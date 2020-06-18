@@ -31,32 +31,12 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun CoffeeList() {
-    val image = imageResource(R.drawable.header)
-
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
-        val imageModifier = Modifier
-            .preferredHeightIn(maxHeight = 180.dp)
-            .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(4.dp))
-
-        Image(
-            image, modifier = imageModifier,
-            contentScale = ContentScale.Crop
-        )
-        Spacer(Modifier.preferredHeight(16.dp))
-        Text(
-            "A day wandering through the sandhills " +
-                    "in Shark Fin Cove, and a few of the " +
-                    "sights I saw",
-            style = typography.h6,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis
-        )
-        Text("Davenport, California", style = typography.body2)
-        Text("December 2018", style = typography.body2)
+fun CoffeeList(coffeeTypes: List<CoffeeType>) {
+    Column {
+        coffeeTypes.forEach { type ->
+            CoffeeTypeItem(type)
+            //HomeScreenDivider()
+        }
     }
 }
 
@@ -123,6 +103,12 @@ fun CoffeeTypeItem(type: CoffeeType) {
 fun DefaultPreview() {
     CoffeegramTheme {
         //CoffeeList()
-        CoffeeTypeItem(CoffeeType(R.drawable.header, "Cappucino"))
+        //CoffeeTypeItem(CoffeeType(R.drawable.header, "Cappucino"))
+        CoffeeList(listOf(
+            CoffeeType(R.drawable.header, "Cappucino"),
+            CoffeeType(R.drawable.header, "Latte"),
+            CoffeeType(R.drawable.header, "Cappucino"),
+            CoffeeType(R.drawable.header, "Latte")
+        ))
     }
 }
