@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
+import androidx.compose.state
 import androidx.ui.core.*
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
@@ -86,6 +87,7 @@ fun CoffeeTypeItem(type: CoffeeType) {
             modifier = Modifier.gravity(Alignment.CenterVertically).weight(1f)
         )
         Row(modifier = Modifier.gravity(Alignment.CenterVertically)) {
+            val count = state { type.count }
             Spacer(Modifier.preferredWidth(16.dp))
             val textButtonModifier = Modifier.gravity(Alignment.CenterVertically)
                 .preferredSizeIn(
@@ -94,15 +96,19 @@ fun CoffeeTypeItem(type: CoffeeType) {
                     minWidth = 0.dp,
                     minHeight = 0.dp
                 )
-            TextButton(onClick = { }, padding = InnerPadding(0.dp), modifier = textButtonModifier) {
+            TextButton(
+                onClick = { count.value-- },
+                padding = InnerPadding(0.dp),
+                modifier = textButtonModifier
+            ) {
                 Text("-")
             }
             Text(
-                type.count.toString(), style = typography.body2,
+                "${count.value}", style = typography.body2,
                 modifier = Modifier.gravity(Alignment.CenterVertically)
             )
             TextButton(
-                onClick = { },
+                onClick = { count.value++ },
                 padding = InnerPadding(0.dp),
                 modifier = textButtonModifier
             ) {
