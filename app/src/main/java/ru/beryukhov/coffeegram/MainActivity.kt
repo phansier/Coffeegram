@@ -4,16 +4,22 @@ import android.os.Bundle
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
+import androidx.compose.getValue
+import androidx.compose.setValue
 import androidx.compose.state
 import androidx.ui.core.*
+import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.VerticalScroller
+import androidx.ui.foundation.gestures.ScrollableState
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.layout.*
+import androidx.ui.layout.ColumnScope.weight
 import androidx.ui.layout.RowScope.gravity
-import androidx.ui.material.Button
-import androidx.ui.material.OutlinedButton
-import androidx.ui.material.TextButton
+import androidx.ui.material.*
+import androidx.ui.material.icons.Icons
+import androidx.ui.material.icons.filled.*
 import androidx.ui.res.imageResource
 import androidx.ui.text.style.TextOverflow
 import androidx.ui.tooling.preview.Preview
@@ -31,8 +37,8 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun CoffeeList(coffeeTypes: List<CoffeeType>) {
-    Column {
+fun CoffeeList(coffeeTypes: List<CoffeeType>, modifier: Modifier = Modifier) {
+    Column(modifier = modifier) {
         coffeeTypes.forEach { type ->
             CoffeeTypeItem(type)
             //HomeScreenDivider()
@@ -102,13 +108,48 @@ fun CoffeeTypeItem(type: CoffeeType) {
 @Composable
 fun DefaultPreview() {
     CoffeegramTheme {
-        //CoffeeList()
-        //CoffeeTypeItem(CoffeeType(R.drawable.header, "Cappucino"))
-        CoffeeList(listOf(
-            CoffeeType(R.drawable.header, "Cappucino"),
-            CoffeeType(R.drawable.header, "Latte"),
-            CoffeeType(R.drawable.header, "Cappucino"),
-            CoffeeType(R.drawable.header, "Latte")
-        ))
+        Scaffold() {
+            Column() {
+                var selectedItem by state { 0 }
+                when (selectedItem) {
+                    0 -> {
+                        Column(modifier = Modifier.weight(1f)){}
+                    }
+                    1 -> {
+                        VerticalScroller(modifier = Modifier.weight(1f)) {
+                            CoffeeList(
+                                listOf(
+                                    CoffeeType(R.drawable.header, "Cappucino"),
+                                    CoffeeType(R.drawable.header, "Latte")
+                                ) * 6
+                            )
+                        }
+                    }
+                }
+
+
+                val items =
+                    listOf("Calendar" to Icons.Filled.DateRange, "Info" to Icons.Filled.Info)
+
+                BottomNavigation {
+                    items.forEachIndexed { index, item ->
+                        BottomNavigationItem(
+                            icon = { Icon(item.second) },
+                            text = { Text(item.first) },
+                            selected = selectedItem == index,
+                            onSelected = { selectedItem = index }
+                        )
+                    }
+                }
+            }
+        }
     }
+}
+
+private operator fun <E> List<E>.times(i: Int): List<E> {
+    val result = mutableListOf<E>()
+    for (j in 0..i) {
+        result.addAll(this)
+    }
+    return result
 }
