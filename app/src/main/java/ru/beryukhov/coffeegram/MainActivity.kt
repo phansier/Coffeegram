@@ -8,20 +8,20 @@ import androidx.compose.getValue
 import androidx.compose.setValue
 import androidx.compose.state
 import androidx.ui.core.*
+import androidx.ui.foundation.AdapterList
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
-import androidx.ui.foundation.VerticalScroller
-import androidx.ui.foundation.gestures.ScrollableState
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.layout.*
-import androidx.ui.layout.ColumnScope.weight
-import androidx.ui.layout.RowScope.gravity
-import androidx.ui.material.*
+import androidx.ui.material.BottomNavigation
+import androidx.ui.material.BottomNavigationItem
+import androidx.ui.material.Scaffold
+import androidx.ui.material.TextButton
 import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.*
+import androidx.ui.material.icons.filled.DateRange
+import androidx.ui.material.icons.filled.Info
 import androidx.ui.res.imageResource
-import androidx.ui.text.style.TextOverflow
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import ru.beryukhov.coffeegram.ui.CoffeegramTheme
@@ -37,12 +37,10 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun CoffeeList(coffeeTypes: List<CoffeeType>, modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
-        coffeeTypes.forEach { type ->
-            CoffeeTypeItem(type)
-            //HomeScreenDivider()
-        }
+fun CoffeeList( coffeeTypes: List<CoffeeType>, modifier: Modifier = Modifier) {
+    AdapterList(data = coffeeTypes, modifier = modifier.fillMaxHeight()) { type ->
+        CoffeeTypeItem(type)
+        //HomeScreenDivider()
     }
 }
 
@@ -116,14 +114,13 @@ fun DefaultPreview() {
                         Column(modifier = Modifier.weight(1f)){}
                     }
                     1 -> {
-                        VerticalScroller(modifier = Modifier.weight(1f)) {
-                            CoffeeList(
-                                listOf(
-                                    CoffeeType(R.drawable.header, "Cappucino"),
-                                    CoffeeType(R.drawable.header, "Latte")
-                                ) * 6
-                            )
-                        }
+                        CoffeeList(
+                            coffeeTypes = listOf(
+                                CoffeeType(R.drawable.header, "Cappucino"),
+                                CoffeeType(R.drawable.header, "Latte")
+                            ) * 6,
+                            modifier = Modifier.weight(1f)
+                        )
                     }
                 }
 
