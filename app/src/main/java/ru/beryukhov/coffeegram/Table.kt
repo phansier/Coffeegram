@@ -22,6 +22,9 @@ import androidx.ui.text.ParagraphStyle
 import androidx.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
+import org.threeten.bp.DayOfWeek
+import org.threeten.bp.YearMonth
+import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.ui.CoffeegramTheme
 import java.text.DateFormatSymbols
 import java.util.*
@@ -72,6 +75,64 @@ fun MonthTableAdjusted(weekItems: List<List<DayItem?>>, modifier: Modifier = Mod
     }
 }
 
+data class WeekDayVectorPair(
+    val day: Int,
+    val weekDay: DayOfWeek,
+    var vector: VectorAsset? = null
+) {
+    fun toDayItem(): DayItem = DayItem("$day", vector)
+}
+
+@Composable
+fun MonthTable(
+    yearMonth: YearMonth,
+    filledDayItemsMap: Map<Int, VectorAsset>,
+    modifier: Modifier = Modifier
+) {
+    val weekDays: List<DayItem> = getWeekDaysNames(ContextAmbient.current).map { DayItem(it) }
+    val days1to31 = mutableListOf<Int>()
+    for (i in 1 until 31) {
+        days1to31.add(i)
+    }
+    val days = days1to31.filter { yearMonth.isValidDay(it) }
+        .associateBy<Int, Int, WeekDayVectorPair>(
+            { it },
+            {
+                WeekDayVectorPair(
+                    it,
+                    yearMonth.atDay(it).dayOfWeek
+                )
+            })
+        .toMutableMap()
+    filledDayItemsMap.forEach { days[it.key]?.vector = it.value }
+    val weekDaysStrings = getWeekDaysNames(ContextAmbient.current)
+    val numberOfFirstDay = weekDaysStrings.indexOf(
+        days[1]!!.weekDay.getDisplayName(
+            TextStyle.SHORT,
+            ContextAmbient.current.resources.configuration.locale
+        )
+    )
+    val daysList: List<WeekDayVectorPair> = days.toList().sortedBy { it.first }.map { it.second }
+    val firstWeek: List<DayItem> =
+        listOf(DayItem("")) * (numberOfFirstDay) + daysList.take(7 - numberOfFirstDay)
+            .map(WeekDayVectorPair::toDayItem)
+    val secondToSixWeeks: List<List<DayItem>> = listOf(2, 3, 4, 5, 6).map {
+        daysList.drop(7 * (it - 1) - numberOfFirstDay).take(7)
+    }.filterNot { it.isEmpty() }
+        .map { it.map(WeekDayVectorPair::toDayItem) }
+
+    val weekItems = mutableListOf(
+        weekDays,
+        firstWeek
+    )
+    weekItems.addAll(secondToSixWeeks)
+    return MonthTableAdjusted(
+        weekItems,
+        modifier = modifier
+    )
+}
+
+
 @Preview(showBackground = true)
 @Composable
 fun TablePreview() {
@@ -89,28 +150,14 @@ fun TablePreview() {
                 DayItem("2", Icons.Default.Call)
             )
         )*/
-        getSampleTable()
+        SampleTable()
         //Text(getWeekDaysNames(ContextAmbient.current).toString())
     }
 }
 
 @Composable
-fun getSampleTable(modifier: Modifier = Modifier) = MonthTableAdjusted(
-    listOf(
-        getWeekDaysNames(ContextAmbient.current).map { DayItem(it) },
-        listOf(
-            null,
-            DayItem("1"),
-            DayItem("2", Icons.Default.Call),
-            DayItem("3"), DayItem("4"), DayItem("5"), DayItem("6")
-        ),
-        getEmptyWeek(7, 13),
-        getEmptyWeek(14, 20),
-        getEmptyWeek(21, 27),
-        getEmptyWeek(28, 30)
-    ),
-    modifier = modifier
-)
+fun SampleTable(modifier: Modifier = Modifier) =
+    MonthTable(YearMonth.of(2020, 7), mapOf(2 to Icons.Default.Call), modifier)
 
 
 fun getWeekDaysNames(context: Context): List<String> =

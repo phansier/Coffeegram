@@ -127,7 +127,7 @@ fun DefaultPreview() {
                         )
 
                         Column(modifier = Modifier.weight(1f), horizontalGravity = Alignment.End) {
-                            getSampleTable(modifier = Modifier.weight(1f))
+                            SampleTable(modifier = Modifier.weight(1f))
                             Text("2020", modifier = Modifier.padding(16.dp))
                         }
                     }
