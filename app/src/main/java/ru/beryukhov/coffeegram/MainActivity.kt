@@ -125,7 +125,11 @@ fun DefaultPreview() {
                             navigationIcon = { IconButton(onClick = {}) { Icon(Icons.Default.KeyboardArrowLeft) } },
                             actions = { IconButton(onClick = {}) { Icon(Icons.Default.KeyboardArrowRight) } }
                         )
-                        Column(modifier = Modifier.weight(1f)) {}
+
+                        Column(modifier = Modifier.weight(1f), horizontalGravity = Alignment.End) {
+                            getSampleTable(modifier = Modifier.weight(1f))
+                            Text("2020", modifier = Modifier.padding(16.dp))
+                        }
                     }
                     1 -> {
                         TopAppBar(title = { Text("Add drink") },
@@ -160,9 +164,9 @@ fun DefaultPreview() {
     }
 }
 
-private operator fun <E> List<E>.times(i: Int): List<E> {
+internal operator fun <E> List<E>.times(i: Int): List<E> {
     val result = mutableListOf<E>()
-    for (j in 0..i) {
+    for (j in 0 until i) {
         result.addAll(this)
     }
     return result
