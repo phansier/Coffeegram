@@ -14,14 +14,13 @@ import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.layout.*
-import androidx.ui.material.BottomNavigation
-import androidx.ui.material.BottomNavigationItem
-import androidx.ui.material.Scaffold
-import androidx.ui.material.TextButton
+import androidx.ui.material.*
 import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.DateRange
-import androidx.ui.material.icons.filled.Info
+import androidx.ui.material.icons.filled.*
 import androidx.ui.res.imageResource
+import androidx.ui.text.AnnotatedString
+import androidx.ui.text.ParagraphStyle
+import androidx.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import ru.beryukhov.coffeegram.ui.CoffeegramTheme
@@ -37,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun CoffeeList( coffeeTypes: List<CoffeeType>, modifier: Modifier = Modifier) {
+fun CoffeeList(coffeeTypes: List<CoffeeType>, modifier: Modifier = Modifier) {
     AdapterList(data = coffeeTypes, modifier = modifier.fillMaxHeight()) { type ->
         CoffeeTypeItem(type)
         //HomeScreenDivider()
@@ -111,9 +110,27 @@ fun DefaultPreview() {
                 var selectedItem by state { 0 }
                 when (selectedItem) {
                     0 -> {
-                        Column(modifier = Modifier.weight(1f)){}
+                        TopAppBar(title = {
+                            Row(horizontalArrangement = Arrangement.Center) {
+                                Text(
+                                    modifier = Modifier.weight(1f),
+                                    text = AnnotatedString(
+                                        text = "Month",
+                                        paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+                                    )
+                                )
+
+                            }
+                        },
+                            navigationIcon = { IconButton(onClick = {}) { Icon(Icons.Default.KeyboardArrowLeft) } },
+                            actions = { IconButton(onClick = {}) { Icon(Icons.Default.KeyboardArrowRight) } }
+                        )
+                        Column(modifier = Modifier.weight(1f)) {}
                     }
                     1 -> {
+                        TopAppBar(title = { Text("Add drink") },
+                            navigationIcon = { IconButton(onClick = {}) { Icon(Icons.Default.ArrowBack) } }
+                        )
                         CoffeeList(
                             coffeeTypes = listOf(
                                 CoffeeType(R.drawable.header, "Cappucino"),
