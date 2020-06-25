@@ -1,10 +1,16 @@
 package ru.beryukhov.coffeegram.data
 
-import androidx.annotation.DrawableRes
+import androidx.ui.graphics.vector.VectorAsset
+import androidx.ui.material.icons.Icons
+import androidx.ui.material.icons.filled.Call
+import androidx.ui.material.icons.filled.Lock
+import androidx.ui.material.icons.filled.ShoppingCart
 
-data class CoffeeType(
-    @DrawableRes
-    val image: Int,
+abstract class CoffeeType(
     val name: String,
-    val count: Int = 0
+    val icon: VectorAsset = Icons.Default.Call
 )
+
+object Cappucino : CoffeeType("Cappucino", Icons.Default.ShoppingCart)
+object Latte : CoffeeType("Latte", Icons.Default.Lock)
+

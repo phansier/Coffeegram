@@ -10,6 +10,8 @@ import androidx.ui.tooling.preview.Preview
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.threeten.bp.YearMonth
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.data.Cappucino
+import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.pages.CoffeeListPage
 import ru.beryukhov.coffeegram.pages.TablePage
 import ru.beryukhov.coffeegram.view.BottomMenu
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
 val selectedItemFlow = MutableStateFlow(0)
 val yearMonthFlow = MutableStateFlow(YearMonth.now())
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
@@ -43,8 +46,8 @@ fun PagesContent(selectedItemFlow: MutableStateFlow<Int>) {
     val selectedItem by selectedItemFlow.collectAsState()
 
     when (selectedItem) {
-        0 -> TablePage(yearMonthFlow)
-        1 -> CoffeeListPage()
+        0 -> TablePage(yearMonthFlow)//todo add real flow as a second parameter
+        1 -> CoffeeListPage(MutableStateFlow(DayCoffee(mapOf(Cappucino to 5))))//todo replace by real flow
     }
 }
 

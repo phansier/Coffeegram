@@ -24,12 +24,14 @@ import androidx.ui.text.ParagraphStyle
 import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
+import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.view.MonthTable
 
 @Composable
-fun TablePage(yearMonthFlow: MutableStateFlow<YearMonth>) {
+fun TablePage(yearMonthFlow: MutableStateFlow<YearMonth>, filledDaysMapFlow: MutableStateFlow<Map<LocalDate, DayCoffee>> = MutableStateFlow(mapOf())) {
     val yearMonth by yearMonthFlow.collectAsState()
 
     TopAppBar(title = {
