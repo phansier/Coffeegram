@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.ui
+package ru.beryukhov.coffeegram.app_ui
 
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.material.Shapes

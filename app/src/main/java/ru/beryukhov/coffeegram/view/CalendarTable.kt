@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram
+package ru.beryukhov.coffeegram.view
 
 import android.content.Context
 import androidx.compose.Composable
@@ -25,7 +25,8 @@ import androidx.ui.unit.dp
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
-import ru.beryukhov.coffeegram.ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.times
 import java.text.DateFormatSymbols
 import java.util.*
 
@@ -60,7 +61,11 @@ fun WeekRow(dayItems: List<DayItem?>) {
     Column(horizontalGravity = Alignment.CenterHorizontally) {
         Row(modifier = Modifier.fillMaxWidth()) {
             for (dayItem in weekDaysItems) {
-                DayCell(dayItem = dayItem ?: DayItem(""), modifier = Modifier.weight(1f))
+                DayCell(
+                    dayItem = dayItem
+                        ?: DayItem(""),
+                    modifier = Modifier.weight(1f)
+                )
             }
         }
         Divider()
@@ -80,7 +85,8 @@ data class WeekDayVectorPair(
     val weekDay: DayOfWeek,
     var vector: VectorAsset? = null
 ) {
-    fun toDayItem(): DayItem = DayItem("$day", vector)
+    fun toDayItem(): DayItem =
+        DayItem("$day", vector)
 }
 
 @Composable
@@ -89,7 +95,9 @@ fun MonthTable(
     filledDayItemsMap: Map<Int, VectorAsset>,
     modifier: Modifier = Modifier
 ) {
-    val weekDays: List<DayItem> = getWeekDaysNames(ContextAmbient.current).map { DayItem(it) }
+    val weekDays: List<DayItem> = getWeekDaysNames(
+        ContextAmbient.current
+    ).map { DayItem(it) }
     val days1to31 = mutableListOf<Int>()
     for (i in 1 until 31) {
         days1to31.add(i)
@@ -105,7 +113,8 @@ fun MonthTable(
             })
         .toMutableMap()
     filledDayItemsMap.forEach { days[it.key]?.vector = it.value }
-    val weekDaysStrings = getWeekDaysNames(ContextAmbient.current)
+    val weekDaysStrings =
+        getWeekDaysNames(ContextAmbient.current)
     val numberOfFirstDay = weekDaysStrings.indexOf(
         days[1]!!.weekDay.getDisplayName(
             TextStyle.SHORT,
@@ -157,7 +166,11 @@ fun TablePreview() {
 
 @Composable
 fun SampleTable(modifier: Modifier = Modifier) =
-    MonthTable(YearMonth.of(2020, 7), mapOf(2 to Icons.Default.Call), modifier)
+    MonthTable(
+        YearMonth.of(2020, 7),
+        mapOf(2 to Icons.Default.Call),
+        modifier
+    )
 
 
 fun getWeekDaysNames(context: Context): List<String> =
