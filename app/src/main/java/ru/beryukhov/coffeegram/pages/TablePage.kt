@@ -28,11 +28,13 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.DaysCoffeesFlow
 import ru.beryukhov.coffeegram.view.MonthTable
 
 @Composable
-fun TablePage(yearMonthFlow: MutableStateFlow<YearMonth>, filledDaysMapFlow: MutableStateFlow<Map<LocalDate, DayCoffee>> = MutableStateFlow(mapOf())) {
+fun TablePage(yearMonthFlow: MutableStateFlow<YearMonth>, filledDaysMapFlow: DaysCoffeesFlow = MutableStateFlow(mapOf()), dateFlow: MutableStateFlow<Int>) {
     val yearMonth by yearMonthFlow.collectAsState()
+    val filledDaysMap by filledDaysMapFlow.collectAsState()
 
     TopAppBar(title = {
         Row(horizontalArrangement = Arrangement.Center) {
@@ -53,7 +55,8 @@ fun TablePage(yearMonthFlow: MutableStateFlow<YearMonth>, filledDaysMapFlow: Mut
     Column(modifier = Modifier.weight(1f), horizontalGravity = Alignment.End) {
         MonthTable(
             yearMonth,
-            mapOf(2 to Icons.Default.Call),//todo replace by real data
+            filledDaysMap.mapKeys {entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth  }.mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getVector() },
+            dateFlow,
             modifier = Modifier.weight(1f)
         )
         Text("${yearMonth.year}", modifier = Modifier.padding(16.dp))

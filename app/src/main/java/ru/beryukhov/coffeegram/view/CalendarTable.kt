@@ -7,6 +7,7 @@ import androidx.ui.core.ContextAmbient
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.clickable
 import androidx.ui.foundation.contentColor
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.vector.VectorAsset
@@ -22,6 +23,7 @@ import androidx.ui.text.ParagraphStyle
 import androidx.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
@@ -32,12 +34,20 @@ import java.util.*
 
 data class DayItem(
     val day: String,
-    val icon: VectorAsset? = null
+    val icon: VectorAsset? = null,
+    val dayOfMonth: Int? = null
 )
 
 @Composable
-fun DayCell(dayItem: DayItem, modifier: Modifier = Modifier) {
-    Column(horizontalGravity = Alignment.CenterHorizontally, modifier = modifier) {
+fun DayCell(
+    dayItem: DayItem,
+    modifier: Modifier = Modifier,
+    dateFlow: MutableStateFlow<Int> = MutableStateFlow(0)
+) {
+    Column(horizontalGravity = Alignment.CenterHorizontally, modifier =
+    if (dayItem.dayOfMonth == null) modifier else
+        modifier.clickable(onClick = { dateFlow.value = dayItem.dayOfMonth })
+    ) {
         with(dayItem) {
             Icon(
                 icon ?: Icons.Default.Call,
@@ -55,7 +65,7 @@ fun DayCell(dayItem: DayItem, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun WeekRow(dayItems: List<DayItem?>) {
+fun WeekRow(dayItems: List<DayItem?>, dateFlow: MutableStateFlow<Int> = MutableStateFlow(0)) {
     val weekDaysItems = dayItems.toMutableList()
     weekDaysItems.addAll(listOf(DayItem("")) * (7 - weekDaysItems.size))
     Column(horizontalGravity = Alignment.CenterHorizontally) {
@@ -64,6 +74,7 @@ fun WeekRow(dayItems: List<DayItem?>) {
                 DayCell(
                     dayItem = dayItem
                         ?: DayItem(""),
+                    dateFlow = dateFlow,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -74,9 +85,13 @@ fun WeekRow(dayItems: List<DayItem?>) {
 }
 
 @Composable
-fun MonthTableAdjusted(weekItems: List<List<DayItem?>>, modifier: Modifier = Modifier) {
+fun MonthTableAdjusted(
+    weekItems: List<List<DayItem?>>,
+    dateFlow: MutableStateFlow<Int> = MutableStateFlow(0),
+    modifier: Modifier = Modifier
+) {
     Column(horizontalGravity = Alignment.CenterHorizontally, modifier = modifier) {
-        weekItems.map { WeekRow(dayItems = it) }
+        weekItems.map { WeekRow(dayItems = it, dateFlow = dateFlow) }
     }
 }
 
@@ -86,13 +101,14 @@ data class WeekDayVectorPair(
     var vector: VectorAsset? = null
 ) {
     fun toDayItem(): DayItem =
-        DayItem("$day", vector)
+        DayItem("$day", vector, day)
 }
 
 @Composable
 fun MonthTable(
     yearMonth: YearMonth,
-    filledDayItemsMap: Map<Int, VectorAsset>,
+    filledDayItemsMap: Map<Int, VectorAsset?>,
+    dateFlow: MutableStateFlow<Int> = MutableStateFlow(0),
     modifier: Modifier = Modifier
 ) {
     val weekDays: List<DayItem> = getWeekDaysNames(
@@ -137,6 +153,7 @@ fun MonthTable(
     weekItems.addAll(secondToSixWeeks)
     return MonthTableAdjusted(
         weekItems,
+        dateFlow,
         modifier = modifier
     )
 }
@@ -169,7 +186,7 @@ fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         YearMonth.of(2020, 7),
         mapOf(2 to Icons.Default.Call),
-        modifier
+        modifier = modifier
     )
 
 

@@ -1,7 +1,6 @@
 package ru.beryukhov.coffeegram.pages
 
 import androidx.compose.Composable
-import androidx.compose.collectAsState
 import androidx.compose.getValue
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.AdapterList
@@ -15,18 +14,15 @@ import androidx.ui.material.icons.Icons
 import androidx.ui.material.icons.filled.ArrowBack
 import androidx.ui.tooling.preview.Preview
 import kotlinx.coroutines.flow.MutableStateFlow
-import ru.beryukhov.coffeegram.view.CoffeeTypeItem
-import ru.beryukhov.coffeegram.R
-import ru.beryukhov.coffeegram.data.Cappucino
-import ru.beryukhov.coffeegram.data.CoffeeType
+import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
-import ru.beryukhov.coffeegram.data.Latte
-import ru.beryukhov.coffeegram.times
+import ru.beryukhov.coffeegram.data.DayCoffeeFlow
+import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
 @Composable
-fun CoffeeListPage(dayCoffeeFlow: MutableStateFlow<DayCoffee>) {
+fun CoffeeListPage(dayCoffeeFlow: DayCoffeeFlow, dateFlow: MutableStateFlow<Int>) {
     TopAppBar(title = { Text("Add drink") },
-        navigationIcon = { IconButton(onClick = {}) { Icon(Icons.Default.ArrowBack) } }
+        navigationIcon = { IconButton(onClick = {dateFlow.value = -1}) { Icon(Icons.Default.ArrowBack) } }
     )
     CoffeeList(
         dayCoffeeFlow,
@@ -35,8 +31,8 @@ fun CoffeeListPage(dayCoffeeFlow: MutableStateFlow<DayCoffee>) {
 }
 
 @Composable
-fun CoffeeList(dayCoffeeFlow: MutableStateFlow<DayCoffee>, modifier: Modifier = Modifier) {
-    val dayCoffee by dayCoffeeFlow.collectAsState()
+fun CoffeeList(dayCoffeeFlow: DayCoffeeFlow, modifier: Modifier = Modifier) {
+    val dayCoffee by dayCoffeeFlow.getState()
     AdapterList(
         data = dayCoffee.coffeeCountMap.toList(),
         modifier = modifier.fillMaxHeight()
@@ -49,7 +45,7 @@ fun CoffeeList(dayCoffeeFlow: MutableStateFlow<DayCoffee>, modifier: Modifier = 
 @Composable
 private fun preview() {
     CoffeeList(
-        MutableStateFlow(DayCoffee(mapOf(Cappucino to 5))),
+        DayCoffeeFlow(MutableStateFlow(mapOf(LocalDate.now() to DayCoffee())), LocalDate.now()),
         modifier = Modifier.weight(1f)
     )
 }
