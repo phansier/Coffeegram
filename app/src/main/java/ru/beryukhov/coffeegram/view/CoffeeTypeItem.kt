@@ -10,12 +10,13 @@ import androidx.ui.layout.*
 import androidx.ui.material.TextButton
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
+import kotlinx.coroutines.flow.MutableStateFlow
+import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.app_ui.typography
-import ru.beryukhov.coffeegram.data.Cappucino
-import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.*
 
 @Composable
-fun CoffeeTypeItem(type: CoffeeType, count: Int/*Todo make it mutable*/) {
+fun CoffeeTypeItem(type: CoffeeType, countFlow: IntFlow) {
     Row(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -35,7 +36,7 @@ fun CoffeeTypeItem(type: CoffeeType, count: Int/*Todo make it mutable*/) {
             modifier = Modifier.gravity(Alignment.CenterVertically).weight(1f)
         )
         Row(modifier = Modifier.gravity(Alignment.CenterVertically)) {
-            val count = state { count }
+            val count = countFlow.getState()
             Spacer(Modifier.preferredWidth(16.dp))
             val textButtonModifier = Modifier.gravity(Alignment.CenterVertically)
                 .preferredSizeIn(
@@ -45,7 +46,7 @@ fun CoffeeTypeItem(type: CoffeeType, count: Int/*Todo make it mutable*/) {
                     minHeight = 0.dp
                 )
             TextButton(
-                onClick = { count.value-- },
+                onClick = { countFlow.set(count.value-1) },
                 padding = InnerPadding(0.dp),
                 modifier = textButtonModifier
             ) {
@@ -56,7 +57,7 @@ fun CoffeeTypeItem(type: CoffeeType, count: Int/*Todo make it mutable*/) {
                 modifier = Modifier.gravity(Alignment.CenterVertically)
             )
             TextButton(
-                onClick = { count.value++ },
+                onClick = { countFlow.set(count.value+1) },
                 padding = InnerPadding(0.dp),
                 modifier = textButtonModifier
             ) {
@@ -70,6 +71,6 @@ fun CoffeeTypeItem(type: CoffeeType, count: Int/*Todo make it mutable*/) {
 @Composable
 private fun preview() {
     CoffeeTypeItem(
-        Cappucino, 4
+        Cappucino, IntFlow(DayCoffeeFlow(MutableStateFlow(mapOf()), LocalDate.now()), Cappucino)
     )
 }

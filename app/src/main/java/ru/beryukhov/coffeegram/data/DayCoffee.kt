@@ -4,6 +4,8 @@ import androidx.compose.Composable
 import androidx.compose.State
 import androidx.compose.collectAsState
 import androidx.ui.graphics.vector.VectorAsset
+import androidx.ui.material.icons.Icons
+import androidx.ui.material.icons.filled.Settings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import org.threeten.bp.LocalDate
@@ -18,6 +20,7 @@ data class DayCoffee(
         //todo normal logic
         if (coffeeCountMap[Cappucino]==0 && coffeeCountMap[Latte]!=0) return Latte.icon
         if (coffeeCountMap[Cappucino]!=0 && coffeeCountMap[Latte]==0) return Cappucino.icon
+        if (coffeeCountMap[Cappucino]!=0 && coffeeCountMap[Latte]!=0) return Icons.Default.Settings
         return null
     }
 }

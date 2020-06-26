@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.DayCoffeeFlow
+import ru.beryukhov.coffeegram.data.IntFlow
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
 @Composable
@@ -37,7 +38,7 @@ fun CoffeeList(dayCoffeeFlow: DayCoffeeFlow, modifier: Modifier = Modifier) {
         data = dayCoffee.coffeeCountMap.toList(),
         modifier = modifier.fillMaxHeight()
     ) { pair ->
-        CoffeeTypeItem(pair.first, pair.second)
+        CoffeeTypeItem(pair.first, IntFlow(dayCoffeeFlow, pair.first))
     }
 }
 
