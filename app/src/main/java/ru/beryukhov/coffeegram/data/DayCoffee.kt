@@ -6,9 +6,11 @@ import androidx.compose.collectAsState
 import androidx.ui.graphics.vector.VectorAsset
 import androidx.ui.material.icons.Icons
 import androidx.ui.material.icons.filled.Settings
+import androidx.ui.res.vectorResource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import org.threeten.bp.LocalDate
+import ru.beryukhov.coffeegram.R
 
 typealias DaysCoffeesFlow = MutableStateFlow<DaysCoffees>
 typealias DaysCoffees = Map<LocalDate, DayCoffee>
@@ -16,11 +18,12 @@ typealias DaysCoffees = Map<LocalDate, DayCoffee>
 data class DayCoffee(
     val coffeeCountMap: Map<CoffeeType, Int> = mapOf(Cappucino to 0, Latte to 0)
 ){
+    @Composable
     fun getVector(): VectorAsset? {
         //todo normal logic
-        if (coffeeCountMap[Cappucino]==0 && coffeeCountMap[Latte]!=0) return Latte.icon
-        if (coffeeCountMap[Cappucino]!=0 && coffeeCountMap[Latte]==0) return Cappucino.icon
-        if (coffeeCountMap[Cappucino]!=0 && coffeeCountMap[Latte]!=0) return Icons.Default.Settings
+        if (coffeeCountMap[Cappucino]==0 && coffeeCountMap[Latte]!=0) return Latte.icon()
+        if (coffeeCountMap[Cappucino]!=0 && coffeeCountMap[Latte]==0) return Cappucino.icon()
+        if (coffeeCountMap[Cappucino]!=0 && coffeeCountMap[Latte]!=0) return vectorResource(R.drawable.coffee)
         return null
     }
 }

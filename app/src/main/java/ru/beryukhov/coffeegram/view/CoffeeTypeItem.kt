@@ -20,7 +20,7 @@ fun CoffeeTypeItem(type: CoffeeType, countFlow: IntFlow) {
     Row(
         modifier = Modifier.padding(16.dp)
     ) {
-        Icon(type.icon, modifier = Modifier.preferredSize(48.dp))
+        Icon(type.icon(), modifier = Modifier.preferredSize(48.dp))
         /*Image(
             imageResource(type.image), modifier = Modifier
                 .preferredHeightIn(maxHeight = 48.dp)

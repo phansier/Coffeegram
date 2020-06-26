@@ -1,16 +1,24 @@
 package ru.beryukhov.coffeegram.data
 
+import androidx.compose.Composable
 import androidx.ui.graphics.vector.VectorAsset
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.Call
-import androidx.ui.material.icons.filled.Lock
-import androidx.ui.material.icons.filled.ShoppingCart
+import androidx.ui.res.vectorResource
+import ru.beryukhov.coffeegram.R
 
 abstract class CoffeeType(
-    val name: String,
-    val icon: VectorAsset = Icons.Default.Call
-)
+    val name: String
+) {
+    @Composable
+    abstract fun icon(): VectorAsset
+}
 
-object Cappucino : CoffeeType("Cappucino", Icons.Default.ShoppingCart)
-object Latte : CoffeeType("Latte", Icons.Default.Lock)
+object Cappucino : CoffeeType("Cappucino") {
+    @Composable
+    override fun icon() = vectorResource(R.drawable.cappucino)
+}
+
+object Latte : CoffeeType("Latte") {
+    @Composable
+    override fun icon() = vectorResource(R.drawable.latte)
+}
 
