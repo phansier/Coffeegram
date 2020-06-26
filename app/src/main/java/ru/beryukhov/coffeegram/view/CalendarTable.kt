@@ -5,10 +5,7 @@ import androidx.compose.Composable
 import androidx.ui.core.Alignment
 import androidx.ui.core.ContextAmbient
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.clickable
-import androidx.ui.foundation.contentColor
+import androidx.ui.foundation.*
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.vector.VectorAsset
 import androidx.ui.layout.Column
@@ -18,6 +15,7 @@ import androidx.ui.layout.preferredSize
 import androidx.ui.material.Divider
 import androidx.ui.material.icons.Icons
 import androidx.ui.material.icons.filled.Call
+import androidx.ui.material.icons.filled.Delete
 import androidx.ui.text.AnnotatedString
 import androidx.ui.text.ParagraphStyle
 import androidx.ui.text.style.TextAlign
@@ -49,11 +47,19 @@ fun DayCell(
         modifier.clickable(onClick = { dateFlow.value = dayItem.dayOfMonth })
     ) {
         with(dayItem) {
-            Icon(
-                icon ?: Icons.Default.Call,
-                tint = if (icon != null) contentColor() else Color.Transparent,
-                modifier = Modifier.preferredSize(32.dp)
-            )
+            if (icon!=null){
+                Icon(
+                    icon,
+                    modifier = Modifier.preferredSize(32.dp)
+                )
+            }else{
+                Icon(
+                    Icons.Default.Delete,
+                    tint = Color.Transparent,
+                    modifier = Modifier.preferredSize(32.dp)
+                )
+            }
+
             Text(
                 AnnotatedString(
                     text = day,

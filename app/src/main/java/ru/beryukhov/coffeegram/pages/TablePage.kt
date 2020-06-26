@@ -55,7 +55,9 @@ fun TablePage(yearMonthFlow: MutableStateFlow<YearMonth>, filledDaysMapFlow: Day
     Column(modifier = Modifier.weight(1f), horizontalGravity = Alignment.End) {
         MonthTable(
             yearMonth,
-            filledDaysMap.mapKeys {entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth  }.mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getVector() },
+            filledDaysMap.filter {entry:  Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
+                .mapKeys {entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth  }
+                .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getVector() },
             dateFlow,
             modifier = Modifier.weight(1f)
         )
