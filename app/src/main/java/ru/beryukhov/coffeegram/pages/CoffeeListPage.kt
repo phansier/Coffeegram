@@ -18,12 +18,20 @@ import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.DayCoffeeFlow
 import ru.beryukhov.coffeegram.data.IntFlow
+import ru.beryukhov.coffeegram.model.NavigationIntent
+import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
 @Composable
-fun CoffeeListPage(dayCoffeeFlow: DayCoffeeFlow, dateFlow: MutableStateFlow<Int>) {
+fun CoffeeListPage(dayCoffeeFlow: DayCoffeeFlow, navigationStore: NavigationStore) {
     TopAppBar(title = { Text("Add drink") },
-        navigationIcon = { IconButton(onClick = {dateFlow.value = -1}) { Icon(Icons.Default.ArrowBack) } }
+        navigationIcon = {
+            IconButton(onClick = { navigationStore.newIntent(NavigationIntent.ReturnToTablePage) }) {
+                Icon(
+                    Icons.Default.ArrowBack
+                )
+            }
+        }
     )
     CoffeeList(
         dayCoffeeFlow,

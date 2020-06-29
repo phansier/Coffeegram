@@ -21,11 +21,12 @@ import androidx.ui.text.ParagraphStyle
 import androidx.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import kotlinx.coroutines.flow.MutableStateFlow
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.model.NavigationIntent
+import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.times
 import java.text.DateFormatSymbols
 import java.util.*
@@ -40,11 +41,17 @@ data class DayItem(
 fun DayCell(
     dayItem: DayItem,
     modifier: Modifier = Modifier,
-    dateFlow: MutableStateFlow<Int> = MutableStateFlow(0)
+    navigationStore: NavigationStore
 ) {
     Column(horizontalGravity = Alignment.CenterHorizontally, modifier =
     if (dayItem.dayOfMonth == null) modifier else
-        modifier.clickable(onClick = { dateFlow.value = dayItem.dayOfMonth })
+        modifier.clickable(onClick = {
+            navigationStore.newIntent(
+                NavigationIntent.OpenCoffeeListPage(
+                    dayItem.dayOfMonth
+                )
+            )
+        })
     ) {
         with(dayItem) {
             if (icon!=null){
@@ -71,7 +78,7 @@ fun DayCell(
 }
 
 @Composable
-fun WeekRow(dayItems: List<DayItem?>, dateFlow: MutableStateFlow<Int> = MutableStateFlow(0)) {
+fun WeekRow(dayItems: List<DayItem?>, navigationStore: NavigationStore) {
     val weekDaysItems = dayItems.toMutableList()
     weekDaysItems.addAll(listOf(DayItem("")) * (7 - weekDaysItems.size))
     Column(horizontalGravity = Alignment.CenterHorizontally) {
@@ -80,7 +87,7 @@ fun WeekRow(dayItems: List<DayItem?>, dateFlow: MutableStateFlow<Int> = MutableS
                 DayCell(
                     dayItem = dayItem
                         ?: DayItem(""),
-                    dateFlow = dateFlow,
+                    navigationStore = navigationStore,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -93,11 +100,11 @@ fun WeekRow(dayItems: List<DayItem?>, dateFlow: MutableStateFlow<Int> = MutableS
 @Composable
 fun MonthTableAdjusted(
     weekItems: List<List<DayItem?>>,
-    dateFlow: MutableStateFlow<Int> = MutableStateFlow(0),
+    navigationStore: NavigationStore,
     modifier: Modifier = Modifier
 ) {
     Column(horizontalGravity = Alignment.CenterHorizontally, modifier = modifier) {
-        weekItems.map { WeekRow(dayItems = it, dateFlow = dateFlow) }
+        weekItems.map { WeekRow(dayItems = it, navigationStore = navigationStore) }
     }
 }
 
@@ -114,7 +121,7 @@ data class WeekDayVectorPair(
 fun MonthTable(
     yearMonth: YearMonth,
     filledDayItemsMap: Map<Int, VectorAsset?>,
-    dateFlow: MutableStateFlow<Int> = MutableStateFlow(0),
+    navigationStore: NavigationStore,
     modifier: Modifier = Modifier
 ) {
     val weekDays: List<DayItem> = getWeekDaysNames(
@@ -159,7 +166,7 @@ fun MonthTable(
     weekItems.addAll(secondToSixWeeks)
     return MonthTableAdjusted(
         weekItems,
-        dateFlow,
+        navigationStore,
         modifier = modifier
     )
 }
@@ -192,7 +199,8 @@ fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         YearMonth.of(2020, 7),
         mapOf(2 to Icons.Default.Call),
-        modifier = modifier
+        modifier = modifier,
+        navigationStore = NavigationStore()
     )
 
 

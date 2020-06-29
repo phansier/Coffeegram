@@ -16,7 +16,6 @@ import androidx.ui.layout.padding
 import androidx.ui.material.IconButton
 import androidx.ui.material.TopAppBar
 import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.Call
 import androidx.ui.material.icons.filled.KeyboardArrowLeft
 import androidx.ui.material.icons.filled.KeyboardArrowRight
 import androidx.ui.text.AnnotatedString
@@ -29,11 +28,12 @@ import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.DaysCoffeesFlow
+import ru.beryukhov.coffeegram.model.NavigationIntent
+import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.view.MonthTable
 
 @Composable
-fun TablePage(yearMonthFlow: MutableStateFlow<YearMonth>, filledDaysMapFlow: DaysCoffeesFlow = MutableStateFlow(mapOf()), dateFlow: MutableStateFlow<Int>) {
-    val yearMonth by yearMonthFlow.collectAsState()
+fun TablePage(yearMonth: YearMonth, filledDaysMapFlow: DaysCoffeesFlow = MutableStateFlow(mapOf()), navigationStore: NavigationStore) {
     val filledDaysMap by filledDaysMapFlow.collectAsState()
 
     TopAppBar(title = {
@@ -48,8 +48,8 @@ fun TablePage(yearMonthFlow: MutableStateFlow<YearMonth>, filledDaysMapFlow: Day
 
         }
     },
-        navigationIcon = { IconButton(onClick = {yearMonthFlow.value = yearMonthFlow.value.minusMonths(1)}) { Icon(Icons.Default.KeyboardArrowLeft) } },
-        actions = { IconButton(onClick = {yearMonthFlow.value = yearMonthFlow.value.plusMonths(1)}) { Icon(Icons.Default.KeyboardArrowRight) } }
+        navigationIcon = { IconButton(onClick = {navigationStore.newIntent(NavigationIntent.PreviousMonth)}) { Icon(Icons.Default.KeyboardArrowLeft) } },
+        actions = { IconButton(onClick = {navigationStore.newIntent(NavigationIntent.NextMonth)}) { Icon(Icons.Default.KeyboardArrowRight) } }
     )
 
     Column(modifier = Modifier.weight(1f), horizontalGravity = Alignment.End) {
@@ -58,7 +58,7 @@ fun TablePage(yearMonthFlow: MutableStateFlow<YearMonth>, filledDaysMapFlow: Day
             filledDaysMap.filter {entry:  Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
                 .mapKeys {entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth  }
                 .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getVector() },
-            dateFlow,
+            navigationStore,
             modifier = Modifier.weight(1f)
         )
         Text("${yearMonth.year}", modifier = Modifier.padding(16.dp))
