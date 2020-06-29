@@ -22,19 +22,18 @@ import androidx.ui.text.AnnotatedString
 import androidx.ui.text.ParagraphStyle
 import androidx.ui.text.style.TextAlign
 import androidx.ui.unit.dp
-import kotlinx.coroutines.flow.MutableStateFlow
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.data.DayCoffee
-import ru.beryukhov.coffeegram.data.DaysCoffeesFlow
+import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.view.MonthTable
 
 @Composable
-fun TablePage(yearMonth: YearMonth, filledDaysMapFlow: DaysCoffeesFlow = MutableStateFlow(mapOf()), navigationStore: NavigationStore) {
-    val filledDaysMap by filledDaysMapFlow.collectAsState()
+fun TablePage(yearMonth: YearMonth, daysCoffeesStore: DaysCoffeesStore, navigationStore: NavigationStore) {
+    val coffeesState by daysCoffeesStore.state.collectAsState()
 
     TopAppBar(title = {
         Row(horizontalArrangement = Arrangement.Center) {
@@ -55,7 +54,7 @@ fun TablePage(yearMonth: YearMonth, filledDaysMapFlow: DaysCoffeesFlow = Mutable
     Column(modifier = Modifier.weight(1f), horizontalGravity = Alignment.End) {
         MonthTable(
             yearMonth,
-            filledDaysMap.filter {entry:  Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
+            coffeesState.coffees.filter { entry:  Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
                 .mapKeys {entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth  }
                 .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getVector() },
             navigationStore,

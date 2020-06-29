@@ -1,6 +1,7 @@
 package ru.beryukhov.coffeegram.pages
 
 import androidx.compose.Composable
+import androidx.compose.collectAsState
 import androidx.compose.getValue
 import androidx.ui.core.Modifier
 import androidx.ui.foundation.AdapterList
@@ -13,17 +14,13 @@ import androidx.ui.material.TopAppBar
 import androidx.ui.material.icons.Icons
 import androidx.ui.material.icons.filled.ArrowBack
 import androidx.ui.tooling.preview.Preview
-import kotlinx.coroutines.flow.MutableStateFlow
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
-import ru.beryukhov.coffeegram.data.DayCoffeeFlow
-import ru.beryukhov.coffeegram.data.IntFlow
-import ru.beryukhov.coffeegram.model.NavigationIntent
-import ru.beryukhov.coffeegram.model.NavigationStore
+import ru.beryukhov.coffeegram.model.*
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
 @Composable
-fun CoffeeListPage(dayCoffeeFlow: DayCoffeeFlow, navigationStore: NavigationStore) {
+fun CoffeeListPage(daysCoffeesStore: DaysCoffeesStore, navigationStore: NavigationStore) {
     TopAppBar(title = { Text("Add drink") },
         navigationIcon = {
             IconButton(onClick = { navigationStore.newIntent(NavigationIntent.ReturnToTablePage) }) {
@@ -34,19 +31,25 @@ fun CoffeeListPage(dayCoffeeFlow: DayCoffeeFlow, navigationStore: NavigationStor
         }
     )
     CoffeeList(
-        dayCoffeeFlow,
+        (navigationStore.state.value as NavigationState.CoffeeListPage).date,
+        daysCoffeesStore,
         modifier = Modifier.weight(1f)
     )
 }
 
 @Composable
-fun CoffeeList(dayCoffeeFlow: DayCoffeeFlow, modifier: Modifier = Modifier) {
-    val dayCoffee by dayCoffeeFlow.getState()
+fun CoffeeList(
+    localDate: LocalDate,
+    daysCoffeesStore: DaysCoffeesStore,
+    modifier: Modifier = Modifier
+) {
+    val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
+    val dayCoffee = dayCoffeeState.coffees[localDate]?:DayCoffee()
     AdapterList(
         data = dayCoffee.coffeeCountMap.toList(),
         modifier = modifier.fillMaxHeight()
     ) { pair ->
-        CoffeeTypeItem(pair.first, IntFlow(dayCoffeeFlow, pair.first))
+        CoffeeTypeItem(localDate, pair.first, pair.second, daysCoffeesStore)
     }
 }
 
@@ -54,7 +57,8 @@ fun CoffeeList(dayCoffeeFlow: DayCoffeeFlow, modifier: Modifier = Modifier) {
 @Composable
 private fun preview() {
     CoffeeList(
-        DayCoffeeFlow(MutableStateFlow(mapOf(LocalDate.now() to DayCoffee())), LocalDate.now()),
+        LocalDate.now(),
+        DaysCoffeesStore(),
         modifier = Modifier.weight(1f)
     )
 }

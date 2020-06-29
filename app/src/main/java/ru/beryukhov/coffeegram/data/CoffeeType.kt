@@ -5,7 +5,7 @@ import androidx.ui.graphics.vector.VectorAsset
 import androidx.ui.res.vectorResource
 import ru.beryukhov.coffeegram.R
 
-abstract class CoffeeType(
+sealed class CoffeeType(
     val name: String
 ) {
     @Composable
