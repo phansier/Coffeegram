@@ -1,24 +1,13 @@
 package ru.beryukhov.coffeegram.data
 
-import androidx.compose.Composable
-import androidx.ui.graphics.vector.VectorAsset
-import androidx.ui.res.vectorResource
+import androidx.annotation.DrawableRes
 import ru.beryukhov.coffeegram.R
 
-sealed class CoffeeType(
-    val name: String
-) {
-    @Composable
-    abstract fun icon(): VectorAsset
-}
+abstract class CoffeeType(
+    val name: String,
+    @DrawableRes val iconId: Int = R.drawable.coffee
+)
 
-object Cappucino : CoffeeType("Cappucino") {
-    @Composable
-    override fun icon() = vectorResource(R.drawable.cappucino)
-}
-
-object Latte : CoffeeType("Latte") {
-    @Composable
-    override fun icon() = vectorResource(R.drawable.latte)
-}
+object Cappucino : CoffeeType("Cappucino", R.drawable.cappucino)
+object Latte : CoffeeType("Latte", R.drawable.latte)
 

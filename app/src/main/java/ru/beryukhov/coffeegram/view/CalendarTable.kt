@@ -1,21 +1,25 @@
 package ru.beryukhov.coffeegram.view
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import androidx.compose.Composable
 import androidx.ui.core.Alignment
 import androidx.ui.core.ContextAmbient
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.*
+import androidx.ui.foundation.Icon
+import androidx.ui.foundation.Image
+import androidx.ui.foundation.Text
+import androidx.ui.foundation.clickable
 import androidx.ui.graphics.Color
-import androidx.ui.graphics.vector.VectorAsset
 import androidx.ui.layout.Column
 import androidx.ui.layout.Row
+import androidx.ui.layout.RowScope.gravity
 import androidx.ui.layout.fillMaxWidth
 import androidx.ui.layout.preferredSize
 import androidx.ui.material.Divider
 import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.Call
 import androidx.ui.material.icons.filled.Delete
+import androidx.ui.res.vectorResource
 import androidx.ui.text.AnnotatedString
 import androidx.ui.text.ParagraphStyle
 import androidx.ui.text.style.TextAlign
@@ -24,6 +28,7 @@ import androidx.ui.unit.dp
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
+import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationStore
@@ -33,7 +38,7 @@ import java.util.*
 
 data class DayItem(
     val day: String,
-    val icon: VectorAsset? = null,
+    @DrawableRes val iconId: Int? = null,
     val dayOfMonth: Int? = null
 )
 
@@ -54,12 +59,15 @@ fun DayCell(
         })
     ) {
         with(dayItem) {
-            if (icon!=null){
-                Icon(
-                    icon,
-                    modifier = Modifier.preferredSize(32.dp)
+            if (iconId != null) {
+                Image(
+                    vectorResource(id = iconId),
+                    modifier = Modifier
+                        .preferredSize(32.dp)
+                        .fillMaxWidth()
+                        .gravity(Alignment.CenterVertically)
                 )
-            }else{
+            } else {
                 Icon(
                     Icons.Default.Delete,
                     tint = Color.Transparent,
@@ -111,16 +119,16 @@ fun MonthTableAdjusted(
 data class WeekDayVectorPair(
     val day: Int,
     val weekDay: DayOfWeek,
-    var vector: VectorAsset? = null
+    @DrawableRes var iconId: Int? = null
 ) {
     fun toDayItem(): DayItem =
-        DayItem("$day", vector, day)
+        DayItem("$day", iconId, day)
 }
 
 @Composable
 fun MonthTable(
     yearMonth: YearMonth,
-    filledDayItemsMap: Map<Int, VectorAsset?>,
+    filledDayItemsMap: Map<Int, Int?>,
     navigationStore: NavigationStore,
     modifier: Modifier = Modifier
 ) {
@@ -141,7 +149,7 @@ fun MonthTable(
                 )
             })
         .toMutableMap()
-    filledDayItemsMap.forEach { days[it.key]?.vector = it.value }
+    filledDayItemsMap.forEach { days[it.key]?.iconId = it.value }
     val weekDaysStrings =
         getWeekDaysNames(ContextAmbient.current)
     val numberOfFirstDay = weekDaysStrings.indexOf(
@@ -198,7 +206,7 @@ fun TablePreview() {
 fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         YearMonth.of(2020, 7),
-        mapOf(2 to Icons.Default.Call),
+        mapOf(2 to R.drawable.coffee),
         modifier = modifier,
         navigationStore = NavigationStore()
     )

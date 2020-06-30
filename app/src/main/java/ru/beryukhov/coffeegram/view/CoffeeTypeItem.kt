@@ -3,33 +3,31 @@ package ru.beryukhov.coffeegram.view
 import androidx.compose.Composable
 import androidx.ui.core.Alignment
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.Icon
+import androidx.ui.foundation.Image
 import androidx.ui.foundation.Text
 import androidx.ui.layout.*
 import androidx.ui.material.TextButton
+import androidx.ui.res.vectorResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.app_ui.typography
-import ru.beryukhov.coffeegram.data.*
+import ru.beryukhov.coffeegram.data.Cappucino
+import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
+
 
 @Composable
 fun CoffeeTypeItem(localDate: LocalDate, coffeeType: CoffeeType, count:Int, daysCoffeesStore: DaysCoffeesStore) {
     Row(
         modifier = Modifier.padding(16.dp)
     ) {
-        Icon(coffeeType.icon(), modifier = Modifier.preferredSize(48.dp))
-        /*Image(
-            imageResource(type.image), modifier = Modifier
-                .preferredHeightIn(maxHeight = 48.dp)
-                .preferredWidthIn(maxWidth = 48.dp)
-                .fillMaxWidth()
-                .clip(shape = RoundedCornerShape(24.dp))
-                .gravity(Alignment.CenterVertically),
-            contentScale = ContentScale.Crop
-        )*/
+        Image(
+            vectorResource(id = coffeeType.iconId), modifier = Modifier
+                .preferredSize(48.dp)
+                .gravity(Alignment.CenterVertically)
+        )
         Spacer(Modifier.preferredWidth(16.dp))
         Text(
             coffeeType.name, style = typography.body1,
