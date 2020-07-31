@@ -4,9 +4,9 @@ import androidx.compose.Composable
 import androidx.compose.collectAsState
 import androidx.compose.getValue
 import androidx.ui.core.Modifier
-import androidx.ui.foundation.AdapterList
 import androidx.ui.foundation.Icon
 import androidx.ui.foundation.Text
+import androidx.ui.foundation.lazy.LazyColumnItems
 import androidx.ui.layout.ColumnScope.weight
 import androidx.ui.layout.fillMaxHeight
 import androidx.ui.material.IconButton
@@ -45,12 +45,11 @@ fun CoffeeList(
 ) {
     val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
     val dayCoffee = dayCoffeeState.coffees[localDate]?:DayCoffee()
-    AdapterList(
-        data = dayCoffee.coffeeCountMap.toList(),
-        modifier = modifier.fillMaxHeight()
-    ) { pair ->
-        CoffeeTypeItem(localDate, pair.first, pair.second, daysCoffeesStore)
-    }
+    LazyColumnItems(items = dayCoffee.coffeeCountMap.toList(),
+        modifier = modifier.fillMaxHeight(),
+        itemContent = { pair ->
+            CoffeeTypeItem(localDate, pair.first, pair.second, daysCoffeesStore)
+        })
 }
 
 @Preview

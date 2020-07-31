@@ -10,20 +10,27 @@ import androidx.ui.material.TextButton
 import androidx.ui.res.vectorResource
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
-import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.app_ui.typography
 import ru.beryukhov.coffeegram.data.Cappucino
 import ru.beryukhov.coffeegram.data.CoffeeType
-import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
-import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 
 
+@Preview
+//@Preview(name = "Large preview", widthDp = 200) //causes compile error but works in preview
 @Composable
-fun CoffeeTypeItem(
-    localDate: LocalDate,
+private fun preview() {
+    CoffeeTypeItemRaw(
+        Cappucino, 5
+    )
+}
+
+/**
+ * A simplified version of [CoffeeTypeItem] to be displayed with Preview
+ */
+@Composable
+private fun CoffeeTypeItemRaw(
     coffeeType: CoffeeType,
-    count: Int,
-    daysCoffeesStore: DaysCoffeesStore
+    count: Int
 ) {
     Row(
         modifier = Modifier.padding(16.dp)
@@ -48,7 +55,7 @@ fun CoffeeTypeItem(
                     minHeight = 0.dp
                 )
             TextButton(
-                onClick = { daysCoffeesStore.newIntent(DaysCoffeesIntent.MinusCoffee(localDate, coffeeType)) },
+                onClick = {  },
                 padding = InnerPadding(0.dp),
                 modifier = textButtonModifier
             ) {
@@ -59,7 +66,7 @@ fun CoffeeTypeItem(
                 modifier = Modifier.gravity(Alignment.CenterVertically)
             )
             TextButton(
-                onClick = { daysCoffeesStore.newIntent(DaysCoffeesIntent.PlusCoffee(localDate, coffeeType)) },
+                onClick = {  },
                 padding = InnerPadding(0.dp),
                 modifier = textButtonModifier
             ) {
@@ -67,12 +74,4 @@ fun CoffeeTypeItem(
             }
         }
     }
-}
-
-@Preview
-@Composable
-private fun preview() {
-    CoffeeTypeItem(
-        LocalDate.now(), Cappucino, 5, DaysCoffeesStore()
-    )
 }
