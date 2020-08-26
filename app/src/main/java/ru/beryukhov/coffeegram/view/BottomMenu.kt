@@ -1,28 +1,28 @@
 package ru.beryukhov.coffeegram.view
 
-import androidx.compose.Composable
-import androidx.compose.collectAsState
-import androidx.compose.getValue
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
-import androidx.ui.material.BottomNavigation
-import androidx.ui.material.BottomNavigationItem
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.DateRange
-import androidx.ui.material.icons.filled.Info
+import androidx.compose.foundation.Icon
+import androidx.compose.foundation.Text
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun BottomMenu(selectedItemFlow: MutableStateFlow<Int>) {
     val items = listOf("Calendar" to Icons.Filled.DateRange, "Info" to Icons.Filled.Info)
-    val selectedItem by selectedItemFlow.collectAsState()
+    val selectedItem:Int by selectedItemFlow.collectAsState()
     BottomNavigation {
         items.forEachIndexed { index, item ->
             BottomNavigationItem(
                 icon = { Icon(item.second) },
-                text = { Text(item.first) },
+                label = { Text(item.first) },
                 selected = selectedItem == index,
-                onSelected = { selectedItemFlow.value = index }
+                onSelect = { selectedItemFlow.value = index }
             )
         }
     }

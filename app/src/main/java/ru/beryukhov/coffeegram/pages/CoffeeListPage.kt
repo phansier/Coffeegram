@@ -1,23 +1,24 @@
 package ru.beryukhov.coffeegram.pages
 
-import androidx.compose.Composable
-import androidx.compose.collectAsState
-import androidx.compose.getValue
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.lazy.LazyColumnItems
-import androidx.ui.layout.ColumnScope.weight
-import androidx.ui.layout.fillMaxHeight
-import androidx.ui.material.IconButton
-import androidx.ui.material.TopAppBar
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.ArrowBack
+import androidx.compose.foundation.Icon
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.ColumnScope.weight
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.material.IconButton
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.ui.tooling.preview.Preview
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.*
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
+
 
 @Composable
 fun CoffeeListPage(daysCoffeesStore: DaysCoffeesStore, navigationStore: NavigationStore) {
@@ -45,7 +46,7 @@ fun CoffeeList(
 ) {
     val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
     val dayCoffee = dayCoffeeState.coffees[localDate]?:DayCoffee()
-    LazyColumnItems(items = dayCoffee.coffeeCountMap.toList(),
+    LazyColumnFor(items = dayCoffee.coffeeCountMap.toList(),
         modifier = modifier.fillMaxHeight(),
         itemContent = { pair ->
             CoffeeTypeItem(localDate, pair.first, pair.second, daysCoffeesStore)

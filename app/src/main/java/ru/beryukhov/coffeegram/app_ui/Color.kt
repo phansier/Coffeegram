@@ -1,6 +1,6 @@
 package ru.beryukhov.coffeegram.app_ui
 
-import androidx.ui.graphics.Color
+import androidx.compose.ui.graphics.Color
 import ru.beryukhov.coffeegram.R
 
 val brown200 = Color(0xFFBCAAA4)

@@ -2,29 +2,28 @@ package ru.beryukhov.coffeegram.view
 
 import android.content.Context
 import androidx.annotation.DrawableRes
-import androidx.compose.Composable
-import androidx.ui.core.Alignment
-import androidx.ui.core.ContextAmbient
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Image
-import androidx.ui.foundation.Text
-import androidx.ui.foundation.clickable
-import androidx.ui.graphics.Color
-import androidx.ui.layout.Column
-import androidx.ui.layout.Row
-import androidx.ui.layout.RowScope.gravity
-import androidx.ui.layout.fillMaxWidth
-import androidx.ui.layout.preferredSize
-import androidx.ui.material.Divider
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.Delete
-import androidx.ui.res.vectorResource
-import androidx.ui.text.AnnotatedString
-import androidx.ui.text.ParagraphStyle
-import androidx.ui.text.style.TextAlign
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.foundation.Icon
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.preferredSize
+import androidx.compose.material.Divider
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.dp
+import androidx.compose.ui.unit.dp
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
@@ -65,7 +64,8 @@ fun DayCell(
                     modifier = Modifier
                         .preferredSize(32.dp)
                         .fillMaxWidth()
-                        .gravity(Alignment.CenterVertically)
+                        //.gravity(Alignment.CenterVertically)
+                        .gravity(Alignment.CenterHorizontally)
                 )
             } else {
                 Icon(

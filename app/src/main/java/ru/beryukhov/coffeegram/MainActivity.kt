@@ -2,16 +2,15 @@ package ru.beryukhov.coffeegram
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.Composable
-import androidx.compose.collectAsState
-import androidx.compose.getValue
-import androidx.ui.core.setContent
-import androidx.ui.layout.Column
-import androidx.ui.material.Scaffold
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.platform.setContent
 import androidx.ui.tooling.preview.Preview
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
-
 import ru.beryukhov.coffeegram.model.NavigationState
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.pages.CoffeeListPage
@@ -34,9 +33,9 @@ fun DefaultPreview() {
 
 @Composable
 fun PagesContent(navigationStore: NavigationStore, daysCoffeesStore: DaysCoffeesStore) {
-    val navigationState by navigationStore.state.collectAsState()
+    val navigationState: NavigationState by navigationStore.state.collectAsState()
     CoffeegramTheme {
-        Scaffold() {
+        Scaffold {
             Column {
                 when (navigationState) {
                     is NavigationState.TablePage -> TablePage(navigationState.yearMonth, daysCoffeesStore, navigationStore)

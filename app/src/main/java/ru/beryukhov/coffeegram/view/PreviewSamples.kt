@@ -1,15 +1,15 @@
 package ru.beryukhov.coffeegram.view
 
-import androidx.compose.Composable
-import androidx.ui.core.Alignment
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Image
-import androidx.ui.foundation.Text
-import androidx.ui.layout.*
-import androidx.ui.material.TextButton
-import androidx.ui.res.vectorResource
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.TextButton
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.vectorResource
 import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.dp
+import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.app_ui.typography
 import ru.beryukhov.coffeegram.data.Cappucino
 import ru.beryukhov.coffeegram.data.CoffeeType
@@ -56,7 +56,7 @@ private fun CoffeeTypeItemRaw(
                 )
             TextButton(
                 onClick = {  },
-                padding = InnerPadding(0.dp),
+                contentPadding = InnerPadding(0.dp),
                 modifier = textButtonModifier
             ) {
                 Text("-")
@@ -67,7 +67,7 @@ private fun CoffeeTypeItemRaw(
             )
             TextButton(
                 onClick = {  },
-                padding = InnerPadding(0.dp),
+                contentPadding = InnerPadding(0.dp),
                 modifier = textButtonModifier
             ) {
                 Text("+")

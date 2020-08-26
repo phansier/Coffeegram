@@ -1,27 +1,27 @@
 package ru.beryukhov.coffeegram.pages
 
-import androidx.compose.Composable
-import androidx.compose.collectAsState
-import androidx.compose.getValue
-import androidx.ui.core.Alignment
-import androidx.ui.core.ContextAmbient
-import androidx.ui.core.Modifier
-import androidx.ui.foundation.Icon
-import androidx.ui.foundation.Text
-import androidx.ui.layout.Arrangement
-import androidx.ui.layout.Column
-import androidx.ui.layout.Row
-import androidx.ui.layout.RowScope.weight
-import androidx.ui.layout.padding
-import androidx.ui.material.IconButton
-import androidx.ui.material.TopAppBar
-import androidx.ui.material.icons.Icons
-import androidx.ui.material.icons.filled.KeyboardArrowLeft
-import androidx.ui.material.icons.filled.KeyboardArrowRight
-import androidx.ui.text.AnnotatedString
-import androidx.ui.text.ParagraphStyle
-import androidx.ui.text.style.TextAlign
-import androidx.ui.unit.dp
+import androidx.compose.foundation.Icon
+import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope.weight
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.IconButton
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
@@ -30,6 +30,7 @@ import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.view.MonthTable
+
 
 @Composable
 fun TablePage(yearMonth: YearMonth, daysCoffeesStore: DaysCoffeesStore, navigationStore: NavigationStore) {
