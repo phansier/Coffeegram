@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.launch
 
 
-abstract class Store<Intent : Any, State : Any>(private val initialState: State) {
-    protected val _intentChannel: Channel<Intent> = Channel(Channel.UNLIMITED)
+abstract class Store<Intent : Any, State : Any>(initialState: State) {
+    private val _intentChannel: Channel<Intent> = Channel(Channel.UNLIMITED)
     protected val _state = MutableStateFlow(initialState)
 
     val state: StateFlow<State>

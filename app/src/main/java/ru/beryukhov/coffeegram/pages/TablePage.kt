@@ -52,7 +52,7 @@ fun TablePage(yearMonth: YearMonth, daysCoffeesStore: DaysCoffeesStore, navigati
         actions = { IconButton(onClick = {navigationStore.newIntent(NavigationIntent.NextMonth)}) { Icon(Icons.Default.KeyboardArrowRight) } }
     )
 
-    Column(modifier = Modifier.weight(1f), horizontalGravity = Alignment.End) {
+    Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.End) {
         MonthTable(
             yearMonth,
             coffeesState.coffees.filter { entry:  Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
