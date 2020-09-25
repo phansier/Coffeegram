@@ -2,8 +2,6 @@ package ru.beryukhov.coffeegram.view
 
 import android.content.Context
 import androidx.annotation.DrawableRes
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.Text
@@ -15,15 +13,17 @@ import androidx.compose.foundation.layout.preferredSize
 import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.ui.tooling.preview.Preview
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
@@ -47,7 +47,7 @@ fun DayCell(
     modifier: Modifier = Modifier,
     navigationStore: NavigationStore
 ) {
-    Column(horizontalGravity = Alignment.CenterHorizontally, modifier =
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier =
     if (dayItem.dayOfMonth == null) modifier else
         modifier.clickable(onClick = {
             navigationStore.newIntent(
@@ -64,8 +64,7 @@ fun DayCell(
                     modifier = Modifier
                         .preferredSize(32.dp)
                         .fillMaxWidth()
-                        //.gravity(Alignment.CenterVertically)
-                        .gravity(Alignment.CenterHorizontally)
+                        .align(Alignment.CenterHorizontally)
                 )
             } else {
                 Icon(
@@ -89,7 +88,7 @@ fun DayCell(
 fun WeekRow(dayItems: List<DayItem?>, navigationStore: NavigationStore) {
     val weekDaysItems = dayItems.toMutableList()
     weekDaysItems.addAll(listOf(DayItem("")) * (7 - weekDaysItems.size))
-    Column(horizontalGravity = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Row(modifier = Modifier.fillMaxWidth()) {
             for (dayItem in weekDaysItems) {
                 DayCell(
@@ -111,7 +110,7 @@ fun MonthTableAdjusted(
     navigationStore: NavigationStore,
     modifier: Modifier = Modifier
 ) {
-    Column(horizontalGravity = Alignment.CenterHorizontally, modifier = modifier) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
         weekItems.map { WeekRow(dayItems = it, navigationStore = navigationStore) }
     }
 }
@@ -140,7 +139,7 @@ fun MonthTable(
         days1to31.add(i)
     }
     val days = days1to31.filter { yearMonth.isValidDay(it) }
-        .associateBy<Int, Int, WeekDayVectorPair>(
+        .associateBy(
             { it },
             {
                 WeekDayVectorPair(
