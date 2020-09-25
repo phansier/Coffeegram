@@ -8,6 +8,6 @@ abstract class CoffeeType(
     @DrawableRes val iconId: Int = R.drawable.coffee
 )
 
-object Cappucino : CoffeeType("Cappucino", R.drawable.cappucino)
+object Cappucino : CoffeeType("Cappuccino", R.drawable.cappucino)
 object Latte : CoffeeType("Latte", R.drawable.latte)
 

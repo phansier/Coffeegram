@@ -5,7 +5,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 
 
 
-
+@Suppress("unused")
 class Application: Application() {
     override fun onCreate() {
         super.onCreate()

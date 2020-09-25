@@ -18,6 +18,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.semantics.accessibilityLabel
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -33,7 +36,11 @@ import ru.beryukhov.coffeegram.view.MonthTable
 
 
 @Composable
-fun TablePage(yearMonth: YearMonth, daysCoffeesStore: DaysCoffeesStore, navigationStore: NavigationStore) {
+fun TablePage(
+    yearMonth: YearMonth,
+    daysCoffeesStore: DaysCoffeesStore,
+    navigationStore: NavigationStore
+) {
     val coffeesState by daysCoffeesStore.state.collectAsState()
 
     TopAppBar(title = {
@@ -41,22 +48,37 @@ fun TablePage(yearMonth: YearMonth, daysCoffeesStore: DaysCoffeesStore, navigati
             Text(
                 modifier = Modifier.weight(1f),
                 text = AnnotatedString(
-                    text = yearMonth.month.getDisplayName(TextStyle.FULL, ContextAmbient.current.resources.configuration.locale),
+                    text = yearMonth.month.getDisplayName(
+                        TextStyle.FULL,
+                        ContextAmbient.current.resources.configuration.locale
+                    ),
                     paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
                 )
             )
 
         }
     },
-        navigationIcon = { IconButton(onClick = {navigationStore.newIntent(NavigationIntent.PreviousMonth)}) { Icon(Icons.Default.KeyboardArrowLeft) } },
-        actions = { IconButton(onClick = {navigationStore.newIntent(NavigationIntent.NextMonth)}) { Icon(Icons.Default.KeyboardArrowRight) } }
+        navigationIcon = {
+            IconButton(
+                onClick = { navigationStore.newIntent(NavigationIntent.PreviousMonth) },
+                modifier = Modifier.semantics {
+                    accessibilityLabel = "ArrowLeft"
+                }) { Icon(Icons.Default.KeyboardArrowLeft) }
+        },
+        actions = {
+            IconButton(
+                onClick = { navigationStore.newIntent(NavigationIntent.NextMonth) },
+                modifier = Modifier.semantics {
+                    testTag = "ArrowRight"
+                }) { Icon(Icons.Default.KeyboardArrowRight) }
+        }
     )
 
-    Column(modifier = Modifier.weight(1f), horizontalGravity = Alignment.End) {
+    Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.End) {
         MonthTable(
             yearMonth,
-            coffeesState.coffees.filter { entry:  Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
-                .mapKeys {entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth  }
+            coffeesState.coffees.filter { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
+                .mapKeys { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth }
                 .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getIconId() },
             navigationStore,
             modifier = Modifier.weight(1f)

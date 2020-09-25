@@ -22,7 +22,7 @@ fun BottomMenu(selectedItemFlow: MutableStateFlow<Int>) {
                 icon = { Icon(item.second) },
                 label = { Text(item.first) },
                 selected = selectedItem == index,
-                onSelect = { selectedItemFlow.value = index }
+                onClick = { selectedItemFlow.value = index }
             )
         }
     }
