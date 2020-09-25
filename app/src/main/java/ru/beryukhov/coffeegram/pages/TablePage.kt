@@ -18,6 +18,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.semantics.accessibilityLabel
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -48,8 +50,8 @@ fun TablePage(yearMonth: YearMonth, daysCoffeesStore: DaysCoffeesStore, navigati
 
         }
     },
-        navigationIcon = { IconButton(onClick = {navigationStore.newIntent(NavigationIntent.PreviousMonth)}) { Icon(Icons.Default.KeyboardArrowLeft) } },
-        actions = { IconButton(onClick = {navigationStore.newIntent(NavigationIntent.NextMonth)}) { Icon(Icons.Default.KeyboardArrowRight) } }
+        navigationIcon = { IconButton(onClick = {navigationStore.newIntent(NavigationIntent.PreviousMonth)}, modifier = Modifier.semantics { accessibilityLabel = "ArrowLeft" }) { Icon(Icons.Default.KeyboardArrowLeft) } },
+        actions = { IconButton(onClick = {navigationStore.newIntent(NavigationIntent.NextMonth)}, modifier = Modifier.semantics { accessibilityLabel = "ArrowRight" }) { Icon(Icons.Default.KeyboardArrowRight) } }
     )
 
     Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.End) {
