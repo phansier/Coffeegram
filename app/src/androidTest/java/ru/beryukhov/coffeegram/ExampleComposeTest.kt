@@ -21,22 +21,39 @@ class ExampleComposeTest {
     @Test
     fun testMonthChange() {
         withRule {
-            onNodeWithText("September").assertIsDisplayed()
+            TablePageObject.apply {
+                Month("September").assertIsDisplayed()
+                LeftArrowButton.assertIsDisplayed().performClick()
+                Month("August").assertIsDisplayed()
+                RightArrowButton.assertIsDisplayed().performClick()
+                Month("September").assertIsDisplayed()
+                RightArrowButton.assertIsDisplayed().performClick()
+                Month("October").assertIsDisplayed()
+            }
+        }
 
-            onNodeWithLabel("ArrowLeft").assertIsDisplayed().performClick()
-            onNodeWithText("August").assertIsDisplayed()
-            onNodeWithTag("ArrowRight").assertIsDisplayed().performClick()
-            onNodeWithText("September").assertIsDisplayed()
-            onNodeWithTag("ArrowRight").assertIsDisplayed().performClick()
-            onNodeWithText("October").assertIsDisplayed()
+    }
 
+    @Test
+    fun testDayOpen() {
+        withRule {
+            TablePageObject.apply {
+                Day("1").assertIsDisplayed()
+                Day("1").assertIsDisplayed().performClick()
+            }
+            CoffeeListPageObject.apply {
+                CappuccinoItem.assertIsDisplayed()
+                LatteItem.assertIsDisplayed()
+            }
         }
     }
 
-    private inline fun <R> withRule(block: ComposeTestRuleJUnit.() -> R): R = with(composeTestRule) {
-        setContent {
-            PagesContent(NavigationStore(), DaysCoffeesStore())
+    private inline fun <R> withRule(block: ComposeTestRuleJUnit.() -> R): R =
+        with(composeTestRule) {
+            setContent {
+                PagesContent(NavigationStore(), DaysCoffeesStore())
+            }
+            block()
         }
-        block()
-    }
 }
+
