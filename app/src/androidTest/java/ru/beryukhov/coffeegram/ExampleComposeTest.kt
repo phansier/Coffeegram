@@ -25,9 +25,9 @@ class ExampleComposeTest {
 
             onNodeWithLabel("ArrowLeft").assertIsDisplayed().performClick()
             onNodeWithText("August").assertIsDisplayed()
-            onNodeWithLabel("ArrowRight").assertIsDisplayed().performClick()
+            onNodeWithTag("ArrowRight").assertIsDisplayed().performClick()
             onNodeWithText("September").assertIsDisplayed()
-            onNodeWithLabel("ArrowRight").assertIsDisplayed().performClick()
+            onNodeWithTag("ArrowRight").assertIsDisplayed().performClick()
             onNodeWithText("October").assertIsDisplayed()
 
         }
