@@ -13,7 +13,10 @@ class ExampleComposeTest {
 
     @Test
     fun testYear() {
-        withRule {
+        with(composeTestRule) {
+            setContent {
+                PagesContent(navigationStore = NavigationStore(), daysCoffeesStore = DaysCoffeesStore())
+            }
             onNodeWithText("2020").assertIsDisplayed()
         }
     }
@@ -51,7 +54,7 @@ class ExampleComposeTest {
     private inline fun <R> withRule(block: ComposeTestRuleJUnit.() -> R): R =
         with(composeTestRule) {
             setContent {
-                PagesContent(NavigationStore(), DaysCoffeesStore())
+                PagesContent(navigationStore = NavigationStore(), daysCoffeesStore = DaysCoffeesStore())
             }
             block()
         }
