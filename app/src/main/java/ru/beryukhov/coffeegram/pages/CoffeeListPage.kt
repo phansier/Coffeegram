@@ -2,7 +2,6 @@ package ru.beryukhov.coffeegram.pages
 
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.ColumnScope.weight
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.IconButton
@@ -21,7 +20,7 @@ import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
 
 @Composable
-fun CoffeeListPage(daysCoffeesStore: DaysCoffeesStore, navigationStore: NavigationStore) {
+fun CoffeeListAppBar(navigationStore: NavigationStore){
     TopAppBar(title = { Text("Add drink") },
         navigationIcon = {
             IconButton(onClick = { navigationStore.newIntent(NavigationIntent.ReturnToTablePage) }) {
@@ -31,10 +30,13 @@ fun CoffeeListPage(daysCoffeesStore: DaysCoffeesStore, navigationStore: Navigati
             }
         }
     )
+}
+
+@Composable
+fun CoffeeListPage(daysCoffeesStore: DaysCoffeesStore, navigationStore: NavigationStore) {
     CoffeeList(
         (navigationStore.state.value as NavigationState.CoffeeListPage).date,
-        daysCoffeesStore,
-        modifier = Modifier.weight(1f)
+        daysCoffeesStore
     )
 }
 
@@ -59,6 +61,6 @@ private fun preview() {
     CoffeeList(
         LocalDate.now(),
         DaysCoffeesStore(),
-        modifier = Modifier.weight(1f)
+        modifier = Modifier
     )
 }
