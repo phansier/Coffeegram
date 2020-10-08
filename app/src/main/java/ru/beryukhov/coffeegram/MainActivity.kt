@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Stack
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawOpacity
 import androidx.compose.ui.platform.setContent
@@ -20,9 +21,7 @@ import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationState
 import ru.beryukhov.coffeegram.model.NavigationStore
-import ru.beryukhov.coffeegram.pages.CoffeeListPage
-import ru.beryukhov.coffeegram.pages.LandingPage
-import ru.beryukhov.coffeegram.pages.TablePage
+import ru.beryukhov.coffeegram.pages.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,12 +59,29 @@ fun PagesContent(
 ) {
     val navigationState: NavigationState by navigationStore.state.collectAsState()
     CoffeegramTheme {
-        Scaffold(modifier) {
-            Column {
-                Spacer(Modifier.padding(top = topPadding))
+        Scaffold(
+            modifier, topBar = {
                 when (navigationState) {
-                    is NavigationState.TablePage -> TablePage(navigationState.yearMonth, daysCoffeesStore, navigationStore)
-                    is NavigationState.CoffeeListPage -> CoffeeListPage(daysCoffeesStore, navigationStore)
+                    is NavigationState.TablePage -> TableAppBar(
+                        navigationState.yearMonth,
+                        navigationStore
+                    )
+                    is NavigationState.CoffeeListPage -> CoffeeListAppBar(navigationStore)
+                }
+            }
+        ) {
+            Column {
+                Spacer(Modifier.padding(top = topPadding).align(Alignment.CenterHorizontally))
+                when (navigationState) {
+                    is NavigationState.TablePage -> TablePage(
+                        navigationState.yearMonth,
+                        daysCoffeesStore,
+                        navigationStore
+                    )
+                    is NavigationState.CoffeeListPage -> CoffeeListPage(
+                        daysCoffeesStore,
+                        navigationStore
+                    )
                 }
             }
         }

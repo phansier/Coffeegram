@@ -4,7 +4,6 @@ import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope.weight
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
@@ -36,13 +35,10 @@ import ru.beryukhov.coffeegram.view.MonthTable
 
 
 @Composable
-fun TablePage(
+fun TableAppBar(
     yearMonth: YearMonth,
-    daysCoffeesStore: DaysCoffeesStore,
     navigationStore: NavigationStore
 ) {
-    val coffeesState by daysCoffeesStore.state.collectAsState()
-
     TopAppBar(title = {
         Row(horizontalArrangement = Arrangement.Center) {
             Text(
@@ -73,8 +69,17 @@ fun TablePage(
                 }) { Icon(Icons.Default.KeyboardArrowRight) }
         }
     )
+}
 
-    Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.End) {
+@Composable
+fun TablePage(
+    yearMonth: YearMonth,
+    daysCoffeesStore: DaysCoffeesStore,
+    navigationStore: NavigationStore
+) {
+    val coffeesState by daysCoffeesStore.state.collectAsState()
+
+    Column(horizontalAlignment = Alignment.End) {
         MonthTable(
             yearMonth,
             coffeesState.coffees.filter { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
