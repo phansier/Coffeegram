@@ -3,10 +3,7 @@ package ru.beryukhov.coffeegram
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.transition
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.Stack
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -29,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContent {
             var splashShown by remember { mutableStateOf(SplashState.Shown) }
             val transition = transition(splashTransitionDefinition, splashShown)
-            Stack {
+            Box {
                 LandingPage(
                     modifier = Modifier.drawOpacity(transition[splashAlphaKey]),
                     onTimeout = { splashShown = SplashState.Completed }
