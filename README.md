@@ -7,7 +7,9 @@ Android app using Jetpack Compose together with StateFlow and MVI
 After implementation of repository part it will be suitable for tracking of consumed coffee cups.
 
 More about app creation:
+
 [Medium EN](https://proandroiddev.com/change-my-mind-or-android-development-transformation-to-jetpack-compose-coroutines-e719a342cc52)
+
 [Habr RU](https://habr.com/ru/company/kaspersky/blog/513364/)
 
 Now consists of two screens:
