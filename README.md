@@ -4,6 +4,9 @@
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.10-blue.svg)](https://kotlinlang.org)
 
 Android app using Jetpack Compose together with StateFlow and MVI
+
+Additional info about Jetpack Compose can be found in the [mindmap](mindmap.md).
+
 After implementation of repository part it will be suitable for tracking of consumed coffee cups.
 
 More about app creation:
@@ -12,7 +15,7 @@ More about app creation:
 
 [Habr RU](https://habr.com/ru/company/kaspersky/blog/513364/)
 
-Now consists of two screens:
+The App consists of two screens:
 1) Table Month page
 ![](https://raw.githubusercontent.com/AndreySBer/Coffeegram/master/images/month_table.png)
 
