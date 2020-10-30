@@ -1,6 +1,6 @@
 # Coffeegram
 
-[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.0.0--alpha03-yellow)](https://developer.android.com/jetpack/compose)
+[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.0.0--alpha06-yellow)](https://developer.android.com/jetpack/compose)
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.10-blue.svg)](https://kotlinlang.org)
 
 Android app using Jetpack Compose together with StateFlow and MVI

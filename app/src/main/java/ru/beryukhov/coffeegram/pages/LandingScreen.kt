@@ -5,7 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.launchInComposition
+import androidx.compose.runtime.LaunchedTask
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.imageResource
@@ -19,7 +19,7 @@ private const val SplashWaitTime: Long = 2000
 @Composable
 fun LandingPage(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
     Box(modifier = modifier.fillMaxSize().background(brown500), alignment = Alignment.Center) {
-        launchInComposition {
+        LaunchedTask {
             delay(SplashWaitTime)
             onTimeout()
         }
