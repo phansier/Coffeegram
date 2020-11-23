@@ -1,7 +1,11 @@
 package ru.beryukhov.coffeegram
 
 import androidx.compose.runtime.Composable
-import androidx.ui.test.*
+import androidx.compose.ui.test.SemanticsNodeInteraction
+import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onNodeWithLabel
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
 import ru.beryukhov.coffeegram.pages.CoffeeListPage
 import ru.beryukhov.coffeegram.pages.TablePage
 
