@@ -1,9 +1,9 @@
 package ru.beryukhov.coffeegram
 
-import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.junit4.ComposeTestRule
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import org.junit.Rule
 import org.junit.Test
@@ -58,7 +58,10 @@ class ExampleComposeTest {
     private inline fun <R> withRule(block: ComposeTestRule.() -> R): R =
         with(composeTestRule) {
             setContent {
-                PagesContent(navigationStore = NavigationStore(), daysCoffeesStore = DaysCoffeesStore())
+                PagesContent(
+                    navigationStore = NavigationStore(),
+                    daysCoffeesStore = DaysCoffeesStore()
+                )
             }
             block()
         }
