@@ -54,6 +54,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
     androidTestImplementation("androidx.ui:ui-test:${rootProject.extra["compose_version"]}")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["compose_version"]}")
 
 
     implementation("com.jakewharton.threetenabp:threetenabp:1.2.4")

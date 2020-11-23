@@ -1,6 +1,10 @@
 package ru.beryukhov.coffeegram
 
-import androidx.ui.test.*
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.ui.test.createComposeRule
 import org.junit.Rule
 import org.junit.Test
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -9,7 +13,7 @@ import ru.beryukhov.coffeegram.model.NavigationStore
 
 class ExampleComposeTest {
     @get:Rule
-    val composeTestRule = createComposeRule(disableTransitions = true)
+    val composeTestRule = createComposeRule(/*disableTransitions = true*/)
 
     @Test
     fun testYear() {
@@ -51,10 +55,13 @@ class ExampleComposeTest {
         }
     }
 
-    private inline fun <R> withRule(block: ComposeTestRuleJUnit.() -> R): R =
+    private inline fun <R> withRule(block: ComposeTestRule.() -> R): R =
         with(composeTestRule) {
             setContent {
-                PagesContent(navigationStore = NavigationStore(), daysCoffeesStore = DaysCoffeesStore())
+                PagesContent(
+                    navigationStore = NavigationStore(),
+                    daysCoffeesStore = DaysCoffeesStore()
+                )
             }
             block()
         }
