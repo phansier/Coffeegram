@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram
+package ru.beryukhov.coffeegram.aa
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollableColumn
@@ -17,11 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.ui.tooling.preview.Devices
 import androidx.ui.tooling.preview.Preview
+import ru.beryukhov.coffeegram.R
 
 @Preview(device = Devices.PIXEL_C)
 @Preview()
 @Composable
-fun AAFilm() {
+fun FilmPage() {
     ScrollableColumn(Modifier.background(color = Color(0xFF191926)).fillMaxHeight()) {
         ConstraintLayout {
             val (imageView2, tvAge, tvTitle, tvTag, ivStars,
@@ -73,19 +74,19 @@ fun AAFilm() {
                     top.linkTo(tvTitle.bottom, margin = 4.dp)
                 }
             )
-            Image(
-                vectorResource(id = R.drawable.ic_star_icon),
+            StarsPreview(
                 modifier = Modifier.constrainAs(ivStars) {
                     top.linkTo(tvTag.bottom, margin = 8.dp)
                     start.linkTo(parent.start, margin = 16.dp)
                 }
             )
-            Text(text = "123 Review",
+            Text(
+                text = "123 Review",
                 color = Color(0xFF6D6D80),
                 modifier = Modifier.constrainAs(tvReviews) {
                     linkTo(
                         start = ivStars.end, end = parent.end,
-                        startMargin = 8.dp, endMargin = 16.dp, bias = 0f
+                        startMargin = 4.dp, endMargin = 16.dp, bias = 0f
                     )
                     centerVerticallyTo(ivStars)
                 }
@@ -159,7 +160,7 @@ fun AAFilm() {
                     top.linkTo(storylineText.bottom, margin = 20.dp)
                 }
             )
-            AAActorsPreview(modifier = Modifier.constrainAs(list_actors_preview) {
+            ActorsPreview(modifier = Modifier.constrainAs(list_actors_preview) {
                 linkTo(
                     start = parent.start, end = parent.end,
                     startMargin = 12.dp, endMargin = 12.dp, bias = 0f

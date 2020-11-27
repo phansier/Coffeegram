@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram
+package ru.beryukhov.coffeegram.aa
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -15,6 +15,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Devices
 import androidx.ui.tooling.preview.Preview
+import ru.beryukhov.coffeegram.R
 
 val actorsList = listOf(
     Actor("Robert Downey Jr.", R.drawable.downey),
@@ -26,8 +27,8 @@ val actorsList = listOf(
 @Preview(device = Devices.PIXEL_C, backgroundColor = 0xff191926)
 @Preview(backgroundColor = 0xff191926)
 @Composable
-fun AAActorsPreview(modifier: Modifier = Modifier) {
-    AAActors(actors = actorsList, modifier = modifier)
+fun ActorsPreview(modifier: Modifier = Modifier) {
+    Actors(actors = actorsList, modifier = modifier)
 }
 
 data class Actor(
@@ -36,20 +37,20 @@ data class Actor(
 )
 
 @Composable
-fun AAActors(actors: List<Actor>, modifier: Modifier = Modifier) {
+fun Actors(actors: List<Actor>, modifier: Modifier = Modifier) {
     LazyRowFor(items = actors,
         modifier = modifier,
         itemContent = {
-            AAActor(it)
+            ActorItem(it)
         })
 }
 
 @Preview
 @Composable
-fun AAActorPreview() = AAActor(actor = Actor("Robert Downey Jr.", R.drawable.downey))
+fun ActorItemPreview() = ActorItem(actor = Actor("Robert Downey Jr.", R.drawable.downey))
 
 @Composable
-fun AAActor(actor: Actor) {
+fun ActorItem(actor: Actor) {
     ConstraintLayout {
         val (photo, name) = createRefs()
         Image(imageResource(id = actor.photo),
