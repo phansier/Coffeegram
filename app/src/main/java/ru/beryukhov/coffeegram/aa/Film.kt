@@ -1,5 +1,7 @@
 package ru.beryukhov.coffeegram.aa
 
+import android.os.Build
+import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
@@ -10,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ContextAmbient
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,10 +23,12 @@ import androidx.ui.tooling.preview.Preview
 import ru.beryukhov.coffeegram.R
 
 @Preview(device = Devices.PIXEL_C)
-@Preview()
+@Preview
 @Composable
 fun FilmPage() {
-    ScrollableColumn(Modifier.background(color = Color(0xFF191926)).fillMaxHeight()) {
+    ScrollableColumn(
+        Modifier.background(color = ColorFromRes(R.color.aa_background)).fillMaxHeight()
+    ) {
         ConstraintLayout {
             val (imageView2, tvAge, tvTitle, tvTag, ivStars,
                 tvReviews, view, imageView7, tvBack, storyline, storylineText,
@@ -47,14 +52,14 @@ fun FilmPage() {
             }
 
             Text(text = "13+",
-                color = Color.White,
+                color = ColorFromRes(R.color.aa_white_text),
                 modifier = Modifier.constrainAs(tvAge) {
                     bottom.linkTo(tvTitle.top, margin = 12.dp)
                     start.linkTo(parent.start, margin = 16.dp)
                 }
             )
             Text(text = "Avengers: End Game",
-                color = Color(0xFFECECEC),
+                color = ColorFromRes(R.color.aa_whitable_text),
                 fontSize = 36.sp,
                 modifier = Modifier.constrainAs(tvTitle) {
                     linkTo(
@@ -65,7 +70,7 @@ fun FilmPage() {
                 }
             )
             Text(text = "Action, Adventure, Fantasy",
-                color = Color(0xFFFF3466),
+                color = ColorFromRes(R.color.aa_contrast_text),
                 modifier = Modifier.constrainAs(tvTag) {
                     linkTo(
                         start = parent.start, end = parent.end,
@@ -82,7 +87,7 @@ fun FilmPage() {
             )
             Text(
                 text = "123 Review",
-                color = Color(0xFF6D6D80),
+                color = ColorFromRes(R.color.aa_disabled_text),
                 modifier = Modifier.constrainAs(tvReviews) {
                     linkTo(
                         start = ivStars.end, end = parent.end,
@@ -109,8 +114,9 @@ fun FilmPage() {
                     start.linkTo(parent.start, margin = 16.dp)
                 }
             )
-            Text(text = "Back",
-                color = Color(0x7FFFFFFF),
+            Text(
+                text = "Back",
+                color = ColorFromRes(R.color.aa_whitable_text),
                 fontSize = 16.sp,
                 modifier = Modifier.constrainAs(tvBack) {
                     linkTo(
@@ -124,7 +130,7 @@ fun FilmPage() {
                 }
             )
             Text(text = "Storyline",
-                color = Color(0xFFECECEC),
+                color = ColorFromRes(R.color.aa_whitable_text),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.constrainAs(storyline) {
@@ -138,7 +144,7 @@ fun FilmPage() {
             val storylineString =
                 "After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe."
             Text(text = storylineString,
-                color = Color(0xC0FFFFFF),
+                color = ColorFromRes(R.color.aa_whitable_text),
                 fontSize = 14.sp,
                 modifier = Modifier.constrainAs(storylineText) {
                     //todo make text corresponding margins
@@ -149,7 +155,7 @@ fun FilmPage() {
                 }
             )
             Text(text = "Cast",
-                color = Color(0xFFECECEC),
+                color = ColorFromRes(R.color.aa_whitable_text),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.constrainAs(cast) {
@@ -167,8 +173,21 @@ fun FilmPage() {
                 )
                 top.linkTo(cast.bottom, margin = 6.dp)
                 bottom.linkTo(parent.bottom, margin = 16.dp)
+                width = fillToConstraints
             })
 
         }
+    }
+}
+
+@Composable
+fun ColorFromRes(@ColorRes color: Int): Color {
+    val context = ContextAmbient.current
+    val res = context.resources
+    val theme = context.theme
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        Color(res.getColor(color, theme))
+    } else {
+        Color(res.getColor(color))
     }
 }

@@ -2,15 +2,11 @@ package ru.beryukhov.coffeegram.aa
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.ConstraintLayout
-import androidx.compose.foundation.layout.Dimension
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRowFor
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Devices
@@ -39,7 +35,7 @@ data class Actor(
 @Composable
 fun Actors(actors: List<Actor>, modifier: Modifier = Modifier) {
     LazyRowFor(items = actors,
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         itemContent = {
             ActorItem(it)
         })
@@ -63,7 +59,7 @@ fun ActorItem(actor: Actor) {
                 .height(80.dp)
         )
         Text(text = actor.name,
-            color = Color.White,
+            color = ColorFromRes(color = R.color.aa_white_text),
             modifier = Modifier.constrainAs(name) {
                 start.linkTo(parent.start, margin = 4.dp)
                 end.linkTo(parent.end, margin = 4.dp)
