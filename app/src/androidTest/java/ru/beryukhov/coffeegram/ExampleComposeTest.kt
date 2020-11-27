@@ -2,9 +2,9 @@ package ru.beryukhov.coffeegram
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeTestRule
+import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.ui.test.createComposeRule
 import org.junit.Rule
 import org.junit.Test
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -21,7 +21,7 @@ class ExampleComposeTest {
             setContent {
                 PagesContent(navigationStore = NavigationStore(), daysCoffeesStore = DaysCoffeesStore())
             }
-            onNodeWithText("2020").assertIsDisplayed()
+            onNodeWithText("2020"  ).assertIsDisplayed()
         }
     }
 
