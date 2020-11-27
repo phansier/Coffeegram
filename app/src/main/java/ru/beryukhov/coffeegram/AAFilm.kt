@@ -4,10 +4,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollableColumn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Dimension.Companion.fillToConstraints
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
@@ -25,7 +26,7 @@ fun AAFilm() {
         ConstraintLayout {
             val (imageView2, tvAge, tvTitle, tvTag, ivStars,
                 tvReviews, view, imageView7, tvBack, storyline, storylineText,
-                storyBarrier, cast, list_actors_preview) = createRefs()
+                cast, list_actors_preview) = createRefs()
             Box(modifier = Modifier.constrainAs(imageView2) {
                 height = Dimension.value(298.dp)
                 top.linkTo(parent.top)
@@ -134,7 +135,7 @@ fun AAFilm() {
                 }
             )
             val storylineString =
-                "After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos\\' actions and restore balance to the universe."
+                "After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe."
             Text(text = storylineString,
                 color = Color(0xC0FFFFFF),
                 fontSize = 14.sp,
@@ -143,6 +144,7 @@ fun AAFilm() {
                     start.linkTo(parent.start, margin = 16.dp)
                     end.linkTo(parent.end, margin = 16.dp)
                     top.linkTo(storyline.bottom, margin = 4.dp)
+                    width = fillToConstraints
                 }
             )
             Text(text = "Cast",
@@ -157,6 +159,14 @@ fun AAFilm() {
                     top.linkTo(storylineText.bottom, margin = 20.dp)
                 }
             )
+            AAActorsPreview(modifier = Modifier.constrainAs(list_actors_preview) {
+                linkTo(
+                    start = parent.start, end = parent.end,
+                    startMargin = 12.dp, endMargin = 12.dp, bias = 0f
+                )
+                top.linkTo(cast.bottom, margin = 6.dp)
+                bottom.linkTo(parent.bottom, margin = 16.dp)
+            })
 
         }
     }
