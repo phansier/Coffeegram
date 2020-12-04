@@ -36,6 +36,7 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "${rootProject.extra["compose_version"]}"
+        kotlinCompilerVersion = "${rootProject.extra["kotlin_version"]}"
     }
 }
 
