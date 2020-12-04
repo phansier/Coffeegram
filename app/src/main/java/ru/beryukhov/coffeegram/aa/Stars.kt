@@ -8,8 +8,8 @@ import androidx.compose.foundation.lazy.LazyRowFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
 import ru.beryukhov.coffeegram.R
 
 @Preview

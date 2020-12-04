@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.Preview
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.*

@@ -22,8 +22,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
