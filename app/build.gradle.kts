@@ -30,7 +30,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         //useIR = true
-        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check")
+        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check", "-Xopt-in=kotlin.RequiresOptIn")
     }
     buildFeatures {
         compose = true

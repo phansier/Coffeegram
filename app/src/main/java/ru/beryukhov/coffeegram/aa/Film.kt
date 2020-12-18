@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.ContextAmbient
+import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -182,7 +182,7 @@ fun FilmPage() {
 
 @Composable
 fun ColorFromRes(@ColorRes color: Int): Color {
-    val context = ContextAmbient.current
+    val context = AmbientContext.current
     val res = context.resources
     val theme = context.theme
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

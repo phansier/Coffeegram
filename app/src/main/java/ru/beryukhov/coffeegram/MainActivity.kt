@@ -11,11 +11,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawOpacity
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ru.beryukhov.coffeegram.animations.*
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -31,11 +32,11 @@ class MainActivity : AppCompatActivity() {
             val transition = transition(splashTransitionDefinition, splashShown)
             Box {
                 LandingPage(
-                    modifier = Modifier.drawOpacity(transition[splashAlphaKey]),
+                    modifier = Modifier.alpha(transition[splashAlphaKey]),
                     onTimeout = { splashShown = SplashState.Completed }
                 )
                 PagesContent(
-                    modifier = Modifier.drawOpacity(transition[contentAlphaKey]),
+                    modifier = Modifier.alpha(transition[contentAlphaKey]),
                     topPadding = transition[contentTopPaddingKey],
                     NavigationStore(), DaysCoffeesStore()
                 )
@@ -50,6 +51,7 @@ fun DefaultPreview() {
     PagesContent(navigationStore = NavigationStore(), daysCoffeesStore = DaysCoffeesStore())
 }
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun PagesContent(
     modifier: Modifier = Modifier,
