@@ -3,7 +3,7 @@ package ru.beryukhov.coffeegram.aa
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRowFor
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -34,11 +34,12 @@ data class Actor(
 
 @Composable
 fun Actors(actors: List<Actor>, modifier: Modifier = Modifier) {
-    LazyRowFor(items = actors,
-        modifier = modifier.fillMaxWidth(),
-        itemContent = {
-            ActorItem(it)
-        })
+    LazyRow(modifier = modifier.fillMaxWidth()) {
+        items(items = actors,
+            itemContent = {
+                ActorItem(it)
+            })
+    }
 }
 
 @Preview
