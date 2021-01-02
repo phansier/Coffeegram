@@ -17,7 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.AmbientContext
-import androidx.compose.ui.semantics.accessibilityLabel
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.AnnotatedString
@@ -59,7 +59,7 @@ fun TableAppBar(
             IconButton(
                 onClick = { navigationStore.newIntent(NavigationIntent.PreviousMonth) },
                 modifier = Modifier.semantics {
-                    accessibilityLabel = "ArrowLeft"
+                    contentDescription = "ArrowLeft"
                 }) { Icon(Icons.Default.KeyboardArrowLeft) }
         },
         actions = {
