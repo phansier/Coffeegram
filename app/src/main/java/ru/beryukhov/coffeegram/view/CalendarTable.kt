@@ -22,7 +22,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
@@ -69,7 +69,7 @@ fun DayCell(
             } else {
                 Icon(
                     Icons.Default.Delete,
-                    tint = Color.Transparent,
+                    tint = Color(0x00000000),//Color.Transparent,
                     modifier = Modifier.preferredSize(32.dp)
                 )
             }
@@ -179,7 +179,7 @@ fun MonthTable(
 }
 
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun TablePreview() {
     CoffeegramTheme {

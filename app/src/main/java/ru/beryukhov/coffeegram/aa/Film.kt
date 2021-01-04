@@ -16,14 +16,15 @@ import androidx.compose.ui.platform.AmbientContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.Devices
+//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ru.beryukhov.coffeegram.R
 
-@Preview(device = Devices.PIXEL_C)
-@Preview
+//@Preview(device = Devices.PIXEL_C)
+//@Preview
+@ExperimentalStdlibApi
 @Composable
 fun FilmPage() {
     ScrollableColumn(

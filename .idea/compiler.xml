@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="12" />
+    <bytecodeTargetLevel target="12">
+      <module name="Coffeegram.common.commonMain" target="1.8" />
+      <module name="Coffeegram.common.commonTest" target="1.8" />
+      <module name="Coffeegram.common.desktopMain" target="1.8" />
+      <module name="Coffeegram.common.desktopTest" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

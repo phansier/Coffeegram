@@ -8,15 +8,17 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.R
 
-@Preview
+//@Preview
+@ExperimentalStdlibApi
 @Composable
 fun StarsPreview(modifier: Modifier = Modifier) = Stars(4, modifier)
 
-@OptIn(ExperimentalStdlibApi::class)
+//@OptIn(ExperimentalStdlibApi::class)
+@ExperimentalStdlibApi
 @Composable
 fun Stars(rate: Int, modifier: Modifier = Modifier) {
     LazyRow(modifier = modifier) {

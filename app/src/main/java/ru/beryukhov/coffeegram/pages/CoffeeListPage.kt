@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
@@ -41,7 +41,7 @@ fun CoffeeListPage(daysCoffeesStore: DaysCoffeesStore, navigationStore: Navigati
     )
 }
 
-@OptIn(ExperimentalCoroutinesApi::class)
+//@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun CoffeeList(
     localDate: LocalDate,
@@ -58,7 +58,7 @@ fun CoffeeList(
     }
 }
 
-@Preview
+//@Preview
 @Composable
 private fun Preview() {
     CoffeeList(

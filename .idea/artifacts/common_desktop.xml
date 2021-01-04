@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="common-desktop">
+    <output-path>$PROJECT_DIR$/common/build/libs</output-path>
+    <root id="archive" name="common-desktop.jar">
+      <element id="module-output" name="Coffeegram.common.desktopMain" />
+    </root>
+  </artifact>
+</component>

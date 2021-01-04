@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -38,20 +38,21 @@ class MainActivity : AppCompatActivity() {
                 PagesContent(
                     modifier = Modifier.alpha(transition[contentAlphaKey]),
                     topPadding = transition[contentTopPaddingKey],
-                    NavigationStore(), DaysCoffeesStore()
+                    navigationStore = NavigationStore(),
+                    daysCoffeesStore = DaysCoffeesStore()
                 )
             }
         }
     }
 }
 
-@Preview(showBackground = true)
+//@Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     PagesContent(navigationStore = NavigationStore(), daysCoffeesStore = DaysCoffeesStore())
 }
 
-@OptIn(ExperimentalCoroutinesApi::class)
+//@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun PagesContent(
     modifier: Modifier = Modifier,

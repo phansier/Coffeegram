@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.app_ui.typography
@@ -69,7 +69,7 @@ fun CoffeeTypeItem(
     }
 }
 
-@Preview
+//@Preview
 @Composable
 private fun preview() {
     CoffeeTypeItem(

@@ -8,8 +8,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.Devices
+//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.R
 
@@ -20,8 +20,8 @@ val actorsList = listOf(
     Actor("Chris Hemsworth", R.drawable.hemsworth)
 )
 
-@Preview(device = Devices.PIXEL_C, backgroundColor = 0xff191926)
-@Preview(backgroundColor = 0xff191926)
+//@Preview(device = Devices.PIXEL_C, backgroundColor = 0xff191926)
+//@Preview(backgroundColor = 0xff191926)
 @Composable
 fun ActorsPreview(modifier: Modifier = Modifier) {
     Actors(actors = actorsList, modifier = modifier)
@@ -42,7 +42,7 @@ fun Actors(actors: List<Actor>, modifier: Modifier = Modifier) {
     }
 }
 
-@Preview
+//@Preview
 @Composable
 fun ActorItemPreview() = ActorItem(actor = Actor("Robert Downey Jr.", R.drawable.downey))
 

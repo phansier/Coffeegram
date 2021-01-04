@@ -8,14 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.app_ui.typography
 import ru.beryukhov.coffeegram.data.Cappucino
 import ru.beryukhov.coffeegram.data.CoffeeType
 
 
-@Preview
+//@Preview
 //@Preview(name = "Large preview", widthDp = 200) //causes compile error but works in preview
 @Composable
 private fun preview() {
