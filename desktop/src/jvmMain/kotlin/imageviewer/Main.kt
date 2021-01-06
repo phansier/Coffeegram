@@ -10,7 +10,7 @@ import ru.beryukhov.coffeegram.view.preview
 fun main() {
 
     Window(
-        title = "ImageViewer",
+        title = "CoffeeGram",
         size = getPreferredWindowSize(800, 1000),
         icon = icAppRounded()
     ) {
