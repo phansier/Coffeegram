@@ -5,6 +5,7 @@ import androidx.compose.desktop.Window
 import androidx.compose.material.MaterialTheme
 import getPreferredWindowSize
 import icAppRounded
+import ru.beryukhov.coffeegram.view.preview
 
 fun main() {
 
@@ -15,7 +16,7 @@ fun main() {
     ) {
         MaterialTheme {
             DesktopTheme {
-
+                preview()
             }
         }
     }

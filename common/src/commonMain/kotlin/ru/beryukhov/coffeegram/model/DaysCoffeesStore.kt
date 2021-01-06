@@ -1,6 +1,6 @@
 package ru.beryukhov.coffeegram.model
 
-import org.threeten.bp.LocalDate
+import ru.beryukhov.coffeegram.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
 
@@ -15,13 +15,13 @@ class DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>(
         }
     }
 
-    private fun increaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState{
+    private fun increaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
         return putCoffeeCount(localDate, coffeeType,
             getCoffeeOrNull(localDate, coffeeType)?.plus(1)?:1
         )
     }
 
-    private fun decreaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState{
+    private fun decreaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
         return putCoffeeCount(localDate, coffeeType,
             getCoffeeOrNull(localDate, coffeeType)?.minus(1)?:0
         )
