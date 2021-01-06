@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="desktop-jvm">
+    <output-path>$PROJECT_DIR$/desktop/build/libs</output-path>
+    <root id="archive" name="desktop-jvm.jar">
+      <element id="module-output" name="Coffeegram.desktop.jvmMain" />
+    </root>
+  </artifact>
+</component>

@@ -2,10 +2,25 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="12">
+      <module name="Coffeegram.common.androidAndroidTest" target="1.8" />
+      <module name="Coffeegram.common.androidAndroidTestDebug" target="1.8" />
+      <module name="Coffeegram.common.androidDebug" target="1.8" />
+      <module name="Coffeegram.common.androidDebugAndroidTest" target="1.8" />
+      <module name="Coffeegram.common.androidDebugUnitTest" target="1.8" />
+      <module name="Coffeegram.common.androidMain" target="1.8" />
+      <module name="Coffeegram.common.androidRelease" target="1.8" />
+      <module name="Coffeegram.common.androidReleaseUnitTest" target="1.8" />
+      <module name="Coffeegram.common.androidTest" target="1.8" />
+      <module name="Coffeegram.common.androidTestDebug" target="1.8" />
+      <module name="Coffeegram.common.androidTestRelease" target="1.8" />
       <module name="Coffeegram.common.commonMain" target="1.8" />
       <module name="Coffeegram.common.commonTest" target="1.8" />
       <module name="Coffeegram.common.desktopMain" target="1.8" />
       <module name="Coffeegram.common.desktopTest" target="1.8" />
+      <module name="Coffeegram.desktop.commonMain" target="1.8" />
+      <module name="Coffeegram.desktop.commonTest" target="1.8" />
+      <module name="Coffeegram.desktop.jvmMain" target="1.8" />
+      <module name="Coffeegram.desktop.jvmTest" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
