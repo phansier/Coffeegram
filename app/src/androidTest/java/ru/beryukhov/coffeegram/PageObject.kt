@@ -3,7 +3,6 @@ package ru.beryukhov.coffeegram
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.junit4.ComposeTestRule
-import androidx.compose.ui.test.onNodeWithLabel
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import ru.beryukhov.coffeegram.pages.CoffeeListPage
@@ -16,7 +15,7 @@ typealias PageElement = ComposeTestRule.() -> SemanticsNodeInteraction
 
 object TablePageObject : PageObject<TablePageObject>() {
     override val Page: @Composable () -> Unit = { TablePage(TODO(), TODO(), TODO()) }
-    val ComposeTestRule.LeftArrowButton get() = onNodeWithLabel("ArrowLeft")
+    val ComposeTestRule.LeftArrowButton get() = onNodeWithText("ArrowLeft")
     val ComposeTestRule.RightArrowButton get() = onNodeWithTag("ArrowRight")
     //todo more complex logic to determine widgets than by it's text
     fun ComposeTestRule.Month(name: String) = onNodeWithText(name)

@@ -6,9 +6,9 @@ import androidx.compose.ui.unit.dp
 
 enum class SplashState { Shown, Completed }
 
-val splashAlphaKey = FloatPropKey()
-val contentAlphaKey = FloatPropKey()
-val contentTopPaddingKey = DpPropKey()
+val splashAlphaKey = FloatPropKey(label = "splashAlphaKey")
+val contentAlphaKey = FloatPropKey(label = "contentAlphaKey")
+val contentTopPaddingKey = DpPropKey(label = "contentTopPaddingKey")
 
 val splashTransitionDefinition = transitionDefinition<SplashState> {
     state(SplashState.Shown) {

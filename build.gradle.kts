@@ -1,6 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    val compose_version by extra("1.0.0-alpha09")
+    val compose_version by extra("1.0.0-alpha10")
     val kotlin_version by extra("1.4.21")
     val coroutines_version by extra("1.4.0")
 
@@ -9,7 +9,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.0-alpha03")
+        classpath("com.android.tools.build:gradle:7.0.0-alpha04")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
 
         // NOTE: Do not place your application dependencies here; they belong
