@@ -26,6 +26,6 @@ fun LandingPage(modifier: Modifier = Modifier, onTimeout: () -> Unit) {
             delay(SplashWaitTime)
             onTimeout()
         }
-        Image(bitmap = imageResource(id = R.drawable.logo_splash))
+        Image(bitmap = imageResource(id = R.drawable.logo_splash), contentDescription = "")
     }
 }

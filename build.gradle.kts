@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    val compose_version by extra("1.0.0-alpha10")
-    val kotlin_version by extra("1.4.21")
+    val compose_version by extra("1.0.0-alpha11")
+    val kotlin_version by extra("1.4.21-2")
     val coroutines_version by extra("1.4.0")
 
     repositories {

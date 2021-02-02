@@ -29,7 +29,9 @@ fun CoffeeTypeItem(
         modifier = Modifier.padding(16.dp)
     ) {
         Image(
-            vectorResource(id = coffeeType.iconId), modifier = Modifier
+            imageVector = vectorResource(id = coffeeType.iconId),
+            contentDescription = "",
+            modifier = Modifier
                 .preferredSize(48.dp)
                 .align(Alignment.CenterVertically)
         )

@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -35,9 +36,9 @@ data class Actor(
 @Composable
 fun Actors(actors: List<Actor>, modifier: Modifier = Modifier) {
     LazyRow(modifier = modifier.fillMaxWidth()) {
-        items(items = actors,
-            itemContent = {
-                ActorItem(it)
+        itemsIndexed(items = actors,
+            itemContent = { _, item ->
+                ActorItem(item)
             })
     }
 }
@@ -50,7 +51,8 @@ fun ActorItemPreview() = ActorItem(actor = Actor("Robert Downey Jr.", R.drawable
 fun ActorItem(actor: Actor) {
     ConstraintLayout {
         val (photo, name) = createRefs()
-        Image(imageResource(id = actor.photo),
+        Image(bitmap = imageResource(id = actor.photo),
+            contentDescription = "Actor's photo",
             modifier = Modifier.constrainAs(photo) {
                 top.linkTo(parent.top)
                 start.linkTo(parent.start, margin = 4.dp)
