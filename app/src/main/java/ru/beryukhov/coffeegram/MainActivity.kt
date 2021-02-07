@@ -27,16 +27,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var splashShown by remember { mutableStateOf(SplashState.Shown) }
-            val transition = splashTransition(splashShown)
+            val transition = newSplashTransition()
             Box {
                 LandingPage(
-                    modifier = Modifier.alpha(transition[splashAlphaKey]),
-                    onTimeout = { splashShown = SplashState.Completed }
+                    modifier = Modifier.alpha(transition.splashAlpha),
                 )
                 PagesContent(
-                    modifier = Modifier.alpha(transition[contentAlphaKey]),
-                    topPadding = transition[contentTopPaddingKey],
+                    modifier = Modifier.alpha(transition.contentAlpha),
+                    topPadding = transition.contentTopPadding,
                     NavigationStore(), DaysCoffeesStore()
                 )
             }
@@ -72,7 +70,10 @@ fun PagesContent(
             }
         ) {
             Column {
-                Spacer(Modifier.padding(top = topPadding).align(Alignment.CenterHorizontally))
+                Spacer(
+                    Modifier
+                        .padding(top = topPadding)
+                        .align(Alignment.CenterHorizontally))
                 when (navigationState) {
                     is NavigationState.TablePage -> TablePage(
                         navigationState.yearMonth,
