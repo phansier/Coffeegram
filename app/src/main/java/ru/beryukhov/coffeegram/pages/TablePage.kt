@@ -60,14 +60,14 @@ fun TableAppBar(
                 onClick = { navigationStore.newIntent(NavigationIntent.PreviousMonth) },
                 modifier = Modifier.semantics {
                     contentDescription = "ArrowLeft"
-                }) { Icon(Icons.Default.KeyboardArrowLeft) }
+                }) { Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "") }
         },
         actions = {
             IconButton(
                 onClick = { navigationStore.newIntent(NavigationIntent.NextMonth) },
                 modifier = Modifier.semantics {
                     testTag = "ArrowRight"
-                }) { Icon(Icons.Default.KeyboardArrowRight) }
+                }) { Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "") }
         }
     )
 }

@@ -61,6 +61,7 @@ fun DayCell(
             if (iconId != null) {
                 Image(
                     vectorResource(id = iconId),
+                    contentDescription = "",
                     modifier = Modifier
                         .preferredSize(32.dp)
                         .fillMaxWidth()
@@ -68,7 +69,8 @@ fun DayCell(
                 )
             } else {
                 Icon(
-                    Icons.Default.Delete,
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "",
                     tint = Color.Transparent,
                     modifier = Modifier.preferredSize(32.dp)
                 )

@@ -1,35 +1,50 @@
 package ru.beryukhov.coffeegram.animations
 
-import androidx.compose.animation.DpPropKey
 import androidx.compose.animation.core.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 enum class SplashState { Shown, Completed }
 
-val splashAlphaKey = FloatPropKey(label = "splashAlphaKey")
-val contentAlphaKey = FloatPropKey(label = "contentAlphaKey")
-val contentTopPaddingKey = DpPropKey(label = "contentTopPaddingKey")
+data class SplashTransition(
+    val splashAlpha: Float,
+    val contentAlpha: Float,
+    val contentTopPadding: Dp
+)
 
-val splashTransitionDefinition = transitionDefinition<SplashState> {
-    state(SplashState.Shown) {
-        this[splashAlphaKey] = 1f
-        this[contentAlphaKey] = 0f
-        this[contentTopPaddingKey] = 100.dp
+@Composable
+fun newSplashTransition(): SplashTransition {
+    val visibleState = remember { MutableTransitionState(SplashState.Shown) }
+    visibleState.targetState = SplashState.Completed
+    val transition = updateTransition(visibleState)
+    val splashAlpha by transition.animateFloat(
+        transitionSpec = { tween(1000) }
+    ) { splashState ->
+        when (splashState) {
+            SplashState.Shown -> 1f
+            SplashState.Completed -> 0f
+        }
     }
-    state(SplashState.Completed) {
-        this[splashAlphaKey] = 0f
-        this[contentAlphaKey] = 1f
-        this[contentTopPaddingKey] = 0.dp
+    val contentAlpha by transition.animateFloat(
+        transitionSpec = { tween(3000) }
+    ) { splashState ->
+        when (splashState) {
+            SplashState.Shown -> 0f
+            SplashState.Completed -> 1f
+        }
     }
-    transition {
-        splashAlphaKey using tween(
-            durationMillis = 1000
-        )
-        contentAlphaKey using tween(
-            durationMillis = 3000
-        )
-        contentTopPaddingKey using spring(
-            stiffness = Spring.StiffnessLow
-        )
+    val contentTopPadding by transition.animateDp(
+        transitionSpec = { spring(stiffness = Spring.StiffnessLow) }
+    ) { splashState ->
+        when (splashState) {
+            SplashState.Shown -> 100.dp
+            SplashState.Completed -> 0.dp
+        }
     }
+    return SplashTransition(splashAlpha, contentAlpha, contentTopPadding)
 }
+
+

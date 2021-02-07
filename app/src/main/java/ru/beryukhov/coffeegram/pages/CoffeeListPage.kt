@@ -2,6 +2,7 @@ package ru.beryukhov.coffeegram.pages
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -26,7 +27,8 @@ fun CoffeeListAppBar(navigationStore: NavigationStore){
         navigationIcon = {
             IconButton(onClick = { navigationStore.newIntent(NavigationIntent.ReturnToTablePage) }) {
                 Icon(
-                    Icons.Default.ArrowBack
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = ""
                 )
             }
         }
@@ -51,8 +53,8 @@ fun CoffeeList(
     val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
     val dayCoffee = dayCoffeeState.coffees[localDate]?:DayCoffee()
     LazyColumn(modifier = modifier.fillMaxHeight()) {
-        items(items = dayCoffee.coffeeCountMap.toList(),
-            itemContent = { pair ->
+        itemsIndexed(items = dayCoffee.coffeeCountMap.toList(),
+            itemContent = { _, pair ->
                 CoffeeTypeItem(localDate, pair.first, pair.second, daysCoffeesStore)
             })
     }

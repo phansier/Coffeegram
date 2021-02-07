@@ -21,7 +21,7 @@ fun BottomMenu(selectedItemFlow: MutableStateFlow<Int>) {
     BottomNavigation {
         items.forEachIndexed { index, item ->
             BottomNavigationItem(
-                icon = { Icon(item.second) },
+                icon = { Icon(imageVector = item.second, contentDescription = "") },
                 label = { Text(item.first) },
                 selected = selectedItem == index,
                 onClick = { selectedItemFlow.value = index }

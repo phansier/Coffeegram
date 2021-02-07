@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.vectorResource
@@ -20,13 +21,14 @@ fun StarsPreview(modifier: Modifier = Modifier) = Stars(4, modifier)
 @Composable
 fun Stars(rate: Int, modifier: Modifier = Modifier) {
     LazyRow(modifier = modifier) {
-        items(items = buildList(5) {
+        itemsIndexed(items = buildList(5) {
             addAll((1..rate).map { true })
             addAll((rate + 1..5).map { false })
         },
-            itemContent = {
+            itemContent = { _, item ->
                 Image(
-                    vectorResource(id = if (it) R.drawable.ic_star_enabled else R.drawable.ic_star_disabled),
+                    imageVector = vectorResource(id = if (item) R.drawable.ic_star_enabled else R.drawable.ic_star_disabled),
+                    contentDescription = "",
                     Modifier.padding(end = 4.dp).height(12.dp).width(14.dp)
                 )
             })
