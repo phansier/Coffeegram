@@ -2,7 +2,6 @@ package ru.beryukhov.coffeegram
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.transition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             var splashShown by remember { mutableStateOf(SplashState.Shown) }
-            val transition = transition(splashTransitionDefinition, splashShown)
+            val transition = splashTransition(splashShown)
             Box {
                 LandingPage(
                     modifier = Modifier.alpha(transition[splashAlphaKey]),
