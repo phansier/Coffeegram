@@ -1,10 +1,20 @@
 package ru.beryukhov.coffeegram.model
 
-import org.threeten.bp.LocalDate
-import org.threeten.bp.YearMonth
+import ru.beryukhov.coffeegram.date_time.local_date.LocalDate
+import ru.beryukhov.coffeegram.date_time.local_date.monthValue
+import ru.beryukhov.coffeegram.date_time.local_date.of
+import ru.beryukhov.coffeegram.date_time.local_date.year
+import ru.beryukhov.coffeegram.date_time.year_month.YearMonth
+import ru.beryukhov.coffeegram.date_time.year_month.minusMonths
+import ru.beryukhov.coffeegram.date_time.year_month.monthValue
+import ru.beryukhov.coffeegram.date_time.year_month.now
+import ru.beryukhov.coffeegram.date_time.year_month.of
+import ru.beryukhov.coffeegram.date_time.year_month.plusMonths
+import ru.beryukhov.coffeegram.date_time.year_month.year
+
 
 class NavigationStore : Store<NavigationIntent, NavigationState>(
-        initialState = NavigationState.TablePage(YearMonth.now())
+        initialState = NavigationState.TablePage(now())
     ) {
 
 
@@ -18,9 +28,9 @@ class NavigationStore : Store<NavigationIntent, NavigationState>(
             }
             is NavigationIntent.OpenCoffeeListPage -> {
                 NavigationState.CoffeeListPage(
-                    LocalDate.of(
+                    of(
                         _state.value.yearMonth.year,
-                        _state.value.yearMonth.month,
+                        _state.value.yearMonth.monthValue,
                         intent.dayOfMonth
                     )
                 )
@@ -50,6 +60,6 @@ sealed class NavigationIntent {
 sealed class NavigationState(val yearMonth: YearMonth) {
     class TablePage(yearMonth: YearMonth) : NavigationState(yearMonth)
     data class CoffeeListPage(val date: LocalDate) : NavigationState(
-        YearMonth.of(date.year, date.month)
+        of(date.year, date.monthValue)
     )
 }

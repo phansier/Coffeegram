@@ -14,8 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.date_time.local_date.LocalDate
+import ru.beryukhov.coffeegram.date_time.local_date.now
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
@@ -65,9 +66,9 @@ fun CoffeeList(
 
 //@Preview
 @Composable
-private fun Preview() {
+fun Preview() {
     CoffeeList(
-        LocalDate.now(),
+        now(),
         DaysCoffeesStore(),
         modifier = Modifier
     )

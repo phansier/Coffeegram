@@ -1,8 +1,8 @@
 package ru.beryukhov.coffeegram.model
 
-import ru.beryukhov.coffeegram.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.date_time.local_date.LocalDate
 
 class DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>(
     initialState = DaysCoffeesState(mapOf())
