@@ -7,5 +7,7 @@ import ru.beryukhov.coffeegram.data.CoffeeType
 
 @Composable
 actual fun Image(coffeeType: CoffeeType, modifier: Modifier) = androidx.compose.foundation.Image(
-    imageResource(coffeeType.iconPath), modifier = modifier
+    bitmap = imageResource(coffeeType.iconPath),
+    contentDescription = "",
+    modifier = modifier
 )

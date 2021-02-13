@@ -1,10 +1,10 @@
 # Coffeegram
 
-[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.0.0--alpha09-yellow)](https://developer.android.com/jetpack/compose)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.20-blue.svg)](https://kotlinlang.org)
+[![Compose Version](https://img.shields.io/badge/JetBrains%20Compose-0.3.0--build152-yellow)](https://github.com/JetBrains/compose-jb)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.30-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 
-Android app using Jetpack Compose together with StateFlow and MVI
+Try to migrate an Android app using Jetpack Compose together with StateFlow and MVI into Desktop
 
 Additional info about Jetpack Compose can be found in the [mindmap](mindmap.md).
 

@@ -1,16 +1,13 @@
 package ru.beryukhov.coffeegram.aa
 
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.imageResource
 //import androidx.compose.ui.tooling.preview.Devices
 //import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import ru.beryukhov.coffeegram.R
 
 val actorsList = listOf(
@@ -35,9 +32,9 @@ data class Actor(
 @Composable
 fun Actors(actors: List<Actor>, modifier: Modifier = Modifier) {
     LazyRow(modifier = modifier.fillMaxWidth()) {
-        items(items = actors,
-            itemContent = {
-                ActorItem(it)
+        itemsIndexed(items = actors,
+            itemContent = { _, item ->
+                ActorItem(item)
             })
     }
 }
@@ -48,9 +45,11 @@ fun ActorItemPreview() = ActorItem(actor = Actor("Robert Downey Jr.", R.drawable
 
 @Composable
 fun ActorItem(actor: Actor) {
-    ConstraintLayout {
+    //todo determine Constraint changes
+    /*ConstraintLayout {
         val (photo, name) = createRefs()
-        Image(imageResource(id = actor.photo),
+        Image(bitmap = imageResource(id = actor.photo),
+            contentDescription = "",
             modifier = Modifier.constrainAs(photo) {
                 top.linkTo(parent.top)
                 start.linkTo(parent.start, margin = 4.dp)
@@ -69,5 +68,5 @@ fun ActorItem(actor: Actor) {
                 width = Dimension.fillToConstraints
             }
         )
-    }
+    }*/
 }

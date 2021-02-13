@@ -1,42 +1,45 @@
 package ru.beryukhov.coffeegram
 
+//import androidx.compose.ui.tooling.preview.Preview
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.transition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.platform.setContent
-//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import ru.beryukhov.coffeegram.animations.*
+import ru.beryukhov.coffeegram.animations.newSplashTransition
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationState
 import ru.beryukhov.coffeegram.model.NavigationStore
-import ru.beryukhov.coffeegram.pages.*
+import ru.beryukhov.coffeegram.pages.CoffeeListAppBar
+import ru.beryukhov.coffeegram.pages.CoffeeListPage
+import ru.beryukhov.coffeegram.pages.LandingPage
+import ru.beryukhov.coffeegram.pages.TableAppBar
+import ru.beryukhov.coffeegram.pages.TablePage
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var splashShown by remember { mutableStateOf(SplashState.Shown) }
-            val transition = transition(splashTransitionDefinition, splashShown)
+            val transition = newSplashTransition()
             Box {
                 LandingPage(
-                    modifier = Modifier.alpha(transition[splashAlphaKey]),
-                    onTimeout = { splashShown = SplashState.Completed }
+                    modifier = Modifier.alpha(transition.splashAlpha),
                 )
                 PagesContent(
-                    modifier = Modifier.alpha(transition[contentAlphaKey]),
-                    topPadding = transition[contentTopPaddingKey],
+                    modifier = Modifier.alpha(transition.contentAlpha),
+                    topPadding = transition.contentTopPadding,
                     navigationStore = NavigationStore(),
                     daysCoffeesStore = DaysCoffeesStore()
                 )

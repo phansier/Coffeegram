@@ -1,5 +1,6 @@
 package ru.beryukhov.coffeegram.view
 
+//import androidx.compose.ui.tooling.preview.Preview
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
@@ -7,7 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.preferredSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -17,12 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.AmbientContext
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
-//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
@@ -60,17 +60,19 @@ fun DayCell(
         with(dayItem) {
             if (iconId != null) {
                 Image(
-                    vectorResource(id = iconId),
+                    painter = painterResource(id = iconId),
+                    contentDescription = "",
                     modifier = Modifier
-                        .preferredSize(32.dp)
+                        .size(32.dp)
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally)
                 )
             } else {
                 Icon(
                     Icons.Default.Delete,
+                    contentDescription = "",
                     tint = Color(0x00000000),//Color.Transparent,
-                    modifier = Modifier.preferredSize(32.dp)
+                    modifier = Modifier.size(32.dp)
                 )
             }
 
@@ -132,7 +134,7 @@ fun MonthTable(
     modifier: Modifier = Modifier
 ) {
     val weekDays: List<DayItem> = getWeekDaysNames(
-        AmbientContext.current
+        LocalContext.current
     ).map { DayItem(it) }
     val days1to31 = mutableListOf<Int>()
     for (i in 1 until 31) {
@@ -150,11 +152,11 @@ fun MonthTable(
         .toMutableMap()
     filledDayItemsMap.forEach { days[it.key]?.iconId = it.value }
     val weekDaysStrings =
-        getWeekDaysNames(AmbientContext.current)
+        getWeekDaysNames(LocalContext.current)
     val numberOfFirstDay = weekDaysStrings.indexOf(
         days[1]!!.weekDay.getDisplayName(
             TextStyle.SHORT,
-            AmbientContext.current.resources.configuration.locale
+            LocalContext.current.resources.configuration.locale
         )
     )
     val daysList: List<WeekDayVectorPair> = days.toList().sortedBy { it.first }.map { it.second }

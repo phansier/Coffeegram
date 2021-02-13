@@ -1,19 +1,25 @@
 package ru.beryukhov.coffeegram.view
 
-import androidx.compose.foundation.layout.*
+//import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.LocalDate
 import ru.beryukhov.coffeegram.data.Cappucino
 import ru.beryukhov.coffeegram.data.CoffeeType
-import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
+import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.now
 
 
@@ -28,17 +34,17 @@ fun CoffeeTypeItem(
         modifier = Modifier.padding(16.dp)
     ) {
         Image(coffeeType, modifier = Modifier
-            .preferredSize(48.dp)
+            .size(48.dp)
             .align(Alignment.CenterVertically))
-        Spacer(Modifier.preferredWidth(16.dp))
+        Spacer(Modifier.width(16.dp))
         Text(
             coffeeType.name, style = typography.body1,
             modifier = Modifier.align(Alignment.CenterVertically).weight(1f)
         )
         Row(modifier = Modifier.align(Alignment.CenterVertically)) {
-            Spacer(Modifier.preferredWidth(16.dp))
+            Spacer(Modifier.width(16.dp))
             val textButtonModifier = Modifier.align(Alignment.CenterVertically)
-                .preferredSizeIn(
+                .sizeIn(
                     maxWidth = 32.dp,
                     maxHeight = 32.dp,
                     minWidth = 0.dp,

@@ -1,33 +1,20 @@
 package ru.beryukhov.coffeegram.aa
 
-import android.os.Build
-import androidx.annotation.ColorRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollableColumn
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Dimension.Companion.fillToConstraints
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.AmbientContext
-import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.font.FontWeight
 //import androidx.compose.ui.tooling.preview.Devices
 //import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import ru.beryukhov.coffeegram.R
+import android.os.Build
+import androidx.annotation.ColorRes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 
 //@Preview(device = Devices.PIXEL_C)
 //@Preview
 @ExperimentalStdlibApi
 @Composable
 fun FilmPage() {
-    ScrollableColumn(
+    //todo determine Constraint changes
+    /*ScrollableColumn(
         Modifier.background(color = ColorFromRes(R.color.aa_background)).fillMaxHeight()
     ) {
         ConstraintLayout {
@@ -178,12 +165,13 @@ fun FilmPage() {
             })
 
         }
-    }
+    }*/
 }
+
 
 @Composable
 fun ColorFromRes(@ColorRes color: Int): Color {
-    val context = AmbientContext.current
+    val context = LocalContext.current
     val res = context.resources
     val theme = context.theme
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -192,3 +180,4 @@ fun ColorFromRes(@ColorRes color: Int): Color {
         Color(res.getColor(color))
     }
 }
+

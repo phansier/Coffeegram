@@ -16,7 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -46,7 +46,7 @@ fun TableAppBar(
                 text = AnnotatedString(
                     text = yearMonth.month.getDisplayName(
                         TextStyle.FULL,
-                        AmbientContext.current.resources.configuration.locale
+                        LocalContext.current.resources.configuration.locale
                     ),
                     paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
                 )
@@ -59,14 +59,14 @@ fun TableAppBar(
                 onClick = { navigationStore.newIntent(NavigationIntent.PreviousMonth) },
                 modifier = Modifier.semantics {
                     contentDescription = "ArrowLeft"
-                }) { Icon(Icons.Default.KeyboardArrowLeft) }
+                }) { Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "") }
         },
         actions = {
             IconButton(
                 onClick = { navigationStore.newIntent(NavigationIntent.NextMonth) },
                 modifier = Modifier.semantics {
                     testTag = "ArrowRight"
-                }) { Icon(Icons.Default.KeyboardArrowRight) }
+                }) { Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "") }
         }
     )
 }
