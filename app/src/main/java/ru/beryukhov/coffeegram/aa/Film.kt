@@ -4,8 +4,10 @@ import android.os.Build
 import androidx.annotation.ColorRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Dimension.Companion.fillToConstraints
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.Text
@@ -13,14 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.AmbientContext
-import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.compose.Dimension.Companion.fillToConstraints
 import ru.beryukhov.coffeegram.R
 
 @Preview(device = Devices.PIXEL_C)
@@ -34,7 +38,8 @@ fun FilmPage() {
         // use `item` for separate elements like headers
         // and `items` for lists of identical elements
         item {
-            ConstraintLayout {
+            //todo make text corresponding margins
+            ConstraintLayout(Modifier) {
                 val (imageView2, tvAge, tvTitle, tvTag, ivStars,
                     tvReviews, view, imageView7, tvBack, storyline, storylineText,
                     cast, list_actors_preview) = createRefs()
@@ -45,13 +50,13 @@ fun FilmPage() {
                     end.linkTo(parent.end)
                 }) {
                     Image(
-                        bitmap = imageResource(id = R.drawable.origh512),
+                        painter = painterResource(id = R.drawable.origh512),
                         contentDescription = "",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxWidth()
                     )
                     Image(
-                        bitmap = imageResource(id = R.drawable.mask),
+                        painter = painterResource(id = R.drawable.mask),
                         contentDescription = "",
                         contentScale = ContentScale.FillBounds,
                         modifier = Modifier.fillMaxWidth()
@@ -112,7 +117,7 @@ fun FilmPage() {
                     .height(36.dp)
                 )
                 Image(
-                    imageVector = vectorResource(id = R.drawable.back),
+                    painter = painterResource(id = R.drawable.back),
                     contentDescription = "",
                     modifier = Modifier.constrainAs(imageView7) {
                         linkTo(
@@ -183,7 +188,6 @@ fun FilmPage() {
                     bottom.linkTo(parent.bottom, margin = 16.dp)
                     width = fillToConstraints
                 })
-
             }
         }
     }
@@ -191,7 +195,7 @@ fun FilmPage() {
 
 @Composable
 fun ColorFromRes(@ColorRes color: Int): Color {
-    val context = AmbientContext.current
+    val context = LocalContext.current
     val res = context.resources
     val theme = context.theme
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

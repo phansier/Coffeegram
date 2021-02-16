@@ -2,16 +2,20 @@ package ru.beryukhov.coffeegram.aa
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.compose.ConstraintLayout
 import ru.beryukhov.coffeegram.R
 
 val actorsList = listOf(
@@ -49,9 +53,9 @@ fun ActorItemPreview() = ActorItem(actor = Actor("Robert Downey Jr.", R.drawable
 
 @Composable
 fun ActorItem(actor: Actor) {
-    ConstraintLayout {
+    ConstraintLayout(Modifier) {
         val (photo, name) = createRefs()
-        Image(bitmap = imageResource(id = actor.photo),
+        Image(painter = painterResource(id = actor.photo),
             contentDescription = "Actor's photo",
             modifier = Modifier.constrainAs(photo) {
                 top.linkTo(parent.top)

@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
@@ -134,7 +134,7 @@ fun MonthTable(
     modifier: Modifier = Modifier
 ) {
     val weekDays: List<DayItem> = getWeekDaysNames(
-        AmbientContext.current
+        LocalContext.current
     ).map { DayItem(it) }
     val days1to31 = mutableListOf<Int>()
     for (i in 1 until 31) {
@@ -152,11 +152,11 @@ fun MonthTable(
         .toMutableMap()
     filledDayItemsMap.forEach { days[it.key]?.iconId = it.value }
     val weekDaysStrings =
-        getWeekDaysNames(AmbientContext.current)
+        getWeekDaysNames(LocalContext.current)
     val numberOfFirstDay = weekDaysStrings.indexOf(
         days[1]!!.weekDay.getDisplayName(
             TextStyle.SHORT,
-            AmbientContext.current.resources.configuration.locale
+            LocalContext.current.resources.configuration.locale
         )
     )
     val daysList: List<WeekDayVectorPair> = days.toList().sortedBy { it.first }.map { it.second }
