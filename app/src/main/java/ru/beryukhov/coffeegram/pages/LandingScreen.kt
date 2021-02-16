@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.brown500
 
@@ -19,6 +19,6 @@ fun LandingPage(modifier: Modifier = Modifier) {
             .background(brown500),
         contentAlignment = Alignment.Center
     ) {
-        Image(bitmap = imageResource(id = R.drawable.logo_splash), contentDescription = "")
+        Image(painter = painterResource(id = R.drawable.logo_splash), contentDescription = "")
     }
 }
