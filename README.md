@@ -1,6 +1,6 @@
 # Coffeegram
 
-[![Compose Version](https://img.shields.io/badge/JetBrains%20Compose-0.3.0--build152-yellow)](https://github.com/JetBrains/compose-jb)
+[![Compose Version](https://img.shields.io/badge/JetBrains%20Compose-0.3.0--rc1-yellow)](https://github.com/JetBrains/compose-jb)
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.30-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 

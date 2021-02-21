@@ -59,13 +59,7 @@ dependencies {
     implementation("org.jetbrains.compose.material:material:${rootProject.extra["jetbrains_compose_version"]}")
     //implementation("org.jetbrains.compose.ui:ui-tooling:${rootProject.extra["jetbrains_compose_version"]}")
 
-    implementation("androidx.activity:activity-compose:1.3.0-alpha02") {
-        exclude(group = "androidx.compose.animation")
-        exclude(group = "androidx.compose.foundation")
-        exclude(group = "androidx.compose.material")
-        exclude(group = "androidx.compose.runtime")
-        exclude(group = "androidx.compose.ui")
-    }
+    implementation("androidx.activity:activity-compose:1.3.0-alpha02")
 
     testImplementation("junit:junit:4.13.1")
 

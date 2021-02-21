@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     //val compose_version by extra("1.0.0-alpha09")
-    val jetbrains_compose_version by extra("0.3.0-build152")
+    val jetbrains_compose_version by extra("0.3.0-rc1")
     val kotlin_version by extra("1.4.30")
     val coroutines_version by extra("1.4.0")
     val appcompat_version by extra("1.2.0")
