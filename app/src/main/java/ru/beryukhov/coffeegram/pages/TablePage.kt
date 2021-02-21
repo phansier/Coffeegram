@@ -85,7 +85,7 @@ fun TablePage(
             yearMonth,
             coffeesState.coffees.filter { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
                 .mapKeys { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth }
-                .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getIconId() },
+                .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getCoffeeType() },
             navigationStore,
             modifier = Modifier.weight(1f)
         )

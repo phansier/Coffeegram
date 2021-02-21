@@ -13,3 +13,5 @@ actual val LocalDate.year: Int
     get() = this.year
 actual val LocalDate.monthValue: Int
     get() = this.monthValue
+
+actual fun LocalDate.dayOfWeek() = dayOfWeek
