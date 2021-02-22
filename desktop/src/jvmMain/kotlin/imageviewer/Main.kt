@@ -5,18 +5,18 @@ import androidx.compose.desktop.Window
 import androidx.compose.material.MaterialTheme
 import getPreferredWindowSize
 import icAppRounded
-import ru.beryukhov.coffeegram.view.TablePreview
+import ru.beryukhov.coffeegram.DefaultPreview
 
 fun main() {
 
     Window(
         title = "CoffeeGram",
-        size = getPreferredWindowSize(800, 1000),
+        size = getPreferredWindowSize(800, 600),
         icon = icAppRounded()
     ) {
         MaterialTheme {
             DesktopTheme {
-                TablePreview()
+                DefaultPreview()
             }
         }
     }

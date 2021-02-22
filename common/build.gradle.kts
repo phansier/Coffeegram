@@ -1,20 +1,9 @@
-import org.jetbrains.compose.compose
-
 plugins {
     id("com.android.library")
     kotlin("multiplatform")
     id("org.jetbrains.compose")
 }
 
-val compose = object {
-    val foundation get() = composeDependency("org.jetbrains.compose.foundation:foundation")
-    val material get() = composeDependency("org.jetbrains.compose.material:material")
-    val runtime get() = composeDependency("org.jetbrains.compose.runtime:runtime")
-
-    val desktop = object {
-        val common = composeDependency("org.jetbrains.compose.desktop:desktop")
-    }
-}
 fun composeDependency(groupWithArtifact: String) = "$groupWithArtifact:${rootProject.extra["jetbrains_compose_version"]}"
 
 kotlin {
@@ -26,7 +15,6 @@ kotlin {
                 api(compose.runtime)
                 api(compose.foundation)
                 api(compose.material)
-                //implementation("io.ktor:ktor-client-core:1.4.1")
             }
         }
         named("androidMain") {
@@ -34,13 +22,11 @@ kotlin {
                 api("androidx.appcompat:appcompat:${rootProject.extra["appcompat_version"]}")
                 api("androidx.core:core-ktx:${rootProject.extra["core_ktx_version"]}")
                 implementation("com.jakewharton.threetenabp:threetenabp:1.2.4")
-                //implementation("io.ktor:ktor-client-cio:1.4.1")
             }
         }
         named("desktopMain") {
             dependencies {
                 api(compose.desktop.common)
-                //implementation("io.ktor:ktor-client-cio:1.4.1")
             }
         }
     }

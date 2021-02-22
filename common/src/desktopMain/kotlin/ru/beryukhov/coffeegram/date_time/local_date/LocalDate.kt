@@ -2,7 +2,7 @@ package ru.beryukhov.coffeegram.date_time.local_date
 
 import ru.beryukhov.coffeegram.date_time.year_month.DayOfWeek
 
-actual typealias LocalDate = LocalDate
+actual typealias LocalDate = java.time.LocalDate
 
 actual fun now() = LocalDate.now()
 actual fun of(year: Int, month: Int, dayOfMonth: Int) = LocalDate.of(year, month, dayOfMonth)

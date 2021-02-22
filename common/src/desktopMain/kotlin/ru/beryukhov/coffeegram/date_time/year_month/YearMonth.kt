@@ -5,9 +5,9 @@ import ru.beryukhov.coffeegram.date_time.local_date.LocalDate
 import java.time.format.TextStyle
 
 
-actual typealias YearMonth = YearMonth
+actual typealias YearMonth = java.time.YearMonth
 
-actual fun now(): YearMonth = YearMonth.now()
+actual fun now(): YearMonth = java.time.YearMonth.now()
 
 actual val YearMonth.year: Int
     get() = this.year
@@ -24,8 +24,8 @@ actual fun YearMonth.getFullMonthName(locale: Locale): String = month.getDisplay
 actual fun of(
     year: Int,
     month: Int
-) = YearMonth.of(year, month)
+) = java.time.YearMonth.of(year, month)
 
-actual typealias DayOfWeek = DayOfWeek
+actual typealias DayOfWeek = java.time.DayOfWeek
 
 actual fun DayOfWeek.getShortDisplayName(locale: Locale) = getDisplayName(TextStyle.SHORT,java.util.Locale(locale.language, locale.region))
