@@ -15,6 +15,8 @@ expect fun YearMonth.minusMonths(monthsToAdd: Long):YearMonth
 expect fun YearMonth.isValidDay(dayOfMonth: Int):Boolean
 expect fun YearMonth.atDay(dayOfMonth: Int): LocalDate
 
+expect fun YearMonth.getFullMonthName(locale: Locale): String
+
 expect fun of(year: Int, month: Int): YearMonth
 
 expect enum class DayOfWeek

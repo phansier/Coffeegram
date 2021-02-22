@@ -8,6 +8,7 @@ expect fun now(): LocalDate
 
 expect val LocalDate.year: Int
 expect val LocalDate.monthValue: Int
+expect val LocalDate.dayOfMonth: Int
 
 expect fun of(year: Int, month: Int, dayOfMonth: Int): LocalDate
 

@@ -2,8 +2,6 @@ package ru.beryukhov.coffeegram.date_time.year_month
 
 import androidx.compose.ui.text.intl.Locale
 import ru.beryukhov.coffeegram.date_time.local_date.LocalDate
-import java.time.DayOfWeek
-import java.time.YearMonth
 import java.time.format.TextStyle
 
 
@@ -20,6 +18,8 @@ actual fun YearMonth.plusMonths(monthsToAdd: Long):YearMonth = plusMonths(months
 actual fun YearMonth.minusMonths(monthsToAdd: Long):YearMonth = minusMonths(monthsToAdd)
 actual fun YearMonth.isValidDay(dayOfMonth: Int):Boolean = isValidDay(dayOfMonth)
 actual fun YearMonth.atDay(dayOfMonth: Int):LocalDate = atDay(dayOfMonth)
+
+actual fun YearMonth.getFullMonthName(locale: Locale): String = month.getDisplayName(TextStyle.FULL, java.util.Locale(locale.language, locale.region))
 
 actual fun of(
     year: Int,

@@ -20,6 +20,8 @@ actual fun YearMonth.minusMonths(monthsToAdd: Long): YearMonth = minusMonths(mon
 actual fun YearMonth.isValidDay(dayOfMonth: Int):Boolean = isValidDay(dayOfMonth)
 actual fun YearMonth.atDay(dayOfMonth: Int):LocalDate = atDay(dayOfMonth)
 
+actual fun YearMonth.getFullMonthName(locale: Locale): String = month.getDisplayName(TextStyle.FULL, java.util.Locale(locale.language, locale.region))
+
 actual fun of(
     year: Int,
     month: Int

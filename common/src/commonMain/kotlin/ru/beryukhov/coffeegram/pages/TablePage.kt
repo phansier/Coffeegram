@@ -16,18 +16,23 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import org.threeten.bp.LocalDate
-import org.threeten.bp.YearMonth
-import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.date_time.local_date.LocalDate
+import ru.beryukhov.coffeegram.date_time.local_date.dayOfMonth
+import ru.beryukhov.coffeegram.date_time.local_date.monthValue
+import ru.beryukhov.coffeegram.date_time.local_date.year
+import ru.beryukhov.coffeegram.date_time.year_month.YearMonth
+import ru.beryukhov.coffeegram.date_time.year_month.getFullMonthName
+import ru.beryukhov.coffeegram.date_time.year_month.monthValue
+import ru.beryukhov.coffeegram.date_time.year_month.year
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationStore
@@ -44,10 +49,7 @@ fun TableAppBar(
             Text(
                 modifier = Modifier.weight(1f),
                 text = AnnotatedString(
-                    text = yearMonth.month.getDisplayName(
-                        TextStyle.FULL,
-                        LocalContext.current.resources.configuration.locale
-                    ),
+                    text = yearMonth.getFullMonthName(Locale.current),
                     paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
                 )
             )
@@ -83,7 +85,7 @@ fun TablePage(
     Column(horizontalAlignment = Alignment.End) {
         MonthTable(
             yearMonth,
-            coffeesState.coffees.filter { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
+            coffeesState.coffees.filter { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.monthValue == yearMonth.monthValue }
                 .mapKeys { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth }
                 .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getCoffeeType() },
             navigationStore,

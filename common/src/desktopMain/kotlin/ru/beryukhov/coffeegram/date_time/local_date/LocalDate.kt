@@ -1,7 +1,6 @@
 package ru.beryukhov.coffeegram.date_time.local_date
 
 import ru.beryukhov.coffeegram.date_time.year_month.DayOfWeek
-import java.time.LocalDate
 
 actual typealias LocalDate = LocalDate
 
@@ -12,5 +11,8 @@ actual val LocalDate.year: Int
     get() = this.year
 actual val LocalDate.monthValue: Int
     get() = this.monthValue
+
+actual val LocalDate.dayOfMonth: Int
+    get() = this.dayOfMonth
 
 actual fun LocalDate.dayOfWeek(): DayOfWeek = dayOfWeek
