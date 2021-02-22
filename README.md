@@ -8,8 +8,12 @@ Android app using Jetpack Compose together with StateFlow and MVI
 
 ---
 
-Work in progress for adopting this app to Desktop in branch [desktop](https://github.com/phansier/Coffeegram/tree/desktop)
+Multiplatform version of app for Android + Desktop in branch [desktop](https://github.com/phansier/Coffeegram/tree/desktop)
+
 ![](images/desktop.png)
+
+It uses Jetbrains version of Compose so can't be merged into master.
+[![Compose Version](https://img.shields.io/badge/JetBrains%20Compose-0.3.0--rc1-yellow)](https://github.com/JetBrains/compose-jb)
 
 ---
 
