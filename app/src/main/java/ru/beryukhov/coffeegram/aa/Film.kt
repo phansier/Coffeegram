@@ -31,7 +31,7 @@ import ru.beryukhov.coffeegram.R
 @Preview
 @Composable
 fun FilmPage() {
-    rememberScrollState(0f)
+    rememberScrollState(0)
     LazyColumn(
         modifier = Modifier.background(color = ColorFromRes(R.color.aa_background)).fillMaxHeight()
     ) {
