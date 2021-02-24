@@ -7,7 +7,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.app_ui.typography
@@ -36,21 +36,21 @@ private fun CoffeeTypeItemRaw(
         modifier = Modifier.padding(16.dp)
     ) {
         Image(
-            imageVector = vectorResource(id = coffeeType.iconId),
+            painter = painterResource(id = coffeeType.iconId),
             contentDescription = "",
             modifier = Modifier
-                .preferredSize(48.dp)
+                .size(48.dp)
                 .align(Alignment.CenterVertically)
         )
-        Spacer(Modifier.preferredWidth(16.dp))
+        Spacer(Modifier.width(16.dp))
         Text(
             coffeeType.name, style = typography.body1,
             modifier = Modifier.align(Alignment.CenterVertically).weight(1f)
         )
         Row(modifier = Modifier.align(Alignment.CenterVertically)) {
-            Spacer(Modifier.preferredWidth(16.dp))
+            Spacer(Modifier.width(16.dp))
             val textButtonModifier = Modifier.align(Alignment.CenterVertically)
-                .preferredSizeIn(
+                .sizeIn(
                     maxWidth = 32.dp,
                     maxHeight = 32.dp,
                     minWidth = 0.dp,
