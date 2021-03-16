@@ -1,10 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     //val compose_version by extra("1.0.0-alpha09")
-    val jetbrains_compose_version by extra("0.3.0-rc1")
-    val kotlin_version by extra("1.4.30")
+    val jetbrains_compose_version by extra("0.3.2")
+    val kotlin_version by extra("1.4.31")
     val coroutines_version by extra("1.4.0")
-    val appcompat_version by extra("1.2.0")
+    val appcompat_version by extra("1.3.0-beta01")
     val core_ktx_version by extra("1.3.2")
 
     repositories {
@@ -13,8 +13,8 @@ buildscript {
             includeModule("org.jetbrains.compose", "compose-gradle-plugin")
         }
         google()
-        jcenter()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        jcenter()
     }
     dependencies {
         //classpath("com.android.tools.build:gradle:7.0.0-alpha03")//
@@ -30,8 +30,8 @@ allprojects {
     repositories {
         mavenLocal()
         google()
-        jcenter()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        jcenter()
     }
 }
 

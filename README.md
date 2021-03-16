@@ -1,7 +1,7 @@
 # Coffeegram
 
-[![Compose Version](https://img.shields.io/badge/JetBrains%20Compose-0.3.0--rc1-yellow)](https://github.com/JetBrains/compose-jb)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.30-blue.svg)](https://kotlinlang.org)
+[![Compose Version](https://img.shields.io/badge/JetBrains%20Compose-0.3.2-yellow)](https://github.com/JetBrains/compose-jb)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.31-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 
 Android + Desktop multiplatform app using Jetpack Compose together with StateFlow and MVI
