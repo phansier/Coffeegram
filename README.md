@@ -1,7 +1,7 @@
 # Coffeegram
 
-[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.0.0--beta01-yellow)](https://developer.android.com/jetpack/compose)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.30-blue.svg)](https://kotlinlang.org)
+[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.0.0--beta02-yellow)](https://developer.android.com/jetpack/compose)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.4.31-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 [![Jetc.dev](https://img.shields.io/badge/jetc.dev-25-blue)](https://jetc.dev/issues/025.html)
 
@@ -14,7 +14,7 @@ Multiplatform version of app for Android + Desktop in branch [desktop](https://g
 ![](images/desktop.png)
 
 It uses Jetbrains version of Compose so can't be merged into master.
-[![Compose Version](https://img.shields.io/badge/JetBrains%20Compose-0.3.0--rc1-yellow)](https://github.com/JetBrains/compose-jb)
+[![Compose Version](https://img.shields.io/badge/JetBrains%20Compose-0.3.2-yellow)](https://github.com/JetBrains/compose-jb)
 
 ---
 
