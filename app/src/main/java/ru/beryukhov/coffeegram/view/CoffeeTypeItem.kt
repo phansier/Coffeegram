@@ -38,11 +38,14 @@ fun CoffeeTypeItem(
         Spacer(Modifier.width(16.dp))
         Text(
             coffeeType.name, style = typography.body1,
-            modifier = Modifier.align(Alignment.CenterVertically).weight(1f)
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .weight(1f)
         )
         Row(modifier = Modifier.align(Alignment.CenterVertically)) {
             Spacer(Modifier.width(16.dp))
-            val textButtonModifier = Modifier.align(Alignment.CenterVertically)
+            val textButtonModifier = Modifier
+                .align(Alignment.CenterVertically)
                 .sizeIn(
                     maxWidth = 32.dp,
                     maxHeight = 32.dp,
@@ -52,7 +55,14 @@ fun CoffeeTypeItem(
             val isReduceCountAllowed = count > 0
             TextButton(
                 enabled = isReduceCountAllowed,
-                onClick = { daysCoffeesStore.newIntent(DaysCoffeesIntent.MinusCoffee(localDate, coffeeType)) },
+                onClick = {
+                    daysCoffeesStore.newIntent(
+                        DaysCoffeesIntent.MinusCoffee(
+                            localDate,
+                            coffeeType
+                        )
+                    )
+                },
                 contentPadding = PaddingValues(0.dp),
                 modifier = textButtonModifier
             ) {
@@ -63,7 +73,14 @@ fun CoffeeTypeItem(
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
             TextButton(
-                onClick = { daysCoffeesStore.newIntent(DaysCoffeesIntent.PlusCoffee(localDate, coffeeType)) },
+                onClick = {
+                    daysCoffeesStore.newIntent(
+                        DaysCoffeesIntent.PlusCoffee(
+                            localDate,
+                            coffeeType
+                        )
+                    )
+                },
                 contentPadding = PaddingValues(0.dp),
                 modifier = textButtonModifier
             ) {
@@ -75,7 +92,7 @@ fun CoffeeTypeItem(
 
 @Preview
 @Composable
-private fun preview() {
+private fun Preview() {
     CoffeeTypeItem(
         LocalDate.now(), Cappucino, 5, DaysCoffeesStore()
     )
