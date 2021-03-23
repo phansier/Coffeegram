@@ -49,7 +49,9 @@ fun CoffeeTypeItem(
                     minWidth = 0.dp,
                     minHeight = 0.dp
                 )
+            val isReduceCountAllowed = count > 0
             TextButton(
+                enabled = isReduceCountAllowed,
                 onClick = { daysCoffeesStore.newIntent(DaysCoffeesIntent.MinusCoffee(localDate, coffeeType)) },
                 contentPadding = PaddingValues(0.dp),
                 modifier = textButtonModifier
