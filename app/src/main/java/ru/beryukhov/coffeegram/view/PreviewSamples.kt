@@ -18,7 +18,7 @@ import ru.beryukhov.coffeegram.data.CoffeeType
 @Preview
 //@Preview(name = "Large preview", widthDp = 200) //causes compile error but works in preview
 @Composable
-private fun preview() {
+private fun Preview() {
     CoffeeTypeItemRaw(
         Cappucino, 5
     )
