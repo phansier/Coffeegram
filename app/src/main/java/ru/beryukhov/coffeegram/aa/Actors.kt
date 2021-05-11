@@ -66,7 +66,7 @@ fun ActorItem(actor: Actor) {
                 .height(80.dp)
         )
         Text(text = actor.name,
-            color = ColorFromRes(color = R.color.aa_white_text),
+            color = colorFromRes(color = R.color.aa_white_text),
             modifier = Modifier.constrainAs(name) {
                 start.linkTo(parent.start, margin = 4.dp)
                 end.linkTo(parent.end, margin = 4.dp)

@@ -33,7 +33,7 @@ import ru.beryukhov.coffeegram.R
 fun FilmPage() {
     rememberScrollState(0)
     LazyColumn(
-        modifier = Modifier.background(color = ColorFromRes(R.color.aa_background)).fillMaxHeight()
+        modifier = Modifier.background(color = colorFromRes(R.color.aa_background)).fillMaxHeight()
     ) {
         // use `item` for separate elements like headers
         // and `items` for lists of identical elements
@@ -64,14 +64,14 @@ fun FilmPage() {
                 }
 
                 Text(text = "13+",
-                    color = ColorFromRes(R.color.aa_white_text),
+                    color = colorFromRes(R.color.aa_white_text),
                     modifier = Modifier.constrainAs(tvAge) {
                         bottom.linkTo(tvTitle.top, margin = 12.dp)
                         start.linkTo(parent.start, margin = 16.dp)
                     }
                 )
                 Text(text = "Avengers: End Game",
-                    color = ColorFromRes(R.color.aa_whitable_text),
+                    color = colorFromRes(R.color.aa_whitable_text),
                     fontSize = 36.sp,
                     modifier = Modifier.constrainAs(tvTitle) {
                         linkTo(
@@ -82,7 +82,7 @@ fun FilmPage() {
                     }
                 )
                 Text(text = "Action, Adventure, Fantasy",
-                    color = ColorFromRes(R.color.aa_contrast_text),
+                    color = colorFromRes(R.color.aa_contrast_text),
                     modifier = Modifier.constrainAs(tvTag) {
                         linkTo(
                             start = parent.start, end = parent.end,
@@ -99,7 +99,7 @@ fun FilmPage() {
                 )
                 Text(
                     text = "123 Review",
-                    color = ColorFromRes(R.color.aa_disabled_text),
+                    color = colorFromRes(R.color.aa_disabled_text),
                     modifier = Modifier.constrainAs(tvReviews) {
                         linkTo(
                             start = ivStars.end, end = parent.end,
@@ -129,7 +129,7 @@ fun FilmPage() {
                 )
                 Text(
                     text = "Back",
-                    color = ColorFromRes(R.color.aa_whitable_text),
+                    color = colorFromRes(R.color.aa_whitable_text),
                     fontSize = 16.sp,
                     modifier = Modifier.constrainAs(tvBack) {
                         linkTo(
@@ -143,7 +143,7 @@ fun FilmPage() {
                     }
                 )
                 Text(text = "Storyline",
-                    color = ColorFromRes(R.color.aa_whitable_text),
+                    color = colorFromRes(R.color.aa_whitable_text),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.constrainAs(storyline) {
@@ -157,7 +157,7 @@ fun FilmPage() {
                 val storylineString =
                     "After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe."
                 Text(text = storylineString,
-                    color = ColorFromRes(R.color.aa_whitable_text),
+                    color = colorFromRes(R.color.aa_whitable_text),
                     fontSize = 14.sp,
                     modifier = Modifier.constrainAs(storylineText) {
                         //todo make text corresponding margins
@@ -168,7 +168,7 @@ fun FilmPage() {
                     }
                 )
                 Text(text = "Cast",
-                    color = ColorFromRes(R.color.aa_whitable_text),
+                    color = colorFromRes(R.color.aa_whitable_text),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.constrainAs(cast) {
@@ -194,7 +194,7 @@ fun FilmPage() {
 }
 
 @Composable
-fun ColorFromRes(@ColorRes color: Int): Color {
+fun colorFromRes(@ColorRes color: Int): Color {
     val context = LocalContext.current
     val res = context.resources
     val theme = context.theme
