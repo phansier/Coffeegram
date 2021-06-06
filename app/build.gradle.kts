@@ -30,7 +30,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         //useIR = true
-        freeCompilerArgs = listOf("-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check", "-Xopt-in=kotlin.RequiresOptIn")
+        freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
     buildFeatures {
         compose = true
@@ -52,7 +52,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
 
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha07")
-    implementation("androidx.activity:activity-compose:1.3.0-alpha08")
+    implementation("androidx.activity:activity-compose:1.3.0-beta01")
 
     testImplementation("junit:junit:4.13.2")
 
@@ -62,7 +62,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["compose_version"]}")
 
 
-    implementation("com.jakewharton.threetenabp:threetenabp:1.2.4")
+    implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.extra["coroutines_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.extra["coroutines_version"]}")

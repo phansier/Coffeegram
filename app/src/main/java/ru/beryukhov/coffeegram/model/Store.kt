@@ -17,7 +17,7 @@ abstract class Store<Intent : Any, State : Any>(initialState: State) {
         get() = _state
 
     fun newIntent(intent: Intent) {
-        _intentChannel.offer(intent)
+        _intentChannel.trySend(intent).isSuccess
     }
 
     init {
