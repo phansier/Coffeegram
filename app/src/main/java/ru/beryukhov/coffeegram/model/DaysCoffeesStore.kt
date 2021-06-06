@@ -1,5 +1,7 @@
 package ru.beryukhov.coffeegram.model
 
+import android.util.Log
+import androidx.compose.runtime.State
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
@@ -9,10 +11,13 @@ class DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>(
 ) {
 
     override fun handleIntent(intent: DaysCoffeesIntent): DaysCoffeesState {
-        return when (intent) {
+        Log.d("TEST_", "intent $intent")
+        val state = when (intent) {
             is DaysCoffeesIntent.PlusCoffee -> increaseCoffee(intent.localDate, intent.coffeeType)
             is DaysCoffeesIntent.MinusCoffee -> decreaseCoffee(intent.localDate, intent.coffeeType)
         }
+        Log.d("TEST_", "state $state")
+        return state
     }
 
     private fun increaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState{
@@ -28,12 +33,12 @@ class DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>(
     }
 
     private fun getCoffeeOrNull(localDate: LocalDate, coffeeType: CoffeeType): Int? {
-        return _state.value.coffees[localDate]?.coffeeCountMap?.get(coffeeType)
+        return _state.value.value[localDate]?.coffeeCountMap?.get(coffeeType)
     }
 
     private fun putCoffeeCount(localDate: LocalDate, coffeeType: CoffeeType, count: Int): DaysCoffeesState {
         return _state.value.copy(
-            coffees = _state.value.coffees.toMutableMap().also{
+            value = _state.value.value.toMutableMap().also{
                 if (it[localDate]==null){
                     it[localDate] = DayCoffee()
                 }
@@ -51,4 +56,4 @@ sealed class DaysCoffeesIntent {
     data class MinusCoffee(val localDate: LocalDate, val coffeeType: CoffeeType) : DaysCoffeesIntent()
 }
 
-data class DaysCoffeesState(val coffees: Map<LocalDate, DayCoffee>)
+data class DaysCoffeesState(override val value: Map<LocalDate, DayCoffee>): State<Map<LocalDate, DayCoffee>>

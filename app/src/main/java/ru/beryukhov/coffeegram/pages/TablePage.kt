@@ -82,7 +82,7 @@ fun TablePage(
     Column(horizontalAlignment = Alignment.End) {
         MonthTable(
             yearMonth,
-            coffeesState.coffees.filter { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
+            coffeesState.value.filter { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
                 .mapKeys { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth }
                 .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getIconId() },
             navigationStore,
