@@ -15,7 +15,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ru.beryukhov.coffeegram.animations.*
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -48,7 +47,6 @@ fun DefaultPreview() {
     PagesContent(navigationStore = NavigationStore(), daysCoffeesStore = DaysCoffeesStore())
 }
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun PagesContent(
     modifier: Modifier = Modifier,
