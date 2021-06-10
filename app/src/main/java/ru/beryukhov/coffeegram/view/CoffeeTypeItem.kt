@@ -1,6 +1,5 @@
 package ru.beryukhov.coffeegram.view
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
@@ -26,7 +25,6 @@ fun CoffeeTypeItem(
     count: Int,
     daysCoffeesStore: DaysCoffeesStore
 ) {
-    Log.d("TEST_", "count $count")
     Row(
         modifier = Modifier.padding(16.dp)
     ) {

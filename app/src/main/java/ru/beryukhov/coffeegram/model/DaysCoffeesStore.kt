@@ -1,6 +1,5 @@
 package ru.beryukhov.coffeegram.model
 
-import android.util.Log
 import androidx.compose.runtime.State
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
@@ -11,13 +10,10 @@ class DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>(
 ) {
 
     override fun handleIntent(intent: DaysCoffeesIntent): DaysCoffeesState {
-        Log.d("TEST_", "intent $intent")
-        val state = when (intent) {
+        return when (intent) {
             is DaysCoffeesIntent.PlusCoffee -> increaseCoffee(intent.localDate, intent.coffeeType)
             is DaysCoffeesIntent.MinusCoffee -> decreaseCoffee(intent.localDate, intent.coffeeType)
         }
-        Log.d("TEST_", "state $state")
-        return state
     }
 
     private fun increaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState{
