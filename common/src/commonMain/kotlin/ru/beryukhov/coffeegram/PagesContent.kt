@@ -43,15 +43,16 @@ fun PagesContent(
         ) {
             Column {
                 Spacer(Modifier.padding(top = topPadding).align(Alignment.CenterHorizontally))
-                when (navigationState) {
+                val currentNavigationState = navigationState
+                when (currentNavigationState) {
                     is NavigationState.TablePage -> TablePage(
-                        navigationState.yearMonth,
+                        currentNavigationState.yearMonth,
                         daysCoffeesStore,
                         navigationStore
                     )
                     is NavigationState.CoffeeListPage -> CoffeeListPage(
                         daysCoffeesStore,
-                        navigationStore
+                        currentNavigationState
                     )
                 }
             }

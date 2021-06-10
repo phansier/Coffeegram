@@ -40,14 +40,13 @@ fun CoffeeListAppBar(navigationStore: NavigationStore){
 }
 
 @Composable
-fun CoffeeListPage(daysCoffeesStore: DaysCoffeesStore, navigationStore: NavigationStore) {
+fun CoffeeListPage(daysCoffeesStore: DaysCoffeesStore, navigationState: NavigationState.CoffeeListPage) {
     CoffeeList(
-        (navigationStore.state.value as NavigationState.CoffeeListPage).date,
+        navigationState.date,
         daysCoffeesStore
     )
 }
 
-//@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun CoffeeList(
     localDate: LocalDate,

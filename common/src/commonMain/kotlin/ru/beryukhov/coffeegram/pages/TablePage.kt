@@ -73,7 +73,6 @@ fun TableAppBar(
     )
 }
 
-//@OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun TablePage(
     yearMonth: YearMonth,
