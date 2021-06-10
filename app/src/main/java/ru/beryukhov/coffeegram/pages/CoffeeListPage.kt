@@ -1,6 +1,7 @@
 package ru.beryukhov.coffeegram.pages
 
 import android.util.Log
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -53,8 +54,16 @@ fun CoffeeList(
     val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
     Log.d("TEST_", "stated $dayCoffeeState")
     val dayCoffee = dayCoffeeState.value[localDate]?:DayCoffee()
-    LazyColumn(modifier = modifier.fillMaxHeight()) {
-        items(
+    Column(modifier = modifier.fillMaxHeight()) {
+        for (pair in dayCoffee.coffeeCountMap.toList()) {
+            CoffeeTypeItem(
+                localDate = localDate,
+                coffeeType = pair.first,
+                count = pair.second,
+                daysCoffeesStore = daysCoffeesStore
+            )
+        }
+        /*items(
             items = dayCoffee.coffeeCountMap.toList(),
             itemContent = { pair ->
                 CoffeeTypeItem(
@@ -63,7 +72,7 @@ fun CoffeeList(
                     count = pair.second,
                     daysCoffeesStore = daysCoffeesStore
                 )
-            })
+            })*/
     }
 }
 
