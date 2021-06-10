@@ -21,22 +21,22 @@ class NavigationStore : Store<NavigationIntent, NavigationState>(
     override fun handleIntent(intent: NavigationIntent): NavigationState {
         return when (intent) {
             NavigationIntent.NextMonth -> {
-                increaseMonth(_state.value.yearMonth)
+                increaseMonth(stateFlow.value.yearMonth)
             }
             NavigationIntent.PreviousMonth -> {
-                decreaseMonth(_state.value.yearMonth)
+                decreaseMonth(stateFlow.value.yearMonth)
             }
             is NavigationIntent.OpenCoffeeListPage -> {
                 NavigationState.CoffeeListPage(
                     of(
-                        _state.value.yearMonth.year,
-                        _state.value.yearMonth.monthValue,
+                        stateFlow.value.yearMonth.year,
+                        stateFlow.value.yearMonth.monthValue,
                         intent.dayOfMonth
                     )
                 )
             }
             NavigationIntent.ReturnToTablePage -> {
-                NavigationState.TablePage(_state.value.yearMonth)
+                NavigationState.TablePage(stateFlow.value.yearMonth)
             }
         }
     }

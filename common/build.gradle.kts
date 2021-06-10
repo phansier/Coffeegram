@@ -21,7 +21,7 @@ kotlin {
             dependencies {
                 api("androidx.appcompat:appcompat:${rootProject.extra["appcompat_version"]}")
                 api("androidx.core:core-ktx:${rootProject.extra["core_ktx_version"]}")
-                implementation("com.jakewharton.threetenabp:threetenabp:1.2.4")
+                implementation("com.jakewharton.threetenabp:threetenabp:1.3.1")
             }
         }
         named("desktopMain") {
