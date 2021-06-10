@@ -1,9 +1,8 @@
 package ru.beryukhov.coffeegram.pages
 
 //import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -55,11 +54,16 @@ fun CoffeeList(
 ) {
     val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
     val dayCoffee = dayCoffeeState.coffees[localDate]?: DayCoffee()
-    LazyColumn(modifier = modifier.fillMaxHeight()) {
-        itemsIndexed(items = dayCoffee.coffeeCountMap.toList(),
-            itemContent = { _, pair ->
-                CoffeeTypeItem(localDate, pair.first, pair.second, daysCoffeesStore)
-            })
+    Column(modifier = modifier.fillMaxHeight()) {
+        val items = dayCoffee.coffeeCountMap.toList()
+        for (pair in items) {
+            CoffeeTypeItem(
+                localDate = localDate,
+                coffeeType = pair.first,
+                count = pair.second,
+                daysCoffeesStore = daysCoffeesStore
+            )
+        }
     }
 }
 
