@@ -8,7 +8,7 @@ class NavigationStore : Store<NavigationIntent, NavigationState>(
     ) {
 
 
-    override fun handleIntent(intent: NavigationIntent): NavigationState {
+    override suspend fun handleIntent(intent: NavigationIntent): NavigationState {
         return when (intent) {
             NavigationIntent.NextMonth -> {
                 increaseMonth(_state.value.yearMonth)
