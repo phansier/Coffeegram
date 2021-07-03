@@ -5,21 +5,18 @@
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 [![Jetc.dev](https://img.shields.io/badge/jetc.dev-25-blue)](https://jetc.dev/issues/025.html)
 
-Android app using Jetpack Compose together with StateFlow and MVI
+## Android app using Jetpack Compose together with StateFlow and MVI
 
 ---
 
-Multiplatform version of app for Android + Desktop in branch [desktop](https://github.com/phansier/Coffeegram/tree/desktop)
+**Multiplatform version of the app for Android + Desktop (using Jetbrains Compose)** is available in [Coffeegram-Desktop](https://github.com/phansier/Coffeegram-Desktop) repo
 
-![](images/desktop.png)
-
-It uses Jetbrains version of Compose so can't be merged into master.
-[![Compose Version](https://img.shields.io/badge/JetBrains%20Compose-0.4.0-yellow)](https://github.com/JetBrains/compose-jb)
+![](https://github.com/phansier/Coffeegram-Desktop/blob/desktop/images/desktop.png)
 
 ---
 
 
-More about initial app creation:
+## More about initial app creation:
 
 [Medium EN](https://proandroiddev.com/change-my-mind-or-android-development-transformation-to-jetpack-compose-coroutines-e719a342cc52)
 
