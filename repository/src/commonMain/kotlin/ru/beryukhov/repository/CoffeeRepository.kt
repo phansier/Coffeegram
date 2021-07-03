@@ -6,22 +6,21 @@ import io.realm.RealmConfiguration
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import ru.beryukhov.repository.model.DateCoffees
-import ru.beryukhov.repository.model.RealmDateCoffees
+import ru.beryukhov.repository.model.DbDayCoffee
 import ru.beryukhov.repository.model.RealmDayCoffee
 import ru.beryukhov.repository.model.toDb
 import ru.beryukhov.repository.model.toRealm
 
 class CoffeeRepository {
     private val realm: Realm by lazy {
-        val configuration = RealmConfiguration(schema = setOf(RealmDateCoffees::class, RealmDayCoffee::class))
+        val configuration = RealmConfiguration(schema = setOf(RealmDayCoffee::class))
         Realm.open(configuration)
     }
 
     // blocking
-    fun createOrUpdate(dateCoffees: List<DateCoffees>) {
-        val all = realm.objects<RealmDateCoffees>()
-        val realmDateCoffees = dateCoffees.map{it.toRealm()}
+    fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>) {
+        val all = realm.objects<RealmDayCoffee>()
+        val realmDateCoffees = dbDateCoffees.map{it.toRealm()}
         if (all.isEmpty()) {
             create(realmDateCoffees)
         } else {
@@ -29,7 +28,7 @@ class CoffeeRepository {
         }
     }
 
-    private fun create(dateCoffees: List<RealmDateCoffees>) {
+    private fun create(dateCoffees: List<RealmDayCoffee>) {
         dateCoffees.forEach {
             realm.writeBlocking {
                 this.copyToRealm(it)
@@ -37,18 +36,19 @@ class CoffeeRepository {
         }
     }
 
-    private fun update(newCoffees: List<RealmDateCoffees>, oldCoffees: List<RealmDateCoffees>) {
+    private fun update(newCoffees: List<RealmDayCoffee>, oldCoffees: List<RealmDayCoffee>) {
         val oldSet = oldCoffees.toSet()
 
         newCoffees.forEach {
-            if (!oldSet.contains(it)) {
+            TODO()
+            /*if (!oldSet.find {  }) {
                 //new date or updated
-                realm.objects<RealmDateCoffees>().query("date == ${it.date} LIMIT(1)")
+                realm.objects<RealmDayCoffee>().query()
                     .firstOrNull()
                     ?.also {
                         //updated
                             updatedDateCoffees ->realm.writeBlocking {
-                            updatedDateCoffees.dayCoffees = it.dayCoffees
+                            updatedDateCoffees. = it.dayCoffees
                         }
                     }
                     ?: run {
@@ -57,13 +57,13 @@ class CoffeeRepository {
                             this.copyToRealm(it)
                         }
                     }
-            }
+            }*/
         }
     }
 
 
-    fun observeChanges(): Flow<List<DateCoffees>> = callbackFlow {
-        val cancellable: Cancellable = realm.objects<RealmDateCoffees>().observe { result ->
+    fun observeChanges(): Flow<List<DbDayCoffee>> = callbackFlow {
+        val cancellable: Cancellable = realm.objects<RealmDayCoffee>().observe { result ->
             this.trySend(result.toList().map{it.toDb()}).isSuccess
         }
 
@@ -72,7 +72,7 @@ class CoffeeRepository {
         }
     }
 
-    fun getAll(): List<DateCoffees> {
-        return realm.objects<RealmDateCoffees>().map{it.toDb()}
+    fun getAll(): List<DbDayCoffee> {
+        return realm.objects<RealmDayCoffee>().map{it.toDb()}
     }
 }

@@ -6,7 +6,7 @@ import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.getByName
 import ru.beryukhov.repository.CoffeeRepository
-import ru.beryukhov.repository.model.DateCoffees
+import ru.beryukhov.repository.model.DbDate
 import ru.beryukhov.repository.model.DbDayCoffee
 
 class DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>(
@@ -77,17 +77,17 @@ class DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>(
 
 }
 
-private fun List<DateCoffees>.toState(): DaysCoffeesState {
-    return DaysCoffeesState(this.associateBy({ it: DateCoffees -> LocalDate.parse(it.date)},{it.dayCoffees.toDayCoffee()}))
+private fun List<DbDate>.toState(): DaysCoffeesState {
+    return DaysCoffeesState(this.associateBy({ it: DbDate -> LocalDate.parse(it.date)},{it.dayCoffees.toDayCoffee()}))
 }
 
 private fun List<DbDayCoffee>.toDayCoffee(): DayCoffee {
     return DayCoffee(this.associateBy ({getByName(it.coffeeName)},{it.count }))
 }
 
-private fun Map<LocalDate, DayCoffee>.toDaysCoffeesList(): List<DateCoffees> {
+private fun Map<LocalDate, DayCoffee>.toDaysCoffeesList(): List<DbDate> {
     return this.toList().map { dayCoffees: Pair<LocalDate, DayCoffee> ->
-        DateCoffees(
+        DbDate(
             date = dayCoffees.first.toString(),
             dayCoffees = dayCoffees.second.coffeeCountMap.toList()
                 .map { dayCups: Pair<CoffeeType, Int> ->
