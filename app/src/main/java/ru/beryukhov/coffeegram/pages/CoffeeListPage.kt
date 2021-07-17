@@ -16,7 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
-import ru.beryukhov.coffeegram.model.*
+import ru.beryukhov.coffeegram.model.DaysCoffeesState
+import ru.beryukhov.coffeegram.model.DaysCoffeesStore
+import ru.beryukhov.coffeegram.model.NavigationIntent
+import ru.beryukhov.coffeegram.model.NavigationState
+import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
 
@@ -35,9 +39,9 @@ fun CoffeeListAppBar(navigationStore: NavigationStore){
 }
 
 @Composable
-fun CoffeeListPage(daysCoffeesStore: DaysCoffeesStore, navigationStore: NavigationStore) {
+fun CoffeeListPage(daysCoffeesStore: DaysCoffeesStore, navigationState: NavigationState.CoffeeListPage) {
     CoffeeList(
-        (navigationStore.state.value as NavigationState.CoffeeListPage).date,
+        navigationState.date,
         daysCoffeesStore
     )
 }
