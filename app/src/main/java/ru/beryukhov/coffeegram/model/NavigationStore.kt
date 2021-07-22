@@ -3,8 +3,9 @@ package ru.beryukhov.coffeegram.model
 import kotlinx.coroutines.flow.MutableStateFlow
 import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
+import ru.beryukhov.coffeegram.store_lib.InMemoryStore
 
-class NavigationStore : Store<NavigationIntent, NavigationState>(
+class NavigationStore : InMemoryStore<NavigationIntent, NavigationState>(
     initialState = NavigationState.TablePage(YearMonth.now())
 ) {
 

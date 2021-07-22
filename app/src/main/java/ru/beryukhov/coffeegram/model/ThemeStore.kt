@@ -1,6 +1,8 @@
 package ru.beryukhov.coffeegram.model
 
-class ThemeStore: Store<ThemeIntent, ThemeState>(
+import ru.beryukhov.coffeegram.store_lib.InMemoryStore
+
+class ThemeStore: InMemoryStore<ThemeIntent, ThemeState>(
     initialState = ThemeState.SYSTEM
 ) {
     override fun handleIntent(intent: ThemeIntent): ThemeState {

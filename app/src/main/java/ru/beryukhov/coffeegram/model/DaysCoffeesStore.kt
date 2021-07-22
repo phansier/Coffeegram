@@ -4,8 +4,9 @@ import androidx.compose.runtime.State
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.store_lib.InMemoryStore
 
-class DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>(
+class DaysCoffeesStore : InMemoryStore<DaysCoffeesIntent, DaysCoffeesState>(
     initialState = DaysCoffeesState(mapOf())
 ) {
 
@@ -29,12 +30,12 @@ class DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>(
     }
 
     private fun getCoffeeOrNull(localDate: LocalDate, coffeeType: CoffeeType): Int? {
-        return _state.value.value[localDate]?.coffeeCountMap?.get(coffeeType)
+        return state.value.value[localDate]?.coffeeCountMap?.get(coffeeType)
     }
 
     private fun putCoffeeCount(localDate: LocalDate, coffeeType: CoffeeType, count: Int): DaysCoffeesState {
-        return _state.value.copy(
-            value = _state.value.value.toMutableMap().also{
+        return state.value.copy(
+            value = state.value.value.toMutableMap().also{
                 if (it[localDate]==null){
                     it[localDate] = DayCoffee()
                 }

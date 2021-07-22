@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.model
+package ru.beryukhov.coffeegram.store_lib
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -8,17 +8,16 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
+abstract class InMemoryStore<Intent : Any, State : Any>(initialState: State): Store<Intent, State> {
+    private val _intentChannel = MutableSharedFlow<Intent>()
+    private val _state = MutableStateFlow(initialState)
 
-abstract class Store<Intent : Any, State : Any>(initialState: State) {
-    private val _intentChannel = MutableSharedFlow<Intent>()//: Channel<Intent> = Channel(Channel.UNLIMITED)
-    protected val _state = MutableStateFlow(initialState)
-
-    val state: StateFlow<State>
+    override val state: StateFlow<State>
         get() = _state
 
-    fun newIntent(intent: Intent) {
+    override fun newIntent(intent: Intent) {
         runBlocking {
-            _intentChannel.emit(intent)//.offer(intent)
+            _intentChannel.emit(intent)
         }
     }
 
