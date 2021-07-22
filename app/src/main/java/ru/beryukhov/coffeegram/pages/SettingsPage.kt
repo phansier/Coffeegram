@@ -12,10 +12,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.beryukhov.coffeegram.Application
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.app_ui.typography
@@ -30,7 +30,7 @@ fun SettingsPagePreview() {
     CoffeegramTheme {
         Scaffold {
             Column {
-                SettingsPage(ThemeStore(LocalContext.current))
+                SettingsPage(Application.themeStore)
             }
         }
     }

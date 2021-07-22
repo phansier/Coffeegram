@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 PagesContent(
                     modifier = Modifier.alpha(transition.contentAlpha),
                     topPadding = transition.contentTopPadding,
-                    NavigationStore(), DaysCoffeesStore(), ThemeStore(LocalContext.current)
+                    NavigationStore(), DaysCoffeesStore(), Application.themeStore
                 )
             }
         }
