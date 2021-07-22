@@ -1,9 +1,12 @@
 package ru.beryukhov.coffeegram.model
 
-import ru.beryukhov.coffeegram.store_lib.InMemoryStore
+import android.content.Context
+import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
+import ru.beryukhov.coffeegram.store_lib.PersistentStore
 
-class ThemeStore: InMemoryStore<ThemeIntent, ThemeState>(
-    initialState = ThemeState.SYSTEM
+class ThemeStore(context: Context): PersistentStore<ThemeIntent, ThemeState>(
+    initialState = ThemeState.SYSTEM,
+    storage = ThemeSharedPrefStorage(context = context)
 ) {
     override fun handleIntent(intent: ThemeIntent): ThemeState {
         return when (intent) {
