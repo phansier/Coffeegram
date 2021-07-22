@@ -38,6 +38,10 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "${rootProject.extra["compose_version"]}"
     }
+    packagingOptions {
+        resources.excludes.add("META-INF/AL2.0")
+        resources.excludes.add("META-INF/LGPL2.1")
+    }
 }
 
 dependencies {

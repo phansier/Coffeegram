@@ -5,8 +5,8 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.YearMonth
 import ru.beryukhov.coffeegram.store_lib.InMemoryStore
 
-class NavigationStore : InMemoryStore<NavigationIntent, NavigationState>(
-    initialState = NavigationState.TablePage(YearMonth.now())
+class NavigationStore(val yearMonth: YearMonth = YearMonth.now()) : InMemoryStore<NavigationIntent, NavigationState>(
+    initialState = NavigationState.TablePage(yearMonth = yearMonth)
 ) {
 
     private val currentMonth = MutableStateFlow(YearMonth.now())
