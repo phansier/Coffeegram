@@ -6,8 +6,8 @@ import androidx.core.content.edit
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.store_lib.Storage
 
-private const val FILENAME = "theme_shared_pref"
-private const val THEME_STATE = "theme_state"
+internal const val FILENAME = "theme_shared_pref"
+internal const val THEME_STATE = "theme_state"
 
 class ThemeSharedPrefStorage(private val context: Context): Storage<ThemeState> {
 

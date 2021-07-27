@@ -1,6 +1,9 @@
+import com.google.protobuf.gradle.*
+
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("com.google.protobuf") version "0.8.12"
 }
 
 android {
@@ -71,7 +74,26 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.extra["coroutines_version"]}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${rootProject.extra["coroutines_version"]}")
 
-    implementation("androidx.datastore:datastore-preferences:1.0.0-rc02")
+    implementation("androidx.datastore:datastore-preferences:${rootProject.extra["datastore_version"]}")
 
+    implementation  ("androidx.datastore:datastore-core:${rootProject.extra["datastore_version"]}")
+    implementation  ("com.google.protobuf:protobuf-javalite:3.10.0")
 
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.10.0"
+    }
+    generateProtoTasks {
+        all().forEach{
+                task ->
+            task.builtins {
+                id("java") {
+                    option("lite")
+                }
+            }
+        }
+
+    }
 }

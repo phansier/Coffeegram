@@ -7,6 +7,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.repository.ThemeDataStorePrefStorage
+import ru.beryukhov.coffeegram.repository.ThemeDataStoreProtoStorage
 import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
 import ru.beryukhov.coffeegram.store_lib.Storage
 
@@ -27,7 +28,8 @@ class Application: Application() {
 
         private val themeStorage: Storage<ThemeState> by lazy {
             //ThemeSharedPrefStorage(context = context)
-            ThemeDataStorePrefStorage(context = context)
+            //ThemeDataStorePrefStorage(context = context)
+            ThemeDataStoreProtoStorage(context = context)
         }
 
         val themeStore: ThemeStore by lazy { ThemeStore(themeStorage) }

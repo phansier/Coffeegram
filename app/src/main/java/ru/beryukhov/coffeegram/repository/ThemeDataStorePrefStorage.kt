@@ -12,9 +12,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.store_lib.Storage
 
-private const val FILENAME = "theme_shared_pref"
-private const val THEME_STATE = "theme_state"
-
 private object PreferencesKeys {
     val THEME_STATE_KEY = stringPreferencesKey(THEME_STATE)
 }
