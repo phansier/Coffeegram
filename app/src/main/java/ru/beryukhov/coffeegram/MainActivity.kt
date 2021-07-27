@@ -42,6 +42,7 @@ import ru.beryukhov.coffeegram.pages.SettingsAppBar
 import ru.beryukhov.coffeegram.pages.SettingsPage
 import ru.beryukhov.coffeegram.pages.TableAppBar
 import ru.beryukhov.coffeegram.pages.TablePage
+import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +69,7 @@ fun DefaultPreview() {
     PagesContent(
         navigationStore = NavigationStore(),
         daysCoffeesStore = DaysCoffeesStore(),
-        themeStore = ThemeStore(LocalContext.current)
+        themeStore = ThemeStore(ThemeSharedPrefStorage(LocalContext.current))
     )
 }
 
