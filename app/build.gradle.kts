@@ -59,7 +59,7 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")//change to 1.0.0-beta09 for working preview
 
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-beta01")
-    implementation("androidx.activity:activity-compose:1.3.0-rc02")
+    implementation("androidx.activity:activity-compose:1.3.0")
 
     testImplementation("junit:junit:4.13.2")
 
