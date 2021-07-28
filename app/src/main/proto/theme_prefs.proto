@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option java_package = "ru.beryukhov.coffeegram.repository";
+option java_multiple_files = true;
+
+message ThemePreferences {
+  enum ProtoThemeState {
+      DARK = 0;
+      LIGHT = 1;
+      SYSTEM = 2;
+  }
+
+  // user selected tasks sorting order
+  ProtoThemeState theme_state = 3;
+}
