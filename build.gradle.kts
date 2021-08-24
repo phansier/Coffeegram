@@ -10,10 +10,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.1.0-alpha09")//alpha04 crashes compose app
+        classpath("com.android.tools.build:gradle:7.1.0-alpha09")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
+
 
 allprojects {
     repositories {
