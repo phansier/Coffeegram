@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    compileSdk = 30
+    compileSdk = 31
 
     defaultConfig {
         applicationId = "ru.beryukhov.coffeegram"
@@ -56,7 +56,7 @@ dependencies {
 
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.material:material:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")//change to 1.0.0-beta09 for working preview
+    implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
 
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-beta02")
     implementation("androidx.activity:activity-compose:1.3.1")
@@ -76,7 +76,7 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:${rootProject.extra["datastore_version"]}")
 
-    implementation  ("androidx.datastore:datastore-core:${rootProject.extra["datastore_version"]}")
+    implementation  ("androidx.datastore:datastore:${rootProject.extra["datastore_version"]}")
     implementation  ("com.google.protobuf:protobuf-javalite:3.10.0")
 
 }
