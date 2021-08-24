@@ -24,8 +24,6 @@
 
 [Youtube (AppsFest) RU](https://youtu.be/CuCV-SGUuCQ/)
 
-Additional info about Jetpack Compose can be found in the [mindmap](mindmap.md).
-
 After implementation of repository part it will be suitable for tracking of consumed coffee cups.
 
 The App consists of two screens:
