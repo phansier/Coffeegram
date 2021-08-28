@@ -8,10 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.app_ui.typography
-import ru.beryukhov.coffeegram.data.Cappucino
+import ru.beryukhov.coffeegram.data.CoffeeType.Cappuccino
 import ru.beryukhov.coffeegram.data.CoffeeType
 
 
@@ -20,7 +21,7 @@ import ru.beryukhov.coffeegram.data.CoffeeType
 @Composable
 private fun Preview() {
     CoffeeTypeItemRaw(
-        Cappucino, 5
+        Cappuccino, 5
     )
 }
 
@@ -44,12 +45,15 @@ private fun CoffeeTypeItemRaw(
         )
         Spacer(Modifier.width(16.dp))
         Text(
-            coffeeType.name, style = typography.body1,
-            modifier = Modifier.align(Alignment.CenterVertically).weight(1f)
+            stringResource(coffeeType.nameId), style = typography.body1,
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
+                .weight(1f)
         )
         Row(modifier = Modifier.align(Alignment.CenterVertically)) {
             Spacer(Modifier.width(16.dp))
-            val textButtonModifier = Modifier.align(Alignment.CenterVertically)
+            val textButtonModifier = Modifier
+                .align(Alignment.CenterVertically)
                 .sizeIn(
                     maxWidth = 32.dp,
                     maxHeight = 32.dp,

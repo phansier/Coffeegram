@@ -32,6 +32,6 @@ abstract class InMemoryStore<Intent : Any, State : Any>(initialState: State): St
             _state.value = handleIntent(it) }
     }
 
-    protected abstract fun handleIntent(intent: Intent): State
+    protected abstract suspend fun handleIntent(intent: Intent): State
 }
 

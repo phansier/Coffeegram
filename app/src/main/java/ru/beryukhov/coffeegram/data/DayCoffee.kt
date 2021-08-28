@@ -3,13 +3,16 @@ package ru.beryukhov.coffeegram.data
 import ru.beryukhov.coffeegram.R
 
 data class DayCoffee(
-    val coffeeCountMap: Map<CoffeeType, Int> = mapOf(Cappucino to 0, Latte to 0)
+    val coffeeCountMap: Map<CoffeeType, Int> = mapOf()
 ){
     fun getIconId():  Int? {
-        //todo normal logic
-        if (coffeeCountMap[Cappucino]==0 && coffeeCountMap[Latte]!=0) return Latte.iconId
-        if (coffeeCountMap[Cappucino]!=0 && coffeeCountMap[Latte]==0) return Cappucino.iconId
-        if (coffeeCountMap[Cappucino]!=0 && coffeeCountMap[Latte]!=0) return R.drawable.coffee
-        return null
+        val t = coffeeCountMap.filterValues { it>0 }
+        return when {
+            t.isEmpty() -> null
+            t.size == 1 -> {
+                t.keys.first().iconId
+            }
+            else -> R.drawable.coffee
+        }
     }
 }

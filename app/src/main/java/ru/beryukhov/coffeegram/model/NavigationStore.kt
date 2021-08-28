@@ -11,8 +11,7 @@ class NavigationStore(val yearMonth: YearMonth = YearMonth.now()) : InMemoryStor
 
     private val currentMonth = MutableStateFlow(YearMonth.now())
 
-    override fun handleIntent(intent: NavigationIntent): NavigationState {
-
+    override suspend fun handleIntent(intent: NavigationIntent): NavigationState {
         return when (intent) {
             NavigationIntent.NextMonth -> {
                 NavigationState.TablePage(increaseMonth())
