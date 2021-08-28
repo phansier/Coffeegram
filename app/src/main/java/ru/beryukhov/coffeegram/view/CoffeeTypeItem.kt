@@ -8,11 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.app_ui.typography
-import ru.beryukhov.coffeegram.data.Cappucino
+import ru.beryukhov.coffeegram.data.CoffeeType.Cappuccino
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -37,7 +38,7 @@ fun CoffeeTypeItem(
         )
         Spacer(Modifier.width(16.dp))
         Text(
-            coffeeType.name, style = typography.body1,
+            stringResource(coffeeType.nameId), style = typography.body1,
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .weight(1f)
@@ -94,6 +95,6 @@ fun CoffeeTypeItem(
 @Composable
 private fun Preview() {
     CoffeeTypeItem(
-        LocalDate.now(), Cappucino, 5, DaysCoffeesStore()
+        LocalDate.now(), Cappuccino, 5, DaysCoffeesStore()
     )
 }
