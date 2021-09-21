@@ -1,11 +1,13 @@
 # Coffeegram
 
-[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.1.0--alpha02-yellow)](https://developer.android.com/jetpack/compose)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.5.21-blue.svg)](https://kotlinlang.org)
+[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.1.0--alpha04-yellow)](https://developer.android.com/jetpack/compose)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.5.30-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 [![Jetc.dev](https://img.shields.io/badge/jetc.dev-25-blue)](https://jetc.dev/issues/025.html)
 
 ## Android app using Jetpack Compose together with StateFlow and MVI
+
+It uses Realm Multiplatform as an underlying database.
 
 ---
 

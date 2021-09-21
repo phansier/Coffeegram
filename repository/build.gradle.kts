@@ -24,15 +24,17 @@ kotlin {
         summary = "Repository for Coffegram"
         homepage = "https://github.com/phansier/Coffeegram"
         ios.deploymentTarget = "14.1"
-        frameworkName = "repository"
+        framework {
+            baseName = "repository"
+        }
         // set path to your ios project podfile, e.g. podfile = project.file("../iosApp/Podfile")
     }
     
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.realm.kotlin:library:${rootProject.extra["realm_version"]}")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${rootProject.extra["coroutines_version"]}")
+                implementation(libs.realmKotlin)
+                implementation(libs.coroutines.core)
             }
         }
         val commonTest by getting {

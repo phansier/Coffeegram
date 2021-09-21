@@ -1,0 +1,27 @@
+[versions]
+kotlin = "1.5.30"
+agp = "7.1.0-alpha12"
+realm = "0.5.0"
+compose = "1.1.0-alpha04"
+coroutines = "1.5.2-native-mt"
+datastore = "1.0.0"
+
+[libraries]
+kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+androidGradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+realmGradle = { module = "io.realm.kotlin:gradle-plugin", version.ref = "realm" }
+
+realmKotlin = { module = "io.realm.kotlin:library", version.ref = "realm" }
+
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+
+compose-uiTest = { module = "androidx.compose.ui:ui-test", version.ref = "compose" }
+compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines"}
+coroutines-android = { module ="org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines"}
+
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore"}
+datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore"}
