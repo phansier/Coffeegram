@@ -20,10 +20,12 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
-            proguardFile(getDefaultProguardFile("proguard-android-optimize.txt"))
-            proguardFile("proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -59,8 +61,8 @@ dependencies {
     implementation(libs.compose.material)
     implementation(libs.compose.uiTooling)
 
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
-    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation(libs.compose.constraint)
+    implementation(libs.compose.activity)
 
     testImplementation("junit:junit:4.13.2")
 

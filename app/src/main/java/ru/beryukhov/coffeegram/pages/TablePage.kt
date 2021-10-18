@@ -18,9 +18,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -65,9 +65,8 @@ fun TableAppBar(
         actions = {
             IconButton(
                 onClick = { navigationStore.newIntent(NavigationIntent.NextMonth) },
-                modifier = Modifier.semantics {
-                    testTag = "ArrowRight"
-                }) { Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "") }
+                modifier = Modifier.testTag("ArrowRight")
+            ) { Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "") }
         }
     )
 }
