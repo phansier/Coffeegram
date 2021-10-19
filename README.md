@@ -1,7 +1,7 @@
 # Coffeegram
 
-[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.1.0--alpha05-yellow)](https://developer.android.com/jetpack/compose)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.5.30-blue.svg)](https://kotlinlang.org)
+[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.1.0--alpha06-yellow)](https://developer.android.com/jetpack/compose)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.5.31-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 [![Jetc.dev](https://img.shields.io/badge/jetc.dev-25-blue)](https://jetc.dev/issues/025.html)
 
@@ -14,6 +14,8 @@ It uses Realm Multiplatform as an underlying database.
 **Multiplatform version of the app for Android + Desktop (using Jetbrains Compose)** is available in [Coffeegram-Desktop](https://github.com/phansier/Coffeegram-Desktop) repo
 
 ![](https://github.com/phansier/Coffeegram-Desktop/blob/desktop/images/desktop.png)
+
+**Wear OS version of the app (WIP) is in branch [wearable](https://github.com/phansier/Coffeegram/tree/wearable)**
 
 ---
 
