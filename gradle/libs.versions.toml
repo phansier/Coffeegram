@@ -1,8 +1,8 @@
 [versions]
 kotlin = "1.5.31"
-agp = "7.2.0-alpha01"
+agp = "7.0.3"
 realm = "0.5.0"
-compose = "1.1.0-alpha06"
+compose = "1.1.0-beta01"
 coroutines = "1.5.2-native-mt"
 datastore = "1.0.0"
 
@@ -15,6 +15,7 @@ realmKotlin = { module = "io.realm.kotlin:library", version.ref = "realm" }
 
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+#compose-material = "androidx.compose.material3:material3:1.0.0-alpha01"
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 
 compose-uiTest = { module = "androidx.compose.ui:ui-test", version.ref = "compose" }
