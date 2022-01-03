@@ -1,9 +1,9 @@
 [versions]
-kotlin = "1.5.31"
-agp = "7.0.3"
-realm = "0.5.0"
-compose = "1.1.0-beta02"
-coroutines = "1.5.2-native-mt"
+kotlin = "1.6.10"
+agp = "7.0.4"
+realm = "0.8.0"
+compose = "1.1.0-rc01"
+coroutines = "1.6.0-native-mt"
 datastore = "1.0.0"
 
 [libraries]
@@ -11,7 +11,7 @@ kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.r
 androidGradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 realmGradle = { module = "io.realm.kotlin:gradle-plugin", version.ref = "realm" }
 
-realmKotlin = { module = "io.realm.kotlin:library", version.ref = "realm" }
+realmKotlin = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
