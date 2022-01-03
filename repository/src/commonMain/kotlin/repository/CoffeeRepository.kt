@@ -1,6 +1,7 @@
 package repository
 
 import io.realm.Realm
+import io.realm.objects
 import io.realm.RealmConfiguration
 import repository.model.DbDayCoffee
 import repository.model.RealmDayCoffee
@@ -9,8 +10,8 @@ import repository.model.toRealm
 
 class CoffeeRepository {
     private val realm: Realm by lazy {
-        val configuration = RealmConfiguration(schema = setOf(RealmDayCoffee::class))
-        Realm(configuration)
+        val configuration = RealmConfiguration.with(schema = setOf(RealmDayCoffee::class))
+        Realm.open(configuration)
     }
 
     // blocking
