@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.appWearCommon)
     implementation(libs.androidx.wear)
     implementation(libs.composeWear.material)
     implementation(libs.composeWear.foundation)
