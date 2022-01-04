@@ -1,5 +1,6 @@
 package ru.beryukhov.coffeegram
 
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -9,9 +10,8 @@ import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.threeten.bp.YearMonth
-import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationStore
-import ru.beryukhov.coffeegram.model.ThemeStore
+import ru.beryukhov.coffeegram.model.getThemeStoreStub
 
 
 class ExampleComposeTest {
@@ -24,8 +24,7 @@ class ExampleComposeTest {
             setContent {
                 PagesContent(
                     navigationStore = NavigationStore(yearMonth = YearMonth.of(2020, 1)),
-                    daysCoffeesStore = DaysCoffeesStore(),
-                    themeStore = ThemeStore()
+                    themeStore = getThemeStoreStub(LocalContext.current)
                 )
             }
             onNodeWithText("2020").assertIsDisplayed()
@@ -68,8 +67,7 @@ class ExampleComposeTest {
             setContent {
                 PagesContent(
                     navigationStore = NavigationStore(yearMonth = yearMonth),
-                    daysCoffeesStore = DaysCoffeesStore(),
-                    themeStore = ThemeStore()
+                    themeStore = getThemeStoreStub(LocalContext.current)
                 )
             }
             block()

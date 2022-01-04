@@ -1,15 +1,17 @@
 package ru.beryukhov.coffeegram
 
-import android.annotation.SuppressLint
 import android.app.Application
 import com.jakewharton.threetenabp.AndroidThreeTen
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import org.koin.dsl.module
+import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
+import ru.beryukhov.coffeegram.pages.CoffeeListViewModelImpl
 import ru.beryukhov.coffeegram.repository.ThemeDataStorePrefStorage
 import ru.beryukhov.coffeegram.repository.ThemeDataStoreProtoStorage
 import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
@@ -36,8 +38,10 @@ class Application: Application() {
             //ThemeDataStorePrefStorage(context = context)
             ThemeDataStoreProtoStorage(context = get())
         }
-        single<ThemeStore> {
+        single {
             ThemeStore(get())
         }
+        single { DaysCoffeesStore()}
+        viewModel { CoffeeListViewModelImpl(daysCoffeesStore = get()) }
     }
 }

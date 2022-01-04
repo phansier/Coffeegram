@@ -84,6 +84,7 @@ dependencies {
     implementation  ("com.google.protobuf:protobuf-javalite:3.10.0")
 
     implementation(libs.koin.android)
+    implementation(libs.koin.compose)
 
 }
 

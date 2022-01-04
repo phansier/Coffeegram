@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.koin.android.ext.android.inject
+import org.koin.androidx.compose.get
 import ru.beryukhov.coffeegram.animations.newSplashTransition
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -44,7 +45,6 @@ import ru.beryukhov.coffeegram.pages.SettingsAppBar
 import ru.beryukhov.coffeegram.pages.SettingsPage
 import ru.beryukhov.coffeegram.pages.TableAppBar
 import ru.beryukhov.coffeegram.pages.TablePage
-import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
 
 class MainActivity : AppCompatActivity() {
 
@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.alpha(transition.contentAlpha),
                     topPadding = transition.contentTopPadding,
                     navigationStore = NavigationStore(),
-                    daysCoffeesStore = DaysCoffeesStore(),
                     themeStore = themeStore
                 )
             }
@@ -75,7 +74,6 @@ class MainActivity : AppCompatActivity() {
 fun DefaultPreview() {
     PagesContent(
         navigationStore = NavigationStore(),
-        daysCoffeesStore = DaysCoffeesStore(),
         themeStore = getThemeStoreStub(LocalContext.current)
     )
 }
@@ -85,7 +83,6 @@ fun PagesContent(
     modifier: Modifier = Modifier,
     topPadding: Dp = 0.dp,
     navigationStore: NavigationStore,
-    daysCoffeesStore: DaysCoffeesStore,
     themeStore: ThemeStore
 ) {
     val navigationState: NavigationState by navigationStore.state.collectAsState()
@@ -116,13 +113,12 @@ fun PagesContent(
                 val currentNavigationState = navigationState
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TablePage(
-                        currentNavigationState.yearMonth,
-                        daysCoffeesStore,
-                        navigationStore
+                        yearMonth = currentNavigationState.yearMonth,
+                        daysCoffeesStore = get(),
+                        navigationStore = navigationStore
                     )
                     is NavigationState.CoffeeListPage -> CoffeeListPage(
-                        daysCoffeesStore,
-                        currentNavigationState.date
+                        localDate = currentNavigationState.date
                     )
                     is NavigationState.SettingsPage -> {
                         SettingsPage(themeStore)

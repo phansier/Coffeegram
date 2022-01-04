@@ -1,7 +1,13 @@
 package ru.beryukhov.coffeegram.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -13,10 +19,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.threeten.bp.LocalDate
 import ru.beryukhov.coffeegram.app_ui.typography
-import ru.beryukhov.coffeegram.data.CoffeeType.Cappuccino
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.CoffeeType.Cappuccino
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
-import ru.beryukhov.coffeegram.model.DaysCoffeesStore
+import ru.beryukhov.coffeegram.pages.CoffeeListViewModel
+import ru.beryukhov.coffeegram.pages.CoffeeListViewModelStub
+import ru.beryukhov.coffeegram.pages.localDateStub
 
 
 @Composable
@@ -24,7 +32,7 @@ fun CoffeeTypeItem(
     localDate: LocalDate,
     coffeeType: CoffeeType,
     count: Int,
-    daysCoffeesStore: DaysCoffeesStore
+    coffeeListViewModel: CoffeeListViewModel
 ) {
     Row(
         modifier = Modifier.padding(16.dp)
@@ -57,7 +65,7 @@ fun CoffeeTypeItem(
             TextButton(
                 enabled = isReduceCountAllowed,
                 onClick = {
-                    daysCoffeesStore.newIntent(
+                    coffeeListViewModel.newIntent(
                         DaysCoffeesIntent.MinusCoffee(
                             localDate,
                             coffeeType
@@ -75,7 +83,7 @@ fun CoffeeTypeItem(
             )
             TextButton(
                 onClick = {
-                    daysCoffeesStore.newIntent(
+                    coffeeListViewModel.newIntent(
                         DaysCoffeesIntent.PlusCoffee(
                             localDate,
                             coffeeType
@@ -95,6 +103,6 @@ fun CoffeeTypeItem(
 @Composable
 private fun Preview() {
     CoffeeTypeItem(
-        LocalDate.now(), Cappuccino, 5, DaysCoffeesStore()
+        localDateStub, Cappuccino, 5, CoffeeListViewModelStub
     )
 }
