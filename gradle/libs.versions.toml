@@ -33,3 +33,5 @@ coroutines-android = { module ="org.jetbrains.kotlinx:kotlinx-coroutines-android
 
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore"}
 datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore"}
+
+koin-android = "io.insert-koin:koin-android:3.1.4"

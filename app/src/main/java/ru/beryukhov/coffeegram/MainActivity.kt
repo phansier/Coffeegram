@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.koin.android.ext.android.inject
 import ru.beryukhov.coffeegram.animations.newSplashTransition
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -35,6 +36,7 @@ import ru.beryukhov.coffeegram.model.NavigationState
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
+import ru.beryukhov.coffeegram.model.getThemeStoreStub
 import ru.beryukhov.coffeegram.pages.CoffeeListAppBar
 import ru.beryukhov.coffeegram.pages.CoffeeListPage
 import ru.beryukhov.coffeegram.pages.LandingPage
@@ -45,6 +47,9 @@ import ru.beryukhov.coffeegram.pages.TablePage
 import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
 
 class MainActivity : AppCompatActivity() {
+
+    private val themeStore: ThemeStore by inject()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -56,7 +61,9 @@ class MainActivity : AppCompatActivity() {
                 PagesContent(
                     modifier = Modifier.alpha(transition.contentAlpha),
                     topPadding = transition.contentTopPadding,
-                    NavigationStore(), DaysCoffeesStore(), Application.themeStore
+                    navigationStore = NavigationStore(),
+                    daysCoffeesStore = DaysCoffeesStore(),
+                    themeStore = themeStore
                 )
             }
         }
@@ -69,7 +76,7 @@ fun DefaultPreview() {
     PagesContent(
         navigationStore = NavigationStore(),
         daysCoffeesStore = DaysCoffeesStore(),
-        themeStore = ThemeStore(ThemeSharedPrefStorage(LocalContext.current))
+        themeStore = getThemeStoreStub(LocalContext.current)
     )
 }
 
