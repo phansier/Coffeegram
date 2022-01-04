@@ -75,18 +75,20 @@ fun PagesContent(
     navigationStore: NavigationStore = get()
 ) {
     val navigationState: NavigationState by navigationStore.state.collectAsState()
+    val currentNavigationState = navigationState
     CoffeegramTheme(
         darkTheme = isDarkTheme()
     ) {
         Scaffold(
             modifier,
             topBar = {
-                when (navigationState) {
+                when (currentNavigationState) {
                     is NavigationState.TablePage -> TableAppBar(
-                        (navigationState as NavigationState.TablePage).yearMonth,
-                        navigationStore
+                        yearMonth = currentNavigationState.yearMonth,
                     )
-                    is NavigationState.CoffeeListPage -> CoffeeListAppBar(navigationStore)
+                    is NavigationState.CoffeeListPage -> CoffeeListAppBar(
+                        localDate = currentNavigationState.date
+                    )
                     is NavigationState.SettingsPage -> SettingsAppBar()
                 }
             },
@@ -97,7 +99,6 @@ fun PagesContent(
                         .padding(top = topPadding)
                         .align(Alignment.CenterHorizontally)
                 )
-                val currentNavigationState = navigationState
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TablePage(
                         yearMonth = currentNavigationState.yearMonth

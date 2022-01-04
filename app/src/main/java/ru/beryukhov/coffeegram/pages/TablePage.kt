@@ -28,14 +28,13 @@ import org.koin.androidx.compose.getViewModel
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.model.NavigationIntent
-import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.view.MonthTable
 
 
 @Composable
 fun TableAppBar(
     yearMonth: YearMonth,
-    navigationStore: NavigationStore
+    tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
 ) {
     TopAppBar(title = {
         Row(horizontalArrangement = Arrangement.Center) {
@@ -54,14 +53,14 @@ fun TableAppBar(
     },
         navigationIcon = {
             IconButton(
-                onClick = { navigationStore.newIntent(NavigationIntent.PreviousMonth) },
+                onClick = { tablePageViewModel.newIntent(NavigationIntent.PreviousMonth) },
                 modifier = Modifier.semantics {
                     contentDescription = "ArrowLeft"
                 }) { Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "") }
         },
         actions = {
             IconButton(
-                onClick = { navigationStore.newIntent(NavigationIntent.NextMonth) },
+                onClick = { tablePageViewModel.newIntent(NavigationIntent.NextMonth) },
                 modifier = Modifier.testTag("ArrowRight")
             ) { Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "") }
         }

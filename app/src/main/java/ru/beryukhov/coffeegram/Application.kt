@@ -45,7 +45,7 @@ class Application: Application() {
         }
         single { DaysCoffeesStore()}
         single { NavigationStore()}
-        viewModel { CoffeeListViewModelImpl(daysCoffeesStore = get()) }
+        viewModel { CoffeeListViewModelImpl(daysCoffeesStore = get(), navigationStore = get()) }
         viewModel { TablePageViewModelImpl(daysCoffeesStore = get(), navigationStore = get()) }
     }
 }

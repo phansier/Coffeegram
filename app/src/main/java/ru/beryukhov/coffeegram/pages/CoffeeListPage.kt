@@ -15,18 +15,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import org.koin.androidx.compose.getViewModel
 import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatterBuilder
+import org.threeten.bp.format.SignStyle
+import org.threeten.bp.format.TextStyle
+import org.threeten.bp.temporal.ChronoField
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.model.NavigationIntent
-import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
 
 @Composable
-fun CoffeeListAppBar(navigationStore: NavigationStore){
-    TopAppBar(title = { Text(stringResource(R.string.add_drink)) },
+fun CoffeeListAppBar(
+    localDate: LocalDate,
+    coffeeListViewModel: CoffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
+) {
+    TopAppBar(title = { Text(localDate.format(dateFormatter) + " " + stringResource(R.string.add_drink)) },
         navigationIcon = {
-            IconButton(onClick = { navigationStore.newIntent(NavigationIntent.ReturnToTablePage) }) {
+            IconButton(onClick = { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = ""
@@ -35,6 +41,13 @@ fun CoffeeListAppBar(navigationStore: NavigationStore){
         }
     )
 }
+
+private val dateFormatter = DateTimeFormatterBuilder()
+    .appendValue(ChronoField.DAY_OF_MONTH, 1, 2, SignStyle.NOT_NEGATIVE)
+    .appendLiteral(' ')
+    .appendText(ChronoField.MONTH_OF_YEAR, TextStyle.SHORT)
+    .toFormatter()
+
 
 @Composable
 fun CoffeeListPage(localDate: LocalDate) {

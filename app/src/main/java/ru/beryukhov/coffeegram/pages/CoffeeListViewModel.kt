@@ -12,16 +12,21 @@ import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
+import ru.beryukhov.coffeegram.model.NavigationIntent
+import ru.beryukhov.coffeegram.model.NavigationStore
 
 interface CoffeeListViewModel{
     @Composable
     fun getDayCoffeesWithEmpty(localDate: LocalDate): List<Pair<CoffeeType, Int>>
 
     fun newIntent(intent: DaysCoffeesIntent)
+    fun newIntent(intent: NavigationIntent)
 }
 
 object CoffeeListViewModelStub: CoffeeListViewModel {
     override fun newIntent(intent: DaysCoffeesIntent) = Unit
+    override fun newIntent(intent: NavigationIntent) = Unit
+
     @Composable
     override fun getDayCoffeesWithEmpty(localDate: LocalDate): List<Pair<CoffeeType, Int>> =
         emptyMap<CoffeeType, Int>().withEmpty()
@@ -30,7 +35,10 @@ object CoffeeListViewModelStub: CoffeeListViewModel {
 val localDateStub: LocalDate = LocalDate.now(ZoneId.of("Z"))
 
 
-class CoffeeListViewModelImpl(private val daysCoffeesStore: DaysCoffeesStore): ViewModel(), CoffeeListViewModel {
+class CoffeeListViewModelImpl(
+    private val daysCoffeesStore: DaysCoffeesStore,
+    private val navigationStore: NavigationStore
+): ViewModel(), CoffeeListViewModel {
     @Composable
     override fun getDayCoffeesWithEmpty(localDate: LocalDate): List<Pair<CoffeeType, Int>> {
         val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
@@ -40,6 +48,10 @@ class CoffeeListViewModelImpl(private val daysCoffeesStore: DaysCoffeesStore): V
 
     override fun newIntent(intent: DaysCoffeesIntent) {
         daysCoffeesStore.newIntent(intent)
+    }
+
+    override fun newIntent(intent: NavigationIntent) {
+        navigationStore.newIntent(intent)
     }
 }
 
