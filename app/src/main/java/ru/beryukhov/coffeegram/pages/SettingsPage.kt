@@ -11,6 +11,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -78,7 +79,7 @@ fun ThemeRadioButtonWithText(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier.padding(8.dp)) {
-        RadioButton(selected = selected, onClick = onClick)
-        Text(label)
+        RadioButton(selected = selected, onClick = onClick, modifier = Modifier.align(CenterVertically))
+        Text(text = label, modifier = Modifier.align(CenterVertically))
     }
 }

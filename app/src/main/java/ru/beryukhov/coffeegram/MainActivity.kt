@@ -22,22 +22,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.koin.android.ext.android.inject
 import org.koin.androidx.compose.get
 import ru.beryukhov.coffeegram.animations.newSplashTransition
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
-import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationState
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
-import ru.beryukhov.coffeegram.model.getThemeStoreStub
 import ru.beryukhov.coffeegram.pages.CoffeeListAppBar
 import ru.beryukhov.coffeegram.pages.CoffeeListPage
 import ru.beryukhov.coffeegram.pages.LandingPage
@@ -47,8 +43,6 @@ import ru.beryukhov.coffeegram.pages.TableAppBar
 import ru.beryukhov.coffeegram.pages.TablePage
 
 class MainActivity : AppCompatActivity() {
-
-    private val themeStore: ThemeStore by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +56,6 @@ class MainActivity : AppCompatActivity() {
                     modifier = Modifier.alpha(transition.contentAlpha),
                     topPadding = transition.contentTopPadding,
                     navigationStore = NavigationStore(),
-                    themeStore = themeStore
                 )
             }
         }
@@ -74,7 +67,6 @@ class MainActivity : AppCompatActivity() {
 fun DefaultPreview() {
     PagesContent(
         navigationStore = NavigationStore(),
-        themeStore = getThemeStoreStub(LocalContext.current)
     )
 }
 
@@ -83,13 +75,10 @@ fun PagesContent(
     modifier: Modifier = Modifier,
     topPadding: Dp = 0.dp,
     navigationStore: NavigationStore,
-    themeStore: ThemeStore
 ) {
     val navigationState: NavigationState by navigationStore.state.collectAsState()
-    val themeState: ThemeState by themeStore.state.collectAsState()
     CoffeegramTheme(
-        darkTheme =
-        isDarkTheme(themeState)
+        darkTheme = isDarkTheme()
     ) {
         Scaffold(
             modifier,
@@ -121,7 +110,7 @@ fun PagesContent(
                         localDate = currentNavigationState.date
                     )
                     is NavigationState.SettingsPage -> {
-                        SettingsPage(themeStore)
+                        SettingsPage(get())
                     }
                 }
                 BottomNavigation(modifier = modifier) {
@@ -160,8 +149,11 @@ fun PagesContent(
 }
 
 @Composable
-private fun isDarkTheme(themeState: ThemeState) = when (themeState) {
-    ThemeState.DARK -> true
-    ThemeState.LIGHT -> false
-    ThemeState.SYSTEM -> isSystemInDarkTheme()
+private fun isDarkTheme(): Boolean {
+    val themeState: ThemeState by get<ThemeStore>().state.collectAsState()
+    return when (themeState) {
+        ThemeState.DARK -> true
+        ThemeState.LIGHT -> false
+        ThemeState.SYSTEM -> isSystemInDarkTheme()
+    }
 }
