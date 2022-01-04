@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
                 PagesContent(
                     modifier = Modifier.alpha(transition.contentAlpha),
                     topPadding = transition.contentTopPadding,
-                    navigationStore = NavigationStore(),
                 )
             }
         }
@@ -66,7 +65,6 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun DefaultPreview() {
     PagesContent(
-        navigationStore = NavigationStore(),
     )
 }
 
@@ -74,7 +72,7 @@ fun DefaultPreview() {
 fun PagesContent(
     modifier: Modifier = Modifier,
     topPadding: Dp = 0.dp,
-    navigationStore: NavigationStore,
+    navigationStore: NavigationStore = get()
 ) {
     val navigationState: NavigationState by navigationStore.state.collectAsState()
     CoffeegramTheme(
@@ -102,9 +100,7 @@ fun PagesContent(
                 val currentNavigationState = navigationState
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TablePage(
-                        yearMonth = currentNavigationState.yearMonth,
-                        daysCoffeesStore = get(),
-                        navigationStore = navigationStore
+                        yearMonth = currentNavigationState.yearMonth
                     )
                     is NavigationState.CoffeeListPage -> CoffeeListPage(
                         localDate = currentNavigationState.date

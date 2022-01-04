@@ -13,8 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,12 +22,11 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.threeten.bp.LocalDate
+import org.koin.androidx.compose.getViewModel
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
-import ru.beryukhov.coffeegram.data.DayCoffee
-import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.view.MonthTable
@@ -74,20 +71,26 @@ fun TableAppBar(
 @Composable
 fun ColumnScope.TablePage(
     yearMonth: YearMonth,
-    daysCoffeesStore: DaysCoffeesStore,
-    navigationStore: NavigationStore
+    tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
 ) {
-    val coffeesState by daysCoffeesStore.state.collectAsState()
-
     Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(1f)) {
         MonthTable(
-            yearMonth,
-            coffeesState.value.filter { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
-                .mapKeys { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth }
-                .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getIconId() },
-            navigationStore,
+            yearMonth = yearMonth,
+            filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth),
             modifier = Modifier.weight(1f)
         )
         Text("${yearMonth.year}", modifier = Modifier.padding(16.dp))
+    }
+}
+
+@Preview
+@Composable
+private fun Preview() {
+    Column {
+        val date = localDateStub
+        TablePage(
+            yearMonth = YearMonth.of(date.year, date.month),
+            tablePageViewModel = TablePageViewModelStub
+        )
     }
 }

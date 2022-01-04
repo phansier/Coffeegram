@@ -21,9 +21,7 @@ interface CoffeeListViewModel{
 }
 
 object CoffeeListViewModelStub: CoffeeListViewModel {
-    override fun newIntent(intent: DaysCoffeesIntent) {
-
-    }
+    override fun newIntent(intent: DaysCoffeesIntent) = Unit
     @Composable
     override fun getDayCoffeesWithEmpty(localDate: LocalDate): List<Pair<CoffeeType, Int>> =
         emptyMap<CoffeeType, Int>().withEmpty()
