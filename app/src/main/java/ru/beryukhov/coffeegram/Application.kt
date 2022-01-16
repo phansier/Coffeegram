@@ -9,6 +9,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import org.koin.dsl.module
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
+import ru.beryukhov.coffeegram.model.LightDaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
@@ -43,7 +44,7 @@ class Application: Application() {
         single {
             ThemeStore(get())
         }
-        single { DaysCoffeesStore()}
+        single<DaysCoffeesStore> { LightDaysCoffeesStore() }
         single { NavigationStore()}
         viewModel { CoffeeListViewModelImpl(daysCoffeesStore = get(), navigationStore = get()) }
         viewModel { TablePageViewModelImpl(daysCoffeesStore = get(), navigationStore = get()) }
