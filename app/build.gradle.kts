@@ -86,6 +86,14 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
 
+    implementation(libs.androidx.lifecycle) //lifecycleScope
+    val playServicesWearableVersion = "17.1.0"
+    val coroutinesVersion = "1.6.0"
+    implementation("com.google.android.gms:play-services-wearable:$playServicesWearableVersion") //Wearable
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion") //connectedNodes.await()
+
+
+
 }
 
 protobuf {

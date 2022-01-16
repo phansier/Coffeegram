@@ -1,6 +1,7 @@
 package ru.beryukhov.coffeegram
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -26,6 +27,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.wearable.Wearable
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import org.koin.androidx.compose.get
 import ru.beryukhov.coffeegram.animations.newSplashTransition
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
@@ -44,8 +52,13 @@ import ru.beryukhov.coffeegram.pages.TablePage
 
 class MainActivity : AppCompatActivity() {
 
+    val nodeClient by lazy { Wearable.getNodeClient(this) }
+    val messageClient by lazy { Wearable.getMessageClient(this) }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //setContentView(R.layout.support_simple_spinner_dropdown_item)
         setContent {
             val transition = newSplashTransition()
             Box {
@@ -55,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                 PagesContent(
                     modifier = Modifier.alpha(transition.contentAlpha),
                     topPadding = transition.contentTopPadding,
+                    startWearableActivity = ::startWearableActivity
                 )
             }
         }
@@ -72,7 +86,8 @@ fun DefaultPreview() {
 fun PagesContent(
     modifier: Modifier = Modifier,
     topPadding: Dp = 0.dp,
-    navigationStore: NavigationStore = get()
+    navigationStore: NavigationStore = get(),
+    startWearableActivity: () -> Unit = {}
 ) {
     val navigationState: NavigationState by navigationStore.state.collectAsState()
     val currentNavigationState = navigationState
@@ -107,7 +122,7 @@ fun PagesContent(
                         localDate = currentNavigationState.date
                     )
                     is NavigationState.SettingsPage -> {
-                        SettingsPage(get())
+                        SettingsPage(get(), startWearableActivity)
                     }
                 }
                 BottomNavigation(modifier = modifier) {
@@ -144,6 +159,32 @@ fun PagesContent(
         }
     }
 }
+
+private val TAG = "TestWatch_"
+
+private fun MainActivity.startWearableActivity() {
+    lifecycleScope.launch {
+        try {
+            val nodes = nodeClient.connectedNodes.await()
+
+            // Send a message to all nodes in parallel
+            nodes.map { node ->
+                async {
+                    messageClient.sendMessage(node.id, START_ACTIVITY_PATH, byteArrayOf())
+                        .await()
+                }
+            }.awaitAll()
+
+            Log.d(TAG, "Starting activity requests sent successfully")
+        } catch (cancellationException: CancellationException) {
+            throw cancellationException
+        } catch (exception: Exception) {
+            Log.d(TAG, "Starting activity failed: $exception")
+        }
+    }
+}
+
+private const val START_ACTIVITY_PATH = "/start-activity"
 
 @Composable
 private fun isDarkTheme(): Boolean {

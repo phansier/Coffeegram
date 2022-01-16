@@ -41,4 +41,6 @@ dependencies {
 
     implementation(libs.compose.activity)
     implementation(libs.compose.uiTooling)
+    val playServicesWearableVersion = "17.1.0"
+    implementation ("com.google.android.gms:play-services-wearable:$playServicesWearableVersion")
 }

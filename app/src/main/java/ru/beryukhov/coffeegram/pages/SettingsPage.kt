@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -39,7 +40,7 @@ fun SettingsPagePreview() {
 }
 
 @Composable
-fun ColumnScope.SettingsPage(themeStore: ThemeStore) {
+fun ColumnScope.SettingsPage(themeStore: ThemeStore, startWearableActivity: ()-> Unit = {}) {
     Column(modifier = Modifier.weight(1f)) {
         Text(
             stringResource(R.string.app_theme),
@@ -62,6 +63,9 @@ fun ColumnScope.SettingsPage(themeStore: ThemeStore) {
             onClick = { themeStore.newIntent(ThemeIntent.SetDarkIntent) },
             stringResource(R.string.app_theme_dark)
         )
+        Button(onClick = { startWearableActivity() }, modifier = Modifier.padding(8.dp)) {
+            Text("Start Wearable Activity")
+        }
     }
 }
 
