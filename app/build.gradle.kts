@@ -10,6 +10,7 @@ android {
     compileSdk = 31
 
     defaultConfig {
+        // NOTE: This must be the same in the phone app and the wear app for the capabilities API
         applicationId = "ru.beryukhov.coffeegram"
         minSdk = 21
         targetSdk = 30
