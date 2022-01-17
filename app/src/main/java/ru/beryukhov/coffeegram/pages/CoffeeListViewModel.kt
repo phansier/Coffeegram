@@ -59,7 +59,7 @@ class CoffeeListViewModelImpl(
 
 @VisibleForTesting
 internal fun Map<CoffeeType, Int>.withEmpty(): List<Pair<CoffeeType, Int>> {
-    data class MutablePair(val ct:CoffeeType, var count:Int)
+    data class MutablePair(val ct: CoffeeType, var count:Int)
 
     val emptyList: MutableList<MutablePair> =
         CoffeeType.values().toList().map { MutablePair(it, 0) }.toMutableList()

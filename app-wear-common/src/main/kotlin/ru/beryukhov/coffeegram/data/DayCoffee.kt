@@ -1,6 +1,7 @@
 package ru.beryukhov.coffeegram.data
 
-import ru.beryukhov.coffeegram.R
+import ru.beryukhov.coffeegram.common.R
+
 
 data class DayCoffee(
     val coffeeCountMap: Map<CoffeeType, Int> = mapOf()

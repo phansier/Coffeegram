@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.async
@@ -37,6 +38,9 @@ import kotlinx.coroutines.tasks.await
 import org.koin.androidx.compose.get
 import ru.beryukhov.coffeegram.animations.newSplashTransition
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.toDataMap
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationState
 import ru.beryukhov.coffeegram.model.NavigationStore
@@ -52,8 +56,9 @@ import ru.beryukhov.coffeegram.pages.TablePage
 
 class MainActivity : AppCompatActivity() {
 
-    val nodeClient by lazy { Wearable.getNodeClient(this) }
-    val messageClient by lazy { Wearable.getMessageClient(this) }
+    internal val nodeClient by lazy { Wearable.getNodeClient(this) }
+    internal val messageClient by lazy { Wearable.getMessageClient(this) }
+    internal val dataClient by lazy { Wearable.getDataClient(this) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -165,7 +170,7 @@ private val TAG = "TestWatch_"
 private fun MainActivity.startWearableActivity() {
     lifecycleScope.launch {
         try {
-            val nodes = nodeClient.connectedNodes.await()
+            val nodes = nodeClient.connectedNodes.await() //todo depending on nodes count show or hide button
 
             // Send a message to all nodes in parallel
             nodes.map { node ->
@@ -182,9 +187,37 @@ private fun MainActivity.startWearableActivity() {
             Log.d(TAG, "Starting activity failed: $exception")
         }
     }
+    sendDayCoffee(
+        //todo replace mock
+        DayCoffee(mapOf(
+            CoffeeType.Cappuccino to 1,
+            CoffeeType.Americano to 2
+        ))
+    )
+}
+
+private fun MainActivity.sendDayCoffee(dayCoffee: DayCoffee) {
+    lifecycleScope.launch {
+        try {
+            val request = PutDataMapRequest.create(DAY_COFFEE_PATH).apply {
+                dayCoffee.toDataMap(dataMap)
+            }
+                .asPutDataRequest()
+                .setUrgent()
+
+            val result = dataClient.putDataItem(request).await()
+
+            Log.d(TAG, "DataItem saved: $result")
+        } catch (cancellationException: CancellationException) {
+            throw cancellationException
+        } catch (exception: Exception) {
+            Log.d(TAG, "Saving DataItem failed: $exception")
+        }
+    }
 }
 
 private const val START_ACTIVITY_PATH = "/start-activity"
+private const val DAY_COFFEE_PATH = "/coffee"
 
 @Composable
 private fun isDarkTheme(): Boolean {

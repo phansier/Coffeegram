@@ -2,7 +2,7 @@ package ru.beryukhov.coffeegram.data
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import ru.beryukhov.coffeegram.R
+import ru.beryukhov.coffeegram.common.R
 
 enum class CoffeeType(
     @StringRes val nameId: Int,
