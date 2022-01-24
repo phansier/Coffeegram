@@ -9,13 +9,18 @@
 
 It uses Realm Multiplatform as an underlying database.
 
+Compose for wearable approbation
+
+
+<img src="images/wear.png" alt="drawing" width="200"/>
+
+
 ---
 
 **Multiplatform version of the app for Android + Desktop (using Jetbrains Compose)** is available in [Coffeegram-Desktop](https://github.com/phansier/Coffeegram-Desktop) repo
 
 ![](https://github.com/phansier/Coffeegram-Desktop/blob/desktop/images/desktop.png)
 
-**Wear OS version of the app (WIP) is in branch [wearable](https://github.com/phansier/Coffeegram/tree/wearable)**
 
 ---
 
