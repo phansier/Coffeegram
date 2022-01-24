@@ -42,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-rc02"//libs.versions.compose.get()
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
     packagingOptions {
         resources.excludes.add("META-INF/AL2.0")
@@ -56,8 +56,8 @@ dependencies {
     implementation(projects.appWearCommon)
 
     implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("com.google.android.material:material:1.5.0")
 
     implementation(libs.compose.ui)
     implementation(libs.compose.material)
