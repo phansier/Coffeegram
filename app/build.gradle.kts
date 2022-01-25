@@ -66,6 +66,7 @@ dependencies {
 
     implementation(libs.compose.constraint)
     implementation(libs.compose.activity)
+    implementation("androidx.glance:glance-appwidget:+")
 
     testImplementation("junit:junit:4.13.2")
 
