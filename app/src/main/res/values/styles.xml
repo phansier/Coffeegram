@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.AppWidget.AppWidget.Container" parent="android:Widget">
+        <item name="android:id">@android:id/background</item>
+        <item name="android:background">?android:attr/colorBackground</item>
+        <item name="android:padding">@dimen/appWidgetPadding</item>
+    </style>
+
+    <dimen name="appWidgetPadding">16dp</dimen>
+    <dimen name="appWidgetRadius">16dp</dimen>
+
+    <color name="appwidget_background">@color/m3_sys_color_light_background</color>
+
+    <!-- The themes below are only used for the preview layouts -->
+    <style name="Theme.AppWidget.AppWidgetContainer" parent="Theme.Material3.DynamicColors.Light"/>
+
+</resources>
