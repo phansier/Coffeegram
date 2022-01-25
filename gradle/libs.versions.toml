@@ -2,9 +2,12 @@
 kotlin = "1.6.10"
 agp = "7.0.4"
 realm = "0.8.0"
-compose = "1.1.0-rc01"
+compose = "1.2.0-alpha01"
+wearCompose = "1.0.0-alpha14"
 coroutines = "1.6.0-native-mt"
 datastore = "1.0.0"
+koin = "3.1.4"
+lifecycle = "2.4.0"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -17,11 +20,24 @@ compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 
+compose-activity = "androidx.activity:activity-compose:1.4.0"
+compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.0"
+
 compose-uiTest = { module = "androidx.compose.ui:ui-test", version.ref = "compose" }
 compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 
-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines"}
-coroutines-android = { module ="org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines"}
+androidx-wear = "androidx.wear:wear:1.2.0"
+composeWear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
+composeWear-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }
+composeWear-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "wearCompose" }
 
-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore"}
-datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore"}
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+
+androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }

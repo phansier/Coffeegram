@@ -1,5 +1,7 @@
 package ru.beryukhov.coffeegram.model
 
+import android.content.Context
+import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
 import ru.beryukhov.coffeegram.store_lib.PersistentStore
 import ru.beryukhov.coffeegram.store_lib.Storage
 
@@ -27,3 +29,5 @@ enum class ThemeState {
     LIGHT,
     SYSTEM
 }
+
+fun getThemeStoreStub(context: Context) = ThemeStore(ThemeSharedPrefStorage(context))

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -11,17 +12,19 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.beryukhov.coffeegram.Application
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.app_ui.typography
 import ru.beryukhov.coffeegram.model.ThemeIntent
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
+import ru.beryukhov.coffeegram.model.getThemeStoreStub
 
 
 @Preview
@@ -30,14 +33,14 @@ fun SettingsPagePreview() {
     CoffeegramTheme {
         Scaffold {
             Column {
-                SettingsPage(Application.themeStore)
+                SettingsPage(getThemeStoreStub(LocalContext.current))
             }
         }
     }
 }
 
 @Composable
-fun ColumnScope.SettingsPage(themeStore: ThemeStore) {
+fun ColumnScope.SettingsPage(themeStore: ThemeStore, startWearableActivity: ()-> Unit = {}) {
     Column(modifier = Modifier.weight(1f)) {
         Text(
             stringResource(R.string.app_theme),
@@ -60,6 +63,9 @@ fun ColumnScope.SettingsPage(themeStore: ThemeStore) {
             onClick = { themeStore.newIntent(ThemeIntent.SetDarkIntent) },
             stringResource(R.string.app_theme_dark)
         )
+        Button(onClick = { startWearableActivity() }, modifier = Modifier.padding(8.dp)) {
+            Text("Start Wearable Activity")
+        }
     }
 }
 
@@ -77,7 +83,7 @@ fun ThemeRadioButtonWithText(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier.padding(8.dp)) {
-        RadioButton(selected = selected, onClick = onClick)
-        Text(label)
+        RadioButton(selected = selected, onClick = onClick, modifier = Modifier.align(CenterVertically))
+        Text(text = label, modifier = Modifier.align(CenterVertically))
     }
 }

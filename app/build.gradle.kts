@@ -10,6 +10,7 @@ android {
     compileSdk = 31
 
     defaultConfig {
+        // NOTE: This must be the same in the phone app and the wear app for the capabilities API
         applicationId = "ru.beryukhov.coffeegram"
         minSdk = 21
         targetSdk = 30
@@ -20,10 +21,12 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
-            proguardFile(getDefaultProguardFile("proguard-android-optimize.txt"))
-            proguardFile("proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -39,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.1.0-rc02"//libs.versions.compose.get()
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
     packagingOptions {
         resources.excludes.add("META-INF/AL2.0")
@@ -50,17 +53,18 @@ android {
 dependencies {
 
     implementation(projects.repository)
+    implementation(projects.appWearCommon)
 
     implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.0")
-    implementation("com.google.android.material:material:1.4.0")
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("com.google.android.material:material:1.5.0")
 
     implementation(libs.compose.ui)
     implementation(libs.compose.material)
     implementation(libs.compose.uiTooling)
 
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02")
-    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation(libs.compose.constraint)
+    implementation(libs.compose.activity)
 
     testImplementation("junit:junit:4.13.2")
 
@@ -79,6 +83,17 @@ dependencies {
 
     implementation  (libs.datastore.datastore)
     implementation  ("com.google.protobuf:protobuf-javalite:3.10.0")
+
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+
+    implementation(libs.androidx.lifecycle) //lifecycleScope
+    val playServicesWearableVersion = "17.1.0"
+    val coroutinesVersion = "1.6.0"
+    implementation("com.google.android.gms:play-services-wearable:$playServicesWearableVersion") //Wearable
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion") //connectedNodes.await()
+
+
 
 }
 

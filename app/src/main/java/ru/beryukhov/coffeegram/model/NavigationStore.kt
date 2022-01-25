@@ -50,16 +50,16 @@ class NavigationStore(val yearMonth: YearMonth = YearMonth.now()) : InMemoryStor
 }
 
 
-sealed class NavigationIntent {
-    object NextMonth : NavigationIntent()
-    object PreviousMonth : NavigationIntent()
-    data class OpenCoffeeListPage(val dayOfMonth: Int) : NavigationIntent()
-    object ReturnToTablePage : NavigationIntent()
-    object ToSettingsPage : NavigationIntent()
+sealed interface NavigationIntent {
+    object NextMonth : NavigationIntent
+    object PreviousMonth : NavigationIntent
+    data class OpenCoffeeListPage(val dayOfMonth: Int) : NavigationIntent
+    object ReturnToTablePage : NavigationIntent
+    object ToSettingsPage : NavigationIntent
 }
 
-sealed class NavigationState {
-    class TablePage(val yearMonth: YearMonth) : NavigationState()
-    data class CoffeeListPage(val date: LocalDate) : NavigationState()
-    object SettingsPage : NavigationState()
+sealed interface NavigationState {
+    class TablePage(val yearMonth: YearMonth) : NavigationState
+    data class CoffeeListPage(val date: LocalDate) : NavigationState
+    object SettingsPage : NavigationState
 }

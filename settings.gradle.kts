@@ -6,3 +6,5 @@ include(":app")
 include(":repository")
 
 includeBuild("build-logic")
+include(":wear")
+include(":app-wear-common")

@@ -7,11 +7,14 @@ import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.repository.CoffeeStorage
 import ru.beryukhov.coffeegram.store_lib.PersistentStore
+import ru.beryukhov.coffeegram.store_lib.Store
 
-class DaysCoffeesStore : PersistentStore<DaysCoffeesIntent, DaysCoffeesState>(
+interface DaysCoffeesStore: Store<DaysCoffeesIntent, DaysCoffeesState>
+
+class HeavyDaysCoffeesStore : PersistentStore<DaysCoffeesIntent, DaysCoffeesState>(
     initialState = DaysCoffeesState(),
     storage = CoffeeStorage()
-) {
+),DaysCoffeesStore {
 
     override fun handleIntent(intent: DaysCoffeesIntent): DaysCoffeesState {
         return when (intent) {
@@ -78,12 +81,12 @@ internal fun changeCoffeeCount(
     return newValue
 }
 
-sealed class DaysCoffeesIntent {
+sealed interface DaysCoffeesIntent {
     data class PlusCoffee(val localDate: LocalDate, val coffeeType: CoffeeType) :
-        DaysCoffeesIntent()
+        DaysCoffeesIntent
 
     data class MinusCoffee(val localDate: LocalDate, val coffeeType: CoffeeType) :
-        DaysCoffeesIntent()
+        DaysCoffeesIntent
 }
 
 data class DaysCoffeesState(override val value: Map<LocalDate, DayCoffee> = mapOf()) :
