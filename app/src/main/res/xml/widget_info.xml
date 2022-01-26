@@ -3,6 +3,10 @@
     android:description="@string/app_widget_description"
     android:minWidth="180dp"
     android:minHeight="50dp"
+    android:minResizeHeight="50dp"
+    android:minResizeWidth="180dp"
+    android:maxResizeHeight="240dp"
+    android:maxResizeWidth="500dp"
     android:initialLayout="@layout/widget_loading"
     android:previewImage="@drawable/logo_splash"
     android:previewLayout="@layout/widget_first_glance_preview"
@@ -10,3 +14,22 @@
     android:targetCellWidth="3"
     android:targetCellHeight="1"
     android:widgetCategory="home_screen|keyguard|searchbox" /><!--todo check this categories-->
+
+<!--
+    >before Android 12
+    android:minWidth="180dp"
+    android:minHeight="50dp"
+    >since Android 12
+    android:minResizeHeight="50dp"
+    android:minResizeWidth="180dp"
+    android:maxResizeHeight="450dp"
+    android:maxResizeWidth="570dp"
+
+    >before Android 12
+    android:previewImage="@drawable/logo_splash"
+    >since Android 12
+    android:previewLayout="@layout/widget_first_glance_preview"
+    android:description="@string/app_widget_description"
+
+
+-->
