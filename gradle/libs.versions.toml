@@ -2,7 +2,7 @@
 kotlin = "1.6.10"
 agp = "7.0.4"
 realm = "0.8.0"
-compose = "1.2.0-alpha01"
+compose = "1.2.0-alpha02"
 wearCompose = "1.0.0-alpha14"
 coroutines = "1.6.0-native-mt"
 datastore = "1.0.0"
