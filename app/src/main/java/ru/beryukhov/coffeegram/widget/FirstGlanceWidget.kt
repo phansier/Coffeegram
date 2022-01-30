@@ -1,7 +1,6 @@
 package ru.beryukhov.coffeegram.widget;
 
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
@@ -22,9 +21,13 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
+import androidx.glance.layout.Spacer
+import androidx.glance.layout.fillMaxHeight
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.height
+import androidx.glance.layout.padding
+import androidx.glance.layout.size
 import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
@@ -34,6 +37,8 @@ import androidx.glance.unit.ColorProvider
 import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.brown500
+import ru.beryukhov.coffeegram.data.CoffeeType
+
 
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error) {
 
@@ -45,9 +50,9 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
 //        private val SMALL_SQUARE = DpSize(50.dp, 50.dp)
 //        private val HORIZONTAL_RECTANGLE = DpSize(100.dp, 50.dp)
 //        private val BIG_SQUARE = DpSize(100.dp, 100.dp)
-        private val SMALL_SQUARE = DpSize(180.dp, 110.dp)
-        private val HORIZONTAL_RECTANGLE = DpSize(270.dp, 110.dp)
-        private val BIG_SQUARE = DpSize(270.dp, 280.dp)
+        private val SMALL_SQUARE = DpSize(110.dp, 110.dp)
+        private val HORIZONTAL_RECTANGLE = DpSize(270.dp, 70.dp)
+        private val BIG_SQUARE = DpSize(270.dp, 140.dp)
     }
 
     //override val sizeMode: SizeMode = SizeMode.Exact
@@ -67,13 +72,19 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                 .fillMaxSize()
                 .background(color = MaterialTheme.colors.background)
         )*/
+        Box(
+            modifier = GlanceModifier.background(
+                day = brown500,
+                night = Color.DarkGray
+            )
+        ) {
 
-        when {
-            size.width <= SMALL_SQUARE.width && size.height <= SMALL_SQUARE.height -> SmallWidget()
-            size.width <= HORIZONTAL_RECTANGLE.width && size.height <= HORIZONTAL_RECTANGLE.height -> HorizontalWidget()
-            else -> BigWidget()
+            when {
+                size.width <= SMALL_SQUARE.width && size.height <= SMALL_SQUARE.height -> SmallWidget()
+                size.width <= HORIZONTAL_RECTANGLE.width && size.height <= HORIZONTAL_RECTANGLE.height -> HorizontalWidget()
+                else -> BigWidget()
+            }
         }
-
     }
 
     @Composable
@@ -82,10 +93,6 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
             contentAlignment = Alignment.Center,
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(
-                    day = brown500,
-                    night = Color.DarkGray
-                )
                 .clickable(
                     actionStartActivity<MainActivity>(
                         /*todo add parameters to open daycoffees list*/
@@ -123,10 +130,87 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     }
 
     @Composable
-    fun HorizontalWidget() {
-        Row {
-            Text("Horizontal")
-            Text("Horizontal")
+    fun HorizontalWidget(coffeeType: CoffeeType = CoffeeType.Cappuccino) {
+        Row(
+            modifier = GlanceModifier.padding(16.dp).fillMaxSize()
+        ) {
+            Column(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = GlanceModifier
+                    .fillMaxHeight()
+            ) {
+                Image(
+                    provider = AndroidResourceImageProvider(resId = coffeeType.iconId),
+                    contentDescription = "",
+                    modifier = GlanceModifier
+                        .fillMaxHeight()
+                        .size(48.dp)
+                )
+            }
+            Spacer(GlanceModifier.width(16.dp))
+            //workaround for aligning text in center by vertical
+            Column(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = GlanceModifier
+                    .fillMaxSize()
+                    .defaultWeight()
+            ) {
+                Text(
+                    "TodoText",//stringResource(coffeeType.nameId),
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        textAlign = TextAlign.Center,
+                        color = ColorProvider(Color.White),
+                    ),
+                    modifier = GlanceModifier
+                        .fillMaxWidth()
+                )
+            }
+            /*Row(modifier = Modifier.align(androidx.compose.ui.Alignment.CenterVertically)) {
+                Spacer(Modifier.width(16.dp))
+                val textButtonModifier = Modifier
+                    .align(androidx.compose.ui.Alignment.CenterVertically)
+                    .sizeIn(
+                        maxWidth = 32.dp,
+                        maxHeight = 32.dp,
+                        minWidth = 0.dp,
+                        minHeight = 0.dp
+                    )
+                val isReduceCountAllowed = count > 0
+                TextButton(
+                    enabled = isReduceCountAllowed,
+                    onClick = {
+                        coffeeListViewModel.newIntent(
+                            DaysCoffeesIntent.MinusCoffee(
+                                localDate,
+                                coffeeType
+                            )
+                        )
+                    },
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = textButtonModifier
+                ) {
+                    androidx.compose.material.Text("-")
+                }
+                androidx.compose.material.Text(
+                    "$count", style = typography.body2,
+                    modifier = Modifier.align(androidx.compose.ui.Alignment.CenterVertically)
+                )
+                TextButton(
+                    onClick = {
+                        coffeeListViewModel.newIntent(
+                            DaysCoffeesIntent.PlusCoffee(
+                                localDate,
+                                coffeeType
+                            )
+                        )
+                    },
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = textButtonModifier
+                ) {
+                    androidx.compose.material.Text("+")
+                }
+            }*/
         }
     }
 
@@ -134,10 +218,12 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     fun BigWidget() {
         LazyColumn {
             items(listOf(Unit, Unit)) {
-                HorizontalWidget()
+                Row {
+                    Text("Horizontal")
+                    Text("Horizontal")
+                }
             }
         }
     }
-
 
 }
