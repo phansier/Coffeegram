@@ -15,9 +15,9 @@ import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.SizeMode
+import androidx.glance.appwidget.background
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
-import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
@@ -33,6 +33,7 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
+import ru.beryukhov.coffeegram.app_ui.brown500
 
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error) {
 
@@ -81,7 +82,10 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
             contentAlignment = Alignment.Center,
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(color = MaterialTheme.colors.background)
+                .background(
+                    day = brown500,
+                    night = Color.DarkGray
+                )
                 .clickable(
                     actionStartActivity<MainActivity>(
                         /*todo add parameters to open daycoffees list*/
