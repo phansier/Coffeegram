@@ -130,9 +130,12 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     }
 
     @Composable
-    fun HorizontalWidget(coffeeType: CoffeeType = CoffeeType.Cappuccino) {
+    fun HorizontalWidget(
+        coffeeType: CoffeeType = CoffeeType.Cappuccino,
+        modifier: GlanceModifier = GlanceModifier.padding(24.dp).fillMaxSize()
+    ) {
         Row(
-            modifier = GlanceModifier.padding(16.dp).fillMaxSize()
+            modifier = modifier
         ) {
             Column(
                 verticalAlignment = Alignment.CenterVertically,
@@ -216,12 +219,15 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
 
     @Composable
     fun BigWidget() {
-        LazyColumn {
-            items(listOf(Unit, Unit)) {
-                Row {
+        LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
+            items(listOf(Unit, Unit, Unit)) {
+                HorizontalWidget(
+                    modifier = GlanceModifier.padding(24.dp).fillMaxWidth().height(100.dp)
+                )
+                /*Row {
                     Text("Horizontal")
                     Text("Horizontal")
-                }
+                }*/
             }
         }
     }
