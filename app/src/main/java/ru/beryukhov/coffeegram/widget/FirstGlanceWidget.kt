@@ -7,8 +7,10 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.AndroidResourceImageProvider
+import androidx.glance.Button
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
@@ -132,8 +134,10 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     @Composable
     fun HorizontalWidget(
         coffeeType: CoffeeType = CoffeeType.Cappuccino,
+        count: Int = 5,
         modifier: GlanceModifier = GlanceModifier.padding(24.dp).fillMaxSize()
     ) {
+        val padding = 16.dp
         Row(
             modifier = modifier
         ) {
@@ -159,7 +163,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                     .defaultWeight()
             ) {
                 Text(
-                    "TodoText",//stringResource(coffeeType.nameId),
+                    text = LocalContext.current.getString(coffeeType.nameId),
                     style = TextStyle(
                         fontSize = 16.sp,
                         textAlign = TextAlign.Center,
@@ -169,51 +173,40 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                         .fillMaxWidth()
                 )
             }
-            /*Row(modifier = Modifier.align(androidx.compose.ui.Alignment.CenterVertically)) {
-                Spacer(Modifier.width(16.dp))
-                val textButtonModifier = Modifier
-                    .align(androidx.compose.ui.Alignment.CenterVertically)
-                    .sizeIn(
-                        maxWidth = 32.dp,
-                        maxHeight = 32.dp,
-                        minWidth = 0.dp,
-                        minHeight = 0.dp
+            Column(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = GlanceModifier
+                    .fillMaxHeight()
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Spacer(GlanceModifier.width(16.dp))
+                    val isReduceCountAllowed = count > 0
+                    Button(
+                        text = "-",
+                        enabled = isReduceCountAllowed,
+                        modifier = GlanceModifier.width(32.dp).height(48.dp),
+                        onClick = actionStartActivity<MainActivity>()//todo replace action
                     )
-                val isReduceCountAllowed = count > 0
-                TextButton(
-                    enabled = isReduceCountAllowed,
-                    onClick = {
-                        coffeeListViewModel.newIntent(
-                            DaysCoffeesIntent.MinusCoffee(
-                                localDate,
-                                coffeeType
-                            )
+                    Spacer(GlanceModifier.width(padding))
+
+                    Text(
+                        "$count",
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            color = ColorProvider(Color.White),
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center,
+                        ),
+
                         )
-                    },
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = textButtonModifier
-                ) {
-                    androidx.compose.material.Text("-")
+                    Spacer(GlanceModifier.width(padding))
+                    Button(
+                        text = "+",
+                        modifier = GlanceModifier.width(32.dp).height(48.dp),
+                        onClick = actionStartActivity<MainActivity>()//todo replace action
+                    )
                 }
-                androidx.compose.material.Text(
-                    "$count", style = typography.body2,
-                    modifier = Modifier.align(androidx.compose.ui.Alignment.CenterVertically)
-                )
-                TextButton(
-                    onClick = {
-                        coffeeListViewModel.newIntent(
-                            DaysCoffeesIntent.PlusCoffee(
-                                localDate,
-                                coffeeType
-                            )
-                        )
-                    },
-                    contentPadding = PaddingValues(0.dp),
-                    modifier = textButtonModifier
-                ) {
-                    androidx.compose.material.Text("+")
-                }
-            }*/
+            }
         }
     }
 
@@ -224,10 +217,6 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                 HorizontalWidget(
                     modifier = GlanceModifier.padding(24.dp).fillMaxWidth().height(100.dp)
                 )
-                /*Row {
-                    Text("Horizontal")
-                    Text("Horizontal")
-                }*/
             }
         }
     }
