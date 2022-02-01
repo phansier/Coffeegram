@@ -61,7 +61,8 @@ dependencies {
 
     implementation(libs.compose.ui)
     implementation(libs.compose.material)
-    implementation(libs.compose.uiTooling)
+    debugImplementation(libs.compose.uiTooling)
+    implementation(libs.compose.preview)
 
     implementation(libs.compose.constraint)
     implementation(libs.compose.activity)

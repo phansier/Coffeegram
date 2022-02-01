@@ -2,7 +2,7 @@
 kotlin = "1.6.10"
 agp = "7.0.4"
 realm = "0.8.0"
-compose = "1.2.0-alpha01"
+compose = "1.2.0-alpha02"
 wearCompose = "1.0.0-alpha14"
 coroutines = "1.6.0-native-mt"
 datastore = "1.0.0"
@@ -19,6 +19,7 @@ realmKotlin = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
+compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
 compose-activity = "androidx.activity:activity-compose:1.4.0"
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.0"
