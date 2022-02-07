@@ -9,6 +9,13 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Chip
+import androidx.compose.material.ChipDefaults
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,12 +26,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.LocalContentAlpha
-import androidx.wear.compose.material.ScalingLazyColumn
-import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.itemsIndexed
+//import androidx.wear.compose.material.Chip
+//import androidx.wear.compose.material.ChipDefaults
+//import androidx.wear.compose.material.LocalContentAlpha
+//import androidx.wear.compose.material.ScalingLazyColumn
+//import androidx.wear.compose.material.Text
+//import androidx.wear.compose.material.itemsIndexed
 import kotlinx.coroutines.flow.MutableStateFlow
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
@@ -48,7 +55,7 @@ class WearActivity : ComponentActivity() {
 @Composable
 fun PagesContent() {
     val dayCoffee by coffeeState.collectAsState()
-    ScalingLazyColumn(
+    LazyColumn(
         modifier = Modifier.fillMaxHeight(),
         contentPadding = PaddingValues(
             top = 28.dp,
@@ -65,20 +72,21 @@ fun PagesContent() {
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CoffeeItem(c: CoffeeType, count: Int) {
     Chip(
-        icon = {
+        leadingIcon = {
             Image(
                 painter = painterResource(id = c.iconId),
                 contentDescription = "",
 
                 modifier = Modifier
-                    .size(ChipDefaults.IconSize)
+                    .size(ChipDefaults.MinHeight)
                     .alpha(LocalContentAlpha.current)
             )
         },
-        label = {
+        content = {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center,
