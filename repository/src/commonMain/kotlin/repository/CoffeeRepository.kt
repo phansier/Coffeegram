@@ -1,7 +1,7 @@
 package repository
 
 import io.realm.Realm
-import io.realm.objects
+import io.realm.query
 import io.realm.RealmConfiguration
 import repository.model.DbDayCoffee
 import repository.model.RealmDayCoffee
@@ -16,7 +16,7 @@ class CoffeeRepository {
 
     // blocking
     fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>) {
-        val all = realm.objects<RealmDayCoffee>()
+        val all = realm.query<RealmDayCoffee>().find()
         if (all.isEmpty()) {
             create(dbDateCoffees)
         } else {
@@ -56,6 +56,6 @@ class CoffeeRepository {
     }
 
     fun getAll(): List<DbDayCoffee> {
-        return realm.objects<RealmDayCoffee>().map { it.toDb() }
+        return realm.query<RealmDayCoffee>().find().map { it.toDb() }
     }
 }
