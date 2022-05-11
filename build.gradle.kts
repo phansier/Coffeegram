@@ -1,3 +1,7 @@
+plugins {
+    id("convention.detekt")
+}
+
 buildscript {
     repositories {
         google()
@@ -18,6 +22,6 @@ allprojects {
     }
 }
 
-task<Delete>("clean") {
-    delete(rootProject.buildDir)
-}
+//task<Delete>("clean") {
+//    delete(rootProject.buildDir)
+//}
