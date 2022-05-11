@@ -11,32 +11,31 @@ import ru.beryukhov.coffeegram.pages.CoffeeListPage
 import ru.beryukhov.coffeegram.pages.TablePage
 
 abstract class PageObject<out T : PageObject<T>> {
-    abstract val Page: @Composable () -> Unit
+    abstract val page: @Composable () -> Unit
 }
 typealias PageElement = ComposeTestRule.() -> SemanticsNodeInteraction
 
 object TablePageObject : PageObject<TablePageObject>() {
-    override val Page: @Composable () -> Unit = {
+    override val page: @Composable () -> Unit = {
         Column {
             TablePage(
                 TODO(),
                 TODO(),
-                TODO()
             )
         }
     }
     val ComposeTestRule.LeftArrowButton get() = onNodeWithContentDescription("ArrowLeft")
     val ComposeTestRule.RightArrowButton get() = onNodeWithTag("ArrowRight")
 
-    //todo more complex logic to determine widgets than by it's text
+    // todo more complex logic to determine widgets than by it's text
     fun ComposeTestRule.Month(name: String) = onNodeWithText(name)
     fun ComposeTestRule.Day(number: String) = onNodeWithText(number)
 }
 
 object CoffeeListPageObject : PageObject<CoffeeListPageObject>() {
-    override val Page: @Composable () -> Unit = { CoffeeListPage(TODO()) }
+    override val page: @Composable () -> Unit = { CoffeeListPage(TODO()) }
 
-    //todo more complex logic to determine widgets than by it's text
+    // todo more complex logic to determine widgets than by it's text
     val ComposeTestRule.CappuccinoItem get() = onNodeWithText("Cappuccino")
     val ComposeTestRule.LatteItem get() = onNodeWithText("Latte")
 }

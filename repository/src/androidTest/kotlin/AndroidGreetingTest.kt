@@ -6,6 +6,6 @@ class AndroidGreetingTest {
 
     @Test
     fun testExample() {
-        //todo
+        // todo
     }
 }

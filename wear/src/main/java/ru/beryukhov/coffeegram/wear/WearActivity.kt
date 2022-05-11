@@ -32,8 +32,6 @@ import ru.beryukhov.coffeegram.data.DayCoffee
 val coffeeState: MutableStateFlow<DayCoffee> by lazy { MutableStateFlow(value = DayCoffee()) }
 
 class WearActivity : ComponentActivity() {
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -89,8 +87,7 @@ fun CoffeeItem(c: CoffeeType, count: Int) {
     )
 }
 
-
-//todo share it
+// todo share it
 @VisibleForTesting
 internal fun Map<CoffeeType, Int>.withEmpty(): List<Pair<CoffeeType, Int>> {
     data class MutablePair(val ct: CoffeeType, var count: Int)

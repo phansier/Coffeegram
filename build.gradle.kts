@@ -1,3 +1,7 @@
+plugins {
+    id("convention.detekt")
+}
+
 buildscript {
     repositories {
         google()
@@ -10,14 +14,9 @@ buildscript {
     }
 }
 
-
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
-}
-
-task<Delete>("clean") {
-    delete(rootProject.buildDir)
 }

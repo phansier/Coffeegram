@@ -20,9 +20,7 @@ class CoffeeStorage(private val repository: CoffeeRepository = lazy_repository) 
     override suspend fun saveState(state: DaysCoffeesState) {
         repository.createOrUpdate(state.value.toDaysCoffeesList())
     }
-
 }
-
 
 @VisibleForTesting
 internal fun List<DbDayCoffee>.toState(): DaysCoffeesState {

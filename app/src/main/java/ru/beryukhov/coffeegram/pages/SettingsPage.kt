@@ -26,7 +26,6 @@ import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.model.getThemeStoreStub
 
-
 @Preview
 @Composable
 fun SettingsPagePreview() {
@@ -40,7 +39,7 @@ fun SettingsPagePreview() {
 }
 
 @Composable
-fun ColumnScope.SettingsPage(themeStore: ThemeStore, startWearableActivity: ()-> Unit = {}) {
+fun ColumnScope.SettingsPage(themeStore: ThemeStore, startWearableActivity: () -> Unit = {}) {
     Column(modifier = Modifier.weight(1f)) {
         Text(
             stringResource(R.string.app_theme),

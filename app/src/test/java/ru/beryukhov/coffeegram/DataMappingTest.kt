@@ -3,6 +3,7 @@ package ru.beryukhov.coffeegram
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.threeten.bp.LocalDate
+import repository.model.DbDayCoffee
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeType.Americano
 import ru.beryukhov.coffeegram.data.CoffeeType.Cappuccino
@@ -11,7 +12,6 @@ import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.changeCoffeeCount
 import ru.beryukhov.coffeegram.pages.withEmpty
-import repository.model.DbDayCoffee
 import ru.beryukhov.coffeegram.repository.toDaysCoffeesList
 import ru.beryukhov.coffeegram.repository.toState
 

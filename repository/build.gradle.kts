@@ -13,10 +13,7 @@ kotlin {
     android()
 
     val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
-            ::iosArm64
-        else
-            ::iosX64
+        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true) ::iosArm64 else ::iosX64
 
     iosTarget("ios") {}
 
@@ -29,7 +26,8 @@ kotlin {
         }
         // set path to your ios project podfile, e.g. podfile = project.file("../iosApp/Podfile")
     }
-    
+
+    @Suppress("UnusedPrivateMember")
     sourceSets {
         val commonMain by getting {
             dependencies {

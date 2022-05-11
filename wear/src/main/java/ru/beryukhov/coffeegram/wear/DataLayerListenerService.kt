@@ -18,13 +18,11 @@ interface MessageHandler {
 class MessageHandlerImpl(private val context: Context) : MessageHandler {
     override fun onMessageReceived(messageEvent: MessageEvent) {
         when (messageEvent.path) {
-            START_ACTIVITY_PATH -> {
-                startActivity(
-                    context,
-                    Intent(context, WearActivity::class.java)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), null
-                )
-            }
+            START_ACTIVITY_PATH -> startActivity(
+                context,
+                Intent(context, WearActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), null
+            )
         }
     }
 }
@@ -33,22 +31,21 @@ interface DataHandler {
     fun onDataReceived(dataEvent: DataEvent)
 }
 
-class DataHandlerImpl() : DataHandler {
+class DataHandlerImpl : DataHandler {
     override fun onDataReceived(dataEvent: DataEvent) {
         val uri = dataEvent.dataItem.uri
         when (uri.path) {
-            DAY_COFFEE_PATH -> {
-                DataMapItem.fromDataItem(dataEvent.dataItem).dataMap.getIntegerArrayList(KEY)?.toDayCoffee()?.let{
+            DAY_COFFEE_PATH ->
+                DataMapItem.fromDataItem(dataEvent.dataItem).dataMap.getIntegerArrayList(KEY)?.toDayCoffee()?.let {
                     coffeeState.value = it
                 }
-            }
         }
     }
 }
 
-class DataLayerListenerService() : WearableListenerService() {
+class DataLayerListenerService : WearableListenerService() {
     private val messageHandler: MessageHandler by lazy { MessageHandlerImpl(this) }
-    private val dataHandler: DataHandler by lazy {DataHandlerImpl()}
+    private val dataHandler: DataHandler by lazy { DataHandlerImpl() }
 
     override fun onMessageReceived(messageEvent: MessageEvent) {
         super.onMessageReceived(messageEvent)
@@ -59,10 +56,10 @@ class DataLayerListenerService() : WearableListenerService() {
         super.onDataChanged(dataEvents)
 
         dataEvents.forEach { dataEvent ->
-           dataHandler.onDataReceived(dataEvent)
+            dataHandler.onDataReceived(dataEvent)
         }
     }
 }
 
-private const val START_ACTIVITY_PATH = "/start-activity" //todo move to common
+private const val START_ACTIVITY_PATH = "/start-activity" // todo move to common
 private const val DAY_COFFEE_PATH = "/coffee"

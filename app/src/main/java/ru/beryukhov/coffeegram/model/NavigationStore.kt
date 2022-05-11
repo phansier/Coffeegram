@@ -13,28 +13,17 @@ class NavigationStore(val yearMonth: YearMonth = YearMonth.now()) : InMemoryStor
 
     override suspend fun handleIntent(intent: NavigationIntent): NavigationState {
         return when (intent) {
-            NavigationIntent.NextMonth -> {
-                NavigationState.TablePage(increaseMonth())
-
-            }
-            NavigationIntent.PreviousMonth -> {
-                NavigationState.TablePage(decreaseMonth())
-            }
-            is NavigationIntent.OpenCoffeeListPage -> {
-                NavigationState.CoffeeListPage(
-                    LocalDate.of(
-                        currentMonth.value.year,
-                        currentMonth.value.month,
-                        intent.dayOfMonth
-                    )
+            NavigationIntent.NextMonth -> NavigationState.TablePage(increaseMonth())
+            NavigationIntent.PreviousMonth -> NavigationState.TablePage(decreaseMonth())
+            is NavigationIntent.OpenCoffeeListPage -> NavigationState.CoffeeListPage(
+                LocalDate.of(
+                    currentMonth.value.year,
+                    currentMonth.value.month,
+                    intent.dayOfMonth
                 )
-            }
-            NavigationIntent.ReturnToTablePage -> {
-                NavigationState.TablePage(currentMonth.value)
-            }
-            NavigationIntent.ToSettingsPage -> {
-                NavigationState.SettingsPage
-            }
+            )
+            NavigationIntent.ReturnToTablePage -> NavigationState.TablePage(currentMonth.value)
+            NavigationIntent.ToSettingsPage -> NavigationState.SettingsPage
         }
     }
 
@@ -48,7 +37,6 @@ class NavigationStore(val yearMonth: YearMonth = YearMonth.now()) : InMemoryStor
         return currentMonth.value
     }
 }
-
 
 sealed interface NavigationIntent {
     object NextMonth : NavigationIntent

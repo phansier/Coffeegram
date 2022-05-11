@@ -15,7 +15,7 @@ import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationStore
 
-interface CoffeeListViewModel{
+interface CoffeeListViewModel {
     @Composable
     fun getDayCoffeesWithEmpty(localDate: LocalDate): List<Pair<CoffeeType, Int>>
 
@@ -23,7 +23,7 @@ interface CoffeeListViewModel{
     fun newIntent(intent: NavigationIntent)
 }
 
-object CoffeeListViewModelStub: CoffeeListViewModel {
+object CoffeeListViewModelStub : CoffeeListViewModel {
     override fun newIntent(intent: DaysCoffeesIntent) = Unit
     override fun newIntent(intent: NavigationIntent) = Unit
 
@@ -34,15 +34,14 @@ object CoffeeListViewModelStub: CoffeeListViewModel {
 
 val localDateStub: LocalDate = LocalDate.now(ZoneId.of("Z"))
 
-
 class CoffeeListViewModelImpl(
     private val daysCoffeesStore: DaysCoffeesStore,
     private val navigationStore: NavigationStore
-): ViewModel(), CoffeeListViewModel {
+) : ViewModel(), CoffeeListViewModel {
     @Composable
     override fun getDayCoffeesWithEmpty(localDate: LocalDate): List<Pair<CoffeeType, Int>> {
         val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
-        val dayCoffee = dayCoffeeState.value[localDate]?: DayCoffee()
+        val dayCoffee = dayCoffeeState.value[localDate] ?: DayCoffee()
         return dayCoffee.coffeeCountMap.withEmpty()
     }
 
@@ -55,16 +54,14 @@ class CoffeeListViewModelImpl(
     }
 }
 
-
-
 @VisibleForTesting
 internal fun Map<CoffeeType, Int>.withEmpty(): List<Pair<CoffeeType, Int>> {
-    data class MutablePair(val ct: CoffeeType, var count:Int)
+    data class MutablePair(val ct: CoffeeType, var count: Int)
 
     val emptyList: MutableList<MutablePair> =
         CoffeeType.values().toList().map { MutablePair(it, 0) }.toMutableList()
     this.forEach { entry: Map.Entry<CoffeeType, Int> ->
-        emptyList.filter{it.ct == entry.key}.forEach { it.count = entry.value }
+        emptyList.filter { it.ct == entry.key }.forEach { it.count = entry.value }
     }
-    return emptyList.map {it.ct to it.count}
+    return emptyList.map { it.ct to it.count }
 }

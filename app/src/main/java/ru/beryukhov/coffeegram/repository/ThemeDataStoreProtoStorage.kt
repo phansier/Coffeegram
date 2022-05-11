@@ -1,7 +1,6 @@
 package ru.beryukhov.coffeegram.repository
 
 import android.content.Context
-
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import androidx.datastore.migrations.SharedPreferencesMigration
@@ -13,7 +12,7 @@ import ru.beryukhov.coffeegram.store_lib.Storage
 
 private const val DATA_STORE_FILE_NAME = "user_prefs.pb"
 
-class ThemeDataStoreProtoStorage(private val context: Context): Storage<ThemeState> {
+class ThemeDataStoreProtoStorage(private val context: Context) : Storage<ThemeState> {
 
     private val Context.dataStore: DataStore<ThemePreferences> by dataStore(
         fileName = DATA_STORE_FILE_NAME,
@@ -47,9 +46,8 @@ class ThemeDataStoreProtoStorage(private val context: Context): Storage<ThemeSta
         currentData
     }
 
-
     override suspend fun getState(): ThemeState? {
-        //do not confuse with `lastOrNull()`, it will be waiting for completion inside otherwise
+        // do not confuse with `lastOrNull()`, it will be waiting for completion inside otherwise
         return context.dataStore.data.firstOrNull()
             ?.themeState.mapOrNull()
     }
@@ -59,7 +57,6 @@ class ThemeDataStoreProtoStorage(private val context: Context): Storage<ThemeSta
             preferences.toBuilder().setThemeState(state.map()).build()
         }
     }
-
 }
 
 private fun ThemeState.map(): ProtoThemeState {

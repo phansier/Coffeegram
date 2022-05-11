@@ -13,7 +13,6 @@ import org.threeten.bp.YearMonth
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.model.getThemeStoreStub
 
-
 class ExampleComposeTest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -45,7 +44,6 @@ class ExampleComposeTest {
                 Month("October").assertIsDisplayed()
             }
         }
-
     }
 
     @Test
@@ -73,4 +71,3 @@ class ExampleComposeTest {
             block()
         }
 }
-

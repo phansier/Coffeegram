@@ -20,5 +20,5 @@ enum class CoffeeType(
     Irish(R.string.irish, R.drawable.irish),
     Cocoa(R.string.cocoa, R.drawable.cocoa),
     Chocolate(R.string.chocolate, R.drawable.chocolate),
-    //icons from here: https://www.freepik.com/free-vector/list-different-types-coffee_951047.htm
+    // icons from here: https://www.freepik.com/free-vector/list-different-types-coffee_951047.htm
 }

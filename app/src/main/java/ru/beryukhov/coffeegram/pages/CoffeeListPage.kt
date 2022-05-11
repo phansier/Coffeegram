@@ -24,7 +24,6 @@ import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
-
 @Composable
 fun CoffeeListAppBar(
     localDate: LocalDate,
@@ -48,7 +47,6 @@ private val dateFormatter = DateTimeFormatterBuilder()
     .appendText(ChronoField.MONTH_OF_YEAR, TextStyle.SHORT)
     .toFormatter()
 
-
 @Composable
 fun CoffeeListPage(localDate: LocalDate) {
     CoffeeList(
@@ -56,7 +54,6 @@ fun CoffeeListPage(localDate: LocalDate) {
         coffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
     )
 }
-
 
 @Composable
 fun CoffeeList(

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 @Composable
 fun BottomMenu(selectedItemFlow: MutableStateFlow<Int>) {
     val items = listOf("Calendar" to Icons.Filled.DateRange, "Info" to Icons.Filled.Info)
-    val selectedItem:Int by selectedItemFlow.collectAsState()
+    val selectedItem: Int by selectedItemFlow.collectAsState()
     BottomNavigation {
         items.forEachIndexed { index, item ->
             BottomNavigationItem(

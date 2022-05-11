@@ -2,6 +2,8 @@
 kotlin = "1.6.10"
 agp = "7.1.2"
 realm = "0.10.2"
+detekt = "1.18.0"
+
 compose = "1.2.0-alpha07"
 wearCompose = "1.0.0-alpha20"
 coroutines = "1.6.0-native-mt"
@@ -13,6 +15,9 @@ lifecycle = "2.4.0"
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 androidGradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 realmGradle = { module = "io.realm.kotlin:gradle-plugin", version.ref = "realm" }
+detektGradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+
+detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 
 realmKotlin = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 

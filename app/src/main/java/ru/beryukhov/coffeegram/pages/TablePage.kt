@@ -30,7 +30,6 @@ import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.view.MonthTable
 
-
 @Composable
 fun TableAppBar(
     yearMonth: YearMonth,
@@ -48,7 +47,6 @@ fun TableAppBar(
                     paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
                 )
             )
-
         }
     },
         navigationIcon = {
