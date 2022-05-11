@@ -9,12 +9,12 @@ import ru.beryukhov.coffeegram.repository.CoffeeStorage
 import ru.beryukhov.coffeegram.store_lib.PersistentStore
 import ru.beryukhov.coffeegram.store_lib.Store
 
-interface DaysCoffeesStore: Store<DaysCoffeesIntent, DaysCoffeesState>
+interface DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>
 
 class HeavyDaysCoffeesStore : PersistentStore<DaysCoffeesIntent, DaysCoffeesState>(
     initialState = DaysCoffeesState(),
     storage = CoffeeStorage()
-),DaysCoffeesStore {
+), DaysCoffeesStore {
 
     override fun handleIntent(intent: DaysCoffeesIntent): DaysCoffeesState {
         return when (intent) {
@@ -59,12 +59,12 @@ class HeavyDaysCoffeesStore : PersistentStore<DaysCoffeesIntent, DaysCoffeesStat
             )
         )
     }
-
 }
 
 @VisibleForTesting
 internal fun changeCoffeeCount(
-    oldValue: Map<LocalDate, DayCoffee>, localDate: LocalDate,
+    oldValue: Map<LocalDate, DayCoffee>,
+    localDate: LocalDate,
     coffeeType: CoffeeType,
     count: Int
 ): Map<LocalDate, DayCoffee> {

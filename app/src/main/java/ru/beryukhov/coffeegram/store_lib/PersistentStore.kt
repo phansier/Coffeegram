@@ -8,20 +8,10 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-
-abstract class PersistentStore<Intent : Any, State : Any>(initialState: State, private val storage: Storage<State>):
+abstract class PersistentStore<Intent : Any, State : Any>(initialState: State, private val storage: Storage<State>) :
     Store<Intent, State> {
     private val _intentChannel = MutableSharedFlow<Intent>()
     private val _state = MutableStateFlow(initialState)
-
-    override val state: StateFlow<State>
-        get() = _state
-
-    override fun newIntent(intent: Intent) {
-        runBlocking {
-            _intentChannel.emit(intent)
-        }
-    }
 
     init {
         GlobalScope.launch {
@@ -29,6 +19,15 @@ abstract class PersistentStore<Intent : Any, State : Any>(initialState: State, p
                 _state.value = it
             }
             handleIntents()
+        }
+    }
+
+    override val state: StateFlow<State>
+        get() = _state
+
+    override fun newIntent(intent: Intent) {
+        runBlocking {
+            _intentChannel.emit(intent)
         }
     }
 
@@ -45,4 +44,3 @@ abstract class PersistentStore<Intent : Any, State : Any>(initialState: State, p
 
     protected abstract fun handleIntent(intent: Intent): State
 }
-

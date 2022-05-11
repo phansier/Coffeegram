@@ -52,5 +52,3 @@ fun newSplashTransition(): SplashTransition {
     }
     return SplashTransition(splashAlpha, contentAlpha, contentTopPadding)
 }
-
-

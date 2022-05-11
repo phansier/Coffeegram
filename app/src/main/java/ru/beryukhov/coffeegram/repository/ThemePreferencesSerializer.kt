@@ -6,7 +6,7 @@ import androidx.datastore.preferences.protobuf.InvalidProtocolBufferException
 import java.io.InputStream
 import java.io.OutputStream
 
-object ThemePreferencesSerializer: Serializer<ThemePreferences> {
+object ThemePreferencesSerializer : Serializer<ThemePreferences> {
     override val defaultValue: ThemePreferences = ThemePreferences.getDefaultInstance().toBuilder()
         .setThemeState(ThemePreferences.ProtoThemeState.SYSTEM).build()
 
@@ -19,6 +19,6 @@ object ThemePreferencesSerializer: Serializer<ThemePreferences> {
     }
 
     override suspend fun writeTo(t: ThemePreferences, output: OutputStream) {
-            t.writeTo(output)
+        t.writeTo(output)
     }
 }

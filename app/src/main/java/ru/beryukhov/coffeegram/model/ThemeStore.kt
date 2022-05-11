@@ -5,7 +5,7 @@ import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
 import ru.beryukhov.coffeegram.store_lib.PersistentStore
 import ru.beryukhov.coffeegram.store_lib.Storage
 
-class ThemeStore(storage: Storage<ThemeState>): PersistentStore<ThemeIntent, ThemeState>(
+class ThemeStore(storage: Storage<ThemeState>) : PersistentStore<ThemeIntent, ThemeState>(
     initialState = ThemeState.SYSTEM,
     storage = storage
 ) {
@@ -19,9 +19,9 @@ class ThemeStore(storage: Storage<ThemeState>): PersistentStore<ThemeIntent, The
 }
 
 sealed class ThemeIntent {
-    object SetDarkIntent: ThemeIntent()
-    object SetLightIntent: ThemeIntent()
-    object SetSystemIntent: ThemeIntent()
+    object SetDarkIntent : ThemeIntent()
+    object SetLightIntent : ThemeIntent()
+    object SetSystemIntent : ThemeIntent()
 }
 
 enum class ThemeState {

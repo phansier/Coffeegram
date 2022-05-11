@@ -2,8 +2,7 @@ plugins {
     `kotlin-dsl`
 }
 
-
-//group = "com.avito.android.buildlogic"
+// group = "com.avito.android.buildlogic"
 
 dependencies {
     // workaround for https://github.com/gradle/gradle/issues/15383

@@ -26,7 +26,6 @@ import ru.beryukhov.coffeegram.pages.CoffeeListViewModel
 import ru.beryukhov.coffeegram.pages.CoffeeListViewModelStub
 import ru.beryukhov.coffeegram.pages.localDateStub
 
-
 @Composable
 fun CoffeeTypeItem(
     localDate: LocalDate,

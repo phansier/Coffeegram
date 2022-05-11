@@ -1,5 +1,5 @@
-import ru.beryukhov.android.withVersionCatalog
 import io.gitlab.arturbosch.detekt.Detekt
+import ru.beryukhov.android.withVersionCatalog
 
 plugins {
     /**

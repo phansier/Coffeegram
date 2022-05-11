@@ -18,42 +18,42 @@ import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.pages.CoffeeListViewModelImpl
 import ru.beryukhov.coffeegram.pages.TablePageViewModelImpl
-import ru.beryukhov.coffeegram.repository.ThemeDataStorePrefStorage
+// import ru.beryukhov.coffeegram.repository.ThemeDataStorePrefStorage
 import ru.beryukhov.coffeegram.repository.ThemeDataStoreProtoStorage
-import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
+// import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
 import ru.beryukhov.coffeegram.store_lib.Storage
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget
 
-
 @Suppress("unused")
-class Application: Application() {
-    override fun onCreate() {
-        super.onCreate()
-        AndroidThreeTen.init(this)
-        startKoin {
-            //workaround for kotlin 1.6.0 see https://github.com/InsertKoinIO/koin/issues/1188
-            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
-            androidContext(this@Application)
-            modules(appModule)
-        }
-        //causes java.lang.IllegalStateException: Reading a state that was created after the snapshot was taken or in a snapshot that has not yet been applied
-        GlobalScope.launch {
-            FirstGlanceWidget().updateAll(this@Application)
-        }
-    }
-
+class Application : Application() {
     private val appModule = module {
         single<Storage<ThemeState>> {
-            //ThemeSharedPrefStorage(context = context)
-            //ThemeDataStorePrefStorage(context = context)
+            // ThemeSharedPrefStorage(context = context)
+            // ThemeDataStorePrefStorage(context = context)
             ThemeDataStoreProtoStorage(context = get())
         }
         single {
             ThemeStore(get())
         }
         single<DaysCoffeesStore> { LightDaysCoffeesStore() }
-        single { NavigationStore()}
+        single { NavigationStore() }
         viewModel { CoffeeListViewModelImpl(daysCoffeesStore = get(), navigationStore = get()) }
         viewModel { TablePageViewModelImpl(daysCoffeesStore = get(), navigationStore = get()) }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        AndroidThreeTen.init(this)
+        startKoin {
+            // workaround for kotlin 1.6.0 see https://github.com/InsertKoinIO/koin/issues/1188
+            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
+            androidContext(this@Application)
+            modules(appModule)
+        }
+        // causes java.lang.IllegalStateException: Reading a state that was created after the snapshot was taken
+        // or in a snapshot that has not yet been applied
+        GlobalScope.launch {
+            FirstGlanceWidget().updateAll(this@Application)
+        }
     }
 }

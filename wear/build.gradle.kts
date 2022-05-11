@@ -13,7 +13,6 @@ android {
         targetSdk = 31
         versionCode = 1
         versionName = "1.0"
-
     }
 
     buildTypes {
@@ -43,5 +42,5 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.compose.uiTooling)
     val playServicesWearableVersion = "17.1.0"
-    implementation ("com.google.android.gms:play-services-wearable:$playServicesWearableVersion")
+    implementation("com.google.android.gms:play-services-wearable:$playServicesWearableVersion")
 }

@@ -60,10 +60,9 @@ class MainActivity : AppCompatActivity() {
     internal val messageClient by lazy { Wearable.getMessageClient(this) }
     internal val dataClient by lazy { Wearable.getDataClient(this) }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.support_simple_spinner_dropdown_item)
+        // setContentView(R.layout.support_simple_spinner_dropdown_item)
         setContent {
             val transition = newSplashTransition()
             Box {
@@ -83,8 +82,7 @@ class MainActivity : AppCompatActivity() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    PagesContent(
-    )
+    PagesContent()
 }
 
 @Composable
@@ -126,57 +124,46 @@ fun PagesContent(
                     is NavigationState.CoffeeListPage -> CoffeeListPage(
                         localDate = currentNavigationState.date
                     )
-                    is NavigationState.SettingsPage -> {
-                        SettingsPage(get(), startWearableActivity)
-                    }
+                    is NavigationState.SettingsPage -> SettingsPage(get(), startWearableActivity)
                 }
                 BottomNavigation(modifier = modifier) {
-                    BottomNavigationItem(selected = currentNavigationState is NavigationState.TablePage,
-                        onClick = {
-                            navigationStore.newIntent(
-                                NavigationIntent.ReturnToTablePage
-                            )
-                        },
-                        label = { Text(stringResource(id = R.string.calendar)) },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Default.Create,
-                                contentDescription = "",
-                            )
-                        }
-                    )
-                    BottomNavigationItem(selected = currentNavigationState is NavigationState.SettingsPage,
-                        onClick = {
-                            navigationStore.newIntent(
-                                NavigationIntent.ToSettingsPage
-                            )
-                        },
-                        label = { Text(stringResource(id = R.string.settings)) },
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Default.Settings,
-                                contentDescription = "",
-                            )
-                        }
-                    )
+                    BottomNavigationItem(selected = currentNavigationState is NavigationState.TablePage, onClick = {
+                        navigationStore.newIntent(
+                            NavigationIntent.ReturnToTablePage
+                        )
+                    }, label = { Text(stringResource(id = R.string.calendar)) }, icon = {
+                        Icon(
+                            imageVector = Icons.Default.Create,
+                            contentDescription = "",
+                        )
+                    })
+                    BottomNavigationItem(selected = currentNavigationState is NavigationState.SettingsPage, onClick = {
+                        navigationStore.newIntent(
+                            NavigationIntent.ToSettingsPage
+                        )
+                    }, label = { Text(stringResource(id = R.string.settings)) }, icon = {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = "",
+                        )
+                    })
                 }
             }
         }
     }
 }
 
-private val TAG = "TestWatch_"
+private const val TAG = "TestWatch_"
 
 private fun MainActivity.startWearableActivity() {
     lifecycleScope.launch {
         try {
-            val nodes = nodeClient.connectedNodes.await() //todo depending on nodes count show or hide button
+            val nodes = nodeClient.connectedNodes.await() // todo depending on nodes count show or hide button
 
             // Send a message to all nodes in parallel
             nodes.map { node ->
                 async {
-                    messageClient.sendMessage(node.id, START_ACTIVITY_PATH, byteArrayOf())
-                        .await()
+                    messageClient.sendMessage(node.id, START_ACTIVITY_PATH, byteArrayOf()).await()
                 }
             }.awaitAll()
 
@@ -188,11 +175,12 @@ private fun MainActivity.startWearableActivity() {
         }
     }
     sendDayCoffee(
-        //todo replace mock
-        DayCoffee(mapOf(
-            CoffeeType.Cappuccino to 1,
-            CoffeeType.Americano to 2
-        ))
+        // todo replace mock
+        DayCoffee(
+            mapOf(
+                CoffeeType.Cappuccino to 1, CoffeeType.Americano to 2
+            )
+        )
     )
 }
 
@@ -201,9 +189,7 @@ private fun MainActivity.sendDayCoffee(dayCoffee: DayCoffee) {
         try {
             val request = PutDataMapRequest.create(DAY_COFFEE_PATH).apply {
                 dayCoffee.toDataMap(dataMap)
-            }
-                .asPutDataRequest()
-                .setUrgent()
+            }.asPutDataRequest().setUrgent()
 
             val result = dataClient.putDataItem(request).await()
 

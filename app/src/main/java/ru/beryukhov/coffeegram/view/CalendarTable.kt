@@ -49,15 +49,19 @@ fun DayCell(
     tablePageViewModel: TablePageViewModel,
     modifier: Modifier = Modifier,
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier =
-    if (dayItem.dayOfMonth == null) modifier else
-        modifier.clickable(onClick = {
-            tablePageViewModel.newIntent(
-                NavigationIntent.OpenCoffeeListPage(
-                    dayItem.dayOfMonth
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally, modifier =
+        if (dayItem.dayOfMonth == null) {
+            modifier
+        } else {
+            modifier.clickable(onClick = {
+                tablePageViewModel.newIntent(
+                    NavigationIntent.OpenCoffeeListPage(
+                        dayItem.dayOfMonth
+                    )
                 )
-            )
-        })
+            })
+        }
     ) {
         with(dayItem) {
             if (iconId != null) {
@@ -105,7 +109,6 @@ fun WeekRow(dayItems: List<DayItem?>) {
         }
         Divider()
     }
-
 }
 
 @Composable
@@ -151,8 +154,7 @@ fun MonthTable(
             })
         .toMutableMap()
     filledDayItemsMap.forEach { days[it.key]?.iconId = it.value }
-    val weekDaysStrings =
-        getWeekDaysNames(LocalContext.current)
+    val weekDaysStrings = getWeekDaysNames(LocalContext.current)
     val numberOfFirstDay = weekDaysStrings.indexOf(
         days[1]!!.weekDay.getDisplayName(
             TextStyle.SHORT,
@@ -161,7 +163,7 @@ fun MonthTable(
     )
     val daysList: List<WeekDayVectorPair> = days.toList().sortedBy { it.first }.map { it.second }
     val firstWeek: List<DayItem> =
-        listOf(DayItem("")) * (numberOfFirstDay) + daysList.take(7 - numberOfFirstDay)
+        listOf(DayItem("")) * numberOfFirstDay + daysList.take(7 - numberOfFirstDay)
             .map(WeekDayVectorPair::toDayItem)
     val secondToSixWeeks: List<List<DayItem>> = listOf(2, 3, 4, 5, 6).map {
         daysList.drop(7 * (it - 1) - numberOfFirstDay).take(7)
@@ -179,7 +181,6 @@ fun MonthTable(
     )
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun TablePreview() {
@@ -195,7 +196,6 @@ fun SampleTable(modifier: Modifier = Modifier) =
         mapOf(2 to R.drawable.coffee),
         modifier = modifier,
     )
-
 
 fun getWeekDaysNames(context: Context): List<String> =
     getWeekDaysNames(context.resources.configuration.locale)

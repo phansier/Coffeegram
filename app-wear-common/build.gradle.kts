@@ -17,6 +17,6 @@ dependencies {
 
     implementation("androidx.annotation:annotation:1.3.0")
     val playServicesWearableVersion = "17.1.0"
-    implementation("com.google.android.gms:play-services-wearable:$playServicesWearableVersion") //Wearable
-
+    // Wearable
+    implementation("com.google.android.gms:play-services-wearable:$playServicesWearableVersion")
 }

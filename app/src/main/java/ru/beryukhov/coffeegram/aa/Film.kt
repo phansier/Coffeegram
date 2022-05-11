@@ -38,7 +38,7 @@ fun FilmPage() {
         // use `item` for separate elements like headers
         // and `items` for lists of identical elements
         item {
-            //todo make text corresponding margins
+            // todo make text corresponding margins
             ConstraintLayout(Modifier) {
                 val (imageView2, tvAge, tvTitle, tvTag, ivStars,
                     tvReviews, view, imageView7, tvBack, storyline, storylineText,
@@ -155,12 +155,14 @@ fun FilmPage() {
                     }
                 )
                 val storylineString =
-                    "After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe."
+                    "After the devastating events of Avengers: Infinity War, the universe is in ruins. " +
+                        "With the help of remaining allies, the Avengers assemble once more in order to reverse " +
+                        "Thanos' actions and restore balance to the universe."
                 Text(text = storylineString,
                     color = colorFromRes(R.color.aa_whitable_text),
                     fontSize = 14.sp,
                     modifier = Modifier.constrainAs(storylineText) {
-                        //todo make text corresponding margins
+                        // todo make text corresponding margins
                         start.linkTo(parent.start, margin = 16.dp)
                         end.linkTo(parent.end, margin = 16.dp)
                         top.linkTo(storyline.bottom, margin = 4.dp)

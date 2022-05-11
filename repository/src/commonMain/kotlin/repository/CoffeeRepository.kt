@@ -1,8 +1,8 @@
 package repository
 
 import io.realm.Realm
-import io.realm.query
 import io.realm.RealmConfiguration
+import io.realm.query
 import repository.model.DbDayCoffee
 import repository.model.RealmDayCoffee
 import repository.model.toDb
@@ -24,7 +24,6 @@ class CoffeeRepository {
         }
     }
 
-
     private fun create(dateCoffees: List<DbDayCoffee>) {
         dateCoffees.forEach {
             realm.writeBlocking {
@@ -40,7 +39,7 @@ class CoffeeRepository {
         newCoffees.forEach { rdc ->
             oldCoffees.firstOrNull { it.date == rdc.date && it.coffeeName == rdc.coffeeName && it.count != rdc.count }
                 ?.also { old ->
-                    //found RDC to update count
+                    // found RDC to update count
                     realm.writeBlocking {
                         findLatest(old)!!.count = rdc.count
                     }

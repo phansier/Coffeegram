@@ -1,5 +1,4 @@
-package ru.beryukhov.coffeegram.widget;
-
+package ru.beryukhov.coffeegram.widget
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
@@ -41,27 +40,12 @@ import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.brown500
 import ru.beryukhov.coffeegram.data.CoffeeType
 
-
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error) {
 
-    companion object {
-        //TODO check this sizes after UI implementation
-//        private val SMALL_SQUARE = DpSize(120.dp, 120.dp)
-//        private val HORIZONTAL_RECTANGLE = DpSize(240.dp, 120.dp)
-//        private val BIG_SQUARE = DpSize(240.dp, 240.dp)
-//        private val SMALL_SQUARE = DpSize(50.dp, 50.dp)
-//        private val HORIZONTAL_RECTANGLE = DpSize(100.dp, 50.dp)
-//        private val BIG_SQUARE = DpSize(100.dp, 100.dp)
-        private val SMALL_SQUARE = DpSize(110.dp, 110.dp)
-        private val HORIZONTAL_RECTANGLE = DpSize(270.dp, 70.dp)
-        private val BIG_SQUARE = DpSize(270.dp, 140.dp)
-    }
-
-    //override val sizeMode: SizeMode = SizeMode.Exact
-    //for Android 12 Responsive layouts feature
+    // override val sizeMode: SizeMode = SizeMode.Exact
+    // for Android 12 Responsive layouts feature
     override val sizeMode: SizeMode =
         SizeMode.Responsive(setOf(SMALL_SQUARE, HORIZONTAL_RECTANGLE, BIG_SQUARE))
-
 
     @Composable
     override fun Content() {
@@ -83,7 +67,8 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
 
             when {
                 size.width <= SMALL_SQUARE.width && size.height <= SMALL_SQUARE.height -> SmallWidget()
-                size.width <= HORIZONTAL_RECTANGLE.width && size.height <= HORIZONTAL_RECTANGLE.height -> HorizontalWidget()
+                size.width <= HORIZONTAL_RECTANGLE.width && size.height <= HORIZONTAL_RECTANGLE.height ->
+                    HorizontalWidget()
                 else -> BigWidget()
             }
         }
@@ -109,7 +94,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                     .height(64.dp)
                     .width(64.dp)
             )
-            //workaround for aligning text in center by vertical
+            // workaround for aligning text in center by vertical
             Column(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = GlanceModifier
@@ -128,7 +113,6 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                 )
             }
         }
-
     }
 
     @Composable
@@ -155,7 +139,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                 )
             }
             Spacer(GlanceModifier.width(16.dp))
-            //workaround for aligning text in center by vertical
+            // workaround for aligning text in center by vertical
             Column(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = GlanceModifier
@@ -185,7 +169,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                         text = "-",
                         enabled = isReduceCountAllowed,
                         modifier = GlanceModifier.width(32.dp).height(48.dp),
-                        onClick = actionStartActivity<MainActivity>()//todo replace action
+                        onClick = actionStartActivity<MainActivity>() // todo replace action
                     )
                     Spacer(GlanceModifier.width(padding))
 
@@ -203,7 +187,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                     Button(
                         text = "+",
                         modifier = GlanceModifier.width(32.dp).height(48.dp),
-                        onClick = actionStartActivity<MainActivity>()//todo replace action
+                        onClick = actionStartActivity<MainActivity>() // todo replace action
                     )
                 }
             }
@@ -221,4 +205,16 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
         }
     }
 
+    companion object {
+        // TODO check this sizes after UI implementation
+        // private val SMALL_SQUARE = DpSize(120.dp, 120.dp)
+        // private val HORIZONTAL_RECTANGLE = DpSize(240.dp, 120.dp)
+        // private val BIG_SQUARE = DpSize(240.dp, 240.dp)
+        // private val SMALL_SQUARE = DpSize(50.dp, 50.dp)
+        // private val HORIZONTAL_RECTANGLE = DpSize(100.dp, 50.dp)
+        // private val BIG_SQUARE = DpSize(100.dp, 100.dp)
+        private val SMALL_SQUARE = DpSize(110.dp, 110.dp)
+        private val HORIZONTAL_RECTANGLE = DpSize(270.dp, 70.dp)
+        private val BIG_SQUARE = DpSize(270.dp, 140.dp)
+    }
 }

@@ -27,9 +27,14 @@ fun Stars(rate: Int, modifier: Modifier = Modifier) {
         },
             itemContent = { _, item ->
                 Image(
-                    painter = painterResource(id = if (item) R.drawable.ic_star_enabled else R.drawable.ic_star_disabled),
+                    painter = painterResource(
+                        id = if (item) R.drawable.ic_star_enabled else R.drawable.ic_star_disabled
+                    ),
                     contentDescription = "",
-                    Modifier.padding(end = 4.dp).height(12.dp).width(14.dp)
+                    Modifier
+                        .padding(end = 4.dp)
+                        .height(12.dp)
+                        .width(14.dp)
                 )
             })
     }

@@ -13,26 +13,29 @@ import ru.beryukhov.coffeegram.model.NavigationStore
 
 interface TablePageViewModel {
     @Composable
-    fun getFilledDayItemsMap(yearMonth: YearMonth):Map<Int, Int?>
+    fun getFilledDayItemsMap(yearMonth: YearMonth): Map<Int, Int?>
 
     fun newIntent(intent: NavigationIntent)
 }
 
-object TablePageViewModelStub: TablePageViewModel {
+object TablePageViewModelStub : TablePageViewModel {
     @Composable
-    override fun getFilledDayItemsMap(yearMonth: YearMonth):Map<Int, Int?> = emptyMap()
+    override fun getFilledDayItemsMap(yearMonth: YearMonth): Map<Int, Int?> = emptyMap()
     override fun newIntent(intent: NavigationIntent) = Unit
 }
 
 class TablePageViewModelImpl(
     private val daysCoffeesStore: DaysCoffeesStore,
     private val navigationStore: NavigationStore
-): ViewModel(), TablePageViewModel {
+) : ViewModel(), TablePageViewModel {
     @Composable
-    override fun getFilledDayItemsMap(yearMonth: YearMonth):Map<Int, Int?> {
+    override fun getFilledDayItemsMap(yearMonth: YearMonth): Map<Int, Int?> {
         val coffeesState by daysCoffeesStore.state.collectAsState()
         return coffeesState.value
-            .filter { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.year == yearMonth.year && entry.key.month == yearMonth.month }
+            .filter { entry: Map.Entry<LocalDate, DayCoffee> ->
+                entry.key.year == yearMonth.year
+                    && entry.key.month == yearMonth.month
+            }
             .mapKeys { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth }
             .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getIconId() }
     }
