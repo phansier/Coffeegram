@@ -19,5 +19,7 @@ jobs:
         java-version: 11
     - name: Detekt
       run: make detekt
-    - name: Build with Gradle
+    - name: Build App Gradle
       run: ./gradlew :app:assemble
+    - name: Build Wear Gradle
+      run: ./gradlew :wear:assemble
