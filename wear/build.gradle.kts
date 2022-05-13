@@ -31,6 +31,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
+    namespace = "ru.beryukhov.coffeegram.wear"
 }
 
 dependencies {

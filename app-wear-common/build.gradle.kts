@@ -11,6 +11,7 @@ android {
             isMinifyEnabled = false
         }
     }
+    namespace = "ru.beryukhov.coffeegram.common"
 }
 
 dependencies {

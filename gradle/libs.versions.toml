@@ -1,6 +1,6 @@
 [versions]
 kotlin = "1.6.10"
-agp = "7.1.2"
+agp = "7.2.0"
 realm = "0.10.2"
 detekt = "1.18.0"
 

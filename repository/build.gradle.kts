@@ -60,4 +60,5 @@ android {
         minSdk = 21
         targetSdk = 30
     }
+    namespace = "repository"
 }
