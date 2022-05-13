@@ -502,7 +502,7 @@ potential-bugs:
     LateinitUsage:
         active: false
         excludes: [ '**/test/**', '**/androidTest/**' ]
-        excludeAnnotatedProperties: [ ]
+        ignoreAnnotated: [ ]
         ignoreOnClassesPattern: ''
     MapGetWithNotNullAssertionOperator:
         active: false
@@ -597,7 +597,7 @@ style:
         active: false
         ignoreOverridableFunction: true
         excludedFunctions: 'describeContents'
-        excludeAnnotatedFunction: [ 'dagger.Provides' ]
+        ignoreAnnotated: [ 'dagger.Provides' ]
     # https://detekt.github.io/detekt/style.html#librarycodemustspecifyreturntype
     # todo enable expicit api https://kotlinlang.org/docs/reference/whatsnew14.html#explicit-api-mode-for-library-authors
     LibraryCodeMustSpecifyReturnType:
@@ -700,10 +700,10 @@ style:
         active: false
     UnderscoresInNumericLiterals:
         active: false
-        acceptableDecimalLength: 5
+        acceptableLength: 5
     UnnecessaryAbstractClass:
         active: false
-        excludeAnnotatedClasses: [ 'dagger.Module' ]
+        ignoreAnnotated: [ 'dagger.Module' ]
     UnnecessaryAnnotationUseSiteTarget:
         active: false
     UnnecessaryApply:
@@ -736,7 +736,7 @@ style:
         active: false
     UseDataClass:
         active: false
-        excludeAnnotatedClasses: [ ]
+        ignoreAnnotated: [ ]
         allowVars: false
     UseEmptyCounterpart:
         active: false

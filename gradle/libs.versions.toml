@@ -1,15 +1,15 @@
 [versions]
-kotlin = "1.6.10"
+kotlin = "1.6.21"
 agp = "7.2.0"
-realm = "0.10.2"
-detekt = "1.18.0"
+realm = "0.11.1"
+detekt = "1.20.0"
 
-compose = "1.2.0-alpha07"
-wearCompose = "1.0.0-alpha20"
-coroutines = "1.6.0-native-mt"
+compose = "1.2.0-beta01"
+wearCompose = "1.0.0-beta01"
+coroutines = "1.6.1-native-mt"
 datastore = "1.0.0"
-koin = "3.1.4"
-lifecycle = "2.4.0"
+koin = "3.2.0"
+lifecycle = "2.4.1"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }

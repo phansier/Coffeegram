@@ -17,7 +17,7 @@ android {
         // NOTE: This must be the same in the phone app and the wear app for the capabilities API
         applicationId = "ru.beryukhov.coffeegram"
         minSdk = 21
-        targetSdk = 30
+        targetSdk = 31
         versionCode = 1
         versionName = "1.0"
 
@@ -62,7 +62,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("com.google.android.material:material:1.5.0")
+    implementation("com.google.android.material:material:1.6.0")
 
     implementation(libs.compose.ui)
     implementation(libs.compose.material)
@@ -71,7 +71,7 @@ dependencies {
 
     implementation(libs.compose.constraint)
     implementation(libs.compose.activity)
-    implementation("androidx.glance:glance-appwidget:1.0.0-alpha02")
+    implementation("androidx.glance:glance-appwidget:1.0.0-alpha03")
 
     testImplementation("junit:junit:4.13.2")
 
