@@ -4,19 +4,19 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     buildTypes {
         release {
             isMinifyEnabled = false
         }
     }
+    namespace = "ru.beryukhov.coffeegram.common"
 }
 
 dependencies {
 
-    implementation("androidx.annotation:annotation:1.3.0")
-    val playServicesWearableVersion = "17.1.0"
+    implementation(libs.androidx.annotation)
     // Wearable
-    implementation("com.google.android.gms:play-services-wearable:$playServicesWearableVersion")
+    implementation(libs.playServices.wearable)
 }

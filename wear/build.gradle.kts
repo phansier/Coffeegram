@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         // NOTE: This must be the same in the phone app and the wear app for the capabilities API
         applicationId = "ru.beryukhov.coffeegram"
-        minSdk = 30
-        targetSdk = 31
+        minSdk = libs.versions.wearMinSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
     }
@@ -31,6 +31,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
+    namespace = "ru.beryukhov.coffeegram.wear"
 }
 
 dependencies {
@@ -41,6 +42,5 @@ dependencies {
 
     implementation(libs.compose.activity)
     implementation(libs.compose.uiTooling)
-    val playServicesWearableVersion = "17.1.0"
-    implementation("com.google.android.gms:play-services-wearable:$playServicesWearableVersion")
+    implementation(libs.playServices.wearable)
 }
