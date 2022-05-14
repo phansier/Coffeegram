@@ -36,10 +36,9 @@ class ThemeDataStorePrefStorage(private val context: Context) : Storage<ThemeSta
         // do not confuse with `lastOrNull()`, it will be waiting for completion inside otherwise
         val prefs = context.dataStore.data.firstOrNull()
         val darkThemeState = prefs?.get(PreferencesKeys.THEME_STATE_KEY)
-        ?.let { DarkThemeState.valueOf(it) }
+            ?.let { DarkThemeState.valueOf(it) }
         val isDynamic = prefs?.get(PreferencesKeys.THEME_DYNAMIC_KEY)
-        return if (darkThemeState!=null && isDynamic!=null) ThemeState(darkThemeState, isDynamic) else null
-
+        return if (darkThemeState != null && isDynamic != null) ThemeState(darkThemeState, isDynamic) else null
     }
 
     override suspend fun saveState(state: ThemeState) {
@@ -47,9 +46,5 @@ class ThemeDataStorePrefStorage(private val context: Context) : Storage<ThemeSta
             preferences[PreferencesKeys.THEME_STATE_KEY] = state.useDarkTheme.name
             preferences[PreferencesKeys.THEME_DYNAMIC_KEY] = state.isDynamic
         }
-        /*context.dataStore.updateData{ preferences ->
-            preferences.toMutablePreferences()
-                .also { it[PreferencesKeys.THEME_STATE_KEY] = state.name }
-        }*/
     }
 }

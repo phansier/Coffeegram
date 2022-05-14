@@ -5,10 +5,10 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -100,11 +100,10 @@ fun AppTheme(
 data class CustomColor(val name: String, val color: Color, val harmonized: Boolean, var roles: ColorRoles)
 data class ExtendedColors(val colors: List<CustomColor>)
 
-
 fun setupErrorColors(colorScheme: ColorScheme, isLight: Boolean): ColorScheme {
     val harmonizedError = MaterialColors.harmonize(error.toColorInt(), colorScheme.primary.toColorInt())
     val roles = MaterialColors.getColorRoles(harmonizedError, isLight)
-    //returns a colorScheme with newly harmonized error colors
+    // returns a colorScheme with newly harmonized error colors
     return colorScheme.copy(
         error = roles.accent.toColor(),
         onError = roles.onAccent.toColor(),
@@ -140,7 +139,6 @@ val LocalExtendedColors = staticCompositionLocalOf {
     initializeExtended
 }
 
-
 @RequiresApi(Build.VERSION_CODES.S)
 @Composable
 fun HarmonizedTheme(
@@ -170,7 +168,6 @@ fun HarmonizedTheme(
 @Composable
 fun CoffeegramTheme(themeState: ThemeState = ThemeStateDefault, content: @Composable () -> Unit) {
 
-
     val darkTheme = when (themeState.useDarkTheme) {
         DarkThemeState.DARK -> true
         DarkThemeState.LIGHT -> false
@@ -183,7 +180,6 @@ fun CoffeegramTheme(themeState: ThemeState = ThemeStateDefault, content: @Compos
     } else {
         AppTheme(useDarkTheme = darkTheme, content = content)
     }
-
 }
 
 private fun Color.toColorInt() = this.value.toInt()

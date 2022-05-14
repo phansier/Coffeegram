@@ -6,9 +6,11 @@ import android.os.Build
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
@@ -50,7 +52,7 @@ fun ColumnScope.SettingsPage(themeStore: ThemeStore, startWearableActivity: () -
         Text(
             stringResource(R.string.app_theme),
             style = AppTypography.titleMedium,
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.absolutePadding(left = 24.dp, top = 16.dp)
         )
         val themeState: ThemeState by themeStore.state.collectAsState()
         ThemeRadioButtonWithText(
@@ -71,11 +73,16 @@ fun ColumnScope.SettingsPage(themeStore: ThemeStore, startWearableActivity: () -
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             ThemeCheckBoxWithText(
                 checked = themeState.isDynamic,
-                onCheckedChange = { themeStore.newIntent(if (it) ThemeIntent.SetDynamicIntent else ThemeIntent.UnSetDynamicIntent) },
+                onCheckedChange = {
+                    themeStore.newIntent(
+                        if (it) ThemeIntent.SetDynamicIntent else ThemeIntent.UnSetDynamicIntent
+                    )
+                },
                 stringResource(R.string.app_theme_dynamic)
             )
         }
-        Button(onClick = { startWearableActivity() }, modifier = Modifier.padding(8.dp)) {
+        Divider()
+        Button(onClick = { startWearableActivity() }, modifier = Modifier.padding(16.dp)) {
             Text("Start Wearable Activity")
         }
     }
@@ -99,6 +106,7 @@ fun ThemeRadioButtonWithText(
         Text(text = label, modifier = Modifier.align(CenterVertically))
     }
 }
+
 @Composable
 fun ThemeCheckBoxWithText(
     checked: Boolean,
