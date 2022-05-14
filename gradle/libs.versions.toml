@@ -70,3 +70,5 @@ material = "com.google.android.material:material:1.6.0"             # https://mv
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.0"       # https://mvnrepository.com/artifact/com.jakewharton.threetenabp/threetenabp/1.4.0
 protobuf-javalite = "com.google.protobuf:protobuf-javalite:3.20.1"  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
 playServices-wearable = "com.google.android.gms:play-services-wearable:17.1.0" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
+
+lottie-compose = "com.airbnb.android:lottie-compose:5.0.3"
