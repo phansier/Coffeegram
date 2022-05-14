@@ -97,6 +97,8 @@ dependencies {
     implementation(libs.playServices.wearable)
     // for connectedNodes.await()
     implementation(libs.coroutines.play)
+
+    implementation(libs.lottie.compose)
 }
 
 protobuf {
