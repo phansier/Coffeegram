@@ -7,6 +7,7 @@
     <string name="app_theme_system">System</string>
     <string name="app_theme_light">Light</string>
     <string name="app_theme_dark">Dark</string>
+    <string name="app_theme_dynamic">Dynamic</string>
     <string name="app_widget_description">App Widget Description</string>
     <string name="loading_widget">Loading widget</string>
     <string name="first_glance_widget">Widget</string>

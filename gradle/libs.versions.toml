@@ -29,7 +29,8 @@ detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", v
 realmKotlin = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+#compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
+compose-material = "androidx.compose.material3:material3:1.0.0-alpha11"
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 

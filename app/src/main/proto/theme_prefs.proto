@@ -12,4 +12,5 @@ message ThemePreferences {
 
   // user selected tasks sorting order
   ProtoThemeState theme_state = 3;
+  bool dynamic = 4;
 }

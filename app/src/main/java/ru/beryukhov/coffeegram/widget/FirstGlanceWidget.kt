@@ -37,7 +37,7 @@ import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
-import ru.beryukhov.coffeegram.app_ui.brown500
+import ru.beryukhov.coffeegram.app_ui.md_theme_light_primary
 import ru.beryukhov.coffeegram.data.CoffeeType
 
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error) {
@@ -60,7 +60,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
         )*/
         Box(
             modifier = GlanceModifier.background(
-                day = brown500,
+                day = md_theme_light_primary,
                 night = Color.DarkGray
             )
         ) {

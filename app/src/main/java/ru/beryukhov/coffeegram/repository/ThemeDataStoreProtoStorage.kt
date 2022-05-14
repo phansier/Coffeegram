@@ -6,6 +6,7 @@ import androidx.datastore.dataStore
 import androidx.datastore.migrations.SharedPreferencesMigration
 import androidx.datastore.migrations.SharedPreferencesView
 import kotlinx.coroutines.flow.firstOrNull
+import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.repository.ThemePreferences.ProtoThemeState
 import ru.beryukhov.coffeegram.store_lib.Storage
@@ -39,7 +40,7 @@ class ThemeDataStoreProtoStorage(private val context: Context) : Storage<ThemeSt
     ) = if (currentData.themeState == ProtoThemeState.SYSTEM) {
         currentData.toBuilder().setThemeState(
             ProtoThemeState.valueOf(
-                sharedPrefs.getString(THEME_STATE, ThemeState.SYSTEM.name)!!
+                sharedPrefs.getString(THEME_STATE, DarkThemeState.SYSTEM.name)!!
             )
         ).build()
     } else {
@@ -48,8 +49,10 @@ class ThemeDataStoreProtoStorage(private val context: Context) : Storage<ThemeSt
 
     override suspend fun getState(): ThemeState? {
         // do not confuse with `lastOrNull()`, it will be waiting for completion inside otherwise
-        return context.dataStore.data.firstOrNull()
-            ?.themeState.mapOrNull()
+        val proto = context.dataStore.data.firstOrNull()
+        val darkThemeState = proto?.themeState.mapOrNull()
+        val isDynamic = proto?.dynamic
+        return if (darkThemeState != null && isDynamic != null) ThemeState(darkThemeState, isDynamic) else null
     }
 
     override suspend fun saveState(state: ThemeState) {
@@ -60,10 +63,10 @@ class ThemeDataStoreProtoStorage(private val context: Context) : Storage<ThemeSt
 }
 
 private fun ThemeState.map(): ProtoThemeState {
-    return ProtoThemeState.valueOf(this.name)
+    return ProtoThemeState.valueOf(this.useDarkTheme.name)
 }
 
-private fun ProtoThemeState?.mapOrNull(): ThemeState? {
+private fun ProtoThemeState?.mapOrNull(): DarkThemeState? {
     if (this == null) return null
-    return ThemeState.valueOf(this.name)
+    return DarkThemeState.valueOf(this.name)
 }
