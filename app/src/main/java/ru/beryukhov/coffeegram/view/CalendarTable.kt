@@ -31,7 +31,7 @@ import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.pages.TablePageViewModel
-import ru.beryukhov.coffeegram.pages.TablePageViewModelImpl
+import ru.beryukhov.coffeegram.pages.TablePageViewModelStub
 import ru.beryukhov.coffeegram.times
 import java.text.DateFormatSymbols
 import java.util.Locale
@@ -92,7 +92,7 @@ fun DayCell(
 }
 
 @Composable
-fun WeekRow(dayItems: List<DayItem?>) {
+fun WeekRow(dayItems: List<DayItem?>, tablePageViewModel: TablePageViewModel) {
     val weekDaysItems = dayItems.toMutableList()
     weekDaysItems.addAll(listOf(DayItem("")) * (7 - weekDaysItems.size))
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -101,7 +101,7 @@ fun WeekRow(dayItems: List<DayItem?>) {
                 DayCell(
                     dayItem = dayItem
                         ?: DayItem(""),
-                    tablePageViewModel = getViewModel<TablePageViewModelImpl>(),
+                    tablePageViewModel = tablePageViewModel,
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -113,10 +113,11 @@ fun WeekRow(dayItems: List<DayItem?>) {
 @Composable
 fun MonthTableAdjusted(
     weekItems: List<List<DayItem?>>,
+    tablePageViewModel: TablePageViewModel,
     modifier: Modifier = Modifier
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
-        weekItems.map { WeekRow(dayItems = it) }
+        weekItems.map { WeekRow(dayItems = it, tablePageViewModel) }
     }
 }
 
@@ -133,6 +134,7 @@ data class WeekDayVectorPair(
 fun MonthTable(
     yearMonth: YearMonth,
     filledDayItemsMap: Map<Int, Int?>,
+    tablePageViewModel: TablePageViewModel,
     modifier: Modifier = Modifier
 ) {
     val weekDays: List<DayItem> = getWeekDaysNames(
@@ -176,6 +178,7 @@ fun MonthTable(
     weekItems.addAll(secondToSixWeeks)
     return MonthTableAdjusted(
         weekItems,
+        tablePageViewModel,
         modifier = modifier
     )
 }
@@ -184,15 +187,16 @@ fun MonthTable(
 @Composable
 fun TablePreview() {
     CoffeegramTheme {
-        SampleTable()
+        SampleTable(TablePageViewModelStub,)
     }
 }
 
 @Composable
-fun SampleTable(modifier: Modifier = Modifier) =
+fun SampleTable(tablePageViewModel: TablePageViewModel, modifier: Modifier = Modifier) =
     MonthTable(
         YearMonth.of(2020, 7),
         mapOf(2 to R.drawable.coffee),
+        tablePageViewModel,
         modifier = modifier,
     )
 

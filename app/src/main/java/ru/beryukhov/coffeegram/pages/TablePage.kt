@@ -82,6 +82,7 @@ fun ColumnScope.TablePage(
         MonthTable(
             yearMonth = yearMonth,
             filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth),
+            tablePageViewModel,
             modifier = Modifier.wrapContentHeight()
         )
         Row(
