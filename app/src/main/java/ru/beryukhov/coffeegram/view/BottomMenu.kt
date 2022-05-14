@@ -1,9 +1,9 @@
 package ru.beryukhov.coffeegram.view
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Info
@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 fun BottomMenu(selectedItemFlow: MutableStateFlow<Int>) {
     val items = listOf("Calendar" to Icons.Filled.DateRange, "Info" to Icons.Filled.Info)
     val selectedItem: Int by selectedItemFlow.collectAsState()
-    BottomNavigation {
+    NavigationBar {
         items.forEachIndexed { index, item ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 icon = { Icon(imageVector = item.second, contentDescription = "") },
                 label = { Text(item.first) },
                 selected = selectedItem == index,

@@ -3,10 +3,10 @@ package ru.beryukhov.coffeegram.pages
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
@@ -29,7 +29,7 @@ fun CoffeeListAppBar(
     localDate: LocalDate,
     coffeeListViewModel: CoffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
 ) {
-    TopAppBar(title = { Text(localDate.format(dateFormatter) + " " + stringResource(R.string.add_drink)) },
+    SmallTopAppBar(title = { Text(localDate.format(dateFormatter) + " " + stringResource(R.string.add_drink)) },
         navigationIcon = {
             IconButton(onClick = { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }) {
                 Icon(
