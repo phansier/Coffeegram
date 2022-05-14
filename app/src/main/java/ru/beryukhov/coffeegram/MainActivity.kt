@@ -100,7 +100,7 @@ fun PagesContent(
     val navigationState: NavigationState by navigationStore.state.collectAsState()
     val currentNavigationState = navigationState
     CoffeegramTheme(
-        darkTheme = isDarkTheme()
+        themeState = themeState()
     ) {
         Scaffold(
             modifier,
@@ -211,11 +211,7 @@ private const val START_ACTIVITY_PATH = "/start-activity"
 private const val DAY_COFFEE_PATH = "/coffee"
 
 @Composable
-private fun isDarkTheme(): Boolean {
+private fun themeState(): ThemeState {
     val themeState: ThemeState by get<ThemeStore>().state.collectAsState()
-    return when (themeState) {
-        ThemeState.DARK -> true
-        ThemeState.LIGHT -> false
-        ThemeState.SYSTEM -> isSystemInDarkTheme()
-    }
+    return themeState
 }

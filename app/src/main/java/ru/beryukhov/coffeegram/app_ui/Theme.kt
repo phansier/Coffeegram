@@ -16,6 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.google.android.material.color.ColorRoles
 import com.google.android.material.color.MaterialColors
+import ru.beryukhov.coffeegram.model.DarkThemeState
+import ru.beryukhov.coffeegram.model.ThemeState
+import ru.beryukhov.coffeegram.model.ThemeStateDefault
 
 private val LightThemeColors = lightColorScheme(
 
@@ -75,6 +78,7 @@ private val DarkThemeColors = darkColorScheme(
     inverseSurface = md_theme_dark_inverseSurface,
     inversePrimary = md_theme_dark_inversePrimary,
 )
+
 @Composable
 fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
@@ -93,7 +97,7 @@ fun AppTheme(
     )
 }
 
-data class CustomColor(val name:String, val color: Color, val harmonized: Boolean, var roles: ColorRoles)
+data class CustomColor(val name: String, val color: Color, val harmonized: Boolean, var roles: ColorRoles)
 data class ExtendedColors(val colors: List<CustomColor>)
 
 
@@ -108,6 +112,7 @@ fun setupErrorColors(colorScheme: ColorScheme, isLight: Boolean): ColorScheme {
         onErrorContainer = roles.onAccentContainer.toColor()
     )
 }
+
 val initializeExtended = ExtendedColors(
     listOf()
 )
@@ -121,7 +126,8 @@ fun setupCustomColors(
         val shouldHarmonize = customColor.harmonized
         // Blend or not
         if (shouldHarmonize) {
-            val blendedColor = MaterialColors.harmonize(customColor.color.toColorInt(), colorScheme.primary.toColorInt())
+            val blendedColor =
+                MaterialColors.harmonize(customColor.color.toColorInt(), colorScheme.primary.toColorInt())
             customColor.roles = MaterialColors.getColorRoles(blendedColor, isLight)
         } else {
             customColor.roles = MaterialColors.getColorRoles(customColor.color.toColorInt(), isLight)
@@ -149,7 +155,7 @@ fun HarmonizedTheme(
         if (useDarkTheme) DarkThemeColors else LightThemeColors
     }
 
-    val colorsWithHarmonizedError = if(errorHarmonize) setupErrorColors(colors, !useDarkTheme) else colors
+    val colorsWithHarmonizedError = if (errorHarmonize) setupErrorColors(colors, !useDarkTheme) else colors
 
     val extendedColors = setupCustomColors(colors, !useDarkTheme)
     CompositionLocalProvider(LocalExtendedColors provides extendedColors) {
@@ -159,6 +165,25 @@ fun HarmonizedTheme(
             content = content
         )
     }
+}
+
+@Composable
+fun CoffeegramTheme(themeState: ThemeState = ThemeStateDefault, content: @Composable () -> Unit) {
+
+
+    val darkTheme = when (themeState.useDarkTheme) {
+        DarkThemeState.DARK -> true
+        DarkThemeState.LIGHT -> false
+        DarkThemeState.SYSTEM -> isSystemInDarkTheme()
+    }
+    val isDynamic = themeState.isDynamic
+
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        HarmonizedTheme(useDarkTheme = darkTheme, isDynamic = isDynamic, content = content)
+    } else {
+        AppTheme(useDarkTheme = darkTheme, content = content)
+    }
+
 }
 
 private fun Color.toColorInt() = this.value.toInt()
