@@ -31,7 +31,6 @@ data class SplashTransition(
     val contentTopPadding: Dp
 )
 
-
 @SuppressLint("UnrememberedMutableState")
 @Composable
 fun TransitionSlot(
@@ -59,7 +58,6 @@ fun TransitionSlotPreview() {
         },
         EndPage = { modifier, topPadding ->
             InnerContent(modifier, topPadding)
-
         }
     )
 }
@@ -74,17 +72,19 @@ fun SplashContent(modifier: Modifier = Modifier) {
 
     )
 }
+
 @Composable
 @Preview
-fun InnerContentPreview() = InnerContent(modifier = Modifier, topPadding= 100.dp)
+fun InnerContentPreview() = InnerContent(modifier = Modifier, topPadding = 100.dp)
 
 @Composable
 fun InnerContent(modifier: Modifier, topPadding: Dp) {
 
-
-    Column(modifier = modifier
-        .background(Color.Blue)
-        .fillMaxSize()) {
+    Column(
+        modifier = modifier
+            .background(Color.Blue)
+            .fillMaxSize()
+    ) {
         Spacer(
             modifier = modifier
                 .padding(top = topPadding)

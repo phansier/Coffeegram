@@ -31,19 +31,19 @@
     <path
         android:fillColor="#301913"
         android:pathData="m514,322.7l-228.8,0c-8.8,0 -15.2,7.2 -15.2,15.2l0,0l0,13.6c0,8.8 6.4,16 15.2,16c0,0 0,0 0.8,0l7.2,0l34.4,251.2c0.8,4 4,7.2 8,7.2l126.4,0c4,0 7.2,-3.2 8,-7.2l36,-251.2l8.8,0c8.8,0 15.2,-7.2 15.2,-15.2c0,0 0,0 0,-0.8l0,-13.6c0,-8.8 -7.2,-15.2 -16,-15.2zM454.8,609.9l-112,0l-8,-56.8l128.8,0l-8.8,56.8zM465.2,536.3l-132.8,0l-14.4,-101.6l161.6,0l-14.4,101.6zM482,419.5l-166.4,0l-8,-52l181.6,0l-7.2,52zM514,351.5l-215.2,0c-0.8,0 -1.6,0 -2.4,0.8l-11.2,0l-0.8,-12.8l228.8,-0.8l0.8,12.8z" />
-    <!--TODO try other pivot+ translate combination to center the bean-->
     <group
         android:name="bean"
-        android:pivotX="403"
-        android:pivotY="500"
-        android:rotation="0"
-        android:translateX="-5"
-        android:translateY="-15">
+        android:pivotX="409"
+        android:pivotY="501"
+        android:rotation="180"
+        android:translateX="-9"
+        android:translateY="-12">
         <path
             android:fillColor="#D5A982"
-            android:pathData="m421.6,458.1c-10.4,-8.8 -30.4,-2.4 -44,14.4s-17.6,36.8 -7.2,45.6c4.8,-38.4 44.8,-25.6 51.2,-60z" />
+            android:pathData="m431.6,468.1c-10.4,-8.8 -30.4,-2.4 -44,14.4s-17.6,36.8 -7.2,45.6c4.8,-38.4 44.8,-25.6 51.2,-60z" />
         <path
             android:fillColor="#D5A982"
-            android:pathData="m378.4,525.3c10.4,8.8 30.4,2.4 44,-14.4c13.6,-16.8 17.6,-36.8 7.2,-45.6c-5.6,34.4 -45.6,21.6 -51.2,60z" />
+            android:pathData="m388.4,535.3c10.4,8.8 30.4,2.4 44,-14.4c13.6,-16.8 17.6,-36.8 7.2,-45.6c-5.6,34.4 -45.6,21.6 -51.2,60z" />
     </group>
+
 </vector>
