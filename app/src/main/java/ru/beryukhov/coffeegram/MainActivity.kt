@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -24,7 +23,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -38,7 +36,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.koin.androidx.compose.get
-import ru.beryukhov.coffeegram.animations.newSplashTransition
+import ru.beryukhov.coffeegram.animations.TransitionSlot
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
@@ -64,19 +62,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // setContentView(R.layout.support_simple_spinner_dropdown_item)
         setContent {
-            val transition = newSplashTransition()
-            Box {
-                LandingPage(
-                    modifier = Modifier.alpha(transition.splashAlpha),
-                )
-                PagesContent(
-                    modifier = Modifier.alpha(transition.contentAlpha),
-                    topPadding = transition.contentTopPadding,
-                    startWearableActivity = ::startWearableActivity
-                )
-            }
+            TransitionSlot(
+                { modifier -> LandingPage(modifier = modifier) },
+                { modifier, topPadding ->
+                    PagesContent(
+                        modifier = modifier,
+                        topPadding = topPadding,
+                        startWearableActivity = ::startWearableActivity
+                    )
+                }
+            )
         }
     }
 }
