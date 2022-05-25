@@ -4,6 +4,10 @@ import com.google.protobuf.gradle.id
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
 
+import java.io.File
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -18,10 +22,19 @@ android {
         applicationId = "ru.beryukhov.coffeegram"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = rootProject.file("download.jks")
+            storePassword = KeyHelper.getValue(KeyHelper.KEY_STORE_PASS)
+            keyAlias = KeyHelper.getValue(KeyHelper.KEY_ALIAS)
+            keyPassword = KeyHelper.getValue(KeyHelper.KEY_PASS)
+        }
     }
 
     buildTypes {
@@ -113,5 +126,21 @@ protobuf {
                 }
             }
         }
+    }
+}
+
+object KeyHelper {
+
+    const val KEY_STORE_FILE = "storeFile"
+    const val KEY_STORE_PASS = "storePassword"
+    const val KEY_ALIAS = "keyAlias"
+    const val KEY_PASS = "keyPassword"
+
+    private val properties by lazy {
+        Properties().apply { load(FileInputStream(File("key.properties"))) }
+    }
+
+    fun getValue(key: String): String {
+        return properties.getProperty(key)
     }
 }
