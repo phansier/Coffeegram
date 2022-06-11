@@ -3,7 +3,6 @@ import com.google.protobuf.gradle.generateProtoTasks
 import com.google.protobuf.gradle.id
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
-
 import java.io.File
 import java.io.FileInputStream
 import java.util.Properties
@@ -149,7 +148,15 @@ object KeyHelper {
     const val KEY_PASS = "keyPassword"
 
     private val properties by lazy {
-        Properties().apply { load(FileInputStream(File("key.properties"))) }
+        try {
+            Properties().apply { load(FileInputStream(File("key.properties"))) }
+        } catch (e: Exception) {
+            Properties().apply {
+                setProperty("storePassword", "")
+                setProperty("keyAlias", "")
+                setProperty("keyPassword", "")
+            }
+        }
     }
 
     fun getValue(key: String): String {

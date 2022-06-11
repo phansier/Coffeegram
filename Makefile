@@ -3,6 +3,14 @@ path := ./
 detekt:
 	$(path)gradlew detektAll
 
+buildApp:
+	./gradlew :app:assemble --no-configuration-cache
+
+buildWear:
+	./gradlew :wear:assemble --no-configuration-cache
+
+localCheck: detekt buildApp buildWear
+
 compose_metrics:
 	$(path)gradlew :app:assembleRelease \-Pmyapp.enableComposeCompilerReports=true --no-configuration-cache
 
