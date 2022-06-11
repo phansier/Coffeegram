@@ -1,8 +1,8 @@
 package repository
 
-import io.realm.Realm
-import io.realm.RealmConfiguration
-import io.realm.query
+import io.realm.kotlin.Realm
+import io.realm.kotlin.RealmConfiguration
+import io.realm.kotlin.ext.query
 import repository.model.DbDayCoffee
 import repository.model.RealmDayCoffee
 import repository.model.toDb
@@ -10,7 +10,7 @@ import repository.model.toRealm
 
 class CoffeeRepository {
     private val realm: Realm by lazy {
-        val configuration = RealmConfiguration.with(schema = setOf(RealmDayCoffee::class))
+        val configuration = RealmConfiguration.Builder(schema = setOf(RealmDayCoffee::class)).build()
         Realm.open(configuration)
     }
 
