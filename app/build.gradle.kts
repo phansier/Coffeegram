@@ -54,6 +54,18 @@ android {
         jvmTarget = "1.8"
         // useIR = true
         freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
+        if (project.findProperty("myapp.enableComposeCompilerReports") == "true") {
+            freeCompilerArgs += listOf(
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+                    project.buildDir.absolutePath + "/compose_metrics"
+            )
+            freeCompilerArgs += listOf(
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+                    project.buildDir.absolutePath + "/compose_metrics"
+            )
+        }
     }
     buildFeatures {
         compose = true
