@@ -3,6 +3,9 @@ import com.google.protobuf.gradle.generateProtoTasks
 import com.google.protobuf.gradle.id
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
+import java.io.File
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -18,10 +21,19 @@ android {
         applicationId = "ru.beryukhov.coffeegram"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = rootProject.file("download.jks")
+            storePassword = KeyHelper.getValue(KeyHelper.KEY_STORE_PASS)
+            keyAlias = KeyHelper.getValue(KeyHelper.KEY_ALIAS)
+            keyPassword = KeyHelper.getValue(KeyHelper.KEY_PASS)
+        }
     }
 
     buildTypes {
@@ -41,6 +53,18 @@ android {
         jvmTarget = "1.8"
         // useIR = true
         freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
+        if (project.findProperty("myapp.enableComposeCompilerReports") == "true") {
+            freeCompilerArgs += listOf(
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
+                    project.buildDir.absolutePath + "/compose_metrics"
+            )
+            freeCompilerArgs += listOf(
+                "-P",
+                "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
+                    project.buildDir.absolutePath + "/compose_metrics"
+            )
+        }
     }
     buildFeatures {
         compose = true
@@ -113,5 +137,29 @@ protobuf {
                 }
             }
         }
+    }
+}
+
+object KeyHelper {
+
+    const val KEY_STORE_FILE = "storeFile"
+    const val KEY_STORE_PASS = "storePassword"
+    const val KEY_ALIAS = "keyAlias"
+    const val KEY_PASS = "keyPassword"
+
+    private val properties by lazy {
+        try {
+            Properties().apply { load(FileInputStream(File("key.properties"))) }
+        } catch (e: Exception) {
+            Properties().apply {
+                setProperty("storePassword", "")
+                setProperty("keyAlias", "")
+                setProperty("keyPassword", "")
+            }
+        }
+    }
+
+    fun getValue(key: String): String {
+        return properties.getProperty(key)
     }
 }
