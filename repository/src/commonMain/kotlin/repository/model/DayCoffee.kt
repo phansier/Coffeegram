@@ -1,6 +1,6 @@
 package repository.model
 
-import io.realm.RealmObject
+import io.realm.kotlin.types.RealmObject
 
 internal class RealmDayCoffee : RealmObject {
     var date: String = ""

@@ -1,5 +1,6 @@
 package ru.beryukhov.coffeegram.pages
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -49,9 +50,11 @@ private val dateFormatter = DateTimeFormatterBuilder()
 
 @Composable
 fun CoffeeListPage(localDate: LocalDate) {
+    val viewModel = getViewModel<CoffeeListViewModelImpl>()
+    BackHandler { viewModel.newIntent(NavigationIntent.ReturnToTablePage) }
     CoffeeList(
         localDate = localDate,
-        coffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
+        coffeeListViewModel = viewModel
     )
 }
 
