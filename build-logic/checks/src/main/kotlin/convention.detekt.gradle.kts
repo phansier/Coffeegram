@@ -35,8 +35,8 @@ val detektAll = tasks.register<Detekt>("detektAll") {
     exclude("**/resources/**")
     exclude("**/build/**")
     reports {
-        xml.enabled = false
-        html.enabled = false
+        xml.required.set(false)
+        html.required.set(false)
     }
 }
 
