@@ -5,6 +5,7 @@ import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
 import java.io.File
 import java.io.FileInputStream
+import java.time.Instant
 import java.util.Properties
 
 plugins {
@@ -21,8 +22,8 @@ android {
         applicationId = "ru.beryukhov.coffeegram"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = 3
-        versionName = "1.1"
+        versionCode = (100000000 + Instant.now().toEpochMilli() / 1000).toInt()
+        versionName = "1.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
