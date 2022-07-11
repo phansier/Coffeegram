@@ -89,7 +89,9 @@ fun ColumnScope.TablePage(
             modifier = Modifier.fillMaxSize(),
         ) {
             LottieCoffee(modifier = Modifier.weight(1f, fill = false), alignment = Alignment.BottomStart)
-            Text("${yearMonth.year}", modifier = Modifier.padding(16.dp).align(Alignment.Bottom))
+            Text("${yearMonth.year}", modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.Bottom))
         }
     }
 }
@@ -112,7 +114,7 @@ fun LottieCoffee(modifier: Modifier = Modifier, alignment: Alignment = Alignment
     val progress by animateLottieCompositionAsState(composition)
     LottieAnimation(
         composition = composition,
-        progress = progress,
+        progress = { progress },
         modifier = modifier,
         alignment = alignment,
     )
