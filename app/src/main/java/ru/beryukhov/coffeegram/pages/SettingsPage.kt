@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import ru.beryukhov.coffeegram.BuildConfig
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.AppTypography
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
@@ -82,8 +83,10 @@ fun ColumnScope.SettingsPage(themeStore: ThemeStore, startWearableActivity: () -
             )
         }
         Divider()
-        Button(onClick = { startWearableActivity() }, modifier = Modifier.padding(16.dp)) {
-            Text("Start Wearable Activity")
+        if (BuildConfig.DEBUG) {
+            Button(onClick = { startWearableActivity() }, modifier = Modifier.padding(16.dp)) {
+                Text("Start Wearable Activity")
+            }
         }
     }
 }
