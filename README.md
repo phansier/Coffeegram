@@ -35,9 +35,9 @@
 
 ---
 
-**Multiplatform version of the app for Android + Desktop (using Jetbrains Compose)** is available in [Coffeegram-Desktop](https://github.com/phansier/Coffeegram-Desktop) repo
+**Multiplatform version of the app for Android + Desktop + <ins>iOS</ins> (using Jetbrains Compose)** is available in [Coffeegram-Desktop](https://github.com/phansier/Coffeegram-Desktop) repo
 
-<img src="images/desktop.png" alt="drawing" width="400"/>
+<img src="https://github.com/phansier/Coffeegram-Desktop/blob/desktop/images/ios.png" alt="drawing" width="300"/>
 
 
 
