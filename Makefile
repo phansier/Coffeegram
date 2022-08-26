@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 path := ./
 
 detekt:
@@ -23,3 +25,10 @@ compose_report:
       -composableMetrics app/build/compose_metrics/app_release-composables.txt \
       -classMetrics app/build/compose_metrics/app_release-classes.txt \
       -o app/build/compose_report/
+
+# Удаляет локальные ветки которые отсутствуют на remote
+# from: https://stackoverflow.com/a/17029936/981330
+unsafe_clear_branches:
+	git fetch --prune && \
+	git branch -r | awk '{print $$1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | \
+	awk '{print $$1}' | xargs git branch -D
