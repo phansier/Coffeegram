@@ -27,6 +27,7 @@ realmGradle = { module = "io.realm.kotlin:gradle-plugin", version.ref = "realm" 
 detektGradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detektCompose = "com.twitter.compose.rules:detekt:0.0.7" # https://github.com/twitter/compose-rules
 
 realmKotlin = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 
