@@ -64,7 +64,7 @@ fun PagesContent() {
 }
 
 @Composable
-fun CoffeeItem(c: CoffeeType, count: Int) {
+fun CoffeeItem(c: CoffeeType, count: Int, modifier: Modifier = Modifier) {
     Chip(
         icon = {
             Image(

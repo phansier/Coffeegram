@@ -30,9 +30,12 @@ import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 @Composable
 fun CoffeeListAppBar(
     localDate: LocalDate,
+    modifier: Modifier = Modifier,
     coffeeListViewModel: CoffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
 ) {
-    SmallTopAppBar(title = { Text(localDate.format(dateFormatter) + " " + stringResource(R.string.add_drink)) },
+    SmallTopAppBar(
+        modifier = modifier,
+        title = { Text(localDate.format(dateFormatter) + " " + stringResource(R.string.add_drink)) },
         navigationIcon = {
             IconButton(onClick = { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }) {
                 Icon(
@@ -63,8 +66,8 @@ fun CoffeeListPage(localDate: LocalDate) {
 @Composable
 fun CoffeeList(
     localDate: LocalDate,
-    modifier: Modifier = Modifier,
     coffeeListViewModel: CoffeeListViewModel,
+    modifier: Modifier = Modifier,
 ) {
     val coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(localDate)
     LazyColumn(modifier = modifier.fillMaxHeight()) {

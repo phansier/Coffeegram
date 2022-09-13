@@ -124,7 +124,7 @@ fun PagesContent(
                     )
                     is NavigationState.SettingsPage -> SettingsPage(get(), startWearableActivity)
                 }
-                NavigationBar(modifier = modifier) {
+                NavigationBar {
                     NavigationBarItem(selected = currentNavigationState is NavigationState.TablePage, onClick = {
                         navigationStore.newIntent(
                             NavigationIntent.ReturnToTablePage

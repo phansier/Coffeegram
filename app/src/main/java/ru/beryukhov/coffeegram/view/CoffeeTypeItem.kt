@@ -31,7 +31,8 @@ fun CoffeeTypeItem(
     localDate: LocalDate,
     coffeeType: CoffeeType,
     count: Int,
-    coffeeListViewModel: CoffeeListViewModel
+    coffeeListViewModel: CoffeeListViewModel,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = Modifier.padding(16.dp)

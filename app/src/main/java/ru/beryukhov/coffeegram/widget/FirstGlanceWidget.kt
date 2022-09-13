@@ -40,6 +40,7 @@ import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.md_theme_light_primary
 import ru.beryukhov.coffeegram.data.CoffeeType
 
+@Suppress("ModifierMissing") // because of  https://github.com/twitter/compose-rules/issues/51
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error) {
 
     // override val sizeMode: SizeMode = SizeMode.Exact
@@ -75,7 +76,10 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     }
 
     @Composable
-    fun SmallWidget(count: Int = 5) {
+    fun SmallWidget(
+        modifier: GlanceModifier = GlanceModifier,
+        count: Int = 5,
+    ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = GlanceModifier
@@ -117,9 +121,9 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
 
     @Composable
     fun HorizontalWidget(
+        modifier: GlanceModifier = GlanceModifier.padding(24.dp).fillMaxSize(),
         coffeeType: CoffeeType = CoffeeType.Cappuccino,
         count: Int = 5,
-        modifier: GlanceModifier = GlanceModifier.padding(24.dp).fillMaxSize()
     ) {
         val padding = 16.dp
         Row(
@@ -195,7 +199,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     }
 
     @Composable
-    fun BigWidget() {
+    fun BigWidget(modifier: GlanceModifier = GlanceModifier,) {
         LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
             items(listOf(Unit, Unit, Unit)) {
                 HorizontalWidget(

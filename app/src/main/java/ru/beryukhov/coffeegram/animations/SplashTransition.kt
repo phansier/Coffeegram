@@ -36,6 +36,7 @@ data class SplashTransition(
 fun TransitionSlot(
     StartPage: @Composable (modifier: Modifier) -> Unit,
     EndPage: @Composable (modifier: Modifier, topPadding: Dp) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val transition = newSplashTransition()
     Box {
@@ -75,10 +76,10 @@ fun SplashContent(modifier: Modifier = Modifier) {
 
 @Composable
 @Preview
-fun InnerContentPreview() = InnerContent(modifier = Modifier, topPadding = 100.dp)
+fun InnerContentPreview(modifier: Modifier = Modifier) = InnerContent(modifier = Modifier, topPadding = 100.dp)
 
 @Composable
-fun InnerContent(modifier: Modifier, topPadding: Dp) {
+fun InnerContent(topPadding: Dp, modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier

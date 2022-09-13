@@ -10,13 +10,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
-fun BottomMenu(selectedItemFlow: MutableStateFlow<Int>) {
+fun BottomMenu(
+    selectedItemFlow: MutableStateFlow<Int>,
+    modifier: Modifier = Modifier,
+) {
     val items = listOf("Calendar" to Icons.Filled.DateRange, "Info" to Icons.Filled.Info)
     val selectedItem: Int by selectedItemFlow.collectAsState()
-    NavigationBar {
+    NavigationBar(modifier = modifier) {
         items.forEachIndexed { index, item ->
             NavigationBarItem(
                 icon = { Icon(imageVector = item.second, contentDescription = "") },

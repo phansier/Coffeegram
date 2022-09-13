@@ -52,7 +52,10 @@ fun Actors(actors: List<Actor>, modifier: Modifier = Modifier) {
 fun ActorItemPreview() = ActorItem(actor = Actor("Robert Downey Jr.", R.drawable.downey))
 
 @Composable
-fun ActorItem(actor: Actor) {
+fun ActorItem(
+    actor: Actor,
+    modifier: Modifier = Modifier,
+) {
     ConstraintLayout(Modifier) {
         val (photo, name) = createRefs()
         Image(painter = painterResource(id = actor.photo),
