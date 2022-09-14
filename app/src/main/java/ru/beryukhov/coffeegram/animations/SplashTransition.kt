@@ -58,7 +58,7 @@ fun TransitionSlotPreview() {
             SplashContent(modifier = modifier)
         },
         EndPage = { modifier, topPadding ->
-            InnerContent(modifier, topPadding)
+            InnerContent(topPadding, modifier)
         }
     )
 }
