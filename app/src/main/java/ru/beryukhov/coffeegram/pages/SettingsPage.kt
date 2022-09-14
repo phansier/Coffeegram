@@ -48,7 +48,11 @@ fun SettingsPagePreview() {
 }
 
 @Composable
-fun ColumnScope.SettingsPage(themeStore: ThemeStore, startWearableActivity: () -> Unit = {}) {
+fun ColumnScope.SettingsPage(
+    themeStore: ThemeStore,
+    modifier: Modifier = Modifier,
+    startWearableActivity: () -> Unit = {}
+) {
     Column(modifier = Modifier.weight(1f)) {
         Text(
             stringResource(R.string.app_theme),
@@ -92,8 +96,8 @@ fun ColumnScope.SettingsPage(themeStore: ThemeStore, startWearableActivity: () -
 }
 
 @Composable
-fun SettingsAppBar() {
-    SmallTopAppBar(title = { Text(stringResource(R.string.settings)) }
+fun SettingsAppBar(modifier: Modifier = Modifier,) {
+    SmallTopAppBar(modifier = modifier, title = { Text(stringResource(R.string.settings)) }
     )
 }
 

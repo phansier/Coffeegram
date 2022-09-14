@@ -92,10 +92,14 @@ fun DayCell(
 }
 
 @Composable
-fun WeekRow(dayItems: List<DayItem?>, tablePageViewModel: TablePageViewModel) {
+fun WeekRow(
+    dayItems: List<DayItem?>,
+    tablePageViewModel: TablePageViewModel,
+    modifier: Modifier = Modifier,
+) {
     val weekDaysItems = dayItems.toMutableList()
     weekDaysItems.addAll(listOf(DayItem("")) * (7 - weekDaysItems.size))
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Row(modifier = Modifier.fillMaxWidth()) {
             for (dayItem in weekDaysItems) {
                 DayCell(

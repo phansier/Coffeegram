@@ -122,9 +122,12 @@ fun PagesContent(
                     is NavigationState.CoffeeListPage -> CoffeeListPage(
                         localDate = currentNavigationState.date
                     )
-                    is NavigationState.SettingsPage -> SettingsPage(get(), startWearableActivity)
+                    is NavigationState.SettingsPage -> SettingsPage(
+                        themeStore = get(),
+                        startWearableActivity = startWearableActivity
+                    )
                 }
-                NavigationBar(modifier = modifier) {
+                NavigationBar {
                     NavigationBarItem(selected = currentNavigationState is NavigationState.TablePage, onClick = {
                         navigationStore.newIntent(
                             NavigationIntent.ReturnToTablePage

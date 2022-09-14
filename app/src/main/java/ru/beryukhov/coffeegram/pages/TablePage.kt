@@ -43,6 +43,7 @@ import ru.beryukhov.coffeegram.view.MonthTable
 @Composable
 fun TableAppBar(
     yearMonth: YearMonth,
+    modifier: Modifier = Modifier,
     tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
 ) {
     SmallTopAppBar(title = {
@@ -78,6 +79,7 @@ fun TableAppBar(
 @Composable
 fun ColumnScope.TablePage(
     yearMonth: YearMonth,
+    modifier: Modifier = Modifier,
     tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
 ) {
     Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(1f)) {
