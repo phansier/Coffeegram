@@ -40,7 +40,6 @@ import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.md_theme_light_primary
 import ru.beryukhov.coffeegram.data.CoffeeType
 
-@Suppress("ModifierMissing") // because of  https://github.com/twitter/compose-rules/issues/51
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error) {
 
     // override val sizeMode: SizeMode = SizeMode.Exact
