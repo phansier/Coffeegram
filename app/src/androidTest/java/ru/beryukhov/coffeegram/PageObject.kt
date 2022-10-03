@@ -19,8 +19,9 @@ object TablePageObject : PageObject<TablePageObject>() {
     override val page: @Composable () -> Unit = {
         Column {
             TablePage(
-                TODO(),
-                TODO(),
+                yearMonth = TODO(),
+                onClick = TODO(),
+                filledDayItemsMap = TODO()
             )
         }
     }
@@ -33,7 +34,7 @@ object TablePageObject : PageObject<TablePageObject>() {
 }
 
 object CoffeeListPageObject : PageObject<CoffeeListPageObject>() {
-    override val page: @Composable () -> Unit = { CoffeeListPage(TODO()) }
+    override val page: @Composable () -> Unit = { CoffeeListPage(TODO(), TODO(), TODO(), TODO()) }
 
     // todo more complex logic to determine widgets than by it's text
     val ComposeTestRule.CappuccinoItem get() = onNodeWithText("Cappuccino")

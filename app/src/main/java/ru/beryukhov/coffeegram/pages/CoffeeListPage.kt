@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import org.koin.androidx.compose.getViewModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatterBuilder
 import org.threeten.bp.format.SignStyle
@@ -23,7 +22,6 @@ import org.threeten.bp.format.TextStyle
 import org.threeten.bp.temporal.ChronoField
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
-import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
 @ExperimentalMaterial3Api
@@ -31,13 +29,13 @@ import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 fun CoffeeListAppBar(
     localDate: LocalDate,
     modifier: Modifier = Modifier,
-    coffeeListViewModel: CoffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
+    onBackClick: () -> Unit
 ) {
     SmallTopAppBar(
         modifier = modifier,
         title = { Text(localDate.format(dateFormatter) + " " + stringResource(R.string.add_drink)) },
         navigationIcon = {
-            IconButton(onClick = { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }) {
+            IconButton(onClick = onBackClick) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack,
                     contentDescription = ""
@@ -54,26 +52,36 @@ private val dateFormatter = DateTimeFormatterBuilder()
     .toFormatter()
 
 @Composable
-fun CoffeeListPage(localDate: LocalDate) {
-    val viewModel = getViewModel<CoffeeListViewModelImpl>()
-    BackHandler { viewModel.newIntent(NavigationIntent.ReturnToTablePage) }
+fun CoffeeListPage(
+    onPlusClick: (coffeeType: CoffeeType) -> Unit,
+    onMinusClick: (coffeeType: CoffeeType) -> Unit,
+    coffeeItems: List<Pair<CoffeeType, Int>>,
+    onBackClick: () -> Unit
+) {
+    BackHandler(onBack = onBackClick)
     CoffeeList(
-        localDate = localDate,
-        coffeeListViewModel = viewModel
+        coffeeItems = coffeeItems,
+        onPlusClick = onPlusClick,
+        onMinusClick = onMinusClick
     )
 }
 
 @Composable
-fun CoffeeList(
-    localDate: LocalDate,
-    coffeeListViewModel: CoffeeListViewModel,
+private fun CoffeeList(
+    coffeeItems: List<Pair<CoffeeType, Int>>,
     modifier: Modifier = Modifier,
+    onPlusClick: (coffeeType: CoffeeType) -> Unit,
+    onMinusClick: (coffeeType: CoffeeType) -> Unit
 ) {
-    val coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(localDate)
     LazyColumn(modifier = modifier.fillMaxHeight()) {
         itemsIndexed(items = coffeeItems,
             itemContent = { _, pair: Pair<CoffeeType, Int> ->
-                CoffeeTypeItem(localDate, pair.first, pair.second, coffeeListViewModel)
+                CoffeeTypeItem(
+                    coffeeType = pair.first,
+                    count = pair.second,
+                    onPlusClick = { onPlusClick(pair.first) },
+                    onMinusClick = { onMinusClick(pair.first) }
+                )
             })
     }
 }
@@ -81,5 +89,9 @@ fun CoffeeList(
 @Preview
 @Composable
 private fun Preview() {
-    CoffeeList(localDateStub, coffeeListViewModel = CoffeeListViewModelStub)
+    CoffeeList(
+        coffeeItems = CoffeeListViewModelStub.getDayCoffeesWithEmpty(localDate = localDateStub),
+        onPlusClick = { },
+        onMinusClick = { }
+    )
 }

@@ -29,9 +29,6 @@ import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
-import ru.beryukhov.coffeegram.model.NavigationIntent
-import ru.beryukhov.coffeegram.pages.TablePageViewModel
-import ru.beryukhov.coffeegram.pages.TablePageViewModelStub
 import ru.beryukhov.coffeegram.times
 import java.text.DateFormatSymbols
 import java.util.Locale
@@ -45,22 +42,15 @@ data class DayItem(
 @Composable
 fun DayCell(
     dayItem: DayItem,
-    tablePageViewModel: TablePageViewModel,
+    onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally, modifier =
-        if (dayItem.dayOfMonth == null) {
-            modifier
-        } else {
-            modifier.clickable(onClick = {
-                tablePageViewModel.newIntent(
-                    NavigationIntent.OpenCoffeeListPage(
-                        dayItem.dayOfMonth
-                    )
-                )
-            })
-        }
+        modifier.clickable(
+            enabled = onClick != null,
+            onClick = onClick ?: {}
+        )
     ) {
         with(dayItem) {
             if (iconId != null) {
@@ -94,7 +84,7 @@ fun DayCell(
 @Composable
 fun WeekRow(
     dayItems: List<DayItem?>,
-    tablePageViewModel: TablePageViewModel,
+    onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val weekDaysItems = dayItems.toMutableList()
@@ -105,7 +95,9 @@ fun WeekRow(
                 DayCell(
                     dayItem = dayItem
                         ?: DayItem(""),
-                    tablePageViewModel = tablePageViewModel,
+                    onClick = dayItem?.dayOfMonth?.let {
+                        { onClick(it) }
+                    },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -117,11 +109,16 @@ fun WeekRow(
 @Composable
 fun MonthTableAdjusted(
     weekItems: List<List<DayItem?>>,
-    tablePageViewModel: TablePageViewModel,
+    onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
-        weekItems.map { WeekRow(dayItems = it, tablePageViewModel) }
+        weekItems.map {
+            WeekRow(
+                dayItems = it,
+                onClick = onClick
+            )
+        }
     }
 }
 
@@ -138,7 +135,7 @@ data class WeekDayVectorPair(
 fun MonthTable(
     yearMonth: YearMonth,
     filledDayItemsMap: Map<Int, Int?>,
-    tablePageViewModel: TablePageViewModel,
+    onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val weekDays: List<DayItem> = getWeekDaysNames(
@@ -181,8 +178,8 @@ fun MonthTable(
     )
     weekItems.addAll(secondToSixWeeks)
     return MonthTableAdjusted(
-        weekItems,
-        tablePageViewModel,
+        weekItems = weekItems,
+        onClick = onClick,
         modifier = modifier
     )
 }
@@ -191,16 +188,16 @@ fun MonthTable(
 @Composable
 fun TablePreview() {
     CoffeegramTheme {
-        SampleTable(TablePageViewModelStub,)
+        SampleTable()
     }
 }
 
 @Composable
-fun SampleTable(tablePageViewModel: TablePageViewModel, modifier: Modifier = Modifier) =
+private fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
-        YearMonth.of(2020, 7),
-        mapOf(2 to R.drawable.coffee),
-        tablePageViewModel,
+        yearMonth = YearMonth.of(2020, 7),
+        filledDayItemsMap = mapOf(2 to R.drawable.coffee),
+        onClick = {},
         modifier = modifier,
     )
 

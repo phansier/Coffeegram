@@ -36,11 +36,13 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.koin.androidx.compose.get
+import org.koin.androidx.compose.getViewModel
 import ru.beryukhov.coffeegram.animations.TransitionSlot
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.toDataMap
+import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationState
 import ru.beryukhov.coffeegram.model.NavigationStore
@@ -48,11 +50,15 @@ import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.pages.CoffeeListAppBar
 import ru.beryukhov.coffeegram.pages.CoffeeListPage
+import ru.beryukhov.coffeegram.pages.CoffeeListViewModel
+import ru.beryukhov.coffeegram.pages.CoffeeListViewModelImpl
 import ru.beryukhov.coffeegram.pages.LandingPage
 import ru.beryukhov.coffeegram.pages.SettingsAppBar
 import ru.beryukhov.coffeegram.pages.SettingsPage
 import ru.beryukhov.coffeegram.pages.TableAppBar
 import ru.beryukhov.coffeegram.pages.TablePage
+import ru.beryukhov.coffeegram.pages.TablePageViewModel
+import ru.beryukhov.coffeegram.pages.TablePageViewModelImpl
 
 class MainActivity : AppCompatActivity() {
 
@@ -92,6 +98,9 @@ fun PagesContent(
 ) {
     val navigationState: NavigationState by navigationStore.state.collectAsState()
     val currentNavigationState = navigationState
+    val coffeeListViewModel: CoffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
+    val tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
+
     CoffeegramTheme(
         themeState = themeState()
     ) {
@@ -101,9 +110,12 @@ fun PagesContent(
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TableAppBar(
                         yearMonth = currentNavigationState.yearMonth,
+                        onPrevClick = { tablePageViewModel.newIntent(NavigationIntent.PreviousMonth) },
+                        onNextClick = { tablePageViewModel.newIntent(NavigationIntent.NextMonth) }
                     )
                     is NavigationState.CoffeeListPage -> CoffeeListAppBar(
-                        localDate = currentNavigationState.date
+                        localDate = currentNavigationState.date,
+                        onBackClick = { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }
                     )
                     is NavigationState.SettingsPage -> SettingsAppBar()
                 }
@@ -117,10 +129,35 @@ fun PagesContent(
                 )
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TablePage(
-                        yearMonth = currentNavigationState.yearMonth
+                        yearMonth = currentNavigationState.yearMonth,
+                        filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(currentNavigationState.yearMonth),
+                        onClick = { dayOfMonth: Int ->
+                            tablePageViewModel.newIntent(
+                                NavigationIntent.OpenCoffeeListPage(
+                                    dayOfMonth
+                                )
+                            )
+                        }
                     )
                     is NavigationState.CoffeeListPage -> CoffeeListPage(
-                        localDate = currentNavigationState.date
+                        coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(currentNavigationState.date),
+                        onPlusClick = { coffeeType: CoffeeType ->
+                            coffeeListViewModel.newIntent(
+                                DaysCoffeesIntent.PlusCoffee(
+                                    currentNavigationState.date,
+                                    coffeeType
+                                )
+                            )
+                        },
+                        onMinusClick = { coffeeType: CoffeeType ->
+                            coffeeListViewModel.newIntent(
+                                DaysCoffeesIntent.MinusCoffee(
+                                    currentNavigationState.date,
+                                    coffeeType
+                                )
+                            )
+                        },
+                        onBackClick = { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }
                     )
                     is NavigationState.SettingsPage -> SettingsPage(
                         themeStore = get(),

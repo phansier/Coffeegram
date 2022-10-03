@@ -37,7 +37,7 @@ import ru.beryukhov.coffeegram.model.getThemeStoreStub
 
 @Preview
 @Composable
-fun SettingsPagePreview() {
+private fun SettingsPagePreview() {
     CoffeegramTheme {
         Scaffold {
             Column(modifier = Modifier.padding(it)) {
@@ -53,7 +53,7 @@ fun ColumnScope.SettingsPage(
     modifier: Modifier = Modifier,
     startWearableActivity: () -> Unit = {}
 ) {
-    Column(modifier = Modifier.weight(1f)) {
+    Column(modifier = modifier.weight(1f)) {
         Text(
             stringResource(R.string.app_theme),
             style = AppTypography.titleMedium,
