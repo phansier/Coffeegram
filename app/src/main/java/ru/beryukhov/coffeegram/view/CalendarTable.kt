@@ -42,8 +42,8 @@ data class DayItem(
 @Composable
 fun DayCell(
     dayItem: DayItem,
-    onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally, modifier =

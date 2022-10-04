@@ -18,11 +18,7 @@ typealias PageElement = ComposeTestRule.() -> SemanticsNodeInteraction
 object TablePageObject : PageObject<TablePageObject>() {
     override val page: @Composable () -> Unit = {
         Column {
-            TablePage(
-                yearMonth = TODO(),
-                onClick = TODO(),
-                filledDayItemsMap = TODO()
-            )
+            TablePage(TODO(), TODO())
         }
     }
     val ComposeTestRule.LeftArrowButton get() = onNodeWithContentDescription("ArrowLeft")

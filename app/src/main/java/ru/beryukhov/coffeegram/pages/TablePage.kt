@@ -32,9 +32,11 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import org.koin.androidx.compose.getViewModel
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.R
+import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.view.MonthTable
 
 @ExperimentalMaterial3Api
@@ -42,8 +44,7 @@ import ru.beryukhov.coffeegram.view.MonthTable
 fun TableAppBar(
     yearMonth: YearMonth,
     modifier: Modifier = Modifier,
-    onPrevClick: () -> Unit,
-    onNextClick: () -> Unit
+    tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
 ) {
     SmallTopAppBar(
         modifier = modifier,
@@ -63,14 +64,14 @@ fun TableAppBar(
         },
         navigationIcon = {
             IconButton(
-                onClick = onPrevClick,
+                onClick = { tablePageViewModel.newIntent(NavigationIntent.PreviousMonth) },
                 modifier = Modifier.semantics {
                     contentDescription = "ArrowLeft"
                 }) { Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "") }
         },
         actions = {
             IconButton(
-                onClick = onNextClick,
+                onClick = { tablePageViewModel.newIntent(NavigationIntent.NextMonth) },
                 modifier = Modifier.testTag("ArrowRight")
             ) { Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "") }
         }
@@ -81,14 +82,19 @@ fun TableAppBar(
 fun ColumnScope.TablePage(
     yearMonth: YearMonth,
     modifier: Modifier = Modifier,
-    filledDayItemsMap: Map<Int, Int?>,
-    onClick: (dayOfMonth: Int) -> Unit
+    tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
 ) {
     Column(horizontalAlignment = Alignment.End, modifier = modifier.weight(1f)) {
         MonthTable(
             yearMonth = yearMonth,
-            filledDayItemsMap = filledDayItemsMap,
-            onClick = onClick,
+            filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth),
+            onClick = { dayOfMonth: Int ->
+                tablePageViewModel.newIntent(
+                    NavigationIntent.OpenCoffeeListPage(
+                        dayOfMonth
+                    )
+                )
+            },
             modifier = Modifier.wrapContentHeight()
         )
         Row(
@@ -109,8 +115,7 @@ private fun Preview() {
         val date = localDateStub
         TablePage(
             yearMonth = YearMonth.of(date.year, date.month),
-            onClick = {},
-            filledDayItemsMap = mapOf(2 to R.drawable.coffee)
+            tablePageViewModel = TablePageViewModelStub
         )
     }
 }

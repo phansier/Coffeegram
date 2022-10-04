@@ -37,7 +37,7 @@ import ru.beryukhov.coffeegram.model.getThemeStoreStub
 
 @Preview
 @Composable
-private fun SettingsPagePreview() {
+fun SettingsPagePreview() {
     CoffeegramTheme {
         Scaffold {
             Column(modifier = Modifier.padding(it)) {
