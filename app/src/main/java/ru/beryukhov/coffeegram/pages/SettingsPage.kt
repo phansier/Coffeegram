@@ -53,7 +53,7 @@ fun ColumnScope.SettingsPage(
     modifier: Modifier = Modifier,
     startWearableActivity: () -> Unit = {}
 ) {
-    Column(modifier = Modifier.weight(1f)) {
+    Column(modifier = modifier.weight(1f)) {
         Text(
             stringResource(R.string.app_theme),
             style = AppTypography.titleMedium,

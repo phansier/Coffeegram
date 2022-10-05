@@ -46,20 +46,22 @@ fun TableAppBar(
     modifier: Modifier = Modifier,
     tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
 ) {
-    SmallTopAppBar(title = {
-        Row(horizontalArrangement = Arrangement.Center) {
-            Text(
-                modifier = Modifier.weight(1f),
-                text = AnnotatedString(
-                    text = yearMonth.month.getDisplayName(
-                        TextStyle.FULL,
-                        LocalContext.current.resources.configuration.locale
-                    ),
-                    paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+    SmallTopAppBar(
+        modifier = modifier,
+        title = {
+            Row(horizontalArrangement = Arrangement.Center) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = AnnotatedString(
+                        text = yearMonth.month.getDisplayName(
+                            TextStyle.FULL,
+                            LocalContext.current.resources.configuration.locale
+                        ),
+                        paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+                    )
                 )
-            )
-        }
-    },
+            }
+        },
         navigationIcon = {
             IconButton(
                 onClick = { tablePageViewModel.newIntent(NavigationIntent.PreviousMonth) },
@@ -82,11 +84,17 @@ fun ColumnScope.TablePage(
     modifier: Modifier = Modifier,
     tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
 ) {
-    Column(horizontalAlignment = Alignment.End, modifier = Modifier.weight(1f)) {
+    Column(horizontalAlignment = Alignment.End, modifier = modifier.weight(1f)) {
         MonthTable(
             yearMonth = yearMonth,
             filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth),
-            tablePageViewModel,
+            onClick = { dayOfMonth: Int ->
+                tablePageViewModel.newIntent(
+                    NavigationIntent.OpenCoffeeListPage(
+                        dayOfMonth
+                    )
+                )
+            },
             modifier = Modifier.wrapContentHeight()
         )
         Row(

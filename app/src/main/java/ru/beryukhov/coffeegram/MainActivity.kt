@@ -92,6 +92,7 @@ fun PagesContent(
 ) {
     val navigationState: NavigationState by navigationStore.state.collectAsState()
     val currentNavigationState = navigationState
+
     CoffeegramTheme(
         themeState = themeState()
     ) {
@@ -100,7 +101,7 @@ fun PagesContent(
             topBar = {
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TableAppBar(
-                        yearMonth = currentNavigationState.yearMonth,
+                        yearMonth = currentNavigationState.yearMonth
                     )
                     is NavigationState.CoffeeListPage -> CoffeeListAppBar(
                         localDate = currentNavigationState.date

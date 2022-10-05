@@ -18,10 +18,7 @@ typealias PageElement = ComposeTestRule.() -> SemanticsNodeInteraction
 object TablePageObject : PageObject<TablePageObject>() {
     override val page: @Composable () -> Unit = {
         Column {
-            TablePage(
-                TODO(),
-                TODO(),
-            )
+            TablePage(TODO(), TODO())
         }
     }
     val ComposeTestRule.LeftArrowButton get() = onNodeWithContentDescription("ArrowLeft")
@@ -33,7 +30,7 @@ object TablePageObject : PageObject<TablePageObject>() {
 }
 
 object CoffeeListPageObject : PageObject<CoffeeListPageObject>() {
-    override val page: @Composable () -> Unit = { CoffeeListPage(TODO()) }
+    override val page: @Composable () -> Unit = { CoffeeListPage(TODO(), TODO()) }
 
     // todo more complex logic to determine widgets than by it's text
     val ComposeTestRule.CappuccinoItem get() = onNodeWithText("Cappuccino")
