@@ -14,8 +14,8 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -97,7 +97,9 @@ fun ColumnScope.SettingsPage(
 
 @Composable
 fun SettingsAppBar(modifier: Modifier = Modifier,) {
-    SmallTopAppBar(modifier = modifier, title = { Text(stringResource(R.string.settings)) }
+    TopAppBar(
+        title = { Text(stringResource(R.string.settings)) },
+        modifier = modifier
     )
 }
 
