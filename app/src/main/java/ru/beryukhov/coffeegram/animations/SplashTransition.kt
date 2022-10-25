@@ -87,12 +87,12 @@ fun InnerContent(topPadding: Dp, modifier: Modifier = Modifier) {
             .fillMaxSize()
     ) {
         Spacer(
-            modifier = modifier
+            modifier = Modifier
                 .padding(top = topPadding)
                 .align(Alignment.CenterHorizontally)
         )
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .background(Color.Red)
                 .fillMaxSize()
         )

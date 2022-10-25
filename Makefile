@@ -3,7 +3,7 @@ SHELL := /bin/bash
 path := ./
 
 detekt:
-	$(path)gradlew detektAll
+	$(path)gradlew detektAll --no-configuration-cache
 
 buildApp:
 	./gradlew :app:assemble --no-configuration-cache
