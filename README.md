@@ -11,6 +11,9 @@
 <a href='https://play.google.com/store/apps/details?id=ru.beryukhov.coffeegram&utm_source=github'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'  width="200"/></a>
 
 - Animated splash for Android 12
+- [Android 13 Monochrome icon](docs-monochrome/MONOCHROME-ICON.md)
+
+<img src="docs-monochrome/after-clipping.png" alt="drawing" width="80"/>
 
 - Material3 Dynamic(Harmonized, following device's theme)/Day/Night themes (switch enabled)
 
@@ -21,7 +24,7 @@
 
 - Jetpack Datastore
 
-- Realm Multiplatform as an underlying database
+- Realm Multiplatform as an database
 
 <img src="images/month_table.png" alt="drawing" width="200"/>
 <img src="images/coffee_list.png" alt="drawing" width="200"/>
@@ -45,6 +48,8 @@
 
 
 ---
+
+
 
 
 ## More about initial app creation:
