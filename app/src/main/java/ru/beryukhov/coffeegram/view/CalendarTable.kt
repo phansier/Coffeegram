@@ -142,7 +142,7 @@ fun MonthTable(
         LocalContext.current
     ).map { DayItem(it) }
     val days1to31 = mutableListOf<Int>()
-    for (i in 1 until 31) {
+    for (i in 1..31) {
         days1to31.add(i)
     }
     val days = days1to31.filter { yearMonth.isValidDay(it) }
