@@ -52,6 +52,7 @@ fun Actors(actors: List<Actor>, modifier: Modifier = Modifier) {
 fun ActorItemPreview() = ActorItem(actor = Actor("Robert Downey Jr.", R.drawable.downey))
 
 @Composable
+@Suppress("UnusedPrivateMember")
 fun ActorItem(
     actor: Actor,
     modifier: Modifier = Modifier,
