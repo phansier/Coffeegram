@@ -86,7 +86,6 @@ dependencies {
     implementation(projects.appWearCommon)
 
     implementation(libs.core.coreKtx)
-    implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
     implementation(libs.compose.ui)
