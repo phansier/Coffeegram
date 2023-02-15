@@ -135,6 +135,7 @@ fun setupCustomColors(
     return initializeExtended
 }
 
+@Suppress("CompositionLocalAllowlist")
 val LocalExtendedColors = staticCompositionLocalOf {
     initializeExtended
 }

@@ -738,7 +738,9 @@ style:
         active: true
         excludes: [ ]
         excludeImports: [ ]
-TwitterCompose:
+Compose:
+    CompositionLocalAllowlist:
+        active: true
     ContentEmitterReturningValues:
         active: true
     ModifierComposable:
@@ -757,7 +759,13 @@ TwitterCompose:
         active: true
     ComposableParamOrder:
         active: true
+    PreviewNaming:
+        active: true
+    PreviewPublic:
+        active: true
     RememberMissing:
+        active: true
+    UnstableCollections:
         active: true
     ViewModelForwarding:
         active: true

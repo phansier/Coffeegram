@@ -86,7 +86,6 @@ dependencies {
     implementation(projects.appWearCommon)
 
     implementation(libs.core.coreKtx)
-    implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
     implementation(libs.compose.ui)
@@ -97,6 +96,8 @@ dependencies {
     implementation(libs.compose.constraint)
     implementation(libs.compose.activity)
     implementation(libs.glance.appwidget)
+
+    implementation(libs.kotlinx.immutableCollections)
 
     testImplementation(libs.junit)
 

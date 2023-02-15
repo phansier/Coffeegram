@@ -32,6 +32,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
+import kotlinx.collections.immutable.toPersistentMap
 import org.koin.androidx.compose.getViewModel
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
@@ -87,7 +88,7 @@ fun ColumnScope.TablePage(
     Column(horizontalAlignment = Alignment.End, modifier = modifier.weight(1f)) {
         MonthTable(
             yearMonth = yearMonth,
-            filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth),
+            filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth).toPersistentMap(),
             onClick = { dayOfMonth: Int ->
                 tablePageViewModel.newIntent(
                     NavigationIntent.OpenCoffeeListPage(

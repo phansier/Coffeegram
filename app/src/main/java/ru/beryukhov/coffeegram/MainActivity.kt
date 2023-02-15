@@ -4,8 +4,8 @@ package ru.beryukhov.coffeegram
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -54,7 +54,7 @@ import ru.beryukhov.coffeegram.pages.SettingsPage
 import ru.beryukhov.coffeegram.pages.TableAppBar
 import ru.beryukhov.coffeegram.pages.TablePage
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     internal val nodeClient by lazy { Wearable.getNodeClient(this) }
     internal val messageClient by lazy { Wearable.getMessageClient(this) }
