@@ -15,6 +15,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
 import org.koin.androidx.compose.getViewModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatterBuilder
@@ -61,7 +63,7 @@ fun CoffeeListPage(
 ) {
     BackHandler { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }
     CoffeeList(
-        coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(localDate),
+        coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(localDate).toPersistentList(),
         onPlusClick = { coffeeType: CoffeeType ->
             coffeeListViewModel.newIntent(
                 DaysCoffeesIntent.PlusCoffee(
@@ -83,7 +85,7 @@ fun CoffeeListPage(
 
 @Composable
 private fun CoffeeList(
-    coffeeItems: List<Pair<CoffeeType, Int>>,
+    coffeeItems: PersistentList<Pair<CoffeeType, Int>>,
     onPlusClick: (coffeeType: CoffeeType) -> Unit,
     modifier: Modifier = Modifier,
     onMinusClick: (coffeeType: CoffeeType) -> Unit

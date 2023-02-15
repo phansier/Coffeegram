@@ -98,6 +98,8 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.glance.appwidget)
 
+    implementation(libs.kotlinx.immutableCollections)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.compose.uiTest)

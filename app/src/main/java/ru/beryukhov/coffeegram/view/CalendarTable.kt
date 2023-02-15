@@ -24,6 +24,10 @@ import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.PersistentMap
+import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toPersistentMap
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
@@ -83,7 +87,7 @@ fun DayCell(
 
 @Composable
 fun WeekRow(
-    dayItems: List<DayItem?>,
+    dayItems: PersistentList<DayItem?>,
     onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -108,7 +112,7 @@ fun WeekRow(
 
 @Composable
 fun MonthTableAdjusted(
-    weekItems: List<List<DayItem?>>,
+    weekItems: PersistentList<PersistentList<DayItem?>>,
     onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -134,13 +138,13 @@ data class WeekDayVectorPair(
 @Composable
 fun MonthTable(
     yearMonth: YearMonth,
-    filledDayItemsMap: Map<Int, Int?>,
+    filledDayItemsMap: PersistentMap<Int, Int?>,
     onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val weekDays: List<DayItem> = getWeekDaysNames(
+    val weekDays: PersistentList<DayItem> = getWeekDaysNames(
         LocalContext.current
-    ).map { DayItem(it) }
+    ).map { DayItem(it) }.toPersistentList()
     val days1to31 = mutableListOf<Int>()
     for (i in 1..31) {
         days1to31.add(i)
@@ -164,13 +168,14 @@ fun MonthTable(
         )
     )
     val daysList: List<WeekDayVectorPair> = days.toList().sortedBy { it.first }.map { it.second }
-    val firstWeek: List<DayItem> =
-        listOf(DayItem("")) * numberOfFirstDay + daysList.take(7 - numberOfFirstDay)
-            .map(WeekDayVectorPair::toDayItem)
-    val secondToSixWeeks: List<List<DayItem>> = listOf(2, 3, 4, 5, 6).map {
+    val firstWeek: PersistentList<DayItem> =
+        (listOf(DayItem("")) * numberOfFirstDay + daysList.take(7 - numberOfFirstDay)
+            .map(WeekDayVectorPair::toDayItem)).toPersistentList()
+
+    val secondToSixWeeks: List<PersistentList<DayItem>> = listOf(2, 3, 4, 5, 6).map {
         daysList.drop(7 * (it - 1) - numberOfFirstDay).take(7)
     }.filterNot { it.isEmpty() }
-        .map { it.map(WeekDayVectorPair::toDayItem) }
+        .map { it.map(WeekDayVectorPair::toDayItem).toPersistentList() }
 
     val weekItems = mutableListOf(
         weekDays,
@@ -178,7 +183,7 @@ fun MonthTable(
     )
     weekItems.addAll(secondToSixWeeks)
     return MonthTableAdjusted(
-        weekItems = weekItems,
+        weekItems = weekItems.toPersistentList(),
         onClick = onClick,
         modifier = modifier
     )
@@ -196,7 +201,7 @@ fun TablePreview() {
 private fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         yearMonth = YearMonth.of(2020, 7),
-        filledDayItemsMap = mapOf(2 to R.drawable.coffee),
+        filledDayItemsMap = mapOf(2 to R.drawable.coffee).toPersistentMap(),
         onClick = {},
         modifier = modifier,
     )

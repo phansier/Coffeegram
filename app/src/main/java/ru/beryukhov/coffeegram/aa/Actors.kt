@@ -16,6 +16,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
 import ru.beryukhov.coffeegram.R
 
 val actorsList = listOf(
@@ -29,7 +31,7 @@ val actorsList = listOf(
 @Preview(backgroundColor = 0xff191926)
 @Composable
 fun ActorsPreview(modifier: Modifier = Modifier) {
-    Actors(actors = actorsList, modifier = modifier)
+    Actors(actors = actorsList.toPersistentList(), modifier = modifier)
 }
 
 data class Actor(
@@ -38,7 +40,7 @@ data class Actor(
 )
 
 @Composable
-fun Actors(actors: List<Actor>, modifier: Modifier = Modifier) {
+fun Actors(actors: PersistentList<Actor>, modifier: Modifier = Modifier) {
     LazyRow(modifier = modifier.fillMaxWidth()) {
         itemsIndexed(items = actors,
             itemContent = { _, item ->

@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneId
 import ru.beryukhov.coffeegram.data.CoffeeType
@@ -17,7 +19,7 @@ import ru.beryukhov.coffeegram.model.NavigationStore
 
 interface CoffeeListViewModel {
     @Composable
-    fun getDayCoffeesWithEmpty(localDate: LocalDate): List<Pair<CoffeeType, Int>>
+    fun getDayCoffeesWithEmpty(localDate: LocalDate): PersistentList<Pair<CoffeeType, Int>>
 
     fun newIntent(intent: DaysCoffeesIntent)
     fun newIntent(intent: NavigationIntent)
@@ -28,8 +30,8 @@ object CoffeeListViewModelStub : CoffeeListViewModel {
     override fun newIntent(intent: NavigationIntent) = Unit
 
     @Composable
-    override fun getDayCoffeesWithEmpty(localDate: LocalDate): List<Pair<CoffeeType, Int>> =
-        emptyMap<CoffeeType, Int>().withEmpty()
+    override fun getDayCoffeesWithEmpty(localDate: LocalDate): PersistentList<Pair<CoffeeType, Int>> =
+        emptyMap<CoffeeType, Int>().withEmpty().toPersistentList()
 }
 
 val localDateStub: LocalDate = LocalDate.now(ZoneId.of("Z"))
@@ -39,10 +41,10 @@ class CoffeeListViewModelImpl(
     private val navigationStore: NavigationStore
 ) : ViewModel(), CoffeeListViewModel {
     @Composable
-    override fun getDayCoffeesWithEmpty(localDate: LocalDate): List<Pair<CoffeeType, Int>> {
+    override fun getDayCoffeesWithEmpty(localDate: LocalDate): PersistentList<Pair<CoffeeType, Int>> {
         val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
         val dayCoffee = dayCoffeeState.value[localDate] ?: DayCoffee()
-        return dayCoffee.coffeeCountMap.withEmpty()
+        return dayCoffee.coffeeCountMap.withEmpty().toPersistentList()
     }
 
     override fun newIntent(intent: DaysCoffeesIntent) {
