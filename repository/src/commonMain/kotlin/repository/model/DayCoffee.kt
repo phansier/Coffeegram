@@ -10,8 +10,6 @@ internal class RealmDayCoffee : RealmObject {
 
 data class DbDayCoffee(val date: String, val coffeeName: String, val count: Int)
 
-// internal fun DbDayCoffee.toDayCoffee
-
 internal fun DbDayCoffee.toRealm(): RealmDayCoffee {
     val dc = this
     return RealmDayCoffee().apply {

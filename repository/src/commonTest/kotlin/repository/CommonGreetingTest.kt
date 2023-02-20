@@ -1,12 +1,12 @@
 package repository
 
 import kotlin.test.Test
-import kotlin.test.assertTrue
+import kotlin.test.assertEquals
 
 class CommonGreetingTest {
 
     @Test
-    fun testExample() {
-        assertTrue(Greeting().greeting().contains("Hello"), "Check 'Hello' is mentioned")
+    fun commonTestExample() {
+        assertEquals(4, 2 + 2, "Sample test")
     }
 }

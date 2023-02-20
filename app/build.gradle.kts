@@ -53,7 +53,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         // useIR = true
-        freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
+        freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
         if (project.findProperty("myapp.enableComposeCompilerReports") == "true") {
             freeCompilerArgs += listOf(
                 "-P",
