@@ -21,7 +21,7 @@ class ThemeSharedPrefStorage(private val context: Context) : Storage<ThemeState>
         val darkThemeState = sharedPrefs.getString(THEME_STATE, null)
             ?.let { DarkThemeState.valueOf(it) }
         val isDynamic = sharedPrefs.getBoolean(THEME_DYNAMIC, true)
-        return if (darkThemeState != null) ThemeState(darkThemeState, isDynamic) else null
+        return if (darkThemeState != null) ThemeState(darkThemeState, isDynamic, false) else null
     }
 
     override suspend fun saveState(state: ThemeState) {

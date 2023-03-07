@@ -47,12 +47,10 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_1_8
-        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
-        // useIR = true
         freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
         if (project.findProperty("myapp.enableComposeCompilerReports") == "true") {
             freeCompilerArgs += listOf(

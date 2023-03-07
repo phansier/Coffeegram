@@ -5,7 +5,7 @@ minSdk = "21"
 wearMinSdk = "25"
 
 kotlin = "1.8.10" # https://kotlinlang.org/docs/releases.html#release-details
-agp = "7.4.1" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "7.4.2" # https://developer.android.com/studio/releases/gradle-plugin
 realm = "1.5.2" # https://github.com/realm/realm-kotlin
 detekt = "1.22.0" # https://github.com/detekt/detekt
 
@@ -66,7 +66,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 #glance-wear-tiles = { module = "androidx.glance:glance-wear-tiles", version.ref = "glance" }
 
 
-androidx-annotation = "androidx.annotation:annotation:1.5.0"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
+androidx-annotation = "androidx.annotation:annotation:1.6.0"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
 androidx-wear = "androidx.wear:wear:1.2.0"                          # https://developer.android.com/jetpack/androidx/releases/wear
 junit = "junit:junit:4.13.2"
 material = "com.google.android.material:material:1.8.0"             # https://mvnrepository.com/artifact/com.google.android.material/material?repo=google
