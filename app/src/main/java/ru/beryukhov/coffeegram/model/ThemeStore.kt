@@ -14,9 +14,8 @@ class ThemeStore(storage: Storage<ThemeState>) : PersistentStore<ThemeIntent, Th
             ThemeIntent.SetDarkIntent -> state.value.copy(useDarkTheme = DarkThemeState.DARK)
             ThemeIntent.SetLightIntent -> state.value.copy(useDarkTheme = DarkThemeState.LIGHT)
             ThemeIntent.SetSystemIntent -> state.value.copy(useDarkTheme = DarkThemeState.SYSTEM)
-            ThemeIntent.SetDynamicIntent -> state.value.copy(isDynamic = true, dynamicSnackbarShow = true)
+            ThemeIntent.SetDynamicIntent -> state.value.copy(isDynamic = true)
             ThemeIntent.UnSetDynamicIntent -> state.value.copy(isDynamic = false)
-            ThemeIntent.DismissDynamicSnackbar -> state.value.copy(dynamicSnackbarShow = false)
         }
     }
 }
@@ -27,15 +26,13 @@ sealed interface ThemeIntent {
     object SetSystemIntent : ThemeIntent
     object SetDynamicIntent : ThemeIntent
     object UnSetDynamicIntent : ThemeIntent
-    object DismissDynamicSnackbar : ThemeIntent
 }
 
-data class ThemeState(val useDarkTheme: DarkThemeState, val isDynamic: Boolean, val dynamicSnackbarShow: Boolean)
+data class ThemeState(val useDarkTheme: DarkThemeState, val isDynamic: Boolean)
 
 val ThemeStateDefault get() = ThemeState(
     useDarkTheme = DarkThemeState.SYSTEM,
     isDynamic = true,
-    dynamicSnackbarShow = false
 )
 
 enum class DarkThemeState {

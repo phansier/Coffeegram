@@ -38,7 +38,7 @@ class ThemeDataStorePrefStorage(private val context: Context) : Storage<ThemeSta
         val darkThemeState = prefs?.get(PreferencesKeys.THEME_STATE_KEY)
             ?.let { DarkThemeState.valueOf(it) }
         val isDynamic = prefs?.get(PreferencesKeys.THEME_DYNAMIC_KEY)
-        return if (darkThemeState != null && isDynamic != null) ThemeState(darkThemeState, isDynamic, false) else null
+        return if (darkThemeState != null && isDynamic != null) ThemeState(darkThemeState, isDynamic) else null
     }
 
     override suspend fun saveState(state: ThemeState) {

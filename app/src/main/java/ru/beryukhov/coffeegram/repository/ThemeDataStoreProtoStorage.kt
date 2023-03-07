@@ -52,7 +52,7 @@ class ThemeDataStoreProtoStorage(private val context: Context) : Storage<ThemeSt
         val proto = context.dataStore.data.firstOrNull()
         val darkThemeState = proto?.themeState.mapOrNull()
         val isDynamic = proto?.dynamic
-        return if (darkThemeState != null && isDynamic != null) ThemeState(darkThemeState, isDynamic, false) else null
+        return if (darkThemeState != null && isDynamic != null) ThemeState(darkThemeState, isDynamic) else null
     }
 
     override suspend fun saveState(state: ThemeState) {
