@@ -50,10 +50,11 @@ data class SplashTransition(
 @Suppress("UnusedPrivateMember")
 @Composable
 fun TransitionSlot(
-    doAnimation: Boolean,
+    doAnimation: Boolean = true,
     StartPage: @Composable (modifier: Modifier) -> Unit,
     EndPage: @Composable (modifier: Modifier, topPadding: Dp) -> Unit,
     modifier: Modifier = Modifier,
+    onAnimationEnded: () -> Unit = {},
 ) {
     if (doAnimation) {
         val transition = newSplashTransition()
@@ -65,6 +66,9 @@ fun TransitionSlot(
                 modifier = Modifier.alpha(transition.contentAlpha),
                 topPadding = transition.contentTopPadding,
             )
+        }
+        if (transition.contentAlpha == SplashState.Completed.transition.contentAlpha) {
+            onAnimationEnded()
         }
     } else {
         EndPage(
@@ -84,7 +88,6 @@ fun TransitionSlotPreview() {
         EndPage = { modifier, topPadding ->
             InnerContent(topPadding, modifier)
         },
-        doAnimation = true
     )
 }
 
@@ -139,5 +142,6 @@ fun newSplashTransition(): SplashTransition {
     val contentTopPadding by transition.animateDp(
         transitionSpec = { tween(2000) }, label = "contentTransitionPadding"
     ) { it.transition.contentTopPadding }
+
     return SplashTransition(splashAlpha, contentAlpha, contentTopPadding)
 }

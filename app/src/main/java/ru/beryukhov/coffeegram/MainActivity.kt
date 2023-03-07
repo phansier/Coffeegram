@@ -23,7 +23,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -66,8 +69,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            var doAnimationState by rememberSaveable {
+                mutableStateOf(true)
+            }
             TransitionSlot(
-                doAnimation = !(savedInstanceState?.getBoolean("recreated", false) == true),
+                doAnimation = doAnimationState,
                 StartPage = { modifier -> LandingPage(modifier = modifier) },
                 EndPage = { modifier, topPadding ->
                     PagesContent(
@@ -75,14 +81,11 @@ class MainActivity : ComponentActivity() {
                         topPadding = topPadding,
                         startWearableActivity = ::startWearableActivity
                     )
-                }
-            )
+                },
+            ) {
+                doAnimationState = false
+            }
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean("recreated", true)
-        super.onSaveInstanceState(outState)
     }
 }
 
