@@ -67,8 +67,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TransitionSlot(
-                { modifier -> LandingPage(modifier = modifier) },
-                { modifier, topPadding ->
+                doAnimation = !(savedInstanceState?.getBoolean("recreated", false) == true),
+                StartPage = { modifier -> LandingPage(modifier = modifier) },
+                EndPage = { modifier, topPadding ->
                     PagesContent(
                         modifier = modifier,
                         topPadding = topPadding,
@@ -77,6 +78,11 @@ class MainActivity : ComponentActivity() {
                 }
             )
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean("recreated", true)
+        super.onSaveInstanceState(outState)
     }
 }
 

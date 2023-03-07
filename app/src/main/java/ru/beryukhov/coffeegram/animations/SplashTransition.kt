@@ -23,7 +23,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-enum class SplashState { Shown, Completed }
+enum class SplashState(val transition: SplashTransition) {
+    Shown(
+        SplashTransition(
+            splashAlpha = 1f,
+            contentAlpha = 0f,
+            contentTopPadding = 200.dp
+        )
+    ),
+    Completed(
+        SplashTransition(
+            splashAlpha = 0f,
+            contentAlpha = 1f,
+            contentTopPadding = 0.dp
+        )
+    )
+}
 
 data class SplashTransition(
     val splashAlpha: Float,
@@ -35,18 +50,26 @@ data class SplashTransition(
 @Suppress("UnusedPrivateMember")
 @Composable
 fun TransitionSlot(
+    doAnimation: Boolean,
     StartPage: @Composable (modifier: Modifier) -> Unit,
     EndPage: @Composable (modifier: Modifier, topPadding: Dp) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val transition = newSplashTransition()
-    Box {
-        StartPage(
-            modifier = Modifier.alpha(transition.splashAlpha),
-        )
+    if (doAnimation) {
+        val transition = newSplashTransition()
+        Box {
+            StartPage(
+                modifier = Modifier.alpha(transition.splashAlpha),
+            )
+            EndPage(
+                modifier = Modifier.alpha(transition.contentAlpha),
+                topPadding = transition.contentTopPadding,
+            )
+        }
+    } else {
         EndPage(
-            modifier = Modifier.alpha(transition.contentAlpha),
-            topPadding = transition.contentTopPadding,
+            modifier = Modifier.alpha(SplashState.Completed.transition.contentAlpha),
+            topPadding = SplashState.Completed.transition.contentTopPadding,
         )
     }
 }
@@ -60,7 +83,8 @@ fun TransitionSlotPreview() {
         },
         EndPage = { modifier, topPadding ->
             InnerContent(topPadding, modifier)
-        }
+        },
+        doAnimation = true
     )
 }
 
@@ -108,27 +132,12 @@ fun newSplashTransition(): SplashTransition {
     val transition = updateTransition(visibleState, label = "splashTransition")
     val splashAlpha by transition.animateFloat(
         transitionSpec = { tween(3000) }, label = "splashTransitionAlpha"
-    ) { splashState ->
-        when (splashState) {
-            SplashState.Shown -> 1f
-            SplashState.Completed -> 0f
-        }
-    }
+    ) { it.transition.splashAlpha }
     val contentAlpha by transition.animateFloat(
         transitionSpec = { tween(3000) }, label = "contentTransitionAlpha"
-    ) { splashState ->
-        when (splashState) {
-            SplashState.Shown -> 0f
-            SplashState.Completed -> 1f
-        }
-    }
+    ) { it.transition.contentAlpha }
     val contentTopPadding by transition.animateDp(
         transitionSpec = { tween(2000) }, label = "contentTransitionPadding"
-    ) { splashState ->
-        when (splashState) {
-            SplashState.Shown -> 200.dp
-            SplashState.Completed -> 0.dp
-        }
-    }
+    ) { it.transition.contentTopPadding }
     return SplashTransition(splashAlpha, contentAlpha, contentTopPadding)
 }
