@@ -14,17 +14,22 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 import ru.beryukhov.coffeegram.BuildConfig
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.AppTypography
@@ -35,13 +40,22 @@ import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.model.getThemeStoreStub
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun SettingsPagePreview() {
+    val snackbarHostState = remember { SnackbarHostState() }
     CoffeegramTheme {
-        Scaffold {
+        Scaffold(
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            }
+        ) {
             Column(modifier = Modifier.padding(it)) {
-                SettingsPage(getThemeStoreStub(LocalContext.current))
+                SettingsPage(
+                    themeStore = getThemeStoreStub(LocalContext.current),
+                    snackbarHostState = snackbarHostState
+                )
             }
         }
     }
@@ -50,6 +64,7 @@ fun SettingsPagePreview() {
 @Composable
 fun ColumnScope.SettingsPage(
     themeStore: ThemeStore,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
     startWearableActivity: () -> Unit = {}
 ) {
@@ -76,9 +91,18 @@ fun ColumnScope.SettingsPage(
             stringResource(R.string.app_theme_dark)
         )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val scope = rememberCoroutineScope()
             ThemeCheckBoxWithText(
                 checked = themeState.isDynamic,
                 onCheckedChange = {
+                    if (it) {
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = "Now app theme will follow system theme",
+                                actionLabel = "OK",
+                            )
+                        }
+                    }
                     themeStore.newIntent(
                         if (it) ThemeIntent.SetDynamicIntent else ThemeIntent.UnSetDynamicIntent
                     )
@@ -96,7 +120,7 @@ fun ColumnScope.SettingsPage(
 }
 
 @Composable
-fun SettingsAppBar(modifier: Modifier = Modifier,) {
+fun SettingsAppBar(modifier: Modifier = Modifier) {
     TopAppBar(
         title = { Text(stringResource(R.string.settings)) },
         modifier = modifier

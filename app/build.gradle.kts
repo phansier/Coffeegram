@@ -23,7 +23,7 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = (100000000 + Instant.now().toEpochMilli() / 1000).toInt()
-        versionName = "1.3"
+        versionName = "1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,12 +47,10 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_1_8
-        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
-        // useIR = true
         freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
         if (project.findProperty("myapp.enableComposeCompilerReports") == "true") {
             freeCompilerArgs += listOf(
@@ -89,7 +87,7 @@ dependencies {
     implementation(libs.material)
 
     implementation(libs.compose.ui)
-    implementation(libs.compose.material)
+    implementation(libs.compose.material3)
     debugImplementation(libs.compose.uiTooling)
     implementation(libs.compose.preview)
 

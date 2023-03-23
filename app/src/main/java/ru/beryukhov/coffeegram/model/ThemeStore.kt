@@ -30,7 +30,10 @@ sealed interface ThemeIntent {
 
 data class ThemeState(val useDarkTheme: DarkThemeState, val isDynamic: Boolean)
 
-val ThemeStateDefault get() = ThemeState(DarkThemeState.SYSTEM, true)
+val ThemeStateDefault get() = ThemeState(
+    useDarkTheme = DarkThemeState.SYSTEM,
+    isDynamic = true,
+)
 
 enum class DarkThemeState {
     DARK,
