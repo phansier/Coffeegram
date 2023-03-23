@@ -50,10 +50,10 @@ data class SplashTransition(
 @Suppress("UnusedPrivateMember")
 @Composable
 fun TransitionSlot(
-    doAnimation: Boolean = true,
     StartPage: @Composable (modifier: Modifier) -> Unit,
     EndPage: @Composable (modifier: Modifier, topPadding: Dp) -> Unit,
     modifier: Modifier = Modifier,
+    doAnimation: Boolean = true,
     onAnimationEnded: () -> Unit = {},
 ) {
     if (doAnimation) {
