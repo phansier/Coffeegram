@@ -1,5 +1,6 @@
 package ru.beryukhov.coffeegram.pages
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -44,6 +46,7 @@ import ru.beryukhov.coffeegram.view.MonthTable
 @Composable
 fun TableAppBar(
     yearMonth: YearMonth,
+    currentPage: Int,
     modifier: Modifier = Modifier,
     tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
 ) {
@@ -54,7 +57,7 @@ fun TableAppBar(
                 Text(
                     modifier = Modifier.weight(1f),
                     text = AnnotatedString(
-                        text = yearMonth.month.getDisplayName(
+                        text = yearMonth.minusMonths(currentPage.toLong()).month.getDisplayName(
                             TextStyle.FULL,
                             LocalContext.current.resources.configuration.locale
                         ),
@@ -79,25 +82,47 @@ fun TableAppBar(
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ColumnScope.TablePage(
     yearMonth: YearMonth,
+    onPageChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
     tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
 ) {
     Column(horizontalAlignment = Alignment.End, modifier = modifier.weight(1f)) {
-        MonthTable(
-            yearMonth = yearMonth,
-            filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth).toPersistentMap(),
-            onClick = { dayOfMonth: Int ->
-                tablePageViewModel.newIntent(
-                    NavigationIntent.OpenCoffeeListPage(
-                        dayOfMonth
-                    )
+
+        HorizontalPager(
+            pageCount = 12,
+            reverseLayout = true,
+            pageSpacing = 16.dp,
+            key = { page -> onPageChange(page).let { page } }
+        ) { page ->
+            Text(
+                modifier = Modifier.weight(1f),
+                text = AnnotatedString(
+                    text = yearMonth.minusMonths(page.toLong()).month.getDisplayName(
+                        TextStyle.FULL,
+                        LocalContext.current.resources.configuration.locale
+                    ),
+                    paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
                 )
-            },
-            modifier = Modifier.wrapContentHeight()
-        )
+            )
+            MonthTable(
+                yearMonth = yearMonth.minusMonths(page.toLong()),
+                filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth.minusMonths(page.toLong()))
+                    .toPersistentMap(),
+                onClick = { dayOfMonth: Int ->
+                    tablePageViewModel.newIntent(
+                        NavigationIntent.OpenCoffeeListPage(
+                            dayOfMonth
+                        )
+                    )
+                },
+                modifier = Modifier.wrapContentHeight()
+            )
+        }
+
         Row(
             modifier = Modifier.fillMaxSize(),
         ) {
@@ -116,6 +141,7 @@ private fun Preview() {
         val date = localDateStub
         TablePage(
             yearMonth = YearMonth.of(date.year, date.month),
+            onPageChange = { },
             tablePageViewModel = TablePageViewModelStub
         )
     }

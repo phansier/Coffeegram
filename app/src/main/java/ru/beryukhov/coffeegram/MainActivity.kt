@@ -105,6 +105,7 @@ fun PagesContent(
     val navigationState: NavigationState by navigationStore.state.collectAsState()
     val currentNavigationState = navigationState
     val snackbarHostState = remember { SnackbarHostState() }
+    var pageState by remember { mutableStateOf(0) }
 
     CoffeegramTheme(
         themeState = themeState()
@@ -114,7 +115,8 @@ fun PagesContent(
             topBar = {
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TableAppBar(
-                        yearMonth = currentNavigationState.yearMonth
+                        yearMonth = currentNavigationState.yearMonth,
+                        currentPage = pageState
                     )
                     is NavigationState.CoffeeListPage -> CoffeeListAppBar(
                         localDate = currentNavigationState.date
@@ -134,7 +136,8 @@ fun PagesContent(
                 )
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TablePage(
-                        yearMonth = currentNavigationState.yearMonth
+                        yearMonth = currentNavigationState.yearMonth,
+                        onPageChange = { pageState = it }
                     )
                     is NavigationState.CoffeeListPage -> CoffeeListPage(
                         localDate = currentNavigationState.date
