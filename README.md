@@ -1,8 +1,8 @@
 # Coffeegram
 
-[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.4.0-yellow)](https://developer.android.com/jetpack/compose)
-[![WearCompose Version](https://img.shields.io/badge/Wear%20Compose-1.1.1-yellow)](https://developer.android.com/jetpack/androidx/releases/wear-compose)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.8.10-blue.svg)](https://kotlinlang.org)
+[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.4.1-yellow)](https://developer.android.com/jetpack/compose)
+[![WearCompose Version](https://img.shields.io/badge/Wear%20Compose-1.1.2-yellow)](https://developer.android.com/jetpack/androidx/releases/wear-compose)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-1.8.20-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 [![Jetc.dev](https://img.shields.io/badge/jetc.dev-25-blue)](https://jetc.dev/issues/025.html)
 
