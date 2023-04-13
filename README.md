@@ -38,13 +38,13 @@
 
 ---
 
-**Multiplatform version of the app for Android + Desktop + <ins>iOS</ins> (using Jetbrains Compose)** is available in [Coffeegram-Desktop](https://github.com/phansier/Coffeegram-Desktop) repo
+**Multiplatform version of the app for Android + Desktop + <ins>iOS</ins> (using Compose Multiplatform)** is available in [Coffeegram-Compose-Multiplatform](https://github.com/phansier/Coffeegram-Compose-Multiplatform) repo
 
-<img src="https://github.com/phansier/Coffeegram-Desktop/blob/desktop/images/ios.png" alt="drawing" width="300"/>
+<img src="https://github.com/phansier/Coffeegram-Compose-Multiplatform/blob/desktop/images/ios.png" alt="drawing" width="300"/>
 
 
 
-![](https://github.com/phansier/Coffeegram-Desktop/blob/desktop/images/desktop.png)
+![](https://github.com/phansier/Coffeegram-Compose-Multiplatform/blob/desktop/images/desktop.png)
 
 
 ---
