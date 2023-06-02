@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
+//    kotlin("native.cocoapods")
     id("com.android.library")
     id("io.realm.kotlin")
 }
@@ -17,7 +17,7 @@ kotlin {
 
     iosTarget("ios") {}
 
-    cocoapods {
+    /*cocoapods {
         summary = "Repository for Coffegram"
         homepage = "https://github.com/phansier/Coffeegram"
         ios.deploymentTarget = "14.1"
@@ -25,7 +25,7 @@ kotlin {
             baseName = "repository"
         }
         // set path to your ios project podfile, e.g. podfile = project.file("../iosApp/Podfile")
-    }
+    }*/
 
     @Suppress("UnusedPrivateMember")
     sourceSets {
