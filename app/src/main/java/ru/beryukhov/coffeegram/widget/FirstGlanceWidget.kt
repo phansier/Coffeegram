@@ -5,10 +5,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.glance.AndroidResourceImageProvider
 import androidx.glance.Button
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
+import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.actionStartActivity
@@ -39,6 +39,7 @@ import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.md_theme_light_primary
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.common.R as common_R
 
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error) {
 
@@ -91,7 +92,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                 )
         ) {
             Image(
-                provider = AndroidResourceImageProvider(resId = R.drawable.cappuccino),
+                provider = ImageProvider(resId = common_R.drawable.cappuccino),
                 contentDescription = "",
                 modifier = GlanceModifier
                     .fillMaxSize()
@@ -135,7 +136,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                     .fillMaxHeight()
             ) {
                 Image(
-                    provider = AndroidResourceImageProvider(resId = coffeeType.iconId),
+                    provider = ImageProvider(resId = coffeeType.iconId),
                     contentDescription = "",
                     modifier = GlanceModifier
                         .fillMaxHeight()
