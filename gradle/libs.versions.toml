@@ -7,7 +7,9 @@ wearMinSdk = "25"
 kotlin = "1.8.21" # https://kotlinlang.org/docs/releases.html#release-details
 agp = "8.0.2" # https://developer.android.com/studio/releases/gradle-plugin
 realm = "1.9.0" # https://github.com/realm/realm-kotlin
-detekt = "1.22.0" # https://github.com/detekt/detekt
+
+detekt = "1.23.0" # https://github.com/detekt/detekt
+detektCompose = "0.1.5" # https://github.com/mrmans0n/compose-rules
 
 compose = "1.4.3" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 composeCompiler = "1.4.7" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
@@ -28,7 +30,7 @@ realmGradle = { module = "io.realm.kotlin:gradle-plugin", version.ref = "realm" 
 detektGradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
-detektCompose = "io.nlopez.compose.rules:detekt:0.1.5" # https://github.com/mrmans0n/compose-rules
+detektCompose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
 
 realmKotlin = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 

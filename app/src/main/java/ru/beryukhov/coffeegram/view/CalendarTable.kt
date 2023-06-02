@@ -31,11 +31,11 @@ import kotlinx.collections.immutable.toPersistentMap
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
-import ru.beryukhov.coffeegram.common.R as common_R
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.times
 import java.text.DateFormatSymbols
 import java.util.Locale
+import ru.beryukhov.coffeegram.common.R as common_R
 
 data class DayItem(
     val day: String,
