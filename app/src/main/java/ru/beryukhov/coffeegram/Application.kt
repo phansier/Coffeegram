@@ -20,7 +20,6 @@ import ru.beryukhov.coffeegram.repository.ThemeDataStoreProtoStorage
 import ru.beryukhov.coffeegram.store_lib.Storage
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget
 
-@Suppress("unused")
 class Application : Application() {
     private val appModule = module {
         single<Storage<ThemeState>> {

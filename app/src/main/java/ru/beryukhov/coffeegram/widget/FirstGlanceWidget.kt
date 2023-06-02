@@ -1,14 +1,16 @@
 package ru.beryukhov.coffeegram.widget
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.glance.AndroidResourceImageProvider
 import androidx.glance.Button
+import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
+import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.actionStartActivity
@@ -18,6 +20,7 @@ import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.background
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
+import androidx.glance.appwidget.provideContent
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
@@ -39,6 +42,7 @@ import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.md_theme_light_primary
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.common.R as common_R
 
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error) {
 
@@ -47,29 +51,31 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     override val sizeMode: SizeMode =
         SizeMode.Responsive(setOf(SMALL_SQUARE, HORIZONTAL_RECTANGLE, BIG_SQUARE))
 
-    @Composable
-    override fun Content() {
-        val size = LocalSize.current
+    override suspend fun provideGlance(context: Context, id: GlanceId) {
+        provideContent {
+            val size = LocalSize.current
 
-        /* // test sizes of widgets
+            /* // test sizes of widgets
         Text(
             text = "W${size.width.value.toInt()} H${size.height.value.toInt()}",
             modifier = GlanceModifier
                 .fillMaxSize()
                 .background(color = MaterialTheme.colors.background)
         )*/
-        Box(
-            modifier = GlanceModifier.background(
-                day = md_theme_light_primary,
-                night = Color.DarkGray
-            )
-        ) {
+            Box(
+                modifier = GlanceModifier.background(
+                    day = md_theme_light_primary,
+                    night = Color.DarkGray
+                )
+            ) {
 
-            when {
-                size.width <= SMALL_SQUARE.width && size.height <= SMALL_SQUARE.height -> SmallWidget()
-                size.width <= HORIZONTAL_RECTANGLE.width && size.height <= HORIZONTAL_RECTANGLE.height ->
-                    HorizontalWidget()
-                else -> BigWidget()
+                when {
+                    size.width <= SMALL_SQUARE.width && size.height <= SMALL_SQUARE.height -> SmallWidget()
+                    size.width <= HORIZONTAL_RECTANGLE.width && size.height <= HORIZONTAL_RECTANGLE.height ->
+                        HorizontalWidget()
+
+                    else -> BigWidget()
+                }
             }
         }
     }
@@ -91,7 +97,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                 )
         ) {
             Image(
-                provider = AndroidResourceImageProvider(resId = R.drawable.cappuccino),
+                provider = ImageProvider(resId = common_R.drawable.cappuccino),
                 contentDescription = "",
                 modifier = GlanceModifier
                     .fillMaxSize()
@@ -135,7 +141,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
                     .fillMaxHeight()
             ) {
                 Image(
-                    provider = AndroidResourceImageProvider(resId = coffeeType.iconId),
+                    provider = ImageProvider(resId = coffeeType.iconId),
                     contentDescription = "",
                     modifier = GlanceModifier
                         .fillMaxHeight()

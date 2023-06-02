@@ -31,11 +31,11 @@ import kotlinx.collections.immutable.toPersistentMap
 import org.threeten.bp.DayOfWeek
 import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
-import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.times
 import java.text.DateFormatSymbols
 import java.util.Locale
+import ru.beryukhov.coffeegram.common.R as common_R
 
 data class DayItem(
     val day: String,
@@ -201,7 +201,7 @@ fun TablePreview() {
 private fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         yearMonth = YearMonth.of(2020, 7),
-        filledDayItemsMap = mapOf(2 to R.drawable.coffee).toPersistentMap(),
+        filledDayItemsMap = mapOf(2 to common_R.drawable.coffee).toPersistentMap(),
         onClick = {},
         modifier = modifier,
     )

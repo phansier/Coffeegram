@@ -134,13 +134,25 @@ complexity:
         ignoreOverridden: false
 
 coroutines:
-    active: false
+    active: true
     GlobalCoroutineUsage:
         active: false
+    InjectDispatcher:
+        active: true
+        dispatcherNames:
+            - 'IO'
+            - 'Default'
+            - 'Unconfined'
     RedundantSuspendModifier:
+        active: true
+    SleepInsteadOfDelay:
+        active: true
+    SuspendFunSwallowedCancellation:
+        active: false
+    SuspendFunWithCoroutineScopeReceiver:
         active: false
     SuspendFunWithFlowReturnType:
-        active: false
+        active: true
 
 empty-blocks:
     active: true
@@ -376,7 +388,6 @@ naming:
         parameterPattern: '[a-z][A-Za-z0-9]*'
         privateParameterPattern: '[a-z][A-Za-z0-9]*'
         excludeClassPattern: '$^'
-        ignoreOverridden: true
     EnumNaming:
         active: false
         excludes: [ '**/test/**', '**/androidTest/**' ]
@@ -400,14 +411,12 @@ naming:
         excludes: [ '**/test/**', '**/androidTest/**' ]
         functionPattern: '([a-z][a-zA-Z0-9]*)|(`.*`)'
         excludeClassPattern: '$^'
-        ignoreOverridden: true
         ignoreAnnotated: [ 'Composable' ]
     FunctionParameterNaming:
         active: false
         excludes: [ '**/test/**', '**/androidTest/**' ]
         parameterPattern: '[a-z][A-Za-z0-9]*'
         excludeClassPattern: '$^'
-        ignoreOverridden: true
     # TODO: enable
     InvalidPackageDeclaration:
         active: false
@@ -453,7 +462,6 @@ naming:
         variablePattern: '[a-z][A-Za-z0-9]*'
         privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
         excludeClassPattern: '$^'
-        ignoreOverridden: true
 
 performance:
     active: false
@@ -523,6 +531,10 @@ potential-bugs:
 
 style:
     active: true
+    BracesOnIfStatements:
+        active: true
+        singleLine: 'never'
+        multiLine: 'always'
     # https://detekt.github.io/detekt/style.html#classordering
     ClassOrdering:
         active: true
@@ -559,7 +571,7 @@ style:
     # https://detekt.github.io/detekt/style.html#forbiddencomment
     ForbiddenComment:
         active: true
-        values: [ 'STOPSHIP' ]
+        comments: [ 'STOPSHIP' ]
         allowedPatterns: ''
     # https://detekt.github.io/detekt/style.html#forbiddenimport
     # todo maybe use it to ban junit 4 in test code
@@ -602,9 +614,6 @@ style:
         ignoreNamedArgument: true
         ignoreEnums: true
         ignoreRanges: false
-    # https://detekt.github.io/detekt/style.html#mandatorybracesifstatements
-    MandatoryBracesIfStatements:
-        active: true
     # https://detekt.github.io/detekt/style.html#mandatorybracesloops
     MandatoryBracesLoops:
         active: true

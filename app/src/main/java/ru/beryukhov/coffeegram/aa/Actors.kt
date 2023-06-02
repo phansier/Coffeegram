@@ -19,6 +19,7 @@ import androidx.constraintlayout.compose.Dimension
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import ru.beryukhov.coffeegram.R
+import ru.beryukhov.coffeegram.common.R as common_R
 
 val actorsList = listOf(
     Actor("Robert Downey Jr.", R.drawable.downey),
@@ -72,7 +73,7 @@ fun ActorItem(
                 .height(80.dp)
         )
         Text(text = actor.name,
-            color = colorFromRes(color = R.color.aa_white_text),
+            color = colorFromRes(color = common_R.color.aa_white_text),
             modifier = Modifier.constrainAs(name) {
                 start.linkTo(parent.start, margin = 4.dp)
                 end.linkTo(parent.end, margin = 4.dp)

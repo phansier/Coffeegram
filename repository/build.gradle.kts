@@ -1,8 +1,6 @@
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
+//    kotlin("native.cocoapods")
     id("com.android.library")
     id("io.realm.kotlin")
 }
@@ -12,12 +10,11 @@ version = "1.0"
 kotlin {
     android()
 
-    val iosTarget: (String, KotlinNativeTarget.() -> Unit) -> KotlinNativeTarget =
-        if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true) ::iosArm64 else ::iosX64
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
-    iosTarget("ios") {}
-
-    cocoapods {
+    /*cocoapods {
         summary = "Repository for Coffegram"
         homepage = "https://github.com/phansier/Coffeegram"
         ios.deploymentTarget = "14.1"
@@ -25,9 +22,8 @@ kotlin {
             baseName = "repository"
         }
         // set path to your ios project podfile, e.g. podfile = project.file("../iosApp/Podfile")
-    }
+    }*/
 
-    @Suppress("UnusedPrivateMember")
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -48,8 +44,15 @@ kotlin {
                 implementation(libs.junit)
             }
         }
-        val iosMain by getting
-        val iosTest by getting
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
+        val iosMain by creating {
+            dependsOn(commonMain)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
+        }
     }
 }
 
@@ -58,7 +61,6 @@ android {
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
     }
     namespace = "repository"
 }
