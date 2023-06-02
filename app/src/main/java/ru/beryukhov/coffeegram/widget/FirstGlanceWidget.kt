@@ -1,11 +1,13 @@
 package ru.beryukhov.coffeegram.widget
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.Button
+import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.Image
 import androidx.glance.ImageProvider
@@ -18,6 +20,7 @@ import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.background
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
+import androidx.glance.appwidget.provideContent
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.Column
@@ -48,29 +51,31 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     override val sizeMode: SizeMode =
         SizeMode.Responsive(setOf(SMALL_SQUARE, HORIZONTAL_RECTANGLE, BIG_SQUARE))
 
-    @Composable
-    override fun Content() {
-        val size = LocalSize.current
+    override suspend fun provideGlance(context: Context, id: GlanceId) {
+        provideContent {
+            val size = LocalSize.current
 
-        /* // test sizes of widgets
+            /* // test sizes of widgets
         Text(
             text = "W${size.width.value.toInt()} H${size.height.value.toInt()}",
             modifier = GlanceModifier
                 .fillMaxSize()
                 .background(color = MaterialTheme.colors.background)
         )*/
-        Box(
-            modifier = GlanceModifier.background(
-                day = md_theme_light_primary,
-                night = Color.DarkGray
-            )
-        ) {
+            Box(
+                modifier = GlanceModifier.background(
+                    day = md_theme_light_primary,
+                    night = Color.DarkGray
+                )
+            ) {
 
-            when {
-                size.width <= SMALL_SQUARE.width && size.height <= SMALL_SQUARE.height -> SmallWidget()
-                size.width <= HORIZONTAL_RECTANGLE.width && size.height <= HORIZONTAL_RECTANGLE.height ->
-                    HorizontalWidget()
-                else -> BigWidget()
+                when {
+                    size.width <= SMALL_SQUARE.width && size.height <= SMALL_SQUARE.height -> SmallWidget()
+                    size.width <= HORIZONTAL_RECTANGLE.width && size.height <= HORIZONTAL_RECTANGLE.height ->
+                        HorizontalWidget()
+
+                    else -> BigWidget()
+                }
             }
         }
     }
