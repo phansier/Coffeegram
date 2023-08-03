@@ -16,7 +16,7 @@ import ru.beryukhov.coffeegram.R
 
 @Composable
 @Preview
-fun LandingPage(modifier: Modifier = Modifier) {
+internal fun LandingPage(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()

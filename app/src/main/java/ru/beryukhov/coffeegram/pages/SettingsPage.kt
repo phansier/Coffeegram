@@ -43,7 +43,7 @@ import ru.beryukhov.coffeegram.model.getThemeStoreStub
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun SettingsPagePreview() {
+internal fun SettingsPagePreview() {
     val snackbarHostState = remember { SnackbarHostState() }
     CoffeegramTheme {
         Scaffold(

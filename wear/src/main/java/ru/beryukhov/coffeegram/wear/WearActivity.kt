@@ -44,7 +44,7 @@ class WearActivity : ComponentActivity() {
 
 @Preview
 @Composable
-fun PagesContent() {
+internal fun PagesContent() {
     val dayCoffee by coffeeState.collectAsState()
     ScalingLazyColumn(
         modifier = Modifier.fillMaxHeight(),
