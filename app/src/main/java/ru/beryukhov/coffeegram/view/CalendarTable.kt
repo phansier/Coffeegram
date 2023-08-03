@@ -191,7 +191,7 @@ fun MonthTable(
 
 @Preview(showBackground = true)
 @Composable
-fun TablePreview() {
+internal fun TablePreview() {
     CoffeegramTheme {
         SampleTable()
     }

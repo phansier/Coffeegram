@@ -80,7 +80,7 @@ fun TransitionSlot(
 
 @Composable
 @Preview
-fun TransitionSlotPreview() {
+internal fun TransitionSlotPreview() {
     TransitionSlot(
         StartPage = { modifier ->
             SplashContent(modifier = modifier)
@@ -93,7 +93,7 @@ fun TransitionSlotPreview() {
 
 @Composable
 @Preview
-fun SplashContent(modifier: Modifier = Modifier) {
+internal fun SplashContent(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .background(Color.Green)
@@ -105,7 +105,7 @@ fun SplashContent(modifier: Modifier = Modifier) {
 @Composable
 @Preview
 @Suppress("UnusedPrivateMember")
-fun InnerContentPreview(modifier: Modifier = Modifier) = InnerContent(modifier = Modifier, topPadding = 100.dp)
+private fun InnerContentPreview(modifier: Modifier = Modifier) = InnerContent(modifier = Modifier, topPadding = 100.dp)
 
 @Composable
 fun InnerContent(topPadding: Dp, modifier: Modifier = Modifier) {

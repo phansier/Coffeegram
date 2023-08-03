@@ -15,7 +15,7 @@ import ru.beryukhov.coffeegram.R
 
 @Preview
 @Composable
-fun StarsPreview(modifier: Modifier = Modifier) = Stars(4, modifier)
+internal fun StarsPreview(modifier: Modifier = Modifier) = Stars(4, modifier)
 
 @OptIn(ExperimentalStdlibApi::class)
 @Composable

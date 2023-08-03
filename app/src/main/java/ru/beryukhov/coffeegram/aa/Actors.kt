@@ -31,7 +31,7 @@ val actorsList = listOf(
 @Preview(device = Devices.PIXEL_C, backgroundColor = 0xff191926)
 @Preview(backgroundColor = 0xff191926)
 @Composable
-fun ActorsPreview(modifier: Modifier = Modifier) {
+internal fun ActorsPreview(modifier: Modifier = Modifier) {
     Actors(actors = actorsList.toPersistentList(), modifier = modifier)
 }
 
@@ -52,7 +52,7 @@ fun Actors(actors: PersistentList<Actor>, modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun ActorItemPreview() = ActorItem(actor = Actor("Robert Downey Jr.", R.drawable.downey))
+internal fun ActorItemPreview() = ActorItem(actor = Actor("Robert Downey Jr.", R.drawable.downey))
 
 @Composable
 @Suppress("UnusedPrivateMember")

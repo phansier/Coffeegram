@@ -1,27 +1,27 @@
 [versions]
 targetSdk = "31"
-compileSdk = "33"
+compileSdk = "34"
 minSdk = "21"
 wearMinSdk = "25"
 
-kotlin = "1.8.21" # https://kotlinlang.org/docs/releases.html#release-details
-agp = "8.0.2" # https://developer.android.com/studio/releases/gradle-plugin
-realm = "1.9.0" # https://github.com/realm/realm-kotlin
+kotlin = "1.9.0" # https://kotlinlang.org/docs/releases.html#release-details
+agp = "8.1.0" # https://developer.android.com/studio/releases/gradle-plugin
+realm = "1.10.2" # https://github.com/realm/realm-kotlin
 
-detekt = "1.23.0" # https://github.com/detekt/detekt
-detektCompose = "0.1.5" # https://github.com/mrmans0n/compose-rules
+detekt = "1.23.1" # https://github.com/detekt/detekt
+detektCompose = "0.1.13" # https://github.com/mrmans0n/compose-rules
 
 compose = "1.4.3" # https://developer.android.com/jetpack/androidx/releases/compose-ui
-composeCompiler = "1.4.7" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
+composeCompiler = "1.5.1" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 wearCompose = "1.1.2" # https://developer.android.com/jetpack/androidx/releases/wear-compose
-coroutines = "1.7.1" # https://github.com/Kotlin/kotlinx.coroutines
+coroutines = "1.7.3" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/datastore
-koin = "3.4.1" # https://github.com/InsertKoinIO/koin#setup--current-version
-koinCompose = "3.4.5" # https://github.com/InsertKoinIO/koin#setup--current-version
+koin = "3.4.3" # https://github.com/InsertKoinIO/koin#setup--current-version
+koinCompose = "3.4.6" # https://github.com/InsertKoinIO/koin#setup--current-version
 lifecycle = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 core = "1.10.1" # https://developer.android.com/jetpack/androidx/releases/core
-glance = "1.0.0-beta01" # https://developer.android.com/jetpack/androidx/releases/glance
+glance = "1.0.0-rc01" # https://developer.android.com/jetpack/androidx/releases/glance
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
