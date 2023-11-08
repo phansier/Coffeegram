@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Settings
@@ -42,6 +44,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.koin.androidx.compose.get
+import org.threeten.bp.YearMonth
 import ru.beryukhov.coffeegram.animations.TransitionSlot
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.data.CoffeeType
@@ -59,6 +62,7 @@ import ru.beryukhov.coffeegram.pages.SettingsAppBar
 import ru.beryukhov.coffeegram.pages.SettingsPage
 import ru.beryukhov.coffeegram.pages.TableAppBar
 import ru.beryukhov.coffeegram.pages.TablePage
+import ru.beryukhov.coffeegram.utils.toTotalMonths
 
 class MainActivity : ComponentActivity() {
 
@@ -95,6 +99,7 @@ internal fun DefaultPreview() {
     PagesContent()
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PagesContent(
     modifier: Modifier = Modifier,
@@ -106,26 +111,33 @@ fun PagesContent(
     val currentNavigationState = navigationState
     val snackbarHostState = remember { SnackbarHostState() }
 
+    // You can scroll all the way up to the year 3000 with page count set to 36 000 --> (3000 * 12)
+    val pagerState = rememberPagerState(
+        pageCount = { 36_000 }, initialPage = if (currentNavigationState is NavigationState.TablePage) {
+            currentNavigationState.yearMonth.toTotalMonths()
+        } else {
+            YearMonth.now().toTotalMonths()
+        }
+    )
+
     CoffeegramTheme(
         themeState = themeState()
     ) {
-        Scaffold(
-            modifier,
-            topBar = {
-                when (currentNavigationState) {
-                    is NavigationState.TablePage -> TableAppBar(
-                        yearMonth = currentNavigationState.yearMonth
-                    )
-                    is NavigationState.CoffeeListPage -> CoffeeListAppBar(
-                        localDate = currentNavigationState.date
-                    )
-                    is NavigationState.SettingsPage -> SettingsAppBar()
-                }
-            },
-            snackbarHost = {
-                SnackbarHost(hostState = snackbarHostState)
+        Scaffold(modifier, topBar = {
+            when (currentNavigationState) {
+                is NavigationState.TablePage -> TableAppBar(
+                    pagerState = pagerState
+                )
+
+                is NavigationState.CoffeeListPage -> CoffeeListAppBar(
+                    localDate = currentNavigationState.date
+                )
+
+                is NavigationState.SettingsPage -> SettingsAppBar()
             }
-        ) {
+        }, snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        }) {
             Column(modifier = Modifier.padding(it)) {
                 Spacer(
                     Modifier
@@ -134,7 +146,7 @@ fun PagesContent(
                 )
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TablePage(
-                        yearMonth = currentNavigationState.yearMonth
+                        pagerState = pagerState
                     )
                     is NavigationState.CoffeeListPage -> CoffeeListPage(
                         localDate = currentNavigationState.date
