@@ -63,4 +63,8 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
     }
     namespace = "repository"
+    compileOptions {
+        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+    }
 }

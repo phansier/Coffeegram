@@ -4,21 +4,20 @@ compileSdk = "34"
 minSdk = "21"
 wearMinSdk = "25"
 
-kotlin = "1.9.10" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin = "1.9.20" # https://kotlinlang.org/docs/releases.html#release-details
 agp = "8.1.2" # https://developer.android.com/studio/releases/gradle-plugin
-realm = "1.11.1" # https://github.com/realm/realm-kotlin
+realm = "1.12.0" # https://github.com/realm/realm-kotlin
 
-detekt = "1.23.1" # https://github.com/detekt/detekt
-detektCompose = "0.3.2" # https://github.com/mrmans0n/compose-rules
+detekt = "1.23.3" # https://github.com/detekt/detekt
+detektCompose = "0.3.3" # https://github.com/mrmans0n/compose-rules
 
 compose = "1.5.4" # https://developer.android.com/jetpack/androidx/releases/compose-ui
-composeCompiler = "1.5.3" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
+composeCompiler = "1.5.4" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 wearCompose = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 coroutines = "1.7.3" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/datastore
 koin = "3.5.0" # https://github.com/InsertKoinIO/koin#setup--current-version
-koinCompose = "3.5.0" # https://github.com/InsertKoinIO/koin#setup--current-version
 lifecycle = "2.6.2" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 core = "1.12.0" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/glance
@@ -59,7 +58,7 @@ datastore-preferences = { module = "androidx.datastore:datastore-preferences", v
 datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinCompose" }
+koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 
@@ -79,4 +78,4 @@ playServices-wearable = "com.google.android.gms:play-services-wearable:18.1.0" #
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5" # https://github.com/Kotlin/kotlinx.collections.immutable
 
 
-lottie-compose = "com.airbnb.android:lottie-compose:6.0.0" # https://github.com/airbnb/lottie-android
+lottie-compose = "com.airbnb.android:lottie-compose:6.1.0" # https://github.com/airbnb/lottie-android
