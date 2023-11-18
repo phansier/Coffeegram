@@ -4,7 +4,7 @@ import org.threeten.bp.YearMonth
 
 fun YearMonth.toTotalMonths(): Int {
     val yearsInMonths = this.year * 12
-    val months = this.monthValue + 1
+    val months = this.monthValue - 1
     return yearsInMonths + months
 }
 
