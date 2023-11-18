@@ -28,7 +28,7 @@ class NavigationStore(val yearMonth: YearMonth = YearMonth.now()) : InMemoryStor
         }
     }
 
-    private fun setYearMonth(yearMonth: YearMonth) : YearMonth{
+    private fun setYearMonth(yearMonth: YearMonth): YearMonth {
         currentYearMonth.value = yearMonth
         return currentYearMonth.value
     }
@@ -36,7 +36,7 @@ class NavigationStore(val yearMonth: YearMonth = YearMonth.now()) : InMemoryStor
 
 sealed interface NavigationIntent {
     data class OpenCoffeeListPage(val dayOfMonth: Int) : NavigationIntent
-    data class SetYearMonth(val yearMonth: YearMonth): NavigationIntent
+    data class SetYearMonth(val yearMonth: YearMonth) : NavigationIntent
     object ReturnToTablePage : NavigationIntent
     object ToSettingsPage : NavigationIntent
 }
