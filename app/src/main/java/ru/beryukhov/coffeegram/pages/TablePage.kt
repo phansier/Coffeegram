@@ -1,5 +1,6 @@
 package ru.beryukhov.coffeegram.pages
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -7,6 +8,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
@@ -16,7 +20,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -33,20 +39,24 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.collections.immutable.toPersistentMap
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
-import org.threeten.bp.YearMonth
 import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.model.NavigationIntent
+import ru.beryukhov.coffeegram.utils.toYearMonth
 import ru.beryukhov.coffeegram.view.MonthTable
 
+@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterial3Api
 @Composable
 fun TableAppBar(
-    yearMonth: YearMonth,
-    modifier: Modifier = Modifier,
-    tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
+    pagerState: PagerState,
+    modifier: Modifier = Modifier
 ) {
+    val scope = rememberCoroutineScope()
+    val yearMonth = pagerState.currentPage.toYearMonth()
+
     TopAppBar(
         modifier = modifier,
         title = {
@@ -65,39 +75,57 @@ fun TableAppBar(
         },
         navigationIcon = {
             IconButton(
-                onClick = { tablePageViewModel.newIntent(NavigationIntent.PreviousMonth) },
+                onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                    }
+                },
                 modifier = Modifier.semantics {
                     contentDescription = "ArrowLeft"
                 }) { Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "") }
         },
         actions = {
             IconButton(
-                onClick = { tablePageViewModel.newIntent(NavigationIntent.NextMonth) },
+                onClick = {
+                    scope.launch {
+                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                    }
+                },
                 modifier = Modifier.testTag("ArrowRight")
             ) { Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "") }
         }
     )
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ColumnScope.TablePage(
-    yearMonth: YearMonth,
+    pagerState: PagerState,
     modifier: Modifier = Modifier,
-    tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>()
+    tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>(),
 ) {
+
+    val yearMonth = pagerState.currentPage.toYearMonth()
+
+    LaunchedEffect(key1 = pagerState.currentPage) {
+        tablePageViewModel.newIntent(NavigationIntent.SetYearMonth(pagerState.currentPage.toYearMonth()))
+    }
+
     Column(horizontalAlignment = Alignment.End, modifier = modifier.weight(1f)) {
-        MonthTable(
-            yearMonth = yearMonth,
-            filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth).toPersistentMap(),
-            onClick = { dayOfMonth: Int ->
-                tablePageViewModel.newIntent(
-                    NavigationIntent.OpenCoffeeListPage(
-                        dayOfMonth
+        HorizontalPager(state = pagerState) {
+            MonthTable(
+                yearMonth = yearMonth,
+                filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth).toPersistentMap(),
+                onClick = { dayOfMonth: Int ->
+                    tablePageViewModel.newIntent(
+                        NavigationIntent.OpenCoffeeListPage(
+                            dayOfMonth
+                        )
                     )
-                )
-            },
-            modifier = Modifier.wrapContentHeight()
-        )
+                },
+                modifier = Modifier.wrapContentHeight()
+            )
+        }
         Row(
             modifier = Modifier.fillMaxSize(),
         ) {
@@ -109,20 +137,20 @@ fun ColumnScope.TablePage(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 private fun Preview() {
     Column {
-        val date = localDateStub
+        val pagerState = rememberPagerState(pageCount = { 36_000 })
         TablePage(
-            yearMonth = YearMonth.of(date.year, date.month),
-            tablePageViewModel = TablePageViewModelStub
+            tablePageViewModel = TablePageViewModelStub, pagerState = pagerState
         )
     }
 }
 
 @Composable
-fun LottieCoffee(modifier: Modifier = Modifier, alignment: Alignment = Alignment.Center,) {
+fun LottieCoffee(modifier: Modifier = Modifier, alignment: Alignment = Alignment.Center) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.lottie_coffee))
     val progress by animateLottieCompositionAsState(composition)
     LottieAnimation(

@@ -9,39 +9,34 @@ class NavigationStore(val yearMonth: YearMonth = YearMonth.now()) : InMemoryStor
     initialState = NavigationState.TablePage(yearMonth = yearMonth)
 ) {
 
-    private val currentMonth = MutableStateFlow(YearMonth.now())
+    private val currentYearMonth = MutableStateFlow(YearMonth.now())
 
     override suspend fun handleIntent(intent: NavigationIntent): NavigationState {
         return when (intent) {
-            NavigationIntent.NextMonth -> NavigationState.TablePage(increaseMonth())
-            NavigationIntent.PreviousMonth -> NavigationState.TablePage(decreaseMonth())
             is NavigationIntent.OpenCoffeeListPage -> NavigationState.CoffeeListPage(
                 LocalDate.of(
-                    currentMonth.value.year,
-                    currentMonth.value.month,
+                    currentYearMonth.value.year,
+                    currentYearMonth.value.month,
                     intent.dayOfMonth
                 )
             )
-            NavigationIntent.ReturnToTablePage -> NavigationState.TablePage(currentMonth.value)
+            is NavigationIntent.SetYearMonth -> NavigationState.TablePage(
+                setYearMonth(yearMonth = intent.yearMonth)
+            )
+            NavigationIntent.ReturnToTablePage -> NavigationState.TablePage(currentYearMonth.value)
             NavigationIntent.ToSettingsPage -> NavigationState.SettingsPage
         }
     }
 
-    private fun increaseMonth(): YearMonth {
-        currentMonth.value = currentMonth.value.plusMonths(1)
-        return currentMonth.value
-    }
-
-    private fun decreaseMonth(): YearMonth {
-        currentMonth.value = currentMonth.value.minusMonths(1)
-        return currentMonth.value
+    private fun setYearMonth(yearMonth: YearMonth) : YearMonth{
+        currentYearMonth.value = yearMonth
+        return currentYearMonth.value
     }
 }
 
 sealed interface NavigationIntent {
-    object NextMonth : NavigationIntent
-    object PreviousMonth : NavigationIntent
     data class OpenCoffeeListPage(val dayOfMonth: Int) : NavigationIntent
+    data class SetYearMonth(val yearMonth: YearMonth): NavigationIntent
     object ReturnToTablePage : NavigationIntent
     object ToSettingsPage : NavigationIntent
 }
