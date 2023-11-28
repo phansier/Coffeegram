@@ -39,7 +39,7 @@ compose-material3 = "androidx.compose.material3:material3:1.1.2" # https://devel
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
-compose-activity = "androidx.activity:activity-compose:1.8.0" # https://developer.android.com/jetpack/androidx/releases/activity
+compose-activity = "androidx.activity:activity-compose:1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 
 compose-uiTest = { module = "androidx.compose.ui:ui-test", version.ref = "compose" }
