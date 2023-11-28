@@ -8,7 +8,7 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("com.google.protobuf") version "0.9.0"
+    id("com.google.protobuf") version "0.9.4"
 }
 
 android {
