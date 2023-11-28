@@ -5,6 +5,8 @@
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.9.20-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 [![Jetc.dev](https://img.shields.io/badge/jetc.dev-25-blue)](https://jetc.dev/issues/025.html)
+[![Hits-of-Code](https://hitsofcode.com/github/phansier/Coffeegram?branch=develop)](https://hitsofcode.com/github/phansier/Coffeegram/view?branch=develop)
+
 
 ## Android app in Jetpack Compose and MVI
 
