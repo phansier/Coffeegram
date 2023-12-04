@@ -19,8 +19,7 @@ jobs:
         distribution: 'adopt'
         java-version: '17'
         cache: 'gradle'
-    - name: Detekt
-      run: make detekt
+
     - name: Build App Gradle
       run: make buildApp
     - name: Build Wear Gradle

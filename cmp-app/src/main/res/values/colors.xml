@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brown_200">#FFBCAAA4</color>
+    <color name="brown_500">#FF795548</color>
+    <color name="brown_700">#FF5D4037</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!--Android Academy app colors-->
+    <color name="aa_background">#FF191926</color>
+    <color name="aa_white_text">#FFFFFF</color>
+    <color name="aa_whitable_text">#FFECECEC</color>
+    <color name="aa_contrast_text">#FFFF3466</color>
+    <color name="aa_disabled_text">#FF6D6D80</color>
+</resources>
