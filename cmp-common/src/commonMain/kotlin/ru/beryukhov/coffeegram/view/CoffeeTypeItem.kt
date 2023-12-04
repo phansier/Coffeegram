@@ -24,8 +24,9 @@ fun CoffeeTypeItem(
     localDate: LocalDate,
     coffeeType: CoffeeType,
     count: Int,
-    daysCoffeesStore: DaysCoffeesStore
-) {
+    daysCoffeesStore: DaysCoffeesStore,
+    modifier: Modifier = Modifier,
+    ) {
     Row(
         modifier = Modifier.padding(16.dp)
     ) {

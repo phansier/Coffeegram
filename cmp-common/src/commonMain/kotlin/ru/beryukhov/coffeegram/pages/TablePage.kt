@@ -24,6 +24,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -35,8 +36,9 @@ import ru.beryukhov.coffeegram.view.MonthTable
 @Composable
 fun TableAppBar(
     yearMonth: YearMonth,
-    navigationStore: NavigationStore
-) {
+    navigationStore: NavigationStore,
+    modifier: Modifier = Modifier,
+    ) {
     TopAppBar(
         title = {
             Row(horizontalArrangement = Arrangement.Center) {
@@ -84,7 +86,7 @@ fun ColumnScope.TablePage(
                 entry.key.year == yearMonth.year && entry.key.month == yearMonth.month
             }
                 .mapKeys { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth }
-                .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getCoffeeType() },
+                .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getCoffeeType() }.toPersistentMap(),
             navigationStore,
             modifier = Modifier.weight(1f)
         )

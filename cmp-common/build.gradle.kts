@@ -42,6 +42,8 @@ kotlin {
                 api(compose.foundation)
                 api(compose.material)
 
+                implementation(libs.kotlinx.immutableCollections)
+
                 implementation(libs.jetbrains.compose.componentsResources)
 
                 implementation(projects.cmpRepository)

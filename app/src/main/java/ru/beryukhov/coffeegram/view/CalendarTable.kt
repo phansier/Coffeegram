@@ -182,6 +182,7 @@ fun MonthTable(
         firstWeek
     )
     weekItems.addAll(secondToSixWeeks)
+
     return MonthTableAdjusted(
         weekItems = weekItems.toPersistentList(),
         onClick = onClick,

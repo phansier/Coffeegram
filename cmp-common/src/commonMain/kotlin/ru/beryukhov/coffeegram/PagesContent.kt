@@ -34,12 +34,12 @@ import ru.beryukhov.coffeegram.pages.TablePage
 
 @Composable
 fun PagesContent(
-    modifier: Modifier = Modifier,
-    topPadding: Dp = 0.dp,
     navigationStore: NavigationStore,
     daysCoffeesStore: DaysCoffeesStore,
-    themeStore: ThemeStore
-) {
+    themeStore: ThemeStore,
+    modifier: Modifier = Modifier,
+    topPadding: Dp = 0.dp,
+    ) {
 
     val navigationState: NavigationState by navigationStore.state.collectAsState()
     val currentNavigationState = navigationState

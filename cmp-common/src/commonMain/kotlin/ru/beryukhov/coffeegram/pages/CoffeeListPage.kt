@@ -26,7 +26,7 @@ import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
 @Composable
-fun CoffeeListAppBar(navigationStore: NavigationStore) {
+fun CoffeeListAppBar(navigationStore: NavigationStore, modifier: Modifier = Modifier) {
     TopAppBar(
         title = { Text("Add drink") },
         navigationIcon = {
