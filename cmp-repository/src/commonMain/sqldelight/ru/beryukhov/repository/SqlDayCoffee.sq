@@ -1,0 +1,24 @@
+createSqlDayCoffeeTable:
+CREATE TABLE IF NOT EXISTS SqlDayCoffee  (
+  date TEXT NOT NULL,
+  coffeeName TEXT NOT NULL,
+  count INTEGER NOT NULL,
+  PRIMARY KEY (date, coffeeName)
+);
+
+insertSqlDayCoffee:
+INSERT OR REPLACE INTO SqlDayCoffee(date, coffeeName, count)
+VALUES (?, ?, ?);
+
+updateSqlDayCoffee:
+INSERT OR REPLACE INTO SqlDayCoffee(date, coffeeName, count)
+VALUES (?, ?, ?);
+
+deleteSqlDayCoffee:
+DELETE
+FROM SqlDayCoffee
+WHERE date = ? AND coffeeName = ?;
+
+selectAll:
+SELECT *
+FROM SqlDayCoffee;

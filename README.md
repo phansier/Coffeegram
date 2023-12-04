@@ -1,6 +1,8 @@
 # Coffeegram
+## Android & Multiplatform Compose based project #KMP
 
 [![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.5.4-yellow)](https://developer.android.com/jetpack/compose)
+[![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.5.10-yellow)](https://github.com/JetBrains/compose-multiplatform)
 [![WearCompose Version](https://img.shields.io/badge/Wear%20Compose-1.2.1-yellow)](https://developer.android.com/jetpack/androidx/releases/wear-compose)
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.9.20-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
@@ -39,18 +41,28 @@
 
 
 ---
+## Multiplatform Compose
+Android + Desktop + iOS (!!!) multiplatform app using [Compose Multiplatform](https://github.com/JetBrains/compose-jb) together with StateFlow and MVI
 
-**Multiplatform version of the app for Android + Desktop + <ins>iOS</ins> (using Compose Multiplatform)** is available in [Coffeegram-Compose-Multiplatform](https://github.com/phansier/Coffeegram-Compose-Multiplatform) repo
+<img src="images/ios.png" alt="drawing" width="300"/>
+<img src="images/ios_dark.png" alt="drawing" width="300"/>
 
-<img src="https://github.com/phansier/Coffeegram-Compose-Multiplatform/blob/develop/images/ios.png" alt="drawing" width="300"/>
+![](images/desktop.png)
 
+This project evolved from [Coffeegram Android](https://github.com/phansier/Coffeegram) (with Android Jetpack Compose) repository.
 
+## Run on Desktop jvm
+`./gradlew run`
 
-![](https://github.com/phansier/Coffeegram-Compose-Multiplatform/blob/develop/images/desktop.png)
-
+## Run on iOS
+[Using KMM plugin](https://github.com/JetBrains/compose-multiplatform-ios-android-template#on-ios)
 
 ---
 
+# Next Steps
+- More SwiftUI & UiKit integration samples 
+- Compose Multiplatform + Native UI integration into iOS
+- Compose optimisations
 
 
 

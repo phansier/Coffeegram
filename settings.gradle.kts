@@ -7,3 +7,7 @@ include(":repository")
 includeBuild("build-logic")
 include(":wear")
 include(":app-wear-common")
+
+include("cmp-app")
+include("cmp-common")
+include("cmp-repository")

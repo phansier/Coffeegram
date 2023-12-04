@@ -1,11 +1,11 @@
 [versions]
 targetSdk = "31"
 compileSdk = "34"
-minSdk = "21"
+minSdk = "21" # was "24" in desktop
 wearMinSdk = "25"
 
 kotlin = "1.9.20" # https://kotlinlang.org/docs/releases.html#release-details
-agp = "8.2.0" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.1.4" # https://developer.android.com/studio/releases/gradle-plugin
 realm = "1.13.0" # https://github.com/realm/realm-kotlin
 
 detekt = "1.23.4" # https://github.com/detekt/detekt
@@ -16,11 +16,19 @@ composeCompiler = "1.5.5" # https://developer.android.com/jetpack/androidx/relea
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 wearCompose = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 coroutines = "1.7.3" # https://github.com/Kotlin/kotlinx.coroutines
-datastore = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/datastore
+datastore = "1.1.0-alpha07" # https://developer.android.com/jetpack/androidx/releases/datastore
+# https://androidx.tech/artifacts/datastore/datastore-core-okio-iosarm64/
 koin = "3.5.0" # https://github.com/InsertKoinIO/koin#setup--current-version
 lifecycle = "2.6.2" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 core = "1.12.0" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/glance
+
+jetbrainsCompose = "1.5.10" # https://github.com/JetBrains/compose-multiplatform
+sqldelight = "2.0.0" # https://github.com/cashapp/sqldelight/releases
+
+appcompat = "1.6.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
+material = "1.10.0" # https://github.com/material-components/material-components-android
+activity = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -39,7 +47,7 @@ compose-material3 = "androidx.compose.material3:material3:1.1.2" # https://devel
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
-compose-activity = "androidx.activity:activity-compose:1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
+compose-activity = "androidx.activity:activity-compose:1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 
 compose-uiTest = { module = "androidx.compose.ui:ui-test", version.ref = "compose" }
@@ -56,13 +64,17 @@ coroutines-play = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-serv
 
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
+datastore-preferencesCore = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
+datastore-coreOkio = { module = "androidx.datastore:datastore-core-okio", version.ref = "datastore" }
 
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
 
-core-coreKtx = { module = "androidx.core:core-ktx", version.ref = "core" }
+core-coreKtx = { module = "androidx.core:core-ktx", version.ref = "core" } # androidx-coreKtx
 
 glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 #glance-wear-tiles = { module = "androidx.glance:glance-wear-tiles", version.ref = "glance" }
@@ -71,7 +83,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 androidx-annotation = "androidx.annotation:annotation:1.7.0"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
 androidx-wear = "androidx.wear:wear:1.3.0"                          # https://developer.android.com/jetpack/androidx/releases/wear
 junit = "junit:junit:4.13.2"
-material = "com.google.android.material:material:1.10.0"             # https://mvnrepository.com/artifact/com.google.android.material/material?repo=google
+material = { module = "com.google.android.material:material", version.ref = "material" }
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.6"       # https://mvnrepository.com/artifact/com.jakewharton.threetenabp/threetenabp
 protobuf-javalite = "com.google.protobuf:protobuf-javalite:3.25.1"  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
 playServices-wearable = "com.google.android.gms:play-services-wearable:18.1.0" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
@@ -79,3 +91,23 @@ kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immuta
 
 
 lottie-compose = "com.airbnb.android:lottie-compose:6.2.0" # https://github.com/airbnb/lottie-android
+
+###
+
+composeGradle = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "jetbrainsCompose" }
+sqldelightGradle = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
+
+jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jetbrainsCompose" }
+jetbrains-compose-material = { module = "org.jetbrains.compose.material:material", version.ref = "jetbrainsCompose" }
+jetbrains-compose-componentsResources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "jetbrainsCompose" }
+
+
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0" # https://github.com/Kotlin/kotlinx-datetime
+
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
+sqldelight-coroutinesExt = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
+sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
+sqldelight-nativeDriver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
+sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }

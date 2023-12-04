@@ -1,0 +1,11 @@
+name: KMMBridge Publish Release
+on: workflow_dispatch
+
+jobs:
+    call-kmmbridge-publish:
+        uses: touchlab/KMMBridgeGithubWorkflow/.github/workflows/faktorybuildbranches.yml@v0.8
+        secrets:
+            PODSPEC_SSH_KEY: ${{ secrets.PODSPEC_SSH_KEY }}
+
+
+

@@ -11,7 +11,14 @@ buildApp:
 buildWear:
 	./gradlew :wear:assemble
 
-localCheck: detekt buildApp buildWear
+
+buildAndroid:
+	./gradlew :cmp-app:assemble
+
+testCommon:
+	./gradlew :cmp-common:testDebugUnitTest
+
+localCheck: detekt buildApp buildWear buildAndroid
 
 compose_metrics:
 	$(path)gradlew :app:assembleRelease \-Pmyapp.enableComposeCompilerReports=true
@@ -32,3 +39,7 @@ unsafe_clear_branches:
 	git fetch --prune && \
 	git branch -r | awk '{print $$1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | \
 	awk '{print $$1}' | xargs git branch -D
+
+## Run on Desktop jvm
+runDesktop:
+	./gradlew run
