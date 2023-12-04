@@ -6,15 +6,15 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
 
-    id("co.touchlab.faktory.kmmbridge") version "0.3.7"
+    id("co.touchlab.kmmbridge") version "0.5.1"
     `maven-publish`
 }
 
 fun composeDependency(groupWithArtifact: String) = "$groupWithArtifact:${libs.versions.jetbrainsCompose}"
 
 kotlin {
-    android()
-    jvm("desktop")
+    androidTarget()
+    jvm()
 
     iosX64()
     iosArm64()
@@ -34,56 +34,35 @@ kotlin {
 //        extraSpecAttributes["resources"] = "['src/commonMain/resources/**']"
     }
 
-    @Suppress("UnusedPrivateMember")
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                api(compose.runtime)
-                api(compose.foundation)
-                api(compose.material)
+        commonMain.dependencies {
+            api(compose.runtime)
+            api(compose.foundation)
+            api(compose.material)
 
-                implementation(libs.kotlinx.immutableCollections)
+            implementation(libs.kotlinx.immutableCollections)
 
-                implementation(libs.jetbrains.compose.componentsResources)
+            implementation(libs.jetbrains.compose.componentsResources)
 
-                implementation(projects.cmpRepository)
-                implementation(libs.kotlinx.datetime)
+            implementation(projects.cmpRepository)
+            implementation(libs.kotlinx.datetime)
 
-                api(libs.datastore.preferencesCore)
-                api(libs.datastore.coreOkio)
+            api(libs.datastore.preferencesCore)
+            api(libs.datastore.coreOkio)
 
-                api(libs.koin.core)
-            }
+            api(libs.koin.core)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-                implementation(libs.koin.test)
-            }
+        commonTest.dependencies {
+            implementation(kotlin("test-common"))
+            implementation(kotlin("test-annotations-common"))
+            implementation(libs.koin.test)
         }
-        val androidMain by getting {
-            dependsOn(commonMain)
-            dependencies {
-                api(libs.androidx.appcompat)
-                api(libs.core.coreKtx)
-            }
+        androidMain.dependencies {
+            api(libs.androidx.appcompat)
+            api(libs.core.coreKtx)
         }
-        val desktopMain by getting {
-            dependencies {
-                implementation(compose.desktop.currentOs)
-            }
-        }
-
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
+        jvmMain.dependencies {
+            implementation(compose.desktop.currentOs)
         }
     }
 }
@@ -148,7 +127,6 @@ compose.desktop {
 
 kmmbridge {
     mavenPublishArtifacts()
-    gitTagVersions()
     spm()
     cocoapods("git@github.com:phansier/PodSpecs.git")
     addGithubPackagesRepository()

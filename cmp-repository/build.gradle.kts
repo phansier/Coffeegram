@@ -16,7 +16,7 @@ sqldelight {
 version = "1.0"
 
 kotlin {
-    android()
+    androidTarget()
 
     jvm()
 
@@ -26,45 +26,27 @@ kotlin {
 
     @Suppress("UnusedPrivateMember")
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(libs.coroutines.core)
+        commonMain.dependencies {
+            implementation(libs.coroutines.core)
 
-                implementation(libs.sqldelight.runtime)
-                implementation(libs.sqldelight.coroutinesExt)
-            }
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.sqldelight.coroutinesExt)
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
-            }
+        commonTest.dependencies {
+            implementation(kotlin("test-common"))
+            implementation(kotlin("test-annotations-common"))
         }
-        val androidMain by getting {
-            dependencies {
-                implementation(libs.sqldelight.androidDriver)
-                implementation(libs.sqldelight.coroutinesExt)
-            }
+        androidMain.dependencies {
+            implementation(libs.sqldelight.androidDriver)
+            implementation(libs.sqldelight.coroutinesExt)
         }
 
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                implementation(libs.sqldelight.nativeDriver)
-            }
+        iosMain.dependencies {
+            implementation(libs.sqldelight.nativeDriver)
         }
 
-        val jvmMain by getting {
-            dependencies {
-                implementation(libs.sqldelight.sqliteDriver)
-            }
+        jvmMain.dependencies {
+            implementation(libs.sqldelight.sqliteDriver)
         }
     }
 }
