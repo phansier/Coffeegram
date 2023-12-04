@@ -3,18 +3,18 @@ SHELL := /bin/bash
 path := ./
 
 detekt:
-	$(path)gradlew detektAll --no-configuration-cache
+	$(path)gradlew detektAll
 
 buildApp:
-	./gradlew :app:assemble --no-configuration-cache
+	./gradlew :app:assemble
 
 buildWear:
-	./gradlew :wear:assemble --no-configuration-cache
+	./gradlew :wear:assemble
 
 localCheck: detekt buildApp buildWear
 
 compose_metrics:
-	$(path)gradlew :app:assembleRelease \-Pmyapp.enableComposeCompilerReports=true --no-configuration-cache
+	$(path)gradlew :app:assembleRelease \-Pmyapp.enableComposeCompilerReports=true
 
 # https://github.com/PatilShreyas/compose-report-to-html
 compose_report:
