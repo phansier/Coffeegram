@@ -80,7 +80,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 #glance-wear-tiles = { module = "androidx.glance:glance-wear-tiles", version.ref = "glance" }
 
 
-androidx-annotation = "androidx.annotation:annotation:1.7.0"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
+androidx-annotation = "androidx.annotation:annotation:1.7.1"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
 androidx-wear = "androidx.wear:wear:1.3.0"                          # https://developer.android.com/jetpack/androidx/releases/wear
 junit = "junit:junit:4.13.2"
 material = { module = "com.google.android.material:material", version.ref = "material" }
