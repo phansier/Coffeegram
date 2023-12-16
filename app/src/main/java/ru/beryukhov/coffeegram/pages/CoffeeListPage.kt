@@ -3,7 +3,7 @@ package ru.beryukhov.coffeegram.pages
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -91,13 +91,14 @@ private fun CoffeeList(
     onMinusClick: (coffeeType: CoffeeType) -> Unit
 ) {
     LazyColumn(modifier = modifier.fillMaxHeight()) {
-        itemsIndexed(items = coffeeItems,
-            itemContent = { _, pair: Pair<CoffeeType, Int> ->
+        items(
+            items = coffeeItems,
+            itemContent = { (type, count): Pair<CoffeeType, Int> ->
                 CoffeeTypeItem(
-                    coffeeType = pair.first,
-                    count = pair.second,
-                    onPlusClick = { onPlusClick(pair.first) },
-                    onMinusClick = { onMinusClick(pair.first) }
+                    coffeeType = type,
+                    count = count,
+                    onPlusClick = { onPlusClick(type) },
+                    onMinusClick = { onMinusClick(type) }
                 )
             })
     }
