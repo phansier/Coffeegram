@@ -12,6 +12,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,17 +63,18 @@ fun CoffeeListPage(
     coffeeListViewModel: CoffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
 ) {
     BackHandler { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }
-    CoffeeList(
-        coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(localDate).toPersistentList(),
-        onPlusClick = { coffeeType: CoffeeType ->
+    val onPlusClick = remember(localDate, coffeeListViewModel) {
+        { coffeeType: CoffeeType ->
             coffeeListViewModel.newIntent(
                 DaysCoffeesIntent.PlusCoffee(
                     localDate,
                     coffeeType
                 )
             )
-        },
-        onMinusClick = { coffeeType: CoffeeType ->
+        }
+    }
+    val onMinusClick = remember(localDate, coffeeListViewModel) {
+        { coffeeType: CoffeeType ->
             coffeeListViewModel.newIntent(
                 DaysCoffeesIntent.MinusCoffee(
                     localDate,
@@ -80,6 +82,11 @@ fun CoffeeListPage(
                 )
             )
         }
+    }
+    CoffeeList(
+        coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(localDate).toPersistentList(),
+        onPlusClick = onPlusClick,
+        onMinusClick = onMinusClick
     )
 }
 
