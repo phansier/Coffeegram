@@ -3,7 +3,7 @@ package ru.beryukhov.coffeegram.pages
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -12,6 +12,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -62,17 +63,18 @@ fun CoffeeListPage(
     coffeeListViewModel: CoffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
 ) {
     BackHandler { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }
-    CoffeeList(
-        coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(localDate).toPersistentList(),
-        onPlusClick = { coffeeType: CoffeeType ->
+    val onPlusClick = remember(localDate, coffeeListViewModel) {
+        { coffeeType: CoffeeType ->
             coffeeListViewModel.newIntent(
                 DaysCoffeesIntent.PlusCoffee(
                     localDate,
                     coffeeType
                 )
             )
-        },
-        onMinusClick = { coffeeType: CoffeeType ->
+        }
+    }
+    val onMinusClick = remember(localDate, coffeeListViewModel) {
+        { coffeeType: CoffeeType ->
             coffeeListViewModel.newIntent(
                 DaysCoffeesIntent.MinusCoffee(
                     localDate,
@@ -80,6 +82,11 @@ fun CoffeeListPage(
                 )
             )
         }
+    }
+    CoffeeList(
+        coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(localDate).toPersistentList(),
+        onPlusClick = onPlusClick,
+        onMinusClick = onMinusClick
     )
 }
 
@@ -91,13 +98,14 @@ private fun CoffeeList(
     onMinusClick: (coffeeType: CoffeeType) -> Unit
 ) {
     LazyColumn(modifier = modifier.fillMaxHeight()) {
-        itemsIndexed(items = coffeeItems,
-            itemContent = { _, pair: Pair<CoffeeType, Int> ->
+        items(
+            items = coffeeItems,
+            itemContent = { (type, count): Pair<CoffeeType, Int> ->
                 CoffeeTypeItem(
-                    coffeeType = pair.first,
-                    count = pair.second,
-                    onPlusClick = { onPlusClick(pair.first) },
-                    onMinusClick = { onMinusClick(pair.first) }
+                    coffeeType = type,
+                    count = count,
+                    onPlusClick = { onPlusClick(type) },
+                    onMinusClick = { onMinusClick(type) }
                 )
             })
     }
