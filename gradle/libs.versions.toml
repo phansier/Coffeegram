@@ -87,7 +87,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.6"       # https://mvnrepository.com/artifact/com.jakewharton.threetenabp/threetenabp
 protobuf-javalite = "com.google.protobuf:protobuf-javalite:3.25.1"  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
 playServices-wearable = "com.google.android.gms:play-services-wearable:18.1.0" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
-kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6" # https://github.com/Kotlin/kotlinx.collections.immutable
+kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7" # https://github.com/Kotlin/kotlinx.collections.immutable
 
 
 lottie-compose = "com.airbnb.android:lottie-compose:6.2.0" # https://github.com/airbnb/lottie-android
