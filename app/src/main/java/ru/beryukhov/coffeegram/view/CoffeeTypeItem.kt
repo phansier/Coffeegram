@@ -1,8 +1,15 @@
 package ru.beryukhov.coffeegram.view
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,6 +18,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -65,10 +76,7 @@ fun CoffeeTypeItem(
             ) {
                 Text("-")
             }
-            Text(
-                "$count", style = AppTypography.bodySmall,
-                modifier = Modifier.align(Alignment.CenterVertically)
-            )
+            AnimatedCounter(count)
             TextButton(
                 onClick = onPlusClick,
                 contentPadding = PaddingValues(0.dp),
@@ -80,13 +88,46 @@ fun CoffeeTypeItem(
     }
 }
 
-@Preview
+private const val ZERO_WIDTH_CHAR = '\u200B'
+
+@Composable
+private fun RowScope.AnimatedCounter(count: Int) {
+    count.toString()
+        // For correct transitions when the digit count changes. Up to 999
+        .padStart(3, ZERO_WIDTH_CHAR)
+        .map { c -> Pair(c, count) }
+        .forEach { digit ->
+            AnimatedContent(
+                targetState = digit,
+                transitionSpec = {
+                    if (targetState.first == initialState.first) {
+                        EnterTransition.None togetherWith ExitTransition.None
+                    } else if (targetState.second > initialState.second) {
+                        slideInVertically { -it } togetherWith slideOutVertically { it }
+                    } else {
+                        slideInVertically { it } togetherWith slideOutVertically { -it }
+                    }
+                },
+                label = "CounterAnimation",
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) { (digit, _) ->
+                Text(
+                    "$digit",
+                    style = AppTypography.bodySmall,
+                )
+            }
+        }
+}
+
+// Background for dark mode
+@Preview(backgroundColor = 0xFFFFFFFF, showBackground = true)
 @Composable
 private fun Preview() {
+    var count by remember { mutableIntStateOf(5) }
     CoffeeTypeItem(
         coffeeType = Cappuccino,
-        count = 5,
-        onPlusClick = {},
-        onMinusClick = {}
+        count = count,
+        onPlusClick = { count++ },
+        onMinusClick = { count-- }
     )
 }
