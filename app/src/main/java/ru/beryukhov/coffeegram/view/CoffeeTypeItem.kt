@@ -1,6 +1,8 @@
 package ru.beryukhov.coffeegram.view
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
@@ -86,15 +88,21 @@ fun CoffeeTypeItem(
     }
 }
 
+private const val ZERO_WIDTH_CHAR = '\u200B'
+
 @Composable
 private fun RowScope.AnimatedCounter(count: Int) {
     count.toString()
-        .mapIndexed { index, c -> Triple(c, count, index) }
+        // For correct transitions when the digit count changes. Up to 999
+        .padStart(3, ZERO_WIDTH_CHAR)
+        .map { c -> Pair(c, count) }
         .forEach { digit ->
             AnimatedContent(
                 targetState = digit,
                 transitionSpec = {
-                    if (targetState.second > initialState.second) {
+                    if (targetState.first == initialState.first) {
+                        EnterTransition.None togetherWith ExitTransition.None
+                    } else if (targetState.second > initialState.second) {
                         slideInVertically { -it } togetherWith slideOutVertically { it }
                     } else {
                         slideInVertically { it } togetherWith slideOutVertically { -it }
@@ -102,9 +110,9 @@ private fun RowScope.AnimatedCounter(count: Int) {
                 },
                 label = "CounterAnimation",
                 modifier = Modifier.align(Alignment.CenterVertically)
-            ) { (c, _, _) ->
+            ) { (digit, _) ->
                 Text(
-                    "$c",
+                    "$digit",
                     style = AppTypography.bodySmall,
                 )
             }
