@@ -5,7 +5,7 @@ minSdk = "21" # was "24" in desktop
 wearMinSdk = "25"
 
 kotlin = "1.9.21" # https://kotlinlang.org/docs/releases.html#release-details
-agp = "8.1.4" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.2.1" # https://developer.android.com/studio/releases/gradle-plugin
 realm = "1.13.0" # https://github.com/realm/realm-kotlin
 
 detekt = "1.23.4" # https://github.com/detekt/detekt
