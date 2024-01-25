@@ -11,7 +11,7 @@ realm = "1.13.0" # https://github.com/realm/realm-kotlin
 detekt = "1.23.4" # https://github.com/detekt/detekt
 detektCompose = "0.3.10" # https://github.com/mrmans0n/compose-rules
 
-compose = "1.5.4" # https://developer.android.com/jetpack/androidx/releases/compose-ui
+compose = "1.6.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 composeCompiler = "1.5.6" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 wearCompose = "1.2.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
