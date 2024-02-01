@@ -23,7 +23,7 @@ lifecycle = "2.7.0" # https://developer.android.com/jetpack/androidx/releases/li
 core = "1.12.0" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/glance
 
-jetbrainsCompose = "1.6.0-beta01" # https://github.com/JetBrains/compose-multiplatform
+jetbrainsCompose = "1.6.0-dev1397" # https://github.com/JetBrains/compose-multiplatform
 sqldelight = "2.0.1" # https://github.com/cashapp/sqldelight/releases
 
 appcompat = "1.6.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
