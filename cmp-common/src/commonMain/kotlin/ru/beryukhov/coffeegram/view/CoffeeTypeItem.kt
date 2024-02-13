@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalResourceApi::class)
+
 package ru.beryukhov.coffeegram.view
 
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,6 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.LocalDate
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -37,11 +41,11 @@ fun CoffeeTypeItem(
                 .align(Alignment.CenterVertically)
         )
         Spacer(Modifier.width(16.dp))
-        Text(
-            text = coffeeType.name,
+        Text(stringResource(coffeeType.name))
+            /*text = getString(coffeeType.name),
             style = typography.body1,
             modifier = Modifier.align(Alignment.CenterVertically).weight(1f)
-        )
+        )*/
         Row(modifier = Modifier.align(Alignment.CenterVertically)) {
             Spacer(Modifier.width(16.dp))
             val textButtonModifier = Modifier.align(Alignment.CenterVertically)

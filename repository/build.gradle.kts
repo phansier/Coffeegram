@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+
 plugins {
     kotlin("multiplatform")
 //    kotlin("native.cocoapods")
@@ -8,7 +11,12 @@ plugins {
 version = "1.0"
 
 kotlin {
-    androidTarget()
+    androidTarget {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        unitTestVariant {
+            sourceSetTree.set(KotlinSourceSetTree.test)
+        }
+    }
 
     iosX64()
     iosArm64()
@@ -41,13 +49,6 @@ kotlin {
                 implementation(libs.junit)
             }
         }
-        val commonTest by getting {}
-        androidUnitTest.dependsOn(commonTest)
-
-        /*androidTest.dependencies {
-            implementation(kotlin("test-junit"))
-            implementation(libs.junit)
-        }*/
     }
 }
 
