@@ -1,0 +1,6 @@
+<resources>
+    <string name="cappuccino">Cappuccino</string>
+    <string name="latte">Latte</string>
+    <string name="americano">Americano</string>
+    <string name="common">Common Coffee</string>
+</resources>

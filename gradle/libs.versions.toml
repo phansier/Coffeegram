@@ -23,7 +23,7 @@ lifecycle = "2.7.0" # https://developer.android.com/jetpack/androidx/releases/li
 core = "1.12.0" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/glance
 
-jetbrainsCompose = "1.6.0-beta01" # https://github.com/JetBrains/compose-multiplatform
+jetbrainsCompose = "1.6.0-beta02" # https://github.com/JetBrains/compose-multiplatform
 sqldelight = "2.0.1" # https://github.com/cashapp/sqldelight/releases
 
 appcompat = "1.6.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
@@ -60,7 +60,7 @@ composeWear-navigation = { module = "androidx.wear.compose:compose-navigation", 
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-play = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines"}
-
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 datastore-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }

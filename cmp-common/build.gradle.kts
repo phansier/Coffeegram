@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.lint.AndroidLintAnalysisTask
+import com.android.build.gradle.internal.lint.LintModelWriterTask
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
@@ -56,6 +58,7 @@ kotlin {
             implementation(kotlin("test-common"))
             implementation(kotlin("test-annotations-common"))
             implementation(libs.koin.test)
+            implementation(libs.coroutines.test)
         }
         androidMain.dependencies {
             api(libs.androidx.appcompat)
@@ -85,7 +88,6 @@ android {
     sourceSets {
         named("main") {
             manifest.srcFile("src/androidMain/AndroidManifest.xml")
-            res.srcDirs("src/androidMain/res", "src/commonMain/resources")
         }
     }
 
@@ -130,4 +132,13 @@ kmmbridge {
     spm()
     cocoapods("git@github.com:phansier/PodSpecs.git")
     addGithubPackagesRepository()
+}
+
+// workaround for https://github.com/JetBrains/compose-multiplatform/issues/4085
+tasks.withType<AndroidLintAnalysisTask> {
+    dependsOn("copyFontsToAndroidAssets")
+}
+
+tasks.withType<LintModelWriterTask> {
+    dependsOn("copyFontsToAndroidAssets")
 }

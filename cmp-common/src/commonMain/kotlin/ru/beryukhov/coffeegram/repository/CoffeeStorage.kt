@@ -1,7 +1,11 @@
+@file:OptIn(ExperimentalResourceApi::class)
+
 package ru.beryukhov.coffeegram.repository
 
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDate.Companion.parse
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.getString
 import repository.CoffeeRepository
 import repository.model.DbDayCoffee
 import ru.beryukhov.coffeegram.data.CoffeeType
@@ -22,7 +26,7 @@ class CoffeeStorage(private val repository: CoffeeRepository) :
 }
 
 // @VisibleForTesting
-internal fun List<DbDayCoffee>.toState(): DaysCoffeesState {
+internal suspend fun List<DbDayCoffee>.toState(): DaysCoffeesState {
     val map = mutableMapOf<LocalDate, DayCoffee>()
     this.forEach {
         val date: LocalDate = parse(it.date)
@@ -37,7 +41,7 @@ internal fun List<DbDayCoffee>.toState(): DaysCoffeesState {
 }
 
 // @VisibleForTesting
-internal fun Map<LocalDate, DayCoffee>.toDaysCoffeesList(): List<DbDayCoffee> {
+internal suspend fun Map<LocalDate, DayCoffee>.toDaysCoffeesList(): List<DbDayCoffee> {
     val list = mutableListOf<DbDayCoffee>()
     this.forEach { entry: Map.Entry<LocalDate, DayCoffee> ->
         val date = entry.key.toString()
@@ -46,7 +50,7 @@ internal fun Map<LocalDate, DayCoffee>.toDaysCoffeesList(): List<DbDayCoffee> {
             list.add(
                 DbDayCoffee(
                     date = date,
-                    coffeeName = inner_entry.key.name,
+                    coffeeName = getString(inner_entry.key.name),
                     count = inner_entry.value
                 )
             )
