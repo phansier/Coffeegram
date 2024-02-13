@@ -1,5 +1,3 @@
-import com.android.build.gradle.internal.lint.AndroidLintAnalysisTask
-import com.android.build.gradle.internal.lint.LintModelWriterTask
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
@@ -132,13 +130,4 @@ kmmbridge {
     spm()
     cocoapods("git@github.com:phansier/PodSpecs.git")
     addGithubPackagesRepository()
-}
-
-// workaround for https://github.com/JetBrains/compose-multiplatform/issues/4085
-tasks.withType<AndroidLintAnalysisTask> {
-    dependsOn("copyFontsToAndroidAssets")
-}
-
-tasks.withType<LintModelWriterTask> {
-    dependsOn("copyFontsToAndroidAssets")
 }
