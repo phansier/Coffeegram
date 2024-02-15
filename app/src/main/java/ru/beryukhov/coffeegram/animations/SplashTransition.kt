@@ -60,11 +60,11 @@ fun TransitionSlot(
         val transition = newSplashTransition()
         Box {
             StartPage(
-                modifier = Modifier.alpha(transition.splashAlpha),
+                Modifier.alpha(transition.splashAlpha),
             )
             EndPage(
-                modifier = Modifier.alpha(transition.contentAlpha),
-                topPadding = transition.contentTopPadding,
+                Modifier.alpha(transition.contentAlpha),
+                transition.contentTopPadding,
             )
         }
         if (transition.contentAlpha == SplashState.Completed.transition.contentAlpha) {
@@ -72,8 +72,8 @@ fun TransitionSlot(
         }
     } else {
         EndPage(
-            modifier = Modifier.alpha(SplashState.Completed.transition.contentAlpha),
-            topPadding = SplashState.Completed.transition.contentTopPadding,
+            Modifier.alpha(SplashState.Completed.transition.contentAlpha),
+            SplashState.Completed.transition.contentTopPadding,
         )
     }
 }
