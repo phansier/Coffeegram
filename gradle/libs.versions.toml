@@ -15,7 +15,7 @@ compose = "1.6.1" # https://developer.android.com/jetpack/androidx/releases/comp
 composeCompiler = "1.5.8" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 wearCompose = "1.3.0" # https://developer.android.com/jetpack/androidx/releases/wear-compose
-coroutines = "1.7.3" # https://github.com/Kotlin/kotlinx.coroutines
+coroutines = "1.8.0" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.1.0-beta01" # https://developer.android.com/jetpack/androidx/releases/datastore
 # https://androidx.tech/artifacts/datastore/datastore-core-okio-iosarm64/
 koin = "3.5.3" # https://github.com/InsertKoinIO/koin#setup--current-version
