@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -92,7 +93,7 @@ fun AppTheme(
 
     MaterialTheme(
         colorScheme = colors,
-        typography = AppTypography,
+        typography = typography,
         content = content
     )
 }
@@ -160,7 +161,7 @@ fun HarmonizedTheme(
     CompositionLocalProvider(LocalExtendedColors provides extendedColors) {
         MaterialTheme(
             colorScheme = colorsWithHarmonizedError,
-            typography = AppTypography,
+            typography = typography,
             content = content
         )
     }

@@ -12,6 +12,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -77,22 +79,22 @@ fun TableAppBar(
             IconButton(
                 onClick = {
                     scope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
                     }
                 },
                 modifier = Modifier.semantics {
                     contentDescription = "ArrowLeft"
-                }) { Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "") }
+                }) { Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "") }
         },
         actions = {
             IconButton(
                 onClick = {
                     scope.launch {
-                        pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                        pagerState.animateScrollToPage(pagerState.currentPage + 1)
                     }
                 },
                 modifier = Modifier.testTag("ArrowRight")
-            ) { Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "") }
+            ) { Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "") }
         }
     )
 }

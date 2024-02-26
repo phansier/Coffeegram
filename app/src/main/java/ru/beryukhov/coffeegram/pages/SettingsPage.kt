@@ -10,8 +10,9 @@ import androidx.compose.foundation.layout.absolutePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -32,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ru.beryukhov.coffeegram.BuildConfig
 import ru.beryukhov.coffeegram.R
-import ru.beryukhov.coffeegram.app_ui.AppTypography
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeIntent
@@ -40,7 +40,6 @@ import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.model.getThemeStoreStub
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 internal fun SettingsPagePreview() {
@@ -71,7 +70,7 @@ fun ColumnScope.SettingsPage(
     Column(modifier = modifier.weight(1f)) {
         Text(
             stringResource(R.string.app_theme),
-            style = AppTypography.titleMedium,
+            style = typography.titleMedium,
             modifier = Modifier.absolutePadding(left = 24.dp, top = 16.dp)
         )
         val themeState: ThemeState by themeStore.state.collectAsState()
@@ -110,7 +109,7 @@ fun ColumnScope.SettingsPage(
                 stringResource(R.string.app_theme_dynamic)
             )
         }
-        Divider()
+        HorizontalDivider()
         if (BuildConfig.DEBUG) {
             Button(onClick = { startWearableActivity() }, modifier = Modifier.padding(16.dp)) {
                 Text("Start Wearable Activity")

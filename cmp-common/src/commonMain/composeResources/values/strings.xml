@@ -3,4 +3,14 @@
     <string name="latte">Latte</string>
     <string name="americano">Americano</string>
     <string name="common">Common Coffee</string>
+
+    <string name="app_theme">App theme</string>
+    <string name="app_theme_system">System</string>
+    <string name="app_theme_light">Light</string>
+    <string name="app_theme_dark">Dark</string>
+    <string name="app_theme_cupertino">Cupertino</string>
+
+    <string name="settings">Settings</string>
+    <string name="calendar">Calendar</string>
+
 </resources>

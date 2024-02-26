@@ -9,9 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme.typography
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +32,7 @@ fun CoffeeTypeItem(
     modifier: Modifier = Modifier,
     ) {
     Row(
-        modifier = Modifier.padding(16.dp)
+        modifier = modifier.padding(16.dp)
     ) {
         Image(
             coffeeType = coffeeType,
@@ -41,11 +41,11 @@ fun CoffeeTypeItem(
                 .align(Alignment.CenterVertically)
         )
         Spacer(Modifier.width(16.dp))
-        Text(stringResource(coffeeType.name))
-            /*text = getString(coffeeType.name),
-            style = typography.body1,
+        Text(
+            text = stringResource(coffeeType.name),
+            style = typography.bodyMedium,
             modifier = Modifier.align(Alignment.CenterVertically).weight(1f)
-        )*/
+        )
         Row(modifier = Modifier.align(Alignment.CenterVertically)) {
             Spacer(Modifier.width(16.dp))
             val textButtonModifier = Modifier.align(Alignment.CenterVertically)
@@ -64,7 +64,7 @@ fun CoffeeTypeItem(
             }
             Text(
                 text = "$count",
-                style = typography.body2,
+                style = typography.bodyMedium,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
             TextButton(

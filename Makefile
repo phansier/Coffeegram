@@ -18,7 +18,7 @@ buildAndroid:
 testCommon:
 	./gradlew :cmp-common:testDebugUnitTest
 
-localCheck: detekt buildApp buildWear buildAndroid
+localCheck: detekt buildApp buildWear buildAndroid testCommon
 
 compose_metrics:
 	$(path)gradlew :app:assembleRelease \-Pmyapp.enableComposeCompilerReports=true
