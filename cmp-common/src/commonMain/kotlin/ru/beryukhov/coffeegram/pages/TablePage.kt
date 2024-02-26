@@ -10,6 +10,8 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
@@ -57,7 +59,7 @@ fun TableAppBar(
                 modifier = Modifier.semantics {
                     contentDescription = "ArrowLeft"
                 }
-            ) { Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "") }
+            ) { Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "") }
         },
         actions = {
             IconButton(
@@ -65,7 +67,7 @@ fun TableAppBar(
                 modifier = Modifier.semantics {
                     testTag = "ArrowRight"
                 }
-            ) { Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "") }
+            ) { Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "") }
         }
     )
 }

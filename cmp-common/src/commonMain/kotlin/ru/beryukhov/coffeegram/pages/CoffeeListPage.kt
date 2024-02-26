@@ -9,7 +9,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -32,7 +32,7 @@ fun CoffeeListAppBar(navigationStore: NavigationStore, modifier: Modifier = Modi
         navigationIcon = {
             IconButton(onClick = { navigationStore.newIntent(NavigationIntent.ReturnToTablePage) }) {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = ""
                 )
             }
