@@ -364,7 +364,7 @@
 					"-ObjC",
 					"-l\"c++\"",
 					"-framework",
-					"\"common\"",
+					"\"cmp_common\"",
 					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_ID}${TEAM_ID}";
@@ -396,7 +396,7 @@
 					"-ObjC",
 					"-l\"c++\"",
 					"-framework",
-					"\"common\"",
+					"\"cmp_common\"",
 					"-lsqlite3",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_ID}${TEAM_ID}";
