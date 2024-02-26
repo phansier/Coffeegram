@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -28,7 +29,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import ru.beryukhov.coffeegram.app_ui.AppTypography
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeType.Cappuccino
 
@@ -52,7 +52,7 @@ fun CoffeeTypeItem(
         )
         Spacer(Modifier.width(16.dp))
         Text(
-            stringResource(coffeeType.nameId), style = AppTypography.bodyMedium,
+            stringResource(coffeeType.nameId), style = typography.bodyMedium,
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .weight(1f)
@@ -113,7 +113,7 @@ private fun RowScope.AnimatedCounter(count: Int) {
             ) { (digit, _) ->
                 Text(
                     "$digit",
-                    style = AppTypography.bodySmall,
+                    style = typography.bodySmall,
                 )
             }
         }

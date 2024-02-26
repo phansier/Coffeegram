@@ -42,7 +42,6 @@ detektCompose = { module = "io.nlopez.compose.rules:detekt", version.ref = "dete
 realmKotlin = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-#compose-material = { module = "androidx.compose.material:material", version.ref = "compose" }
 compose-material3 = "androidx.compose.material3:material3:1.2.0" # https://developer.android.com/jetpack/androidx/releases/compose-material3
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
@@ -98,7 +97,6 @@ composeGradle = { module = "org.jetbrains.compose:compose-gradle-plugin", versio
 sqldelightGradle = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 
 jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jetbrainsCompose" }
-jetbrains-compose-material = { module = "org.jetbrains.compose.material:material", version.ref = "jetbrainsCompose" }
 jetbrains-compose-componentsResources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "jetbrainsCompose" }
 
 

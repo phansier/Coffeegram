@@ -1,3 +1,4 @@
+@file:OptIn(ExperimentalResourceApi::class)
 package ru.beryukhov.coffeegram
 
 import androidx.compose.foundation.layout.Column
@@ -7,17 +8,24 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coffeegram.`cmp-common`.generated.resources.Res
+import coffeegram.`cmp-common`.generated.resources.calendar
+import coffeegram.`cmp-common`.generated.resources.settings
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBar
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBarItem
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
@@ -43,6 +51,7 @@ fun PagesContent(
 
     val navigationState: NavigationState by navigationStore.state.collectAsState()
     val currentNavigationState = navigationState
+    val snackbarHostState = remember { SnackbarHostState() }
     CoffeegramTheme(
         themeState = themeState(themeStore)
     ) {
@@ -75,6 +84,7 @@ fun PagesContent(
                     )
                     is NavigationState.SettingsPage -> SettingsPage(
                         themeStore = themeStore,
+                        snackbarHostState = snackbarHostState,
                     )
                 }
                 AdaptiveNavigationBar {
@@ -85,7 +95,7 @@ fun PagesContent(
                                 NavigationIntent.ReturnToTablePage
                             )
                         },
-                        label = { Text(Strings.calendar) },
+                        label = { Text(stringResource(Res.string.calendar)) },
                         icon = {
                             Icon(
                                 imageVector = Icons.Default.Create,
@@ -99,7 +109,7 @@ fun PagesContent(
                                 NavigationIntent.ToSettingsPage
                             )
                         },
-                        label = { Text(Strings.settings) },
+                        label = { Text(stringResource(Res.string.settings)) },
                         icon = {
                             Icon(
                                 imageVector = Icons.Default.Settings,

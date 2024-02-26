@@ -47,9 +47,10 @@ Android + Desktop + iOS (!!!) multiplatform app using [Compose Multiplatform](ht
 <img src="images/ios.png" alt="drawing" width="300"/>
 <img src="images/ios_dark.png" alt="drawing" width="300"/>
 
+Native iOS look & feel by [Compose Cupertino](https://github.com/alexzhirkevich/compose-cupertino/tree/master)
+
 ![](images/desktop.png)
 
-This project evolved from [Coffeegram Android](https://github.com/phansier/Coffeegram) (with Android Jetpack Compose) repository.
 
 ## Run on Desktop jvm
 `./gradlew run`

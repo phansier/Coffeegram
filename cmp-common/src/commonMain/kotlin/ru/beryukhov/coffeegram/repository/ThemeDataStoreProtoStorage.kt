@@ -39,7 +39,7 @@ class ThemeDataStorePrefStorage(private val dataStore: DataStore<Preferences>) :
     override suspend fun saveState(state: ThemeState) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.THEME_STATE_KEY] = state.useDarkTheme.name
-            preferences[PreferencesKeys.THEME_DYNAMIC_KEY] = state.isDynamic
+            preferences[PreferencesKeys.THEME_DYNAMIC_KEY] = state.isCupertino
         }
     }
 }

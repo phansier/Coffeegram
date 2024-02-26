@@ -38,7 +38,6 @@ kotlin {
         commonMain.dependencies {
             api(compose.runtime)
             api(compose.foundation)
-            api(compose.material)
 
             implementation(libs.kotlinx.immutableCollections)
 
@@ -111,9 +110,11 @@ compose.desktop {
             packageVersion = "1.0.0"
             modules("jdk.crypto.ec")
 
-            val iconsRoot = project.file("../cmp_common/src/desktopMain/resources/images")
+            val iconsRoot = project.file("../cmp-common/src/jvmMain/resources/images")
             macOS {
                 iconFile.set(iconsRoot.resolve("icon-mac.icns"))
+                packageName = "Coffeegram"
+                dockName = "Coffeegram"
             }
             windows {
                 iconFile.set(iconsRoot.resolve("icon-windows.ico"))
