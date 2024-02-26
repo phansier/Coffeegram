@@ -6,14 +6,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,6 +19,11 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
+import io.github.alexzhirkevich.cupertino.adaptive.icons.AdaptiveIcons
+import io.github.alexzhirkevich.cupertino.adaptive.icons.KeyboardArrowLeft
+import io.github.alexzhirkevich.cupertino.adaptive.icons.KeyboardArrowRight
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
@@ -41,7 +39,8 @@ fun TableAppBar(
     navigationStore: NavigationStore,
     modifier: Modifier = Modifier,
     ) {
-    TopAppBar(
+    AdaptiveTopAppBar(
+        modifier = modifier,
         title = {
             Row(horizontalArrangement = Arrangement.Center) {
                 Text(
@@ -54,20 +53,20 @@ fun TableAppBar(
             }
         },
         navigationIcon = {
-            IconButton(
+            AdaptiveIconButton(
                 onClick = { navigationStore.newIntent(NavigationIntent.PreviousMonth) },
                 modifier = Modifier.semantics {
                     contentDescription = "ArrowLeft"
                 }
-            ) { Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "") }
+            ) { Icon(imageVector = AdaptiveIcons.Outlined.KeyboardArrowLeft, contentDescription = "") }
         },
         actions = {
-            IconButton(
+            AdaptiveIconButton(
                 onClick = { navigationStore.newIntent(NavigationIntent.NextMonth) },
                 modifier = Modifier.semantics {
                     testTag = "ArrowRight"
                 }
-            ) { Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "") }
+            ) { Icon(imageVector = AdaptiveIcons.Outlined.KeyboardArrowRight, contentDescription = "") }
         }
     )
 }

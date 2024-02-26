@@ -9,13 +9,13 @@ import androidx.compose.material.Checkbox
 import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
 import ru.beryukhov.coffeegram.Strings
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeIntent
@@ -54,7 +54,7 @@ fun ColumnScope.SettingsPage(
 
 @Composable
 fun SettingsAppBar(modifier: Modifier = Modifier) {
-    TopAppBar(modifier = modifier, title = { Text(Strings.settings) })
+    AdaptiveTopAppBar(modifier = modifier, title = { Text(Strings.settings) })
 }
 
 @Composable

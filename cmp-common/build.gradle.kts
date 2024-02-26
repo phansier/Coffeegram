@@ -47,6 +47,9 @@ kotlin {
             implementation(projects.cmpRepository)
             implementation(libs.kotlinx.datetime)
 
+            implementation(libs.cupertino.adaptive)
+            implementation(libs.cupertino.iconsExtended)
+
             api(libs.datastore.preferencesCore)
             api(libs.datastore.coreOkio)
 

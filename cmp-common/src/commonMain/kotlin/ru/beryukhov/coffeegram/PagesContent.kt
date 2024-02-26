@@ -3,14 +3,11 @@ package ru.beryukhov.coffeegram
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,6 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBar
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBarItem
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
@@ -46,7 +46,7 @@ fun PagesContent(
     CoffeegramTheme(
         themeState = themeState(themeStore)
     ) {
-        Scaffold(
+        AdaptiveScaffold(
             modifier = modifier,
             topBar = {
                 when (currentNavigationState) {
@@ -61,7 +61,7 @@ fun PagesContent(
                 }
             }
         ) {
-            Column {
+            Column(modifier = Modifier.padding(it)) {
                 Spacer(Modifier.padding(top = topPadding).align(Alignment.CenterHorizontally))
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TablePage(
@@ -77,27 +77,35 @@ fun PagesContent(
                         themeStore = themeStore,
                     )
                 }
-                BottomNavigation {
-                    BottomNavigationItem(selected = currentNavigationState is NavigationState.TablePage, onClick = {
-                        navigationStore.newIntent(
-                            NavigationIntent.ReturnToTablePage
-                        )
-                    }, label = { Text(Strings.calendar) }, icon = {
-                        Icon(
-                            imageVector = Icons.Default.Create,
-                            contentDescription = "",
-                        )
-                    })
-                    BottomNavigationItem(selected = currentNavigationState is NavigationState.SettingsPage, onClick = {
-                        navigationStore.newIntent(
-                            NavigationIntent.ToSettingsPage
-                        )
-                    }, label = { Text(Strings.settings) }, icon = {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = "",
-                        )
-                    })
+                AdaptiveNavigationBar {
+                    AdaptiveNavigationBarItem(
+                        selected = currentNavigationState is NavigationState.TablePage,
+                        onClick = {
+                            navigationStore.newIntent(
+                                NavigationIntent.ReturnToTablePage
+                            )
+                        },
+                        label = { Text(Strings.calendar) },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Create,
+                                contentDescription = "",
+                            )
+                        })
+                    AdaptiveNavigationBarItem(
+                        selected = currentNavigationState is NavigationState.SettingsPage,
+                        onClick = {
+                            navigationStore.newIntent(
+                                NavigationIntent.ToSettingsPage
+                            )
+                        },
+                        label = { Text(Strings.settings) },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Default.Settings,
+                                contentDescription = "",
+                            )
+                        })
                 }
             }
         }

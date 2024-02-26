@@ -1,7 +1,7 @@
 [versions]
 targetSdk = "31"
 compileSdk = "34"
-minSdk = "21" # was "24" in desktop
+minSdk = "24"
 wearMinSdk = "25"
 
 kotlin = "1.9.22" # https://kotlinlang.org/docs/releases.html#release-details
@@ -111,3 +111,6 @@ sqldelight-coroutinesExt = { module = "app.cash.sqldelight:coroutines-extensions
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-nativeDriver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
 sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
+
+cupertino-adaptive = { module = "io.github.alexzhirkevich:cupertino-adaptive", version = "0.1.0-alpha03" }
+cupertino-iconsExtended = { module = "io.github.alexzhirkevich:cupertino-icons-extended", version = "0.1.0-alpha03" }

@@ -5,15 +5,15 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
 import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
@@ -27,10 +27,10 @@ import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
 @Composable
 fun CoffeeListAppBar(navigationStore: NavigationStore, modifier: Modifier = Modifier) {
-    TopAppBar(
+    AdaptiveTopAppBar(
         title = { Text("Add drink") },
         navigationIcon = {
-            IconButton(onClick = { navigationStore.newIntent(NavigationIntent.ReturnToTablePage) }) {
+            AdaptiveIconButton(onClick = { navigationStore.newIntent(NavigationIntent.ReturnToTablePage) }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = ""
