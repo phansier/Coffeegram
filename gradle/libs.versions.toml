@@ -85,7 +85,7 @@ androidx-wear = "androidx.wear:wear:1.3.0"                          # https://de
 junit = "junit:junit:4.13.2"
 material = { module = "com.google.android.material:material", version.ref = "material" }
 threetenabp = "com.jakewharton.threetenabp:threetenabp:1.4.6"       # https://mvnrepository.com/artifact/com.jakewharton.threetenabp/threetenabp
-protobuf-javalite = "com.google.protobuf:protobuf-javalite:3.25.2"  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
+protobuf-javalite = "com.google.protobuf:protobuf-javalite:3.25.3"  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
 playServices-wearable = "com.google.android.gms:play-services-wearable:18.1.0" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7" # https://github.com/Kotlin/kotlinx.collections.immutable
 
