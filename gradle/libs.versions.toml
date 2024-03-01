@@ -112,3 +112,5 @@ sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", versio
 
 cupertino-adaptive = { module = "io.github.alexzhirkevich:cupertino-adaptive", version = "0.1.0-alpha03" }
 cupertino-iconsExtended = { module = "io.github.alexzhirkevich:cupertino-icons-extended", version = "0.1.0-alpha03" }
+
+desugar = { module = "com.android.tools:desugar_jdk_libs_minimal", version = "2.0.4" }

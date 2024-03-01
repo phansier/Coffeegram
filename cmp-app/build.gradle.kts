@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs_minimal:2.0.4")
+    coreLibraryDesugaring(libs.desugar)
 
     implementation(projects.cmpCommon)
 
