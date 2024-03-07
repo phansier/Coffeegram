@@ -42,7 +42,7 @@ detektCompose = { module = "io.nlopez.compose.rules:detekt", version.ref = "dete
 realmKotlin = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
 
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-material3 = "androidx.compose.material3:material3:1.2.0" # https://developer.android.com/jetpack/androidx/releases/compose-material3
+compose-material3 = "androidx.compose.material3:material3:1.2.1" # https://developer.android.com/jetpack/androidx/releases/compose-material3
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
