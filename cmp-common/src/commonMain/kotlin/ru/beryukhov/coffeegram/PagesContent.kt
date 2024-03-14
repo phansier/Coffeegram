@@ -18,9 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coffeegram.`cmp-common`.generated.resources.Res
-import coffeegram.`cmp-common`.generated.resources.calendar
-import coffeegram.`cmp-common`.generated.resources.settings
+import coffeegram.cmp_common.generated.resources.Res
+import coffeegram.cmp_common.generated.resources.calendar
+import coffeegram.cmp_common.generated.resources.settings
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBar
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBarItem
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
