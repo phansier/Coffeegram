@@ -2,14 +2,14 @@
 
 package ru.beryukhov.coffeegram.data
 
-import coffeegram.`cmp-common`.generated.resources.Res
-import coffeegram.`cmp-common`.generated.resources.americano
-import coffeegram.`cmp-common`.generated.resources.cappuccino
-import coffeegram.`cmp-common`.generated.resources.coffee
-import coffeegram.`cmp-common`.generated.resources.common
-import coffeegram.`cmp-common`.generated.resources.ic_cappuccino
-import coffeegram.`cmp-common`.generated.resources.ic_latte
-import coffeegram.`cmp-common`.generated.resources.latte
+import coffeegram.cmp_common.generated.resources.Res
+import coffeegram.cmp_common.generated.resources.americano
+import coffeegram.cmp_common.generated.resources.cappuccino
+import coffeegram.cmp_common.generated.resources.coffee
+import coffeegram.cmp_common.generated.resources.common
+import coffeegram.cmp_common.generated.resources.ic_cappuccino
+import coffeegram.cmp_common.generated.resources.ic_latte
+import coffeegram.cmp_common.generated.resources.latte
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.StringResource
