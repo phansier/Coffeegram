@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -8,6 +10,7 @@ sqldelight {
     databases {
         create("CoffeeDb") {
             packageName.set("ru.beryukhov.repository")
+            generateAsync.set(true)
         }
     }
     // linkSqlite = true
@@ -23,6 +26,11 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
+
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        browser {}
+    }
 
     sourceSets {
         commonMain.dependencies {
@@ -43,6 +51,11 @@ kotlin {
 
         jvmMain.dependencies {
             implementation(libs.sqldelight.sqliteDriver)
+        }
+
+        wasmJsMain.dependencies {
+            implementation(libs.sqldelight.webWorkerDriver)
+            implementation(devNpm("copy-webpack-plugin", "9.1.0"))
         }
     }
 }

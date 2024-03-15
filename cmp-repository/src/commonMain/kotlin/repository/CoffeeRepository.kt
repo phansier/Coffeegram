@@ -10,9 +10,10 @@ interface CoffeeRepository {
     fun getAll(): List<DbDayCoffee>
 }
 
-internal class SqldCoffeeRepository(private val db: SqlDayCoffeeQueries) : CoffeeRepository {
-
-    init {
+class SqlCoffeeRepositoryImpl: CoffeeRepository {
+    private val db: SqlDayCoffeeQueries by lazy {
+        val driverFactory = DriverFactory()
+        val db = createDatabase(driverFactory).sqlDayCoffeeQueries
         db.createSqlDayCoffeeTable()
     }
 
@@ -56,5 +57,18 @@ internal class SqldCoffeeRepository(private val db: SqlDayCoffeeQueries) : Coffe
 
     override fun getAll(): List<DbDayCoffee> {
         return db.selectAll().executeAsList().map { it.toDb() }
+    }
+}
+
+class InMemoryCoffeeRepository : CoffeeRepository {
+    private val db = mutableListOf<DbDayCoffee>()
+
+    override fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>) {
+        db.removeAll { dbDateCoffees.contains(it) }
+        db.addAll(dbDateCoffees)
+    }
+
+    override fun getAll(): List<DbDayCoffee> {
+        return db
     }
 }
