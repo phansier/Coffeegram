@@ -43,3 +43,7 @@ unsafe_clear_branches:
 ## Run on Desktop jvm
 runDesktop:
 	./gradlew run
+
+
+runWasm:
+	./gradlew :wasm:wasmJsRun --no-configuration-cache
