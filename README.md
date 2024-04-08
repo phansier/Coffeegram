@@ -1,9 +1,9 @@
 # Coffeegram
 ## Android & Multiplatform Compose based project #KMP
 
-[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.6.3-yellow)](https://developer.android.com/jetpack/compose)
+[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.6.5-yellow)](https://developer.android.com/jetpack/compose)
 [![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.6.1-yellow)](https://github.com/JetBrains/compose-multiplatform)
-[![WearCompose Version](https://img.shields.io/badge/Wear%20Compose-1.3.0-yellow)](https://developer.android.com/jetpack/androidx/releases/wear-compose)
+[![WearCompose Version](https://img.shields.io/badge/Wear%20Compose-1.3.1-yellow)](https://developer.android.com/jetpack/androidx/releases/wear-compose)
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-1.9.23-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 [![Jetc.dev](https://img.shields.io/badge/jetc.dev-25-blue)](https://jetc.dev/issues/025.html)
