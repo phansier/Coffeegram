@@ -113,4 +113,4 @@ sqldelight-nativeDriver = { module = "app.cash.sqldelight:native-driver", versio
 sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 
 cupertino-adaptive = { module = "io.github.alexzhirkevich:cupertino-adaptive", version = "0.1.0-alpha03" }
-cupertino-iconsExtended = { module = "io.github.alexzhirkevich:cupertino-icons-extended", version = "0.1.0-alpha03" }
+cupertino-iconsExtended = { module = "io.github.alexzhirkevich:cupertino-icons-extended", version = "0.1.0-alpha04" }
