@@ -17,6 +17,7 @@ composeCompiler = "1.5.11-dev-k1.9.23-96ef9dc6af1" # https://developer.android.c
 wearCompose = "1.3.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
 jetbrainsCompose = "1.6.1" # https://github.com/JetBrains/compose-multiplatform
+cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertino
 
 coroutines = "1.8.0" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.1.0-beta02" # https://developer.android.com/jetpack/androidx/releases/datastore
@@ -112,5 +113,5 @@ sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", vers
 sqldelight-nativeDriver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
 sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 
-cupertino-adaptive = { module = "io.github.alexzhirkevich:cupertino-adaptive", version = "0.1.0-alpha03" }
-cupertino-iconsExtended = { module = "io.github.alexzhirkevich:cupertino-icons-extended", version = "0.1.0-alpha03" }
+cupertino-adaptive = { module = "io.github.alexzhirkevich:cupertino-adaptive", version.ref = "cupertino" }
+cupertino-iconsExtended = { module = "io.github.alexzhirkevich:cupertino-icons-extended", version.ref = "cupertino" }
