@@ -22,7 +22,7 @@ cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertin
 coroutines = "1.8.0" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.1.0-beta02" # https://developer.android.com/jetpack/androidx/releases/datastore
 # https://androidx.tech/artifacts/datastore/datastore-core-okio-iosarm64/
-koin = "3.5.3" # https://github.com/InsertKoinIO/koin#setup--current-version
+koin = "3.5.4" # https://github.com/InsertKoinIO/koin#setup--current-version
 lifecycle = "2.7.0" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 core = "1.12.0" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.0.0" # https://developer.android.com/jetpack/androidx/releases/glance
@@ -61,7 +61,7 @@ composeWear-navigation = { module = "androidx.wear.compose:compose-navigation", 
 
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
-coroutines-play = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines"}
+coroutines-play = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
@@ -115,3 +115,7 @@ sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", versio
 
 cupertino-adaptive = { module = "io.github.alexzhirkevich:cupertino-adaptive", version.ref = "cupertino" }
 cupertino-iconsExtended = { module = "io.github.alexzhirkevich:cupertino-icons-extended", version.ref = "cupertino" }
+
+kotlin-test-common = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
+kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
+kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

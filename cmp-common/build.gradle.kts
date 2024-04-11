@@ -64,6 +64,11 @@ kotlin {
             api(libs.androidx.appcompat)
             api(libs.core.coreKtx)
         }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test.junit)
+            }
+        }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
         }
