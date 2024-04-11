@@ -19,7 +19,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveDivider
+import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveHorizontalDivider
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.toPersistentList
@@ -105,7 +105,7 @@ fun WeekRow(dayItems: PersistentList<DayItem?>, navigationStore: NavigationStore
                 )
             }
         }
-        AdaptiveDivider()
+        AdaptiveHorizontalDivider()
     }
 }
 

@@ -1,15 +1,15 @@
 package ru.beryukhov.coffeegram.app_ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTheme
+import io.github.alexzhirkevich.cupertino.adaptive.CupertinoThemeSpec
+import io.github.alexzhirkevich.cupertino.adaptive.MaterialThemeSpec
 import io.github.alexzhirkevich.cupertino.adaptive.Theme
-import io.github.alexzhirkevich.cupertino.theme.CupertinoTheme
 import io.github.alexzhirkevich.cupertino.theme.darkColorScheme
 import io.github.alexzhirkevich.cupertino.theme.lightColorScheme
 import ru.beryukhov.coffeegram.model.DarkThemeState
@@ -85,30 +85,25 @@ fun CoffeegramTheme(
         DarkThemeState.LIGHT -> false
         DarkThemeState.SYSTEM -> isSystemInDarkTheme()
     }
-
     AdaptiveTheme(
-        material = {
-            MaterialTheme(
-                colorScheme = if (darkTheme) {
-                    DarkThemeColors
-                } else {
-                    LightThemeColors
-                },
-                typography = typography,
-                shapes = shapes,
-                content = it
-            )
-        },
-        cupertino = {
-            CupertinoTheme(
-                colorScheme = if (darkTheme) {
-                    darkColorScheme()
-                } else {
-                    lightColorScheme()
-                },
-                content = it
-            )
-        },
+        material =
+        MaterialThemeSpec(
+            colorScheme = if (darkTheme) {
+                DarkThemeColors
+            } else {
+                LightThemeColors
+            },
+            typography = typography,
+            shapes = shapes,
+        ),
+        cupertino =
+        CupertinoThemeSpec(
+            colorScheme = if (darkTheme) {
+                darkColorScheme()
+            } else {
+                lightColorScheme()
+            },
+        ),
         target = if (themeState.isCupertino) Theme.Cupertino else Theme.Material3,
         content = content
     )
