@@ -4,7 +4,7 @@ compileSdk = "34"
 minSdk = "24"
 wearMinSdk = "25"
 
-kotlin = "1.9.23" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin = "2.0.0-RC1" # https://kotlinlang.org/docs/releases.html#release-details
 agp = "8.2.2" # https://developer.android.com/studio/releases/gradle-plugin
 realm = "1.14.1" # https://github.com/realm/realm-kotlin
 
@@ -12,7 +12,7 @@ detekt = "1.23.6" # https://github.com/detekt/detekt
 detektCompose = "0.3.13" # https://github.com/mrmans0n/compose-rules
 
 compose = "1.6.5" # https://developer.android.com/jetpack/androidx/releases/compose-ui
-composeCompiler = "1.5.11-dev-k1.9.23-96ef9dc6af1" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
+composeCompiler = "1.5.11" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 wearCompose = "1.3.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 

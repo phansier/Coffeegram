@@ -24,6 +24,6 @@ allprojects {
         google()
         mavenCentral()
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-        maven("https://androidx.dev/storage/compose-compiler/repository/")
+//        maven("https://androidx.dev/storage/compose-compiler/repository/") // only for prerelease versions of compose compiler
     }
 }
