@@ -6,7 +6,7 @@ wearMinSdk = "25"
 
 kotlin = "1.9.23" # https://kotlinlang.org/docs/releases.html#release-details
 agp = "8.2.2" # https://developer.android.com/studio/releases/gradle-plugin
-realm = "1.14.1" # https://github.com/realm/realm-kotlin
+realm = "1.15.0" # https://github.com/realm/realm-kotlin
 
 detekt = "1.23.6" # https://github.com/detekt/detekt
 detektCompose = "0.3.15" # https://github.com/mrmans0n/compose-rules
