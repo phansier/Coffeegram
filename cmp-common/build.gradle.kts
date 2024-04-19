@@ -6,7 +6,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
 
-    id("co.touchlab.kmmbridge") version "0.5.3"
+    id("co.touchlab.kmmbridge") version "0.5.4"
     `maven-publish`
 }
 
