@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -34,9 +35,14 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+//        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
     }
     namespace = "ru.beryukhov.coffeegram.wear"
+}
+
+composeCompiler {
+    // TODO: Remove workaround for https://youtrack.jetbrains.com/issue/KT-67216
+    suppressKotlinVersionCompatibilityCheck = libs.versions.kotlin.get()
 }
 
 dependencies {
