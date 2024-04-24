@@ -9,7 +9,7 @@ agp = "8.2.2" # https://developer.android.com/studio/releases/gradle-plugin
 realm = "1.15.0-SNAPSHOT" # https://github.com/realm/realm-kotlin
 
 detekt = "1.23.6" # https://github.com/detekt/detekt
-detektCompose = "0.3.16" # https://github.com/mrmans0n/compose-rules
+detektCompose = "0.3.17" # https://github.com/mrmans0n/compose-rules
 
 compose = "1.6.6" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 composeCompiler = "1.5.12" # https://developer.android.com/jetpack/androidx/releases/compose-compiler
