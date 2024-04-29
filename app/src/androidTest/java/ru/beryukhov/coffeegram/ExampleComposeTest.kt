@@ -8,8 +8,8 @@ import androidx.compose.ui.test.performClick
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
-import org.threeten.bp.YearMonth
 import ru.beryukhov.coffeegram.model.NavigationStore
+import ru.beryukhov.date_time_utils.YearMonth
 
 class ExampleComposeTest {
     @get:Rule

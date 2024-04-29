@@ -18,17 +18,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.datetime.LocalDate
 import org.koin.androidx.compose.getViewModel
-import org.threeten.bp.LocalDate
-import org.threeten.bp.format.DateTimeFormatterBuilder
-import org.threeten.bp.format.SignStyle
-import org.threeten.bp.format.TextStyle
-import org.threeten.bp.temporal.ChronoField
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
+import ru.beryukhov.date_time_utils.getFullMonthName
 
 @ExperimentalMaterial3Api
 @Composable
@@ -39,7 +36,12 @@ fun CoffeeListAppBar(
 ) {
     TopAppBar(
         modifier = modifier,
-        title = { Text(localDate.format(dateFormatter) + " " + stringResource(R.string.add_drink)) },
+        title = {
+            Text(
+                "${localDate.dayOfMonth} ${getFullMonthName(localDate.month).take(3)} "
+                    + stringResource(R.string.add_drink)
+            )
+        },
         navigationIcon = {
             IconButton(onClick = { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }) {
                 Icon(
@@ -50,12 +52,6 @@ fun CoffeeListAppBar(
         }
     )
 }
-
-private val dateFormatter = DateTimeFormatterBuilder()
-    .appendValue(ChronoField.DAY_OF_MONTH, 1, 2, SignStyle.NOT_NEGATIVE)
-    .appendLiteral(' ')
-    .appendText(ChronoField.MONTH_OF_YEAR, TextStyle.SHORT)
-    .toFormatter()
 
 @Composable
 fun CoffeeListPage(

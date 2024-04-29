@@ -44,7 +44,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.koin.androidx.compose.get
-import org.threeten.bp.YearMonth
 import ru.beryukhov.coffeegram.animations.TransitionSlot
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.data.CoffeeType
@@ -62,7 +61,8 @@ import ru.beryukhov.coffeegram.pages.SettingsAppBar
 import ru.beryukhov.coffeegram.pages.SettingsPage
 import ru.beryukhov.coffeegram.pages.TableAppBar
 import ru.beryukhov.coffeegram.pages.TablePage
-import ru.beryukhov.coffeegram.utils.toTotalMonths
+import ru.beryukhov.date_time_utils.nowYM
+import ru.beryukhov.date_time_utils.toTotalMonths
 
 class MainActivity : ComponentActivity() {
 
@@ -116,7 +116,7 @@ fun PagesContent(
         pageCount = { 36_000 }, initialPage = if (currentNavigationState is NavigationState.TablePage) {
             currentNavigationState.yearMonth.toTotalMonths()
         } else {
-            YearMonth.now().toTotalMonths()
+            nowYM().toTotalMonths()
         }
     )
 

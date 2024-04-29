@@ -1,6 +1,6 @@
 package ru.beryukhov.coffeegram.model
 
-import org.threeten.bp.LocalDate
+import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.store_lib.InMemoryStore
