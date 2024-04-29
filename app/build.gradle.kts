@@ -67,19 +67,12 @@ android {
         compose = true
         buildConfig = true
     }
-    composeOptions {
-//        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
+    
     packaging {
         resources.excludes.add("META-INF/AL2.0")
         resources.excludes.add("META-INF/LGPL2.1")
     }
     namespace = "ru.beryukhov.coffeegram"
-}
-
-composeCompiler {
-    // TODO: Remove workaround for https://youtrack.jetbrains.com/issue/KT-67216
-    suppressKotlinVersionCompatibilityCheck = libs.versions.kotlin.get()
 }
 
 dependencies {
