@@ -5,6 +5,9 @@ path := ./
 detekt:
 	$(path)gradlew detektAll
 
+autodetekt:
+	$(path)gradlew detektAll --auto-correct --continue
+
 buildApp:
 	./gradlew :app:assemble
 

@@ -5,6 +5,7 @@ plugins {
 //    kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.compose")
+    id("org.jetbrains.kotlin.plugin.compose")
 
     id("co.touchlab.kmmbridge") version "0.5.5"
     `maven-publish`
@@ -44,7 +45,7 @@ kotlin {
             implementation(libs.jetbrains.compose.componentsResources)
 
             implementation(projects.cmpRepository)
-            implementation(libs.kotlinx.datetime)
+            implementation(projects.dateTimeUtils)
 
             implementation(libs.cupertino.adaptive)
             implementation(libs.cupertino.iconsExtended)
@@ -55,8 +56,8 @@ kotlin {
             api(libs.koin.core)
         }
         commonTest.dependencies {
-            implementation(kotlin("test-common"))
-            implementation(kotlin("test-annotations-common"))
+            implementation(libs.kotlin.test.common)
+            implementation(libs.kotlin.test.annotations.common)
             implementation(libs.koin.test)
             implementation(libs.coroutines.test)
         }
@@ -84,25 +85,13 @@ android {
     }
 
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    sourceSets {
-        named("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-        }
     }
 
     kotlin {
         jvmToolchain(17)
     }
-}
-
-dependencies {
-    coreLibraryDesugaring(libs.kotlinx.datetime)
 }
 
 compose.desktop {

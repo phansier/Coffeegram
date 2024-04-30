@@ -11,3 +11,5 @@ include(":app-wear-common")
 include("cmp-app")
 include("cmp-common")
 include("cmp-repository")
+
+include("date-time-utils")

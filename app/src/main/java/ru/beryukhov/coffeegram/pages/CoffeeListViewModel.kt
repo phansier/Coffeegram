@@ -7,8 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
+import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
@@ -16,6 +15,7 @@ import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationStore
+import ru.beryukhov.date_time_utils.nowLD
 
 interface CoffeeListViewModel {
     @Composable
@@ -34,7 +34,7 @@ object CoffeeListViewModelStub : CoffeeListViewModel {
         emptyMap<CoffeeType, Int>().withEmpty().toPersistentList()
 }
 
-val localDateStub: LocalDate = LocalDate.now(ZoneId.of("Z"))
+val localDateStub: LocalDate = nowLD()
 
 class CoffeeListViewModelImpl(
     private val daysCoffeesStore: DaysCoffeesStore,

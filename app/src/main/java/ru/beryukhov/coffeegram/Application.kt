@@ -2,7 +2,6 @@ package ru.beryukhov.coffeegram
 
 import android.app.Application
 import androidx.glance.appwidget.updateAll
-import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.koin.androidContext
@@ -39,7 +38,6 @@ class Application : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        AndroidThreeTen.init(this)
         startKoin {
             androidContext(this@Application)
             modules(appModule)

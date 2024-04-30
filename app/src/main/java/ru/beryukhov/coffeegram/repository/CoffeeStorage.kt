@@ -1,7 +1,7 @@
 package ru.beryukhov.coffeegram.repository
 
 import androidx.annotation.VisibleForTesting
-import org.threeten.bp.LocalDate
+import kotlinx.datetime.LocalDate
 import repository.CoffeeRepository
 import repository.model.DbDayCoffee
 import ru.beryukhov.coffeegram.data.CoffeeType
