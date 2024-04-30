@@ -16,7 +16,7 @@ composeCompiler = "1.5.12" # https://developer.android.com/jetpack/androidx/rele
 # https://developer.android.com/jetpack/androidx/releases/compose-kotlin
 wearCompose = "1.3.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
-jetbrainsCompose = "1.6.2" # https://github.com/JetBrains/compose-multiplatform
+jetbrainsCompose = "1.6.10-beta03" # https://github.com/JetBrains/compose-multiplatform
 cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertino
 
 coroutines = "1.8.0" # https://github.com/Kotlin/kotlinx.coroutines
