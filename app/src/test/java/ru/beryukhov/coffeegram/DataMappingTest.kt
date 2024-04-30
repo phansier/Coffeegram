@@ -1,8 +1,8 @@
 package ru.beryukhov.coffeegram
 
+import kotlinx.datetime.LocalDate
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.threeten.bp.LocalDate
 import repository.model.DbDayCoffee
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeType.Americano

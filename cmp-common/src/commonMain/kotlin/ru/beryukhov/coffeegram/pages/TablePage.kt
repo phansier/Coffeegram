@@ -30,8 +30,9 @@ import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationStore
-import ru.beryukhov.coffeegram.model.YearMonth
 import ru.beryukhov.coffeegram.view.MonthTable
+import ru.beryukhov.date_time_utils.YearMonth
+import ru.beryukhov.date_time_utils.getFullMonthName
 
 @Composable
 fun TableAppBar(
@@ -46,7 +47,7 @@ fun TableAppBar(
                 Text(
                     modifier = Modifier.weight(1f),
                     text = AnnotatedString(
-                        text = yearMonth.getFullMonthName(),
+                        text = getFullMonthName(yearMonth.month),
                         paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
                     )
                 )

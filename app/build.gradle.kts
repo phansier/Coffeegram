@@ -106,7 +106,7 @@ dependencies {
     androidTestImplementation(libs.compose.uiTest)
     androidTestImplementation(libs.compose.uiTestJunit4)
 
-    implementation(libs.threetenabp)
+    implementation(projects.dateTimeUtils)
 
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)

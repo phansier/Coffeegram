@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.model
+package ru.beryukhov.date_time_utils
 
 import kotlinx.datetime.Clock.System.now
 import kotlinx.datetime.DateTimeUnit.Companion.MONTH
@@ -25,6 +25,7 @@ import kotlinx.datetime.Month.NOVEMBER
 import kotlinx.datetime.Month.OCTOBER
 import kotlinx.datetime.Month.SEPTEMBER
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.number
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 
@@ -43,23 +44,6 @@ data class YearMonth(val year: Int, val month: Month) {
         return plusMonths(-monthsToSubtract)
     }
 
-    fun getFullMonthName(): String =
-        when (this.month) {
-            JANUARY -> "JANUARY"
-            FEBRUARY -> "FEBRUARY"
-            MARCH -> "MARCH"
-            APRIL -> "APRIL"
-            MAY -> "MAY"
-            JUNE -> "JUNE"
-            JULY -> "JULY"
-            AUGUST -> "AUGUST"
-            SEPTEMBER -> "SEPTEMBER"
-            OCTOBER -> "OCTOBER"
-            NOVEMBER -> "NOVEMBER"
-            DECEMBER -> "DECEMBER"
-            else -> ""
-        }.lowercase().replaceFirstChar { it.titlecase() }
-
     fun atDay(day: Int): LocalDate {
         return LocalDate(year, month, day)
     }
@@ -72,6 +56,23 @@ data class YearMonth(val year: Int, val month: Month) {
         return month.days(isLeapYear(year))
     }
 }
+
+fun getFullMonthName(month: Month): String =
+    when (month) {
+        JANUARY -> "JANUARY"
+        FEBRUARY -> "FEBRUARY"
+        MARCH -> "MARCH"
+        APRIL -> "APRIL"
+        MAY -> "MAY"
+        JUNE -> "JUNE"
+        JULY -> "JULY"
+        AUGUST -> "AUGUST"
+        SEPTEMBER -> "SEPTEMBER"
+        OCTOBER -> "OCTOBER"
+        NOVEMBER -> "NOVEMBER"
+        DECEMBER -> "DECEMBER"
+        else -> ""
+    }.lowercase().replaceFirstChar { it.titlecase() }
 
 fun nowYM(): YearMonth {
     val ld = nowLD()
@@ -109,3 +110,15 @@ private fun isLeapYear(prolepticYear: Int): Boolean =
 
 fun dateFormatSymbolsShortWeekdays(): List<String> =
     DayOfWeek.values().map { it.getShortDisplayName() }
+
+fun YearMonth.toTotalMonths(): Int {
+    val yearsInMonths = this.year * 12
+    val months = this.minusMonths(1).month.number
+    return yearsInMonths + months
+}
+
+fun Int.toYearMonth(): YearMonth {
+    val years = this / 12
+    val months = this % 12 + 1
+    return YearMonth(years, Month(months))
+}

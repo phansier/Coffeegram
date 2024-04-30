@@ -4,12 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.ViewModel
-import org.threeten.bp.LocalDate
-import org.threeten.bp.YearMonth
+import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationStore
+import ru.beryukhov.date_time_utils.YearMonth
 
 interface TablePageViewModel {
     @Composable

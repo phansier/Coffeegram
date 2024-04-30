@@ -1,7 +1,7 @@
-package ru.beryukhov.coffeegram.utils
+package ru.beryukhov.date_time_utils
 
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ExtensionMethodsKtTest {
 

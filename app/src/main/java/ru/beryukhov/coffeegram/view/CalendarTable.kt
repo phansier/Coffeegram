@@ -28,11 +28,12 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap
-import org.threeten.bp.DayOfWeek
-import org.threeten.bp.YearMonth
-import org.threeten.bp.format.TextStyle
+import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.Month
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.times
+import ru.beryukhov.date_time_utils.YearMonth
+import ru.beryukhov.date_time_utils.getShortDisplayName
 import java.text.DateFormatSymbols
 import java.util.Locale
 import ru.beryukhov.coffeegram.common.R as common_R
@@ -162,10 +163,7 @@ fun MonthTable(
     filledDayItemsMap.forEach { days[it.key]?.iconId = it.value }
     val weekDaysStrings = getWeekDaysNames(LocalContext.current)
     val numberOfFirstDay = weekDaysStrings.indexOf(
-        days[1]!!.weekDay.getDisplayName(
-            TextStyle.SHORT,
-            LocalContext.current.resources.configuration.locale
-        )
+        days[1]!!.weekDay.getShortDisplayName()
     )
     val daysList: List<WeekDayVectorPair> = days.toList().sortedBy { it.first }.map { it.second }
     val firstWeek: PersistentList<DayItem> =
@@ -201,7 +199,7 @@ internal fun TablePreview() {
 @Composable
 private fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
-        yearMonth = YearMonth.of(2020, 7),
+        yearMonth = YearMonth(2020, Month(7)),
         filledDayItemsMap = mapOf(2 to common_R.drawable.coffee).toPersistentMap(),
         onClick = {},
         modifier = modifier,

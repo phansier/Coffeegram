@@ -44,7 +44,7 @@ kotlin {
             implementation(libs.jetbrains.compose.componentsResources)
 
             implementation(projects.cmpRepository)
-            implementation(libs.kotlinx.datetime)
+            implementation(projects.dateTimeUtils)
 
             implementation(libs.cupertino.adaptive)
             implementation(libs.cupertino.iconsExtended)
@@ -55,8 +55,8 @@ kotlin {
             api(libs.koin.core)
         }
         commonTest.dependencies {
-            implementation(kotlin("test-common"))
-            implementation(kotlin("test-annotations-common"))
+            implementation(libs.kotlin.test.common)
+            implementation(libs.kotlin.test.annotations.common)
             implementation(libs.koin.test)
             implementation(libs.coroutines.test)
         }
@@ -88,18 +88,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    sourceSets {
-        named("main") {
-            manifest.srcFile("src/androidMain/AndroidManifest.xml")
-        }
-    }
-
     kotlin {
         jvmToolchain(17)
     }
-}
-
-dependencies {
 }
 
 compose.desktop {

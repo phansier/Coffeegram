@@ -14,8 +14,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -43,11 +40,11 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
-import org.threeten.bp.format.TextStyle
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.model.NavigationIntent
-import ru.beryukhov.coffeegram.utils.toYearMonth
 import ru.beryukhov.coffeegram.view.MonthTable
+import ru.beryukhov.date_time_utils.getFullMonthName
+import ru.beryukhov.date_time_utils.toYearMonth
 
 @OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterial3Api
@@ -66,10 +63,7 @@ fun TableAppBar(
                 Text(
                     modifier = Modifier.weight(1f),
                     text = AnnotatedString(
-                        text = yearMonth.month.getDisplayName(
-                            TextStyle.FULL,
-                            LocalContext.current.resources.configuration.locale
-                        ),
+                        text = getFullMonthName(yearMonth.month),
                         paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
                     )
                 )

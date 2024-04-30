@@ -24,17 +24,12 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    @Suppress("UnusedPrivateMember")
     sourceSets {
         commonMain.dependencies {
             implementation(libs.coroutines.core)
 
             implementation(libs.sqldelight.runtime)
             implementation(libs.sqldelight.coroutinesExt)
-        }
-        commonTest.dependencies {
-            implementation(kotlin("test-common"))
-            implementation(kotlin("test-annotations-common"))
         }
         androidMain.dependencies {
             implementation(libs.sqldelight.androidDriver)
@@ -54,7 +49,6 @@ kotlin {
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
     }

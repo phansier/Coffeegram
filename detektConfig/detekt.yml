@@ -267,7 +267,7 @@ exceptions:
 formatting:
     active: true
     android: true
-    autoCorrect: false
+    autoCorrect: true
 
     # todo rise an issue: false positive on kotlin @file annotations
     AnnotationOnSeparateLine:
@@ -294,6 +294,7 @@ formatting:
         insertFinalNewLine: false
     ImportOrdering:
         active: true
+        autoCorrect: true
         layout: '*,java.**,javax.**,kotlin.**,^'
     # blocked by bugs: https://github.com/pinterest/ktlint/issues?q=is%3Aissue+is%3Aopen+Indentation
     Indentation:
@@ -336,7 +337,8 @@ formatting:
 
     # DUPLICATE of style UnusedImports
     NoUnusedImports:
-        active: false
+        active: true
+        autoCorrect: true
     # DUPLICATE of style WildcardImports
     NoWildcardImports:
         active: false
@@ -362,6 +364,7 @@ formatting:
         active: true
     SpacingAroundOperators:
         active: true
+        autoCorrect: true
     SpacingAroundParens:
         active: true
     SpacingAroundRangeOperator:
@@ -618,6 +621,7 @@ style:
     MandatoryBracesLoops:
         active: true
     # https://detekt.github.io/detekt/style.html#maxlinelength
+    # This rules overlaps with MaximumLineLength from the formatting rules
     MaxLineLength:
         active: true
         maxLineLength: 120

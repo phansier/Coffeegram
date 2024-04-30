@@ -31,10 +31,10 @@ import ru.beryukhov.coffeegram.data.Cappuccino
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.model.NavigationStore
-import ru.beryukhov.coffeegram.model.YearMonth
-import ru.beryukhov.coffeegram.model.dateFormatSymbolsShortWeekdays
-import ru.beryukhov.coffeegram.model.getShortDisplayName
 import ru.beryukhov.coffeegram.times
+import ru.beryukhov.date_time_utils.YearMonth
+import ru.beryukhov.date_time_utils.dateFormatSymbolsShortWeekdays
+import ru.beryukhov.date_time_utils.getShortDisplayName
 
 data class DayItem(
     val day: String,
