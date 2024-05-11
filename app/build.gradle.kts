@@ -10,6 +10,7 @@ plugins {
     kotlin("android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.protobuf")
+    id("com.github.triplet.play") version "3.9.1"
 }
 
 android {
@@ -21,7 +22,7 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = (100000000 + Instant.now().toEpochMilli() / 1000).toInt()
-        versionName = "1.4"
+        versionName = "1.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -159,4 +160,10 @@ object KeyHelper {
     fun getValue(key: String): String {
         return properties.getProperty(key)
     }
+}
+
+play {
+    serviceAccountCredentials.set(file("../play_config.json"))
+    track.set("alpha")
+    defaultToAppBundles.set(true)
 }
