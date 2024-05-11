@@ -16,3 +16,7 @@ cmp-iosApp/Podfile.lock
 cmp-iosApp/Pods/*
 cmp-iosApp/iosApp.xcodeproj/*
 !cmp-iosApp/iosApp.xcodeproj/project.pbxproj
+
+*.jks
+*.jks.*
+app/src/main/play
