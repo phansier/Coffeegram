@@ -4,7 +4,7 @@ compileSdk = "34"
 minSdk = "24"
 wearMinSdk = "25"
 
-kotlin = "2.0.0-RC2" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin = "2.0.0-RC3" # https://kotlinlang.org/docs/releases.html#release-details
 agp = "8.4.0" # https://developer.android.com/studio/releases/gradle-plugin
 realm = "1.15.0-SNAPSHOT" # https://github.com/realm/realm-kotlin
 
