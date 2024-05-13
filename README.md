@@ -4,7 +4,7 @@
 [![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.6.6-yellow)](https://developer.android.com/jetpack/compose)
 [![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.6.10--rc01-yellow)](https://github.com/JetBrains/compose-multiplatform)
 [![WearCompose Version](https://img.shields.io/badge/Wear%20Compose-1.3.1-yellow)](https://developer.android.com/jetpack/androidx/releases/wear-compose)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.0.0--RC02-blue.svg)](https://kotlinlang.org)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.0.0--RC03-blue.svg)](https://kotlinlang.org)
 ![Android CI](https://github.com/phansier/Coffeegram/workflows/Android%20CI/badge.svg?branch=master)
 [![Jetc.dev](https://img.shields.io/badge/jetc.dev-25-blue)](https://jetc.dev/issues/025.html)
 [![Hits-of-Code](https://hitsofcode.com/github/phansier/Coffeegram?branch=develop)](https://hitsofcode.com/github/phansier/Coffeegram/view?branch=develop)
