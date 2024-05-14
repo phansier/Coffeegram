@@ -9,7 +9,7 @@ autodetekt:
 	$(path)gradlew detektAll --auto-correct --continue
 
 buildApp:
-	./gradlew :app:assemble
+	./gradlew :app:assembleDebug
 
 buildWear:
 	./gradlew :wear:assemble
