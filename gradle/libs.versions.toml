@@ -106,7 +106,7 @@ jetbrains-compose-componentsResources = { module = "org.jetbrains.compose.compon
 
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 
-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.5.0" # https://github.com/Kotlin/kotlinx-datetime
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.0" # https://github.com/Kotlin/kotlinx-datetime
 
 sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
 sqldelight-coroutinesExt = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
