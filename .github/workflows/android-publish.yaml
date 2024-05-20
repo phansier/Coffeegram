@@ -1,0 +1,55 @@
+name: Android to GPlay Publish Release
+on:
+    push:
+        tags:
+            - '*-android'
+    workflow_dispatch:
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            -   uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
+
+            -   name: set up JDK
+                uses: actions/setup-java@v4
+                with:
+                    distribution: 'adopt'
+                    java-version: '17'
+
+            -   name: Gradle Setup
+                uses: gradle/actions/setup-gradle@v3
+                with:
+                    gradle-home-cache-cleanup: true
+                    cache-encryption-key: ${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
+
+            -   name: Cache KMP tooling
+                uses: actions/cache@v4
+                with:
+                    path: |
+                        ~/.konan
+                    key: ${{ runner.os }}-v1-${{ hashFiles('*.versions.toml') }}
+
+            -   name: Configure Keystore
+                run: |
+                    echo '${{ secrets.KEYSTORE_FILE }}'> release.keystore.asc
+                    gpg -d --passphrase '${{ secrets.KEYSTORE_PASSPHRASE }}' --batch release.keystore.asc > download.jks
+                    echo "storePassword=$KEYSTORE_STORE_PASSWORD" >> key.properties
+                    echo "keyAlias=$KEYSTORE_KEY_ALIAS" >> key.properties
+                    echo "keyPassword=$KEYSTORE_KEY_PASSWORD" >> key.properties
+                env:
+                    KEYSTORE_KEY_ALIAS: ${{ secrets.KEYSTORE_KEY_ALIAS }}
+                    KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
+                    KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
+            -   name: Create Google Play Config file
+                run: |
+                    echo "$PLAY_CONFIG_JSON" > play_config.json.b64
+                    base64 -d -i play_config.json.b64 > play_config.json
+                env:
+                    PLAY_CONFIG_JSON: ${{ secrets.PLAY_CONFIG }}
+
+            -   name: Distribute app to Alpha track
+                run: ./gradlew :app:bundleRelease :app:publishBundle
