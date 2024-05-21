@@ -97,9 +97,11 @@ dependencies {
 
     implementation(libs.google.maps.compose)
 
+    implementation(libs.ktor.client.okhttp)
+
     implementation(libs.kotlinx.immutableCollections)
 
-    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test.junit)
 
     androidTestImplementation(libs.compose.uiTest)
     androidTestImplementation(libs.compose.uiTestJunit4)

@@ -14,6 +14,7 @@ import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.pages.CoffeeListViewModelImpl
+import ru.beryukhov.coffeegram.pages.MapPageViewModelImpl
 import ru.beryukhov.coffeegram.pages.TablePageViewModelImpl
 import ru.beryukhov.coffeegram.repository.ThemeDataStoreProtoStorage
 import ru.beryukhov.coffeegram.store_lib.Storage
@@ -34,6 +35,7 @@ class Application : Application() {
         single { NavigationStore() }
         viewModel { CoffeeListViewModelImpl(daysCoffeesStore = get(), navigationStore = get()) }
         viewModel { TablePageViewModelImpl(daysCoffeesStore = get(), navigationStore = get()) }
+        viewModel { MapPageViewModelImpl() }
     }
 
     override fun onCreate() {

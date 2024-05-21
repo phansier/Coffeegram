@@ -1,8 +1,6 @@
 package ru.beryukhov.coffeegram
 
 import kotlinx.datetime.LocalDate
-import org.junit.Assert.assertEquals
-import org.junit.Test
 import repository.model.DbDayCoffee
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeType.Americano
@@ -14,23 +12,25 @@ import ru.beryukhov.coffeegram.model.changeCoffeeCount
 import ru.beryukhov.coffeegram.pages.withEmpty
 import ru.beryukhov.coffeegram.repository.toDaysCoffeesList
 import ru.beryukhov.coffeegram.repository.toState
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class DataMappingTest {
 
     private val exampleDaysCoffeesState = DaysCoffeesState(
         mapOf(
-            LocalDate.of(2021, 8, 15) to DayCoffee(
+            LocalDate(2021, 8, 15) to DayCoffee(
                 mapOf(
                     Cappuccino to 0
                 )
             ),
-            LocalDate.of(2021, 9, 22) to DayCoffee(
+            LocalDate(2021, 9, 22) to DayCoffee(
                 mapOf(
                     Cappuccino to 1,
                     Latte to 2
                 )
             ),
-            LocalDate.of(2022, 10, 23) to DayCoffee(
+            LocalDate(2022, 10, 23) to DayCoffee(
                 mapOf(
                     Cappuccino to 3
                 )
@@ -54,7 +54,7 @@ class DataMappingTest {
 
     @Test
     fun parseDate() {
-        assertEquals(LocalDate.of(2021, 8, 15), LocalDate.parse("2021-08-15"))
+        assertEquals(LocalDate(2021, 8, 15), LocalDate.parse("2021-08-15"))
     }
 
     @Test
@@ -73,28 +73,28 @@ class DataMappingTest {
     fun changeCoffeeCountToAbsentDateTest() {
         val actual: Map<LocalDate, DayCoffee> = changeCoffeeCount(
             oldValue = exampleDaysCoffeesState.value,
-            localDate = LocalDate.of(2021, 8, 14),
+            localDate = LocalDate(2021, 8, 14),
             coffeeType = Cappuccino,
             count = 1
         )
         val expected = mapOf(
-            LocalDate.of(2021, 8, 14) to DayCoffee(
+            LocalDate(2021, 8, 14) to DayCoffee(
                 mapOf(
                     Cappuccino to 1,
                 )
             ),
-            LocalDate.of(2021, 8, 15) to DayCoffee(
+            LocalDate(2021, 8, 15) to DayCoffee(
                 mapOf(
                     Cappuccino to 0,
                 )
             ),
-            LocalDate.of(2021, 9, 22) to DayCoffee(
+            LocalDate(2021, 9, 22) to DayCoffee(
                 mapOf(
                     Cappuccino to 1,
                     Latte to 2
                 )
             ),
-            LocalDate.of(2022, 10, 23) to DayCoffee(
+            LocalDate(2022, 10, 23) to DayCoffee(
                 mapOf(
                     Cappuccino to 3
                 )
@@ -107,23 +107,23 @@ class DataMappingTest {
     fun changeCoffeeCountToEmptyDateTest() {
         val actual: Map<LocalDate, DayCoffee> = changeCoffeeCount(
             oldValue = exampleDaysCoffeesState.value,
-            localDate = LocalDate.of(2021, 8, 15),
+            localDate = LocalDate(2021, 8, 15),
             coffeeType = Cappuccino,
             count = 1
         )
         val expected = mapOf(
-            LocalDate.of(2021, 8, 15) to DayCoffee(
+            LocalDate(2021, 8, 15) to DayCoffee(
                 mapOf(
                     Cappuccino to 1,
                 )
             ),
-            LocalDate.of(2021, 9, 22) to DayCoffee(
+            LocalDate(2021, 9, 22) to DayCoffee(
                 mapOf(
                     Cappuccino to 1,
                     Latte to 2
                 )
             ),
-            LocalDate.of(2022, 10, 23) to DayCoffee(
+            LocalDate(2022, 10, 23) to DayCoffee(
                 mapOf(
                     Cappuccino to 3
                 )
