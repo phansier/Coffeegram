@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -30,15 +31,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
@@ -110,7 +113,8 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
                         onClick = { _ ->
                             viewModel.markerClick(it.coffeeShop)
                             true
-                        }
+                        },
+                        zIndex = if (it.highlighted) 1f else 0f
                     ) {
                         Marker(
                             name = it.coffeeShop.name,
@@ -136,19 +140,44 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
 
 @Composable
 @Preview
-fun Marker(name: String = "Title", descr: String = "Subtitle", highlighted: Boolean = false, expanded: Boolean = true) =
+fun SmallMarker() = Marker(expanded = false)
+
+@Composable
+@Preview
+fun ExpandedMarker() = Marker(expanded = true)
+
+
+@Composable
+fun Marker(
+    name: String = "Title",
+    descr: String = "Subtitle",
+    highlighted: Boolean = false,
+    expanded: Boolean
+) {
+    val borderRadius = if (expanded) 12.dp else 6.dp
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-
             .padding(16.dp)
-            .shadow(elevation = 9.dp, shape = RoundedCornerShape(size = 6.dp))
-            .height(if (expanded) 44.dp else 30.dp)
+            .boxShadow(
+                blurRadius = 3.dp,
+                offset = DpOffset(x = 0.dp, y = 2.dp),
+                shape = RoundedCornerShape(borderRadius),
+                color = Color(0f, 0f, 0f, 0.15f)
+            )
+            .boxShadow(
+                blurRadius = 9.dp,
+                offset = DpOffset(x = 0.dp, y = 6.dp),
+                shape = RoundedCornerShape(borderRadius),
+                color = Color(0f, 0f, 0f, 0.04f)
+            )
+//            .height(if (expanded) 44.dp else 30.dp)
             .background(
                 color = if (highlighted) Color(0xFFE8E5E3) else Color(0xFFFFFFFF),
                 shape = RoundedCornerShape(size = 6.dp)
             )
             .padding(start = 4.dp, top = 3.dp, end = 8.dp, bottom = 3.dp)
+            .widthIn(min = 0.dp, max = (LocalConfiguration.current.screenWidthDp / if (highlighted) 1 else 2).dp)
 
     ) {
         Image(
@@ -162,7 +191,7 @@ fun Marker(name: String = "Title", descr: String = "Subtitle", highlighted: Bool
 
         )
         Column(
-            verticalArrangement = Arrangement.spacedBy(-4.dp, Alignment.CenterVertically),
+            verticalArrangement = Arrangement.spacedBy(if (highlighted) 4.dp else -4.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.Start,
             modifier = Modifier.padding(start = 4.dp)
         ) {
@@ -174,7 +203,9 @@ fun Marker(name: String = "Title", descr: String = "Subtitle", highlighted: Bool
                     lineHeight = 24.sp,
                     fontWeight = FontWeight(350),
                     color = textColor,
-                )
+                ),
+                maxLines = if (highlighted) 2 else 1,
+                overflow = TextOverflow.Ellipsis
             )
             if (expanded) {
                 Text(
@@ -184,12 +215,16 @@ fun Marker(name: String = "Title", descr: String = "Subtitle", highlighted: Bool
                         lineHeight = 18.sp,
                         fontWeight = FontWeight(350),
                         color = textColor,
-                    )
+
+                        ),
+                    maxLines = if (highlighted) 3 else 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }
 
     }
+}
 
 @Composable
 fun MapAppBar(modifier: Modifier = Modifier) {
@@ -245,3 +280,4 @@ data class ExtendedCoffeeShop(
     val coffeeShop: CoffeeShop,
     val highlighted: Boolean,
 )
+
