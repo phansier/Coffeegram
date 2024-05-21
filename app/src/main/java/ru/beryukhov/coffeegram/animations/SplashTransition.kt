@@ -47,7 +47,6 @@ data class SplashTransition(
 )
 
 @SuppressLint("UnrememberedMutableState")
-@Suppress("UnusedPrivateMember")
 @Composable
 fun TransitionSlot(
     StartPage: @Composable (modifier: Modifier) -> Unit,
@@ -104,7 +103,6 @@ internal fun SplashContent(modifier: Modifier = Modifier) {
 
 @Composable
 @Preview
-@Suppress("UnusedPrivateMember")
 private fun InnerContentPreview(modifier: Modifier = Modifier) = InnerContent(modifier = Modifier, topPadding = 100.dp)
 
 @Composable

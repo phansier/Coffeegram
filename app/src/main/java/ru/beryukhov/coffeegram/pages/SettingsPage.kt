@@ -118,6 +118,7 @@ fun ColumnScope.SettingsPage(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsAppBar(modifier: Modifier = Modifier) {
     TopAppBar(

@@ -81,7 +81,6 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     }
 
     @Composable
-    @Suppress("UnusedPrivateMember")
     fun SmallWidget(
         modifier: GlanceModifier = GlanceModifier,
         count: Int = 5,
@@ -205,7 +204,6 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     }
 
     @Composable
-    @Suppress("UnusedPrivateMember")
     fun BigWidget(modifier: GlanceModifier = GlanceModifier,) {
         LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
             items(listOf(Unit, Unit, Unit)) {
