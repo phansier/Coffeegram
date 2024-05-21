@@ -31,10 +31,8 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import ru.beryukhov.coffeegram.R
@@ -76,17 +74,22 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
         position = CameraPosition.fromLatLngZoom(/* target = */ coarseLocation, /* zoom = */ 10f)
     }
     if (coarseLocationEnabled) {
-        GoogleMap(
-            modifier = modifier.fillMaxSize(),
-            properties = MapProperties().copy(isMyLocationEnabled = true),
-            cameraPositionState = cameraPositionState
+        Box(
+            modifier = modifier.weight(1f),
         ) {
-            coffeeShops.forEach {
-                AdvancedMarker(
-                    state = MarkerState(position = LatLng(it.latitude, it.longitude)),
-                    title = it.name
-                )
+            GoogleMap(
+                modifier = modifier.fillMaxSize(),
+                properties = MapProperties().copy(isMyLocationEnabled = true),
+                cameraPositionState = cameraPositionState
+            ) {
+                coffeeShops.forEach {
+                    AdvancedMarker(
+                        state = MarkerState(position = LatLng(it.latitude, it.longitude)),
+                        title = it.name
+                    )
+                }
             }
+            // Text(text = cameraPositionState.position.target.toString(), modifier = Modifier.align(Alignment.Center))
         }
     } else {
         Box(
@@ -94,6 +97,7 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
         ) {
             Text(text = "Your should give location permission", modifier = Modifier.align(Alignment.Center))
         }
+
     }
 }
 
