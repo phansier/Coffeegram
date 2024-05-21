@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.LocalDate
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
@@ -32,7 +32,7 @@ import ru.beryukhov.date_time_utils.getFullMonthName
 fun CoffeeListAppBar(
     localDate: LocalDate,
     modifier: Modifier = Modifier,
-    coffeeListViewModel: CoffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
+    coffeeListViewModel: CoffeeListViewModel = koinViewModel<CoffeeListViewModelImpl>()
 ) {
     TopAppBar(
         modifier = modifier,
@@ -56,7 +56,7 @@ fun CoffeeListAppBar(
 @Composable
 fun CoffeeListPage(
     localDate: LocalDate,
-    coffeeListViewModel: CoffeeListViewModel = getViewModel<CoffeeListViewModelImpl>()
+    coffeeListViewModel: CoffeeListViewModel = koinViewModel<CoffeeListViewModelImpl>()
 ) {
     BackHandler { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }
     val onPlusClick = remember(localDate, coffeeListViewModel) {

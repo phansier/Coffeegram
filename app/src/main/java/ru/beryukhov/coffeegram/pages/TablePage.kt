@@ -39,7 +39,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.koinViewModel
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.view.MonthTable
@@ -98,7 +98,7 @@ fun TableAppBar(
 fun ColumnScope.TablePage(
     pagerState: PagerState,
     modifier: Modifier = Modifier,
-    tablePageViewModel: TablePageViewModel = getViewModel<TablePageViewModelImpl>(),
+    tablePageViewModel: TablePageViewModel = koinViewModel<TablePageViewModelImpl>(),
 ) {
 
     val yearMonth = pagerState.currentPage.toYearMonth()

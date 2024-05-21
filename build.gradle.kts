@@ -19,6 +19,7 @@ buildscript {
         classpath(libs.sqldelightGradle)
         classpath(libs.composeKotlinGradle)
         classpath(libs.protobufGradle)
+        classpath(libs.secretsGradle)
     }
 }
 
