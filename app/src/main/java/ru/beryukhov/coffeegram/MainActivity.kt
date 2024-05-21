@@ -7,37 +7,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Create
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
@@ -48,24 +21,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.koin.androidx.compose.get
 import ru.beryukhov.coffeegram.animations.TransitionSlot
-import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.toDataMap
-import ru.beryukhov.coffeegram.model.NavigationIntent
-import ru.beryukhov.coffeegram.model.NavigationState
-import ru.beryukhov.coffeegram.model.NavigationStore
-import ru.beryukhov.coffeegram.model.ThemeState
-import ru.beryukhov.coffeegram.model.ThemeStore
-import ru.beryukhov.coffeegram.pages.CoffeeListAppBar
-import ru.beryukhov.coffeegram.pages.CoffeeListPage
 import ru.beryukhov.coffeegram.pages.LandingPage
-import ru.beryukhov.coffeegram.pages.SettingsAppBar
-import ru.beryukhov.coffeegram.pages.SettingsPage
-import ru.beryukhov.coffeegram.pages.TableAppBar
-import ru.beryukhov.coffeegram.pages.TablePage
-import ru.beryukhov.date_time_utils.nowYM
-import ru.beryukhov.date_time_utils.toTotalMonths
 
 class MainActivity : ComponentActivity() {
 
@@ -96,7 +55,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-
 
 private fun MainActivity.startWearableActivity() {
     lifecycleScope.launch {

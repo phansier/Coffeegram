@@ -99,10 +99,10 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
             viewModel.newZoom(cameraPositionState.position.zoom)
         }
         Box(
-            modifier = modifier.weight(1f),
+            modifier = Modifier.weight(1f),
         ) {
             GoogleMap(
-                modifier = modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize(),
                 properties = MapProperties().copy(isMyLocationEnabled = true),
                 cameraPositionState = cameraPositionState
             ) {
@@ -124,40 +124,37 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
                         )
                     }
                 }
-
             }
         }
-
     } else {
         Box(
             modifier = modifier.fillMaxSize(),
         ) {
             Text(text = "Your should give location permission", modifier = Modifier.align(Alignment.Center))
         }
-
     }
 }
 
 @Composable
 @Preview
-fun SmallMarker() = Marker(expanded = false)
+private fun SmallMarker() = Marker(expanded = false)
 
 @Composable
 @Preview
-fun ExpandedMarker() = Marker(expanded = true)
-
+private fun ExpandedMarker() = Marker(expanded = true)
 
 @Composable
 fun Marker(
+    modifier: Modifier = Modifier,
     name: String = "Title",
     descr: String = "Subtitle",
     highlighted: Boolean = false,
-    expanded: Boolean
+    expanded: Boolean = false,
 ) {
     val borderRadius = if (expanded) 12.dp else 6.dp
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .padding(16.dp)
             .boxShadow(
                 blurRadius = 3.dp,
@@ -222,7 +219,6 @@ fun Marker(
                 )
             }
         }
-
     }
 }
 
@@ -268,7 +264,6 @@ class MapPageViewModelImpl : ViewModel(), MapPageViewModel {
             }
         }))
     }
-
 }
 
 data class CoffeeShopsState(
@@ -280,4 +275,3 @@ data class ExtendedCoffeeShop(
     val coffeeShop: CoffeeShop,
     val highlighted: Boolean,
 )
-

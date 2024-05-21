@@ -75,8 +75,9 @@ fun Modifier.boxShadow(
     return drawWithCache {
         onDrawWithContent {
 
-            if (inset)
+            if (inset) {
                 drawContent()
+            }
 
             drawIntoCanvas { canvas ->
 
@@ -179,8 +180,9 @@ fun Modifier.boxShadow(
                 nativeCanvas.restoreToCount(count)
             }
 
-            if (!inset)
+            if (!inset) {
                 drawContent()
+            }
         }
     }.run {
         when {

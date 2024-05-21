@@ -3,7 +3,6 @@ package ru.beryukhov.coffeegram.repository
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-
 class CoffeeShopsParserTest {
     @Test
     fun testRegex() {

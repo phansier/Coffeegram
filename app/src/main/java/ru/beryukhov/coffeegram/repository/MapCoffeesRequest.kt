@@ -9,7 +9,7 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import ru.beryukhov.coffeegram.BuildConfig
 
-private val client = HttpClient{
+private val client = HttpClient {
     if (BuildConfig.DEBUG) {
         install(Logging) {
             level = LogLevel.INFO
@@ -17,7 +17,6 @@ private val client = HttpClient{
                 override fun log(message: String) {
                     Log.d("HTTP", message)
                 }
-
             }
         }
     }
@@ -26,10 +25,11 @@ private val client = HttpClient{
 suspend fun coffeeShops(): List<CoffeeShop> {
     try {
         val response =
-            client.get("https://raw.githubusercontent.com/specialtycoffeecyprus/api/develop/database/seeders/CafeSeeder.php")
-                .bodyAsText()
+            client.get(
+                "https://raw.githubusercontent.com/specialtycoffeecyprus/api/" +
+                    "develop/database/seeders/CafeSeeder.php"
+            ).bodyAsText()
         return parseResponse(response)
-
     } catch (_: Exception) {
         return emptyList()
     }
@@ -46,7 +46,9 @@ fun parseResponse(response: String): List<CoffeeShop> {
 
         if (name != null && description != null && latitude != null && longitude != null) {
             CoffeeShop(name, description, latitude, longitude)
-        } else null
+        } else {
+            null
+        }
     }.toList()
 }
 
@@ -59,7 +61,7 @@ private fun param(block: List<String>, paramName: String) =
         ?.removeSuffix("'")
         ?.removeSuffix("\"")
 
-data class CoffeeShop (
+data class CoffeeShop(
     val name: String,
     val description: String,
     val latitude: Double,
@@ -69,4 +71,3 @@ data class CoffeeShop (
         return "CoffeeShop(name='$name', lat=$latitude, lng=$longitude)"
     }
 }
-
