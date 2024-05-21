@@ -2,6 +2,8 @@
     <string name="app_name">Coffeegram</string>
     <string name="calendar">Calendar</string>
     <string name="settings">Settings</string>
+    <string name="map_short">Specialty</string>
+    <string name="map_long">Specialty Coffee Map</string>
     <string name="add_drink">Drinks</string>
     <string name="app_theme">App theme</string>
     <string name="app_theme_system">System</string>

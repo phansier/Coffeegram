@@ -1,7 +1,8 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
 
 package ru.beryukhov.coffeegram
 
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -35,6 +36,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
@@ -83,7 +86,8 @@ class MainActivity : ComponentActivity() {
                     PagesContent(
                         modifier = modifier,
                         topPadding = topPadding,
-                        startWearableActivity = ::startWearableActivity
+                        startWearableActivity = ::startWearableActivity,
+                        showMap = checkCoarseLocationPermission()
                     )
                 },
             ) {
@@ -93,98 +97,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-internal fun DefaultPreview() {
-    PagesContent()
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun PagesContent(
-    modifier: Modifier = Modifier,
-    topPadding: Dp = 0.dp,
-    navigationStore: NavigationStore = get(),
-    startWearableActivity: () -> Unit = {}
-) {
-    val navigationState: NavigationState by navigationStore.state.collectAsState()
-    val currentNavigationState = navigationState
-    val snackbarHostState = remember { SnackbarHostState() }
-
-    // You can scroll all the way up to the year 3000 with page count set to 36 000 --> (3000 * 12)
-    val pagerState = rememberPagerState(
-        pageCount = { 36_000 }, initialPage = if (currentNavigationState is NavigationState.TablePage) {
-            currentNavigationState.yearMonth.toTotalMonths()
-        } else {
-            nowYM().toTotalMonths()
-        }
-    )
-
-    CoffeegramTheme(
-        themeState = themeState()
-    ) {
-        Scaffold(modifier, topBar = {
-            when (currentNavigationState) {
-                is NavigationState.TablePage -> TableAppBar(
-                    pagerState = pagerState
-                )
-
-                is NavigationState.CoffeeListPage -> CoffeeListAppBar(
-                    localDate = currentNavigationState.date
-                )
-
-                is NavigationState.SettingsPage -> SettingsAppBar()
-            }
-        }, snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }) {
-            Column(modifier = Modifier.padding(it)) {
-                Spacer(
-                    Modifier
-                        .padding(top = topPadding)
-                        .align(Alignment.CenterHorizontally)
-                )
-                when (currentNavigationState) {
-                    is NavigationState.TablePage -> TablePage(
-                        pagerState = pagerState
-                    )
-                    is NavigationState.CoffeeListPage -> CoffeeListPage(
-                        localDate = currentNavigationState.date
-                    )
-                    is NavigationState.SettingsPage -> SettingsPage(
-                        themeStore = get(),
-                        snackbarHostState = snackbarHostState,
-                        startWearableActivity = startWearableActivity,
-                    )
-                }
-                NavigationBar {
-                    NavigationBarItem(selected = currentNavigationState is NavigationState.TablePage, onClick = {
-                        navigationStore.newIntent(
-                            NavigationIntent.ReturnToTablePage
-                        )
-                    }, label = { Text(stringResource(id = R.string.calendar)) }, icon = {
-                        Icon(
-                            imageVector = Icons.Default.Create,
-                            contentDescription = "",
-                        )
-                    })
-                    NavigationBarItem(selected = currentNavigationState is NavigationState.SettingsPage, onClick = {
-                        navigationStore.newIntent(
-                            NavigationIntent.ToSettingsPage
-                        )
-                    }, label = { Text(stringResource(id = R.string.settings)) }, icon = {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = "",
-                        )
-                    })
-                }
-            }
-        }
-    }
-}
-
-private const val TAG = "TestWatch_"
 
 private fun MainActivity.startWearableActivity() {
     lifecycleScope.launch {
@@ -233,11 +145,11 @@ private fun MainActivity.sendDayCoffee(dayCoffee: DayCoffee) {
     }
 }
 
+private fun MainActivity.checkCoarseLocationPermission(): Boolean = checkSelfPermission(
+    ACCESS_COARSE_LOCATION
+) == PackageManager.PERMISSION_GRANTED
+
 private const val START_ACTIVITY_PATH = "/start-activity"
 private const val DAY_COFFEE_PATH = "/coffee"
 
-@Composable
-private fun themeState(): ThemeState {
-    val themeState: ThemeState by get<ThemeStore>().state.collectAsState()
-    return themeState
-}
+private const val TAG = "TestWatch_"

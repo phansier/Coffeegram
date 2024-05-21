@@ -140,7 +140,8 @@ private fun Preview() {
     Column {
         val pagerState = rememberPagerState(pageCount = { 36_000 })
         TablePage(
-            tablePageViewModel = TablePageViewModelStub, pagerState = pagerState
+            tablePageViewModel = TablePageViewModelStub,
+            pagerState = pagerState
         )
     }
 }
