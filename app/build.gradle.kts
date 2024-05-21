@@ -98,6 +98,7 @@ dependencies {
     implementation(libs.google.maps.compose)
 
     implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.logging)
 
     implementation(libs.kotlinx.immutableCollections)
 

@@ -1,10 +1,27 @@
 package ru.beryukhov.coffeegram.repository
 
+import android.util.Log
 import io.ktor.client.HttpClient
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logger
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
+import ru.beryukhov.coffeegram.BuildConfig
 
-private val client = HttpClient()
+private val client = HttpClient{
+    if (BuildConfig.DEBUG) {
+        install(Logging) {
+            level = LogLevel.INFO
+            logger = object : Logger {
+                override fun log(message: String) {
+                    Log.d("HTTP", message)
+                }
+
+            }
+        }
+    }
+}
 
 suspend fun coffeeShops(): List<CoffeeShop> {
     try {
@@ -47,5 +64,9 @@ data class CoffeeShop (
     val description: String,
     val latitude: Double,
     val longitude: Double,
-)
+) {
+    override fun toString(): String {
+        return "CoffeeShop(name='$name', lat=$latitude, lng=$longitude)"
+    }
+}
 
