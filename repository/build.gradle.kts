@@ -5,7 +5,7 @@ plugins {
     kotlin("multiplatform")
 //    kotlin("native.cocoapods")
     id("com.android.library")
-//    id("io.realm.kotlin")
+    id("io.realm.kotlin")
 }
 
 version = "1.0"
