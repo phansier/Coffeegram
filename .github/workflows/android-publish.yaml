@@ -51,5 +51,11 @@ jobs:
                 env:
                     PLAY_CONFIG_JSON: ${{ secrets.PLAY_CONFIG }}
 
+            -   name: Create Google Maps Config file
+                run: |
+                    echo "MAPS_API_KEY=$MAP_KEY" >> secrets.properties
+                env:
+                    MAP_KEY: ${{ secrets.MAP_KEY }}
+
             -   name: Distribute app to Alpha track
                 run: ./gradlew :app:bundleRelease :app:publishBundle

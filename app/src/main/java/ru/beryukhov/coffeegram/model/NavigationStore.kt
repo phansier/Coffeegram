@@ -26,6 +26,7 @@ class NavigationStore(val yearMonth: YearMonth = nowYM()) : InMemoryStore<Naviga
             )
             NavigationIntent.ReturnToTablePage -> NavigationState.TablePage(currentYearMonth.value)
             NavigationIntent.ToSettingsPage -> NavigationState.SettingsPage
+            NavigationIntent.ToMapPage -> NavigationState.MapPage
         }
     }
 
@@ -40,10 +41,12 @@ sealed interface NavigationIntent {
     data class SetYearMonth(val yearMonth: YearMonth) : NavigationIntent
     object ReturnToTablePage : NavigationIntent
     object ToSettingsPage : NavigationIntent
+    object ToMapPage : NavigationIntent
 }
 
 sealed interface NavigationState {
     class TablePage(val yearMonth: YearMonth) : NavigationState
     data class CoffeeListPage(val date: LocalDate) : NavigationState
     object SettingsPage : NavigationState
+    object MapPage : NavigationState
 }

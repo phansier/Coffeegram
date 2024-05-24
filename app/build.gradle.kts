@@ -11,6 +11,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.protobuf")
     id("com.github.triplet.play") version "3.9.1"
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -94,9 +95,14 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.glance.appwidget)
 
+    implementation(libs.google.maps.compose)
+
+    implementation(libs.ktor.client.okhttp)
+    implementation(libs.ktor.logging)
+
     implementation(libs.kotlinx.immutableCollections)
 
-    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.test.junit)
 
     androidTestImplementation(libs.compose.uiTest)
     androidTestImplementation(libs.compose.uiTestJunit4)
@@ -167,4 +173,8 @@ play {
     serviceAccountCredentials.set(file("../play_config.json"))
     track.set("alpha")
     defaultToAppBundles.set(true)
+}
+secrets {
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
 }

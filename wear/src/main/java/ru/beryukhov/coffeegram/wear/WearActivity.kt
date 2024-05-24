@@ -64,7 +64,6 @@ internal fun PagesContent() {
 }
 
 @Composable
-@Suppress("UnusedPrivateMember")
 fun CoffeeItem(c: CoffeeType, count: Int, modifier: Modifier = Modifier) {
     Chip(
         icon = {
