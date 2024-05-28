@@ -5,7 +5,7 @@ minSdk = "24"
 wearMinSdk = "25"
 
 kotlin = "2.0.0" # https://kotlinlang.org/docs/releases.html#release-details
-agp = "8.4.0" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.4.1" # https://developer.android.com/studio/releases/gradle-plugin
 realm = "2.0.0-SNAPSHOT" # https://github.com/realm/realm-kotlin
 ktor = "2.3.11" # https://github.com/ktorio/ktor
 
