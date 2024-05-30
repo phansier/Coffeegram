@@ -30,7 +30,7 @@ glance = "1.1.0-rc01" # https://developer.android.com/jetpack/androidx/releases/
 
 sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 
-appcompat = "1.6.1" # https://developer.android.com/jetpack/androidx/releases/appcompat
+appcompat = "1.7.0" # https://developer.android.com/jetpack/androidx/releases/appcompat
 material = "1.12.0" # https://github.com/material-components/material-components-android
 activity = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
 
