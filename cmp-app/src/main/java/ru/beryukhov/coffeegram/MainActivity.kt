@@ -1,8 +1,8 @@
 package ru.beryukhov.coffeegram
 
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -13,7 +13,7 @@ import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.pages.LandingPage
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     private val navigationStore: NavigationStore by inject()
     private val daysCoffeesStore: DaysCoffeesStore by inject()
