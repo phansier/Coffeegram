@@ -62,8 +62,7 @@ kotlin {
             implementation(libs.coroutines.test)
         }
         androidMain.dependencies {
-            api(libs.androidx.appcompat)
-            api(libs.core.coreKtx)
+            // api(libs.core.coreKtx)
         }
         val androidUnitTest by getting {
             dependencies {

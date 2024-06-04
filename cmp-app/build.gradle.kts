@@ -33,8 +33,7 @@ android {
 dependencies {
     implementation(projects.cmpCommon)
 
-    implementation(libs.core.coreKtx)
-    implementation(libs.androidx.appcompat)
+    // implementation(libs.core.coreKtx)
     implementation(libs.material)
 
     implementation(libs.jetbrains.compose.ui)
