@@ -5,14 +5,14 @@ minSdk = "24"
 wearMinSdk = "25"
 
 kotlin = "2.0.0" # https://kotlinlang.org/docs/releases.html#release-details
-agp = "8.4.1" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.4.2" # https://developer.android.com/studio/releases/gradle-plugin
 realm = "2.0.0" # https://github.com/realm/realm-kotlin
 ktor = "2.3.11" # https://github.com/ktorio/ktor
 
 detekt = "1.23.6" # https://github.com/detekt/detekt
-detektCompose = "0.4.3" # https://github.com/mrmans0n/compose-rules
+detektCompose = "0.4.4" # https://github.com/mrmans0n/compose-rules
 
-compose = "1.6.7" # https://developer.android.com/jetpack/androidx/releases/compose-ui
+compose = "1.6.8" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 wearCompose = "1.3.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
 jetbrainsCompose = "1.6.11" # https://github.com/JetBrains/compose-multiplatform
@@ -30,7 +30,7 @@ sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 material = "1.12.0" # https://github.com/material-components/material-components-android
 activity = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
 
-protobuf = "4.27.0"
+protobuf = "4.27.1"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -86,7 +86,7 @@ core-coreKtx = { module = "androidx.core:core-ktx", version.ref = "core" } # and
 glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 #glance-wear-tiles = { module = "androidx.glance:glance-wear-tiles", version.ref = "glance" }
 
-google-maps-compose = "com.google.maps.android:maps-compose:5.0.1"
+google-maps-compose = "com.google.maps.android:maps-compose:5.0.3"
 
 
 androidx-annotation = "androidx.annotation:annotation:1.8.0"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
