@@ -1,5 +1,13 @@
 version: 2
+
 updates:
+  # Updates for Github Actions used in the repo
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "Dependencies"
   # Maintain App gradle dependencies
   - package-ecosystem: "gradle"
     directory: "/"
@@ -8,3 +16,8 @@ updates:
     open-pull-requests-limit: 5
     labels:
       - "Dependencies"
+    # Create a group of dependencies to be updated together in one pull request
+    groups:
+       all:
+          patterns:
+            - "*"
