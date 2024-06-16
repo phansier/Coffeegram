@@ -5,7 +5,7 @@ minSdk = "24"
 wearMinSdk = "25"
 
 kotlin = "2.0.0" # https://kotlinlang.org/docs/releases.html#release-details
-agp = "8.4.2" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.5.0" # https://developer.android.com/studio/releases/gradle-plugin
 realm = "2.0.0" # https://github.com/realm/realm-kotlin
 ktor = "2.3.11" # https://github.com/ktorio/ktor
 
@@ -21,9 +21,9 @@ cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertin
 coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/datastore
 koin = "3.5.6" # https://github.com/InsertKoinIO/koin#setup--current-version
-lifecycle = "2.8.1" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+lifecycle = "2.8.2" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 core = "1.13.1" # https://developer.android.com/jetpack/androidx/releases/core
-glance = "1.1.0-rc01" # https://developer.android.com/jetpack/androidx/releases/glance
+glance = "1.1.0" # https://developer.android.com/jetpack/androidx/releases/glance
 
 sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 
