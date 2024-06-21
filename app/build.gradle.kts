@@ -10,7 +10,7 @@ plugins {
     kotlin("android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.protobuf")
-    id("com.github.triplet.play") version "3.9.1"
+    id("com.github.triplet.play") version "3.10.0"
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
