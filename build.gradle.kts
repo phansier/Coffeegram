@@ -13,6 +13,8 @@ buildscript {
         classpath(libs.androidGradle)
         classpath(libs.kotlinGradle)
         classpath(libs.realmGradle)
+        classpath(libs.roomGradle)
+        classpath(libs.ksp)
 
         classpath(libs.composeGradle)
         classpath(libs.sqldelightGradle)

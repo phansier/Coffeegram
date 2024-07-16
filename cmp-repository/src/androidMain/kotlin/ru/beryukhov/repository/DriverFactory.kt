@@ -4,7 +4,7 @@ import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 
-lateinit var context: Context // todo fill it
+lateinit var context: Context // todo fill it with koin instead
 
 internal actual class DriverFactory {
     actual fun createDriver(): SqlDriver {

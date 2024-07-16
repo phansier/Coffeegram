@@ -11,9 +11,9 @@ import ru.beryukhov.coffeegram.store_lib.Store
 
 interface DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>
 
-class HeavyDaysCoffeesStore : PersistentStore<DaysCoffeesIntent, DaysCoffeesState>(
+class HeavyDaysCoffeesStore(storage: CoffeeStorage) : PersistentStore<DaysCoffeesIntent, DaysCoffeesState>(
     initialState = DaysCoffeesState(),
-    storage = CoffeeStorage()
+    storage = storage
 ), DaysCoffeesStore {
 
     override fun handleIntent(intent: DaysCoffeesIntent): DaysCoffeesState {

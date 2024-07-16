@@ -9,9 +9,7 @@ import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.store_lib.Storage
 
-val lazy_repository: CoffeeRepository by lazy { CoffeeRepository() }
-
-class CoffeeStorage(private val repository: CoffeeRepository = lazy_repository) :
+class CoffeeStorage(private val repository: CoffeeRepository) :
     Storage<DaysCoffeesState> {
     override suspend fun getState(): DaysCoffeesState {
         return repository.getAll().toState()
