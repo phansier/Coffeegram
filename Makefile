@@ -2,6 +2,8 @@ SHELL := /bin/bash
 
 path := ./
 
+params := --console=plain
+
 detekt:
 	$(path)gradlew detektAll
 
@@ -21,7 +23,7 @@ buildAndroid:
 testCommon:
 	./gradlew :cmp-common:testDebugUnitTest
 
-localCheck: detekt buildApp buildWear buildAndroid testCommon
+localCheck: detekt buildApp buildWear buildAndroid testCommon $(params)
 
 compose_metrics:
 	$(path)gradlew :app:assembleRelease \-Pmyapp.enableComposeCompilerReports=true

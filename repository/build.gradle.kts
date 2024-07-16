@@ -3,9 +3,9 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
     kotlin("multiplatform")
-//    kotlin("native.cocoapods")
     id("com.android.library")
-    id("io.realm.kotlin")
+    id("androidx.room")
+    id("com.google.devtools.ksp")
 }
 
 version = "1.0"
@@ -22,21 +22,15 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    /*cocoapods {
-        summary = "Repository for Coffegram"
-        homepage = "https://github.com/phansier/Coffeegram"
-        ios.deploymentTarget = "14.1"
-        framework {
-            baseName = "repository"
-        }
-        // set path to your ios project podfile, e.g. podfile = project.file("../iosApp/Podfile")
-    }*/
-
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.room.runtime)
+            implementation(libs.sqlite.bundled)
+            implementation(libs.sqlite)
 
-            implementation(libs.realmKotlin)
             implementation(libs.coroutines.core)
+
+            implementation(libs.koin.core)
         }
         commonTest.dependencies {
             implementation(kotlin("test-common"))
@@ -62,4 +56,15 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
         sourceCompatibility = JavaVersion.VERSION_17
     }
+}
+
+dependencies {
+    add("kspAndroid", libs.room.compiler)
+    add("kspIosSimulatorArm64", libs.room.compiler)
+    add("kspIosX64", libs.room.compiler)
+    add("kspIosArm64", libs.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }

@@ -2,12 +2,10 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     kotlin("multiplatform")
-//    kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
 
-    id("co.touchlab.kmmbridge") version "0.5.5"
     `maven-publish`
 }
 
@@ -20,20 +18,6 @@ kotlin {
     iosX64()
     iosArm64()
     iosSimulatorArm64()
-
-//    cocoapods {
-//        version = "1.0.0"
-//        summary = "Some description for the Shared Module"
-//        homepage = "https://github.com/phansier/Coffeegram"
-//        ios.deploymentTarget = "14.1"
-//        podfile = project.file("../cmp-iosApp/Podfile")
-//        framework {
-//            baseName = "cmp_common"
-//            isStatic = true
-//        }
-//        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
-//        extraSpecAttributes["resources"] = "['src/commonMain/resources/**']"
-//    }
 
     sourceSets {
         commonMain.dependencies {
@@ -120,11 +104,4 @@ compose.desktop {
             }
         }
     }
-}
-
-kmmbridge {
-    mavenPublishArtifacts()
-    spm()
-    // cocoapods("git@github.com:phansier/PodSpecs.git")
-    addGithubPackagesRepository()
 }
