@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
-    id("io.realm.kotlin")
     id("androidx.room")
     id("com.google.devtools.ksp")
 }
@@ -29,7 +28,6 @@ kotlin {
             implementation(libs.sqlite.bundled)
             implementation(libs.sqlite)
 
-            implementation(libs.realmKotlin)
             implementation(libs.coroutines.core)
 
             implementation(libs.koin.core)

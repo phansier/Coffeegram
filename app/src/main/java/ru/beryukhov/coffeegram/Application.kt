@@ -34,7 +34,6 @@ class Application : Application() {
         single {
             ThemeStore(get())
         }
-//        single<CoffeeRepository> { RealmCoffeeRepository() }
         single<CoffeeRepository> { RoomCoffeeRepository(get()) }
         single<CoffeeStorage> { CoffeeStorage(get()) }
         single<DaysCoffeesStore> { HeavyDaysCoffeesStore(get()) }

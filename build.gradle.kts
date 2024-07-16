@@ -12,7 +12,6 @@ buildscript {
     dependencies {
         classpath(libs.androidGradle)
         classpath(libs.kotlinGradle)
-        classpath(libs.realmGradle)
         classpath(libs.roomGradle)
         classpath(libs.ksp)
 
