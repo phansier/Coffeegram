@@ -17,7 +17,7 @@ private val koinApp = initKoin().koin
 
 private fun initKoin() =
     startKoin {
-        modules(appModule())
+        modules(appModule)
     }
 
 fun main() = singleWindowApplication(

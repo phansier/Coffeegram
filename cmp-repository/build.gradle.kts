@@ -30,6 +30,7 @@ kotlin {
 
             implementation(libs.sqldelight.runtime)
             implementation(libs.sqldelight.coroutinesExt)
+            implementation(libs.koin.core)
         }
         androidMain.dependencies {
             implementation(libs.sqldelight.androidDriver)

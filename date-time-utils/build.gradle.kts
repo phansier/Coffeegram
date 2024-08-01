@@ -19,8 +19,8 @@ kotlin {
             api(libs.kotlinx.datetime)
         }
         commonTest.dependencies {
-            implementation(libs.kotlin.test.common)
-            implementation(libs.kotlin.test.annotations.common)
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlin.test.annotations)
         }
         val androidUnitTest by getting {
             dependencies {

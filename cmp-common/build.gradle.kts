@@ -38,8 +38,8 @@ kotlin {
             api(libs.koin.core)
         }
         commonTest.dependencies {
-            implementation(libs.kotlin.test.common)
-            implementation(libs.kotlin.test.annotations.common)
+            implementation(libs.kotlin.test)
+            implementation(libs.kotlin.test.annotations)
             implementation(libs.koin.test)
             implementation(libs.coroutines.test)
         }

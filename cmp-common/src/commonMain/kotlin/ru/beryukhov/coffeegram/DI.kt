@@ -1,7 +1,6 @@
 package ru.beryukhov.coffeegram
 
 import org.koin.dsl.module
-import repository.CoffeeRepository
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.DaysCoffeesStoreImpl
 import ru.beryukhov.coffeegram.model.NavigationStore
@@ -9,13 +8,14 @@ import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.repository.CoffeeStorage
 import ru.beryukhov.coffeegram.repository.ThemeDataStorePrefStorage
-import ru.beryukhov.coffeegram.repository.createDataStore
+import ru.beryukhov.coffeegram.repository.datastoreModule
 import ru.beryukhov.coffeegram.store_lib.Storage
+import ru.beryukhov.repository.sqlDatabaseModule
 
-fun appModule() = module {
-    single {
-        createDataStore()
-    }
+val appModule = module {
+    includes(sqlDatabaseModule)
+    includes(datastoreModule())
+
     single<Storage<ThemeState>> {
         ThemeDataStorePrefStorage(dataStore = get())
     }
@@ -23,7 +23,6 @@ fun appModule() = module {
         ThemeStore(get())
     }
     single<DaysCoffeesStore> { DaysCoffeesStoreImpl(coffeeStorage = get()) }
-    single { CoffeeRepository() }
     single { CoffeeStorage(repository = get()) }
 
     single { NavigationStore() }

@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.firstOrNull
 import okio.Path.Companion.toPath
+import org.koin.core.module.Module
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.store_lib.Storage
@@ -53,4 +54,4 @@ fun createDataStore(producePath: () -> String): DataStore<Preferences> {
     )
 }
 
-internal expect fun createDataStore(): DataStore<Preferences>
+internal expect fun datastoreModule(): Module
