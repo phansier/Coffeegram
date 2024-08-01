@@ -9,8 +9,6 @@ plugins {
     `maven-publish`
 }
 
-fun composeDependency(groupWithArtifact: String) = "$groupWithArtifact:${libs.versions.jetbrainsCompose}"
-
 kotlin {
     androidTarget()
     jvm()
