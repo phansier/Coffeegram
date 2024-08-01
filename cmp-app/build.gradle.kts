@@ -31,9 +31,12 @@ android {
 }
 
 dependencies {
+
     implementation(projects.cmpCommon)
 
-    // implementation(libs.core.coreKtx)
+    implementation(compose.runtime)
+    implementation(compose.foundation)
+
     implementation(libs.material)
 
     implementation(libs.jetbrains.compose.ui)

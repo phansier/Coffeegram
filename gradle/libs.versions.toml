@@ -113,7 +113,6 @@ composeGradle = { module = "org.jetbrains.compose:compose-gradle-plugin", versio
 sqldelightGradle = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 
 jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jetbrainsCompose" }
-jetbrains-compose-componentsResources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "jetbrainsCompose" }
 
 kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.0" # https://github.com/Kotlin/kotlinx-datetime
 

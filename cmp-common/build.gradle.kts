@@ -19,12 +19,12 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(compose.runtime)
-            api(compose.foundation)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.components.uiToolingPreview)
+            implementation(compose.components.resources)
 
             implementation(libs.kotlinx.immutableCollections)
-
-            implementation(libs.jetbrains.compose.componentsResources)
 
             implementation(projects.cmpRepository)
             implementation(projects.dateTimeUtils)
