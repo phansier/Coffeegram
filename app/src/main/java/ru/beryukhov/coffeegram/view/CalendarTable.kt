@@ -208,7 +208,7 @@ private fun SampleTable(modifier: Modifier = Modifier) =
     )
 
 fun getWeekDaysNames(context: Context): List<String> =
-    getWeekDaysNames(context.resources.configuration.locale)
+    getWeekDaysNames(context.resources.configuration.locales[0])
 
 fun getWeekDaysNames(locale: Locale): List<String> {
     val list = DateFormatSymbols(locale).shortWeekdays.toMutableList()

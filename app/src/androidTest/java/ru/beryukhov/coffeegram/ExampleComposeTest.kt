@@ -5,11 +5,13 @@ import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import org.junit.Ignore
+import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Month
 import org.junit.Rule
 import org.junit.Test
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.date_time_utils.YearMonth
+import ru.beryukhov.date_time_utils.nowYM
 
 class ExampleComposeTest {
     @get:Rule
@@ -17,20 +19,14 @@ class ExampleComposeTest {
 
     @Test
     fun testYear() {
-        with(composeTestRule) {
-            setContent {
-                PagesContent(
-                    navigationStore = NavigationStore(yearMonth = YearMonth.of(2020, 1)),
-                )
-            }
+        withRule(yearMonth = YearMonth(2020, Month(1))) {
             onNodeWithText("2020").assertIsDisplayed()
         }
     }
 
     @Test
-    @Ignore
     fun testMonthChange() {
-        withRule(yearMonth = YearMonth.of(2020, 9)) {
+        withRule(yearMonth = YearMonth(2020, Month(9))) {
             TablePageObject.apply {
                 Month("September").assertIsDisplayed()
                 LeftArrowButton.assertIsDisplayed().performClick()
@@ -44,8 +40,7 @@ class ExampleComposeTest {
     }
 
     @Test
-    @Ignore
-    fun testDayOpen() {
+    fun testDayOpen() = runTest {
         withRule {
             TablePageObject.apply {
                 Day("1").assertIsDisplayed()
@@ -58,7 +53,7 @@ class ExampleComposeTest {
         }
     }
 
-    private inline fun <R> withRule(yearMonth: YearMonth = YearMonth.now(), block: ComposeTestRule.() -> R): R =
+    private inline fun <R> withRule(yearMonth: YearMonth = nowYM(), block: ComposeTestRule.() -> R): R =
         with(composeTestRule) {
             setContent {
                 PagesContent(

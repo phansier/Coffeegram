@@ -1,5 +1,6 @@
 package ru.beryukhov.coffeegram
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.SemanticsNodeInteraction
@@ -15,6 +16,7 @@ abstract class PageObject<out T : PageObject<T>> {
 }
 typealias PageElement = ComposeTestRule.() -> SemanticsNodeInteraction
 
+@OptIn(ExperimentalFoundationApi::class)
 object TablePageObject : PageObject<TablePageObject>() {
     override val page: @Composable () -> Unit = {
         Column {
