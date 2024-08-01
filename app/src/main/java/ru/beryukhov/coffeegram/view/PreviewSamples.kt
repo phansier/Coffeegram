@@ -25,9 +25,7 @@ import ru.beryukhov.coffeegram.data.CoffeeType.Cappuccino
 // @Preview(name = "Large preview", widthDp = 200) //causes compile error but works in preview
 @Composable
 private fun Preview() {
-    CoffeeTypeItemRaw(
-        Cappuccino, 5
-    )
+    CoffeeTypeItemRaw(Cappuccino, 5)
 }
 
 /**
@@ -50,7 +48,8 @@ private fun CoffeeTypeItemRaw(
         )
         Spacer(Modifier.width(16.dp))
         Text(
-            stringResource(coffeeType.nameId), style = typography.bodyMedium,
+            stringResource(coffeeType.nameId),
+            style = typography.bodyMedium,
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .weight(1f)
@@ -73,7 +72,8 @@ private fun CoffeeTypeItemRaw(
                 Text("-")
             }
             Text(
-                "$count", style = typography.bodySmall,
+                "$count",
+                style = typography.bodySmall,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
             TextButton(

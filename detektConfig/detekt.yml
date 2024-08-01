@@ -179,9 +179,8 @@ empty-blocks:
     EmptyForBlock:
         active: true
     # https://detekt.github.io/detekt/empty-blocks.html#emptyfunctionblock
-    # todo enable, 26 errors
     EmptyFunctionBlock:
-        active: false
+        active: true
         ignoreOverridden: false
     # https://detekt.github.io/detekt/empty-blocks.html#emptyifblock
     EmptyIfBlock:
@@ -269,14 +268,12 @@ formatting:
     android: true
     autoCorrect: true
 
-    # todo rise an issue: false positive on kotlin @file annotations
     AnnotationOnSeparateLine:
-        active: false
+        active: true
     AnnotationSpacing:
         active: true
-    # todo fix and enable
     ArgumentListWrapping:
-        active: false
+        active: true
     # questionable rule; && and || goes to the end of line, instead of beginning a new line as we do right now
     ChainWrapping:
         active: false
@@ -285,7 +282,7 @@ formatting:
     # duplicate of naming:EnumNaming
     EnumEntryNameCase:
         active: false
-    # todo what is it?
+    # DUPLICATE of naming:MatchingDeclarationName
     Filename:
         active: false
     # DUPLICATE of style:NewLineAtEndOfFile
@@ -420,7 +417,6 @@ naming:
         excludes: [ '**/test/**', '**/androidTest/**' ]
         parameterPattern: '[a-z][A-Za-z0-9]*'
         excludeClassPattern: '$^'
-    # TODO: enable
     InvalidPackageDeclaration:
         active: false
         rootPackage: ''
@@ -551,9 +547,8 @@ style:
         active: false
         conversionFunctionPrefix: [ 'to' ]
     # https://detekt.github.io/detekt/style.html#dataclassshouldbeimmutable
-    # todo probably a good idea to enable it
     DataClassShouldBeImmutable:
-        active: false
+        active: true
     # https://detekt.github.io/detekt/style.html#equalsnullcall
     EqualsNullCall:
         active: true
@@ -577,7 +572,6 @@ style:
         comments: [ 'STOPSHIP' ]
         allowedPatterns: ''
     # https://detekt.github.io/detekt/style.html#forbiddenimport
-    # todo maybe use it to ban junit 4 in test code
     ForbiddenImport:
         active: true
         imports: [ ]
@@ -662,15 +656,11 @@ style:
     RedundantHigherOrderMapUsage:
         active: false
     # https://detekt.github.io/detekt/style.html#redundantvisibilitymodifierrule
-    # todo don't know about kotlin strict mode
-    # fix in 1.15 https://github.com/detekt/detekt/issues/3125 only works per module, not in our detektAll task
-    # because of how strict api detection works
     RedundantVisibilityModifierRule:
-        active: false
+        active: true
     # https://detekt.github.io/detekt/style.html#returncount
-    # todo enable (11 errors)
     ReturnCount:
-        active: false
+        active: true
         max: 2
         excludedFunctions: [ 'equals' ]
         excludeLabeled: false

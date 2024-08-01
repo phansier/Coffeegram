@@ -78,7 +78,8 @@ fun TableAppBar(
                 },
                 modifier = Modifier.semantics {
                     contentDescription = "ArrowLeft"
-                }) { Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "") }
+                }
+            ) { Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "") }
         },
         actions = {
             IconButton(
@@ -126,9 +127,12 @@ fun ColumnScope.TablePage(
             modifier = Modifier.fillMaxSize(),
         ) {
             LottieCoffee(modifier = Modifier.weight(1f, fill = false), alignment = Alignment.BottomStart)
-            Text("${yearMonth.year}", modifier = Modifier
-                .padding(16.dp)
-                .align(Alignment.Bottom))
+            Text(
+                "${yearMonth.year}",
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.Bottom)
+            )
         }
     }
 }

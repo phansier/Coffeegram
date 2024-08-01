@@ -69,7 +69,8 @@ fun PagesContent(
 
     // You can scroll all the way up to the year 3000 with page count set to 36 000 --> (3000 * 12)
     val pagerState = rememberPagerState(
-        pageCount = { 36_000 }, initialPage = if (currentNavigationState is NavigationState.TablePage) {
+        pageCount = { 36_000 },
+        initialPage = if (currentNavigationState is NavigationState.TablePage) {
             currentNavigationState.yearMonth.toTotalMonths()
         } else {
             nowYM().toTotalMonths()

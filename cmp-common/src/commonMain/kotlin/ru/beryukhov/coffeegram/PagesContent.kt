@@ -99,7 +99,8 @@ fun PagesContent(
                                 imageVector = Icons.Default.Create,
                                 contentDescription = "",
                             )
-                        })
+                        }
+                    )
                     AdaptiveNavigationBarItem(
                         selected = currentNavigationState is NavigationState.SettingsPage,
                         onClick = {
@@ -113,7 +114,8 @@ fun PagesContent(
                                 imageVector = Icons.Default.Settings,
                                 contentDescription = "",
                             )
-                        })
+                        }
+                    )
                 }
             }
         }

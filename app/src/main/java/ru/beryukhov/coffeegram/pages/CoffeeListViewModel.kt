@@ -58,10 +58,11 @@ class CoffeeListViewModelImpl(
 
 @VisibleForTesting
 internal fun Map<CoffeeType, Int>.withEmpty(): List<Pair<CoffeeType, Int>> {
+    @Suppress("DataClassShouldBeImmutable")
     data class MutablePair(val ct: CoffeeType, var count: Int)
 
     val emptyList: MutableList<MutablePair> =
-        CoffeeType.values().toList().map { MutablePair(it, 0) }.toMutableList()
+        CoffeeType.entries.map { MutablePair(it, 0) }.toMutableList()
     this.forEach { entry: Map.Entry<CoffeeType, Int> ->
         emptyList.filter { it.ct == entry.key }.forEach { it.count = entry.value }
     }

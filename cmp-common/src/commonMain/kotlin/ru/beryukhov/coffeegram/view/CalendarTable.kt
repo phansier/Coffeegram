@@ -148,7 +148,8 @@ fun MonthTable(
                     it,
                     yearMonth.atDay(it).dayOfWeek
                 )
-            })
+            }
+        )
         .toMutableMap()
     filledDayItemsMap.forEach { days[it.key]?.coffeeType = it.value }
     val weekDaysStrings = getWeekDaysNames()
@@ -180,7 +181,7 @@ fun MonthTable(
 
 @Preview
 @Composable
-fun TablePreview() {
+private fun TablePreview() {
     CoffeegramTheme {
         SampleTable()
     }

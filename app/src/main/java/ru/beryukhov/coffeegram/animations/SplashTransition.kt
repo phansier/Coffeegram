@@ -132,13 +132,16 @@ fun newSplashTransition(): SplashTransition {
     visibleState.targetState = SplashState.Completed
     val transition = updateTransition(visibleState, label = "splashTransition")
     val splashAlpha by transition.animateFloat(
-        transitionSpec = { tween(3000) }, label = "splashTransitionAlpha"
+        transitionSpec = { tween(3000) },
+        label = "splashTransitionAlpha"
     ) { it.transition.splashAlpha }
     val contentAlpha by transition.animateFloat(
-        transitionSpec = { tween(3000) }, label = "contentTransitionAlpha"
+        transitionSpec = { tween(3000) },
+        label = "contentTransitionAlpha"
     ) { it.transition.contentAlpha }
     val contentTopPadding by transition.animateDp(
-        transitionSpec = { tween(2000) }, label = "contentTransitionPadding"
+        transitionSpec = { tween(2000) },
+        label = "contentTransitionPadding"
     ) { it.transition.contentTopPadding }
 
     return SplashTransition(splashAlpha, contentAlpha, contentTopPadding)

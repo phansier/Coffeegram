@@ -51,8 +51,8 @@ fun DayCell(
     onClick: (() -> Unit)? = null
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally, modifier =
-        modifier.clickable(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.clickable(
             enabled = onClick != null,
             onClick = onClick ?: {}
         )
@@ -127,6 +127,7 @@ fun MonthTableAdjusted(
     }
 }
 
+@Suppress("DataClassShouldBeImmutable")
 data class WeekDayVectorPair(
     val day: Int,
     val weekDay: DayOfWeek,
@@ -158,7 +159,8 @@ fun MonthTable(
                     it,
                     yearMonth.atDay(it).dayOfWeek
                 )
-            })
+            }
+        )
         .toMutableMap()
     filledDayItemsMap.forEach { days[it.key]?.iconId = it.value }
     val weekDaysStrings = getWeekDaysNames(LocalContext.current)

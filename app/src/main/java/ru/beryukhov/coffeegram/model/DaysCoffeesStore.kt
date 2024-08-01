@@ -28,8 +28,9 @@ class HeavyDaysCoffeesStore(storage: CoffeeStorage) : PersistentStore<DaysCoffee
         coffeeType: CoffeeType
     ): DaysCoffeesState {
         return putCoffeeCount(
-            localDate, coffeeType,
-            getCoffeeOrNull(localDate, coffeeType)?.plus(1) ?: 1
+            localDate = localDate,
+            coffeeType = coffeeType,
+            count = getCoffeeOrNull(localDate, coffeeType)?.plus(1) ?: 1
         )
     }
 
@@ -38,8 +39,9 @@ class HeavyDaysCoffeesStore(storage: CoffeeStorage) : PersistentStore<DaysCoffee
         coffeeType: CoffeeType
     ): DaysCoffeesState {
         return putCoffeeCount(
-            localDate, coffeeType,
-            getCoffeeOrNull(localDate, coffeeType)?.minus(1) ?: 0
+            localDate = localDate,
+            coffeeType = coffeeType,
+            count = getCoffeeOrNull(localDate, coffeeType)?.minus(1) ?: 0
         )
     }
 
@@ -55,7 +57,9 @@ class HeavyDaysCoffeesStore(storage: CoffeeStorage) : PersistentStore<DaysCoffee
         return DaysCoffeesState(
             changeCoffeeCount(
                 oldValue = state.value.value,
-                localDate, coffeeType, count
+                localDate = localDate,
+                coffeeType = coffeeType,
+                count = count
             )
         )
     }

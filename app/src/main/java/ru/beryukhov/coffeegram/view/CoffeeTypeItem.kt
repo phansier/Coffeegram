@@ -52,7 +52,8 @@ fun CoffeeTypeItem(
         )
         Spacer(Modifier.width(16.dp))
         Text(
-            stringResource(coffeeType.nameId), style = typography.bodyMedium,
+            stringResource(coffeeType.nameId),
+            style = typography.bodyMedium,
             modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .weight(1f)

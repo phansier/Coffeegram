@@ -21,7 +21,8 @@ class MessageHandlerImpl(private val context: Context) : MessageHandler {
             START_ACTIVITY_PATH -> startActivity(
                 context,
                 Intent(context, WearActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), null
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                null
             )
         }
     }

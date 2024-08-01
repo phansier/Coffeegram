@@ -79,7 +79,8 @@ private fun MainActivity.startWearableActivity() {
         // todo replace mock
         DayCoffee(
             mapOf(
-                CoffeeType.Cappuccino to 1, CoffeeType.Americano to 2
+                CoffeeType.Cappuccino to 1,
+                CoffeeType.Americano to 2
             )
         )
     )

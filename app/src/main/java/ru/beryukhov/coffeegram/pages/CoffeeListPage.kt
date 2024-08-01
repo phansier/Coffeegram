@@ -103,7 +103,8 @@ private fun CoffeeList(
                     onPlusClick = { onPlusClick(type) },
                     onMinusClick = { onMinusClick(type) }
                 )
-            })
+            }
+        )
     }
 }
 
