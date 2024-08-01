@@ -25,7 +25,6 @@ private val LightColorPalette = Colors(
     secondary = teal200
 )
 
-// Todo reuse with main app
 @Composable
 fun CoffeegramTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {

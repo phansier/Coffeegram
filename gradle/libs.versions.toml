@@ -67,7 +67,6 @@ compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.
 
 composeWear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
 composeWear-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }
-composeWear-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "wearCompose" }
 
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }

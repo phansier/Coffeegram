@@ -1,6 +1,5 @@
 package ru.beryukhov.coffeegram.pages
 
-import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -10,6 +9,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.withEmpty
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -54,17 +54,4 @@ class CoffeeListViewModelImpl(
     override fun newIntent(intent: NavigationIntent) {
         navigationStore.newIntent(intent)
     }
-}
-
-@VisibleForTesting
-internal fun Map<CoffeeType, Int>.withEmpty(): List<Pair<CoffeeType, Int>> {
-    @Suppress("DataClassShouldBeImmutable")
-    data class MutablePair(val ct: CoffeeType, var count: Int)
-
-    val emptyList: MutableList<MutablePair> =
-        CoffeeType.entries.map { MutablePair(it, 0) }.toMutableList()
-    this.forEach { entry: Map.Entry<CoffeeType, Int> ->
-        emptyList.filter { it.ct == entry.key }.forEach { it.count = entry.value }
-    }
-    return emptyList.map { it.ct to it.count }
 }
