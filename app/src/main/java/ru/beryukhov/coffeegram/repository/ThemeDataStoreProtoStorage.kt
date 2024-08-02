@@ -27,8 +27,8 @@ class ThemeDataStoreProtoStorage(private val context: Context) : Storage<ThemeSt
 
     private fun getSharedPreferencesMigration(context: Context) =
         SharedPreferencesMigration(
-            context = context, sharedPreferencesName = FILENAME,
-            /*, keysToMigrate = MIGRATE_ALL_KEYS*/
+            context = context,
+            sharedPreferencesName = FILENAME,
             migrate = { sharedPrefs: SharedPreferencesView, currentData: ThemePreferences ->
                 getMappingFromSharedPrefs(currentData, sharedPrefs)
             }

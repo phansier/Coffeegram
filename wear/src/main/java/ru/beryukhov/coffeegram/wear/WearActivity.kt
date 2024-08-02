@@ -3,10 +3,9 @@ package ru.beryukhov.coffeegram.wear
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -19,15 +18,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
+import androidx.wear.compose.foundation.lazy.itemsIndexed
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.LocalContentAlpha
-import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.Text
-import androidx.wear.compose.material.itemsIndexed
 import kotlinx.coroutines.flow.MutableStateFlow
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.withEmpty
 
 val coffeeState: MutableStateFlow<DayCoffee> by lazy { MutableStateFlow(value = DayCoffee()) }
 
@@ -47,7 +47,7 @@ class WearActivity : ComponentActivity() {
 internal fun PagesContent() {
     val dayCoffee by coffeeState.collectAsState()
     ScalingLazyColumn(
-        modifier = Modifier.fillMaxHeight(),
+        modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(
             top = 28.dp,
             start = 10.dp,
@@ -55,7 +55,8 @@ internal fun PagesContent() {
             bottom = 40.dp
         ),
     ) {
-        itemsIndexed(items = dayCoffee.coffeeCountMap.withEmpty(),
+        itemsIndexed(
+            items = dayCoffee.coffeeCountMap.withEmpty(),
             itemContent = { _, pair: Pair<CoffeeType, Int> ->
                 CoffeeItem(c = pair.first, count = pair.second)
             }
@@ -85,17 +86,4 @@ fun CoffeeItem(c: CoffeeType, count: Int, modifier: Modifier = Modifier) {
         },
         onClick = {},
     )
-}
-
-// todo share it
-@VisibleForTesting
-internal fun Map<CoffeeType, Int>.withEmpty(): List<Pair<CoffeeType, Int>> {
-    data class MutablePair(val ct: CoffeeType, var count: Int)
-
-    val emptyList: MutableList<MutablePair> =
-        CoffeeType.values().toList().map { MutablePair(it, 0) }.toMutableList()
-    this.forEach { entry: Map.Entry<CoffeeType, Int> ->
-        emptyList.filter { it.ct == entry.key }.forEach { it.count = entry.value }
-    }
-    return emptyList.map { it.ct to it.count }
 }

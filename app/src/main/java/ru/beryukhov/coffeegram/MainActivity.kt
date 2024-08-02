@@ -19,10 +19,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import org.koin.androidx.compose.get
 import ru.beryukhov.coffeegram.animations.TransitionSlot
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.DAY_COFFEE_PATH
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.START_ACTIVITY_PATH
 import ru.beryukhov.coffeegram.data.toDataMap
 import ru.beryukhov.coffeegram.pages.LandingPage
 
@@ -79,7 +80,8 @@ private fun MainActivity.startWearableActivity() {
         // todo replace mock
         DayCoffee(
             mapOf(
-                CoffeeType.Cappuccino to 1, CoffeeType.Americano to 2
+                CoffeeType.Cappuccino to 1,
+                CoffeeType.Americano to 2
             )
         )
     )
@@ -106,8 +108,5 @@ private fun MainActivity.sendDayCoffee(dayCoffee: DayCoffee) {
 private fun MainActivity.checkCoarseLocationPermission(): Boolean = checkSelfPermission(
     ACCESS_COARSE_LOCATION
 ) == PackageManager.PERMISSION_GRANTED
-
-private const val START_ACTIVITY_PATH = "/start-activity"
-private const val DAY_COFFEE_PATH = "/coffee"
 
 private const val TAG = "TestWatch_"

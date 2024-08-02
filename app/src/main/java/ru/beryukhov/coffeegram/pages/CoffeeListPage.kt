@@ -3,9 +3,9 @@ package ru.beryukhov.coffeegram.pages
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,6 +14,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.collections.immutable.PersistentList
@@ -45,7 +46,7 @@ fun CoffeeListAppBar(
         navigationIcon = {
             IconButton(onClick = { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }) {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = ""
                 )
             }
@@ -56,6 +57,7 @@ fun CoffeeListAppBar(
 @Composable
 fun CoffeeListPage(
     localDate: LocalDate,
+    modifier: Modifier = Modifier,
     coffeeListViewModel: CoffeeListViewModel = koinViewModel<CoffeeListViewModelImpl>()
 ) {
     BackHandler { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }
@@ -82,7 +84,8 @@ fun CoffeeListPage(
     CoffeeList(
         coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(localDate).toPersistentList(),
         onPlusClick = onPlusClick,
-        onMinusClick = onMinusClick
+        onMinusClick = onMinusClick,
+        modifier = modifier.testTag("CoffeeListScreen")
     )
 }
 
@@ -93,17 +96,22 @@ private fun CoffeeList(
     modifier: Modifier = Modifier,
     onMinusClick: (coffeeType: CoffeeType) -> Unit
 ) {
-    LazyColumn(modifier = modifier.fillMaxHeight()) {
-        items(
-            items = coffeeItems,
-            itemContent = { (type, count): Pair<CoffeeType, Int> ->
-                CoffeeTypeItem(
-                    coffeeType = type,
-                    count = count,
-                    onPlusClick = { onPlusClick(type) },
-                    onMinusClick = { onMinusClick(type) }
-                )
-            })
+    LazyColumn(
+        modifier = modifier
+            .fillMaxHeight()
+            .testTag("CoffeeList")
+            .lazyListLength(coffeeItems.size)
+    ) {
+        itemsIndexed(items = coffeeItems) { index, model ->
+            val (type, count) = model
+            CoffeeTypeItem(
+                coffeeType = type,
+                count = count,
+                onPlusClick = { onPlusClick(type) },
+                onMinusClick = { onMinusClick(type) },
+                modifier = Modifier.lazyListItemPosition(index)
+            )
+        }
     }
 }
 

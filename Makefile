@@ -5,25 +5,25 @@ path := ./
 params := --console=plain
 
 detekt:
-	$(path)gradlew detektAll
+	$(path)gradlew detektAll $(params)
 
 autodetekt:
 	$(path)gradlew detektAll --auto-correct --continue
 
 buildApp:
-	./gradlew :app:assembleDebug
+	./gradlew :app:assembleDebug $(params)
 
 buildWear:
-	./gradlew :wear:assemble
+	./gradlew :wear:assemble $(params)
 
 
 buildAndroid:
-	./gradlew :cmp-app:assemble
+	./gradlew :cmp-app:assemble $(params)
 
 testCommon:
-	./gradlew :cmp-common:testDebugUnitTest
+	./gradlew :cmp-common:testDebugUnitTest $(params)
 
-localCheck: detekt buildApp buildWear buildAndroid testCommon $(params)
+localCheck: detekt buildApp buildWear buildAndroid testCommon
 
 compose_metrics:
 	$(path)gradlew :app:assembleRelease \-Pmyapp.enableComposeCompilerReports=true

@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
@@ -51,8 +52,8 @@ fun DayCell(
     onClick: (() -> Unit)? = null
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally, modifier =
-        modifier.clickable(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier.clickable(
             enabled = onClick != null,
             onClick = onClick ?: {}
         )
@@ -103,7 +104,7 @@ fun WeekRow(
                     onClick = dayItem?.dayOfMonth?.let {
                         { onClick(it) }
                     },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f).testTag("Day")
                 )
             }
         }
@@ -127,6 +128,7 @@ fun MonthTableAdjusted(
     }
 }
 
+@Suppress("DataClassShouldBeImmutable")
 data class WeekDayVectorPair(
     val day: Int,
     val weekDay: DayOfWeek,
@@ -158,7 +160,8 @@ fun MonthTable(
                     it,
                     yearMonth.atDay(it).dayOfWeek
                 )
-            })
+            }
+        )
         .toMutableMap()
     filledDayItemsMap.forEach { days[it.key]?.iconId = it.value }
     val weekDaysStrings = getWeekDaysNames(LocalContext.current)
@@ -206,7 +209,7 @@ private fun SampleTable(modifier: Modifier = Modifier) =
     )
 
 fun getWeekDaysNames(context: Context): List<String> =
-    getWeekDaysNames(context.resources.configuration.locale)
+    getWeekDaysNames(context.resources.configuration.locales[0])
 
 fun getWeekDaysNames(locale: Locale): List<String> {
     val list = DateFormatSymbols(locale).shortWeekdays.toMutableList()

@@ -8,7 +8,9 @@ import com.google.android.gms.wearable.DataEventBuffer
 import com.google.android.gms.wearable.DataMapItem
 import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.WearableListenerService
+import ru.beryukhov.coffeegram.data.DAY_COFFEE_PATH
 import ru.beryukhov.coffeegram.data.KEY
+import ru.beryukhov.coffeegram.data.START_ACTIVITY_PATH
 import ru.beryukhov.coffeegram.data.toDayCoffee
 
 interface MessageHandler {
@@ -21,7 +23,8 @@ class MessageHandlerImpl(private val context: Context) : MessageHandler {
             START_ACTIVITY_PATH -> startActivity(
                 context,
                 Intent(context, WearActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK), null
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                null
             )
         }
     }
@@ -60,6 +63,3 @@ class DataLayerListenerService : WearableListenerService() {
         }
     }
 }
-
-private const val START_ACTIVITY_PATH = "/start-activity" // todo move to common
-private const val DAY_COFFEE_PATH = "/coffee"

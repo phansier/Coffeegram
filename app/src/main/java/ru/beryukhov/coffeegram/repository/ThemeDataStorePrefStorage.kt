@@ -25,8 +25,8 @@ class ThemeDataStorePrefStorage(private val context: Context) : Storage<ThemeSta
         produceMigrations = { context ->
             listOf(
                 SharedPreferencesMigration(
-                    context, FILENAME
-                    /*, keysToMigrate = MIGRATE_ALL_KEYS*/
+                    context,
+                    FILENAME
                 )
             )
         }

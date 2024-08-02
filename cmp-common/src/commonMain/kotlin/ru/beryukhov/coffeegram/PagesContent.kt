@@ -1,4 +1,3 @@
-@file:OptIn(ExperimentalResourceApi::class)
 package ru.beryukhov.coffeegram
 
 import androidx.compose.foundation.layout.Column
@@ -24,7 +23,6 @@ import coffeegram.cmp_common.generated.resources.settings
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBar
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBarItem
 import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -101,7 +99,8 @@ fun PagesContent(
                                 imageVector = Icons.Default.Create,
                                 contentDescription = "",
                             )
-                        })
+                        }
+                    )
                     AdaptiveNavigationBarItem(
                         selected = currentNavigationState is NavigationState.SettingsPage,
                         onClick = {
@@ -115,7 +114,8 @@ fun PagesContent(
                                 imageVector = Icons.Default.Settings,
                                 contentDescription = "",
                             )
-                        })
+                        }
+                    )
                 }
             }
         }

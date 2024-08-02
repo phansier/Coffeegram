@@ -113,7 +113,7 @@ fun dateFormatSymbolsShortWeekdays(): List<String> =
 
 fun YearMonth.toTotalMonths(): Int {
     val yearsInMonths = this.year * 12
-    val months = this.minusMonths(1).month.number
+    val months = this.month.number - 1
     return yearsInMonths + months
 }
 

@@ -13,7 +13,7 @@
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="3"
     android:targetCellHeight="3"
-    android:widgetCategory="home_screen|keyguard|searchbox" /><!--todo check this categories-->
+    android:widgetCategory="home_screen|keyguard|searchbox" />
 
 <!--
     >before Android 12

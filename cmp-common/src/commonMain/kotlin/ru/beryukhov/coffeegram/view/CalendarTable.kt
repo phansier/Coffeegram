@@ -1,7 +1,5 @@
 package ru.beryukhov.coffeegram.view
 
-// import androidx.compose.ui.tooling.preview.Preview
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,6 +24,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Month
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.data.Cappuccino
 import ru.beryukhov.coffeegram.data.CoffeeType
@@ -149,7 +148,8 @@ fun MonthTable(
                     it,
                     yearMonth.atDay(it).dayOfWeek
                 )
-            })
+            }
+        )
         .toMutableMap()
     filledDayItemsMap.forEach { days[it.key]?.coffeeType = it.value }
     val weekDaysStrings = getWeekDaysNames()
@@ -179,25 +179,11 @@ fun MonthTable(
     )
 }
 
-// @Preview(showBackground = true)
+@Preview
 @Composable
-fun TablePreview() {
+private fun TablePreview() {
     CoffeegramTheme {
-        /*Row {
-            DayCell(DayItem("Пн"))
-            DayCell(DayItem("1"))
-            DayCell(DayItem("2", Icons.Default.Call))
-        }*/
-        /*WeekRow(
-            listOf(
-                null,
-                DayItem("Пн"),
-                DayItem("1"),
-                DayItem("2", Icons.Default.Call)
-            )
-        )*/
         SampleTable()
-        // Text(getWeekDaysNames(ContextAmbient.current).toString())
     }
 }
 

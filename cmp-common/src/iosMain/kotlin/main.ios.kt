@@ -10,5 +10,5 @@ fun MainViewController() = ComposeUIViewController { DefaultPreview(koinApp.get(
 
 private fun initKoin() =
     startKoin {
-        modules(appModule())
+        modules(appModule)
     }

@@ -2,21 +2,22 @@ package repository
 
 import repository.model.DbDayCoffee
 import repository.model.toDb
-import ru.beryukhov.repository.DriverFactory
 import ru.beryukhov.repository.SqlDayCoffee
 import ru.beryukhov.repository.SqlDayCoffeeQueries
-import ru.beryukhov.repository.createDatabase
 
-class CoffeeRepository {
-    private val db: SqlDayCoffeeQueries by lazy {
-        val driverFactory = DriverFactory()
-        val db = createDatabase(driverFactory).sqlDayCoffeeQueries
+interface CoffeeRepository {
+    fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>)
+    fun getAll(): List<DbDayCoffee>
+}
+
+internal class SqldCoffeeRepository(private val db: SqlDayCoffeeQueries) : CoffeeRepository {
+
+    init {
         db.createSqlDayCoffeeTable()
-        return@lazy db
     }
 
     // blocking
-    fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>) {
+    override fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>) {
         val all = db.selectAll().executeAsList()
         if (all.isEmpty()) {
             create(dbDateCoffees)
@@ -53,7 +54,7 @@ class CoffeeRepository {
         }
     }
 
-    fun getAll(): List<DbDayCoffee> {
+    override fun getAll(): List<DbDayCoffee> {
         return db.selectAll().executeAsList().map { it.toDb() }
     }
 }

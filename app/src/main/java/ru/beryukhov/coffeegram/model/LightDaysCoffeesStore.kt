@@ -18,15 +18,17 @@ class LightDaysCoffeesStore : InMemoryStore<DaysCoffeesIntent, DaysCoffeesState>
 
     private fun increaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
         return putCoffeeCount(
-            localDate, coffeeType,
-            getCoffeeOrNull(localDate, coffeeType)?.plus(1) ?: 1
+            localDate = localDate,
+            coffeeType = coffeeType,
+            count = getCoffeeOrNull(localDate, coffeeType)?.plus(1) ?: 1
         )
     }
 
     private fun decreaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
         return putCoffeeCount(
-            localDate, coffeeType,
-            getCoffeeOrNull(localDate, coffeeType)?.minus(1) ?: 0
+            localDate = localDate,
+            coffeeType = coffeeType,
+            count = getCoffeeOrNull(localDate, coffeeType)?.minus(1) ?: 0
         )
     }
 

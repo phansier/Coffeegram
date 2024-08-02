@@ -83,7 +83,7 @@ private val DarkThemeColors = darkColorScheme(
 @Composable
 fun AppTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
     val colors = if (!useDarkTheme) {
         LightThemeColors
@@ -98,6 +98,7 @@ fun AppTheme(
     )
 }
 
+@Suppress("DataClassShouldBeImmutable")
 data class CustomColor(val name: String, val color: Color, val harmonized: Boolean, var roles: ColorRoles)
 data class ExtendedColors(val colors: List<CustomColor>)
 
@@ -146,7 +147,7 @@ val LocalExtendedColors = staticCompositionLocalOf {
 fun HarmonizedTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     isDynamic: Boolean = true,
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
     val colors = if (isDynamic) {
         val context = LocalContext.current

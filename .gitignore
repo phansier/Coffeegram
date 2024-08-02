@@ -20,3 +20,4 @@ cmp-iosApp/iosApp.xcodeproj/*
 *.jks
 *.jks.*
 app/src/main/play
+/gcm-diagnose.log

@@ -1,6 +1,5 @@
 package ru.beryukhov.coffeegram.pages
 
-// import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed

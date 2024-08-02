@@ -62,12 +62,11 @@ compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.r
 compose-activity = "androidx.activity:activity-compose:1.9.1" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 
-compose-uiTest = { module = "androidx.compose.ui:ui-test", version.ref = "compose" }
 compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+kakao-compose = { module = "io.github.kakaocup:compose", version = "0.4.3" }
 
 composeWear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
 composeWear-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }
-composeWear-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "wearCompose" }
 
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
@@ -113,7 +112,6 @@ composeGradle = { module = "org.jetbrains.compose:compose-gradle-plugin", versio
 sqldelightGradle = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 
 jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jetbrainsCompose" }
-jetbrains-compose-componentsResources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "jetbrainsCompose" }
 
 kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.0" # https://github.com/Kotlin/kotlinx-datetime
 
@@ -126,6 +124,6 @@ sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", versio
 cupertino-adaptive = { module = "io.github.alexzhirkevich:cupertino-adaptive", version.ref = "cupertino" }
 cupertino-iconsExtended = { module = "io.github.alexzhirkevich:cupertino-icons-extended", version.ref = "cupertino" }
 
-kotlin-test-common = { module = "org.jetbrains.kotlin:kotlin-test-common", version.ref = "kotlin" }
-kotlin-test-annotations-common = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+kotlin-test-annotations = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

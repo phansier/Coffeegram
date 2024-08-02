@@ -15,8 +15,7 @@ class Application : Application() {
         startKoin {
             androidContext(this@Application)
             androidLogger()
-            modules(appModule() + androidModule)
+            modules(appModule + androidModule)
         }
-        initDbContext(this)
     }
 }
