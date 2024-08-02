@@ -104,9 +104,6 @@ dependencies {
 
     testImplementation(libs.kotlin.test.junit)
 
-    androidTestImplementation(libs.compose.uiTest)
-    androidTestImplementation(libs.compose.uiTestJunit4)
-
     implementation(projects.dateTimeUtils)
 
     implementation(libs.coroutines.core)
@@ -128,6 +125,9 @@ dependencies {
     implementation(libs.coroutines.play)
 
     implementation(libs.lottie.compose)
+
+    androidTestImplementation(libs.compose.uiTestJunit4)
+    androidTestImplementation(libs.kakao.compose)
 }
 
 protobuf {

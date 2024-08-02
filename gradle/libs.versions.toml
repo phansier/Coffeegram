@@ -62,8 +62,8 @@ compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.r
 compose-activity = "androidx.activity:activity-compose:1.9.1" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 
-compose-uiTest = { module = "androidx.compose.ui:ui-test", version.ref = "compose" }
 compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
+kakao-compose = { module = "io.github.kakaocup:compose", version = "0.4.3" }
 
 composeWear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
 composeWear-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }

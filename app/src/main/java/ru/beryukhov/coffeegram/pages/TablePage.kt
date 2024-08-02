@@ -61,7 +61,7 @@ fun TableAppBar(
         title = {
             Row(horizontalArrangement = Arrangement.Center) {
                 Text(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).testTag("Month"),
                     text = AnnotatedString(
                         text = getFullMonthName(yearMonth.month),
                         paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
@@ -77,7 +77,7 @@ fun TableAppBar(
                     }
                 },
                 modifier = Modifier.semantics {
-                    contentDescription = "ArrowLeft"
+                    contentDescription = "LeftArrow"
                 }
             ) { Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "") }
         },
@@ -88,7 +88,7 @@ fun TableAppBar(
                         pagerState.animateScrollToPage(pagerState.currentPage + 1)
                     }
                 },
-                modifier = Modifier.testTag("ArrowRight")
+                modifier = Modifier.testTag("RightArrow")
             ) { Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "") }
         }
     )
@@ -108,7 +108,7 @@ fun ColumnScope.TablePage(
         tablePageViewModel.newIntent(NavigationIntent.SetYearMonth(pagerState.currentPage.toYearMonth()))
     }
 
-    Column(horizontalAlignment = Alignment.End, modifier = modifier.weight(1f)) {
+    Column(horizontalAlignment = Alignment.End, modifier = modifier.weight(1f).testTag("TableScreen")) {
         HorizontalPager(state = pagerState) {
             MonthTable(
                 yearMonth = yearMonth,
@@ -132,6 +132,7 @@ fun ColumnScope.TablePage(
                 modifier = Modifier
                     .padding(16.dp)
                     .align(Alignment.Bottom)
+                    .testTag("Year")
             )
         }
     }

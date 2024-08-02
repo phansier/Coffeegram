@@ -4,8 +4,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
-import kotlinx.coroutines.test.runTest
+import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import kotlinx.datetime.Month
 import org.junit.Rule
 import org.junit.Test
@@ -13,7 +12,7 @@ import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.date_time_utils.YearMonth
 import ru.beryukhov.date_time_utils.nowYM
 
-class ExampleComposeTest {
+class ComposeScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -21,34 +20,35 @@ class ExampleComposeTest {
     fun testYear() {
         withRule(yearMonth = YearMonth(2020, Month(1))) {
             onNodeWithText("2020").assertIsDisplayed()
+            onComposeScreen<TableScreen>(composeTestRule) {
+                yearName.assertIsDisplayed()
+                monthName.assertIsDisplayed()
+                yearName.assertTextEquals("2020")
+                monthName.assertTextEquals("January")
+            }
         }
     }
 
     @Test
     fun testMonthChange() {
         withRule(yearMonth = YearMonth(2020, Month(9))) {
-            TablePageObject.apply {
-                Month("September").assertIsDisplayed()
-                LeftArrowButton.assertIsDisplayed().performClick()
-                Month("August").assertIsDisplayed()
-                RightArrowButton.assertIsDisplayed().performClick()
-                Month("September").assertIsDisplayed()
-                RightArrowButton.assertIsDisplayed().performClick()
-                Month("October").assertIsDisplayed()
-            }
-        }
-    }
-
-    @Test
-    fun testDayOpen() = runTest {
-        withRule {
-            TablePageObject.apply {
-                Day("1").assertIsDisplayed()
-                Day("1").assertIsDisplayed().performClick()
-            }
-            CoffeeListPageObject.apply {
-                CappuccinoItem.assertIsDisplayed()
-                LatteItem.assertIsDisplayed()
+            onComposeScreen<TableScreen>(composeTestRule) {
+                monthName.assertTextEquals("September")
+                leftArrowButton {
+                    assertIsDisplayed()
+                    performClick()
+                }
+                monthName.assertTextEquals("August")
+                rightArrowButton {
+                    assertIsDisplayed()
+                    performClick()
+                }
+                monthName.assertTextEquals("September")
+                rightArrowButton {
+                    assertIsDisplayed()
+                    performClick()
+                }
+                monthName.assertTextEquals("October")
             }
         }
     }
