@@ -92,7 +92,8 @@ androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", vers
 core-coreKtx = { module = "androidx.core:core-ktx", version.ref = "core" } # androidx-coreKtx
 
 glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
-#glance-wear-tiles = { module = "androidx.glance:glance-wear-tiles", version.ref = "glance" }
+glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
+glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
 google-maps-compose = "com.google.maps.android:maps-compose:6.1.1"
 
