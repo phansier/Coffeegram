@@ -12,6 +12,7 @@ plugins {
     id("com.google.protobuf")
     id("com.github.triplet.play") version "3.10.1"
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.android.compose.screenshot")
 }
 
 android {
@@ -76,6 +77,8 @@ android {
         resources.excludes.add("META-INF/LGPL2.1")
     }
     namespace = "ru.beryukhov.coffeegram"
+
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 dependencies {
@@ -88,7 +91,10 @@ dependencies {
 
     implementation(libs.compose.ui)
     implementation(libs.compose.material3)
+
     debugImplementation(libs.compose.uiTooling)
+    screenshotTestImplementation(libs.compose.uiTooling)
+
     implementation(libs.compose.preview)
 
     implementation(libs.compose.constraint)

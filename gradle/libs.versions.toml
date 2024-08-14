@@ -10,6 +10,7 @@ ktor = "2.3.12" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha06" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-alpha06" # https://developer.android.com/jetpack/androidx/releases/sqlite
 ksp = "2.0.20-RC-1.0.24"
+screenshot = "0.0.1-alpha03"
 
 detekt = "1.23.6" # https://github.com/detekt/detekt
 detektCompose = "0.4.10" # https://github.com/mrmans0n/compose-rules
@@ -43,7 +44,7 @@ composeKotlinGradle = { module = "org.jetbrains.kotlin:compose-compiler-gradle-p
 protobufGradle = { module = "com.google.protobuf:protobuf-gradle-plugin", version = "0.9.4" }
 secretsGradle = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
 ksp = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-
+screenshot = { module = "com.android.compose.screenshot:screenshot-test-gradle-plugin", version.ref = "screenshot"}
 
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detektCompose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
