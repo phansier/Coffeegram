@@ -20,6 +20,7 @@ buildscript {
         classpath(libs.composeKotlinGradle)
         classpath(libs.protobufGradle)
         classpath(libs.secretsGradle)
+        classpath(libs.screenshot)
     }
 }
 

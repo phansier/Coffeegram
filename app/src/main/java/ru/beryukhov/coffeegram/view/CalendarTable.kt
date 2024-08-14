@@ -193,14 +193,14 @@ fun MonthTable(
 
 @Preview(showBackground = true)
 @Composable
-internal fun TablePreview() {
+private fun TablePreview() {
     CoffeegramTheme {
         SampleTable()
     }
 }
 
 @Composable
-private fun SampleTable(modifier: Modifier = Modifier) =
+internal fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         yearMonth = YearMonth(2020, Month(7)),
         filledDayItemsMap = mapOf(2 to common_R.drawable.coffee).toPersistentMap(),
