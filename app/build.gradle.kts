@@ -100,6 +100,8 @@ dependencies {
     implementation(libs.compose.constraint)
     implementation(libs.compose.activity)
     implementation(libs.glance.appwidget)
+    debugImplementation(libs.glance.preview)
+    debugImplementation(libs.glance.appwidget.preview)
 
     implementation(libs.google.maps.compose)
 
