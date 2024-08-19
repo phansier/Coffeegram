@@ -45,6 +45,13 @@ sealed interface NavigationIntent {
 }
 
 sealed interface NavigationState {
+    fun mapTestTag(): String = when (this) {
+        is CoffeeListPage -> "CoffeeListScreen"
+        MapPage -> "MapScreen"
+        SettingsPage -> "SettingsScreen"
+        is TablePage -> "TableScreen"
+    }
+
     class TablePage(val yearMonth: YearMonth) : NavigationState
     data class CoffeeListPage(val date: LocalDate) : NavigationState
     object SettingsPage : NavigationState
