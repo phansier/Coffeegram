@@ -25,6 +25,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -97,7 +98,7 @@ fun PagesContent(
         }, snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
         }) {
-            Column(modifier = Modifier.padding(it)) {
+            Column(modifier = Modifier.padding(it).testTag(currentNavigationState.mapTestTag())) {
                 Spacer(
                     Modifier
                         .padding(top = topPadding)

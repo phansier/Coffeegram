@@ -85,7 +85,7 @@ fun CoffeeListPage(
         coffeeItems = coffeeListViewModel.getDayCoffeesWithEmpty(localDate).toPersistentList(),
         onPlusClick = onPlusClick,
         onMinusClick = onMinusClick,
-        modifier = modifier.testTag("CoffeeListScreen")
+        modifier = modifier
     )
 }
 
@@ -99,8 +99,8 @@ private fun CoffeeList(
     LazyColumn(
         modifier = modifier
             .fillMaxHeight()
-            .testTag("CoffeeList")
             .lazyListLength(coffeeItems.size)
+            .testTag("CoffeeList")
     ) {
         itemsIndexed(items = coffeeItems) { index, model ->
             val (type, count) = model
