@@ -33,7 +33,7 @@ sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 material = "1.12.0" # https://github.com/material-components/material-components-android
 activity = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
 
-protobuf = "4.27.3"
+protobuf = "4.27.4"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
