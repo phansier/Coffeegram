@@ -10,13 +10,13 @@ ktor = "2.3.12" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha07" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-alpha07" # https://developer.android.com/jetpack/androidx/releases/sqlite
 ksp = "2.0.20-1.0.24"
-screenshot = "0.0.1-alpha05"
+screenshot = "0.0.1-alpha06"
 
 detekt = "1.23.6" # https://github.com/detekt/detekt
-detektCompose = "0.4.10" # https://github.com/mrmans0n/compose-rules
+detektCompose = "0.4.11" # https://github.com/mrmans0n/compose-rules
 
-compose = "1.6.8" # https://developer.android.com/jetpack/androidx/releases/compose-ui
-wearCompose = "1.3.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
+compose = "1.7.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
+wearCompose = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
 jetbrainsCompose = "1.6.11" # https://github.com/JetBrains/compose-multiplatform
 cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertino
@@ -24,7 +24,7 @@ cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertin
 coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/datastore
 koin = "3.5.6" # https://github.com/InsertKoinIO/koin#setup--current-version
-lifecycle = "2.8.4" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+lifecycle = "2.8.5" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 core = "1.13.1" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.1.0" # https://developer.android.com/jetpack/androidx/releases/glance
 
@@ -56,11 +56,11 @@ sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 
 
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-material3 = "androidx.compose.material3:material3:1.2.1" # https://developer.android.com/jetpack/androidx/releases/compose-material3
+compose-material3 = "androidx.compose.material3:material3:1.3.0" # https://developer.android.com/jetpack/androidx/releases/compose-material3
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
-compose-activity = "androidx.activity:activity-compose:1.9.1" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
+compose-activity = "androidx.activity:activity-compose:1.9.2" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 
 compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
@@ -95,7 +95,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
-google-maps-compose = "com.google.maps.android:maps-compose:6.1.1"
+google-maps-compose = "com.google.maps.android:maps-compose:6.1.2"
 
 
 androidx-annotation = "androidx.annotation:annotation:1.8.2"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
@@ -106,7 +106,7 @@ playServices-wearable = "com.google.android.gms:play-services-wearable:18.2.0" #
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7" # https://github.com/Kotlin/kotlinx.collections.immutable
 
 
-lottie-compose = "com.airbnb.android:lottie-compose:6.5.1" # https://github.com/airbnb/lottie-android
+lottie-compose = "com.airbnb.android:lottie-compose:6.5.2" # https://github.com/airbnb/lottie-android
 
 ###
 
