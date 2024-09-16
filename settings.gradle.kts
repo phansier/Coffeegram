@@ -11,5 +11,6 @@ include(":app-wear-common")
 include("cmp-app")
 include("cmp-common")
 include("cmp-repository")
+include("cmp-sqldelight")
 
 include("date-time-utils")

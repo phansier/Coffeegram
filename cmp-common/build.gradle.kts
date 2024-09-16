@@ -1,5 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
@@ -38,8 +38,24 @@ kotlin {
         binaries.executable()
     }
 
+    // Apply the default hierarchy again. It'll create, for example, the iosMain source set:
+    applyDefaultHierarchyTemplate()
+
+    sourceSets {
+        val notWasm by creating {
+            dependsOn(commonMain.get())
+        }
+
+        iosMain.get().dependsOn(notWasm)
+        jvmMain.get().dependsOn(notWasm)
+        androidMain.get().dependsOn(notWasm)
+    }
+
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.cmpRepository)
+            implementation(projects.dateTimeUtils)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.components.uiToolingPreview)
@@ -47,16 +63,18 @@ kotlin {
 
             implementation(libs.kotlinx.immutableCollections)
 
-            implementation(projects.cmpRepository)
-            implementation(projects.dateTimeUtils)
-
             implementation(libs.cupertino.adaptive)
             implementation(libs.cupertino.iconsExtended)
 
-            api(libs.datastore.preferencesCore)
-            api(libs.datastore.coreOkio)
-
             api(libs.koin.core)
+        }
+        val notWasm by getting {
+            dependencies {
+                implementation(projects.cmpSqldelight)
+
+                implementation(libs.datastore.preferencesCore)
+                implementation(libs.datastore.coreOkio)
+            }
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -123,8 +141,4 @@ compose.desktop {
             }
         }
     }
-}
-
-compose.experimental {
-    web.application {}
 }
