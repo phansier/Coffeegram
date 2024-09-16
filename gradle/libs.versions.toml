@@ -9,19 +9,19 @@ agp = "8.6.0" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "2.3.12" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha07" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-alpha07" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.0.20-1.0.24"
-screenshot = "0.0.1-alpha06"
+ksp = "2.0.20-1.0.25"
+screenshot = "0.0.1-alpha07"
 
-detekt = "1.23.6" # https://github.com/detekt/detekt
-detektCompose = "0.4.11" # https://github.com/mrmans0n/compose-rules
+detekt = "1.23.7" # https://github.com/detekt/detekt
+detektCompose = "0.4.12" # https://github.com/mrmans0n/compose-rules
 
-compose = "1.7.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
+compose = "1.7.1" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 wearCompose = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
 jetbrainsCompose = "1.6.11" # https://github.com/JetBrains/compose-multiplatform
 cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertino
 
-coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
+coroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/datastore
 koin = "3.5.6" # https://github.com/InsertKoinIO/koin#setup--current-version
 lifecycle = "2.8.5" # https://developer.android.com/jetpack/androidx/releases/lifecycle
@@ -33,7 +33,7 @@ sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 material = "1.12.0" # https://github.com/material-components/material-components-android
 activity = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
 
-protobuf = "4.28.0"
+protobuf = "4.28.1"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -103,7 +103,7 @@ androidx-wear = "androidx.wear:wear:1.3.0"                          # https://de
 material = { module = "com.google.android.material:material", version.ref = "material" }
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
 playServices-wearable = "com.google.android.gms:play-services-wearable:18.2.0" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
-kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7" # https://github.com/Kotlin/kotlinx.collections.immutable
+kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8" # https://github.com/Kotlin/kotlinx.collections.immutable
 
 
 lottie-compose = "com.airbnb.android:lottie-compose:6.5.2" # https://github.com/airbnb/lottie-android
