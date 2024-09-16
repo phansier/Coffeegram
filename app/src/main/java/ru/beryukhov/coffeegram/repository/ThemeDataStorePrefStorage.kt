@@ -16,6 +16,7 @@ import ru.beryukhov.coffeegram.store_lib.Storage
 private object PreferencesKeys {
     val THEME_STATE_KEY = stringPreferencesKey(THEME_STATE)
     val THEME_DYNAMIC_KEY = booleanPreferencesKey(THEME_DYNAMIC)
+    val THEME_SUMMER_KEY = booleanPreferencesKey(THEME_SUMMER)
 }
 
 class ThemeDataStorePrefStorage(private val context: Context) : Storage<ThemeState> {
@@ -25,20 +26,26 @@ class ThemeDataStorePrefStorage(private val context: Context) : Storage<ThemeSta
         produceMigrations = { context ->
             listOf(
                 SharedPreferencesMigration(
-                    context,
-                    FILENAME
+                    context = context,
+                    sharedPreferencesName = FILENAME
                 )
             )
         }
     )
 
+    @Suppress("ReturnCount")
     override suspend fun getState(): ThemeState? {
         // do not confuse with `lastOrNull()`, it will be waiting for completion inside otherwise
         val prefs = context.dataStore.data.firstOrNull()
         val darkThemeState = prefs?.get(PreferencesKeys.THEME_STATE_KEY)
-            ?.let { DarkThemeState.valueOf(it) }
-        val isDynamic = prefs?.get(PreferencesKeys.THEME_DYNAMIC_KEY)
-        return if (darkThemeState != null && isDynamic != null) ThemeState(darkThemeState, isDynamic) else null
+            ?.let { DarkThemeState.valueOf(it) } ?: return null
+        val isDynamic = prefs.get(PreferencesKeys.THEME_DYNAMIC_KEY) ?: return null
+        val isSummer = prefs.get(PreferencesKeys.THEME_SUMMER_KEY) ?: return null
+        return ThemeState(
+            useDarkTheme = darkThemeState,
+            isDynamic = isDynamic,
+            isSummer = isSummer
+        )
     }
 
     override suspend fun saveState(state: ThemeState) {

@@ -22,6 +22,18 @@
             </intent-filter>
         </activity>
 
+        <activity-alias
+            android:name=".SummerActivity"
+            android:icon="@mipmap/new_launcher"
+            android:theme="@style/Theme.Coffeegram.NoActionBar"
+            android:exported="true"
+            android:targetActivity=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
         <!--For composeTestRule-->
         <activity android:name="androidx.activity.ComponentActivity" />
 
