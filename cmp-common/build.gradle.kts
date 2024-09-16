@@ -5,6 +5,7 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("native.cocoapods")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
 
@@ -92,6 +93,18 @@ kotlin {
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
+        }
+    }
+
+    cocoapods {
+        version = "1.0.0"
+        summary = "Some description for the Shared Module"
+        homepage = "https://github.com/phansier/Coffeegram"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../cmp-iosApp/Podfile")
+        framework {
+            baseName = "cmp_common"
+            isStatic = true
         }
     }
 }
