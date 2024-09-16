@@ -1,8 +1,11 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("native.cocoapods")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
 
@@ -17,8 +20,43 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs {
+        moduleName = "composeApp"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
+                    static = (static ?: mutableListOf()).apply {
+                        // Serve sources to debug inside browser
+                        add(project.projectDir.path)
+                        add(project.projectDir.path + "/commonMain/")
+                        add(project.projectDir.path + "/wasmJsMain/")
+                    }
+                }
+            }
+        }
+        binaries.executable()
+    }
+
+    // Apply the default hierarchy again. It'll create, for example, the iosMain source set:
+    applyDefaultHierarchyTemplate()
+
+    sourceSets {
+        val notWasm by creating {
+            dependsOn(commonMain.get())
+        }
+
+        iosMain.get().dependsOn(notWasm)
+        jvmMain.get().dependsOn(notWasm)
+        androidMain.get().dependsOn(notWasm)
+    }
+
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.cmpRepository)
+            implementation(projects.dateTimeUtils)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.components.uiToolingPreview)
@@ -26,16 +64,18 @@ kotlin {
 
             implementation(libs.kotlinx.immutableCollections)
 
-            implementation(projects.cmpRepository)
-            implementation(projects.dateTimeUtils)
-
             implementation(libs.cupertino.adaptive)
             implementation(libs.cupertino.iconsExtended)
 
-            api(libs.datastore.preferencesCore)
-            api(libs.datastore.coreOkio)
-
             api(libs.koin.core)
+        }
+        val notWasm by getting {
+            dependencies {
+                implementation(projects.cmpSqldelight)
+
+                implementation(libs.datastore.preferencesCore)
+                implementation(libs.datastore.coreOkio)
+            }
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -53,6 +93,18 @@ kotlin {
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
+        }
+    }
+
+    cocoapods {
+        version = "1.0.0"
+        summary = "Some description for the Shared Module"
+        homepage = "https://github.com/phansier/Coffeegram"
+        ios.deploymentTarget = "14.1"
+        podfile = project.file("../cmp-iosApp/Podfile")
+        framework {
+            baseName = "cmp_common"
+            isStatic = true
         }
     }
 }

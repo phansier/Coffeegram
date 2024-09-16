@@ -9,13 +9,13 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.singleWindowApplication
-import org.koin.core.context.startKoin
+import org.koin.core.context.GlobalContext.startKoin
 import ru.beryukhov.coffeegram.DefaultPreview
 import ru.beryukhov.coffeegram.appModule
 
 private val koinApp = initKoin().koin
 
-private fun initKoin() =
+ private fun initKoin() =
     startKoin {
         modules(appModule)
     }

@@ -42,7 +42,7 @@
 
 ---
 ## Multiplatform Compose
-Android + Desktop + iOS (!!!) multiplatform app using [Compose Multiplatform](https://github.com/JetBrains/compose-jb) together with StateFlow and MVI
+Android + Desktop + iOS + Wasm (!!!) multiplatform app using [Compose Multiplatform](https://github.com/JetBrains/compose-jb) together with StateFlow and MVI
 
 <img src="images/ios.png" alt="drawing" width="300"/>
 <img src="images/ios_dark.png" alt="drawing" width="300"/>
@@ -50,6 +50,7 @@ Android + Desktop + iOS (!!!) multiplatform app using [Compose Multiplatform](ht
 Native iOS look & feel by [Compose Cupertino](https://github.com/alexzhirkevich/compose-cupertino/tree/master)
 
 ![](images/desktop.png)
+![](images/wasm.png)
 
 
 ## Run on Desktop jvm
