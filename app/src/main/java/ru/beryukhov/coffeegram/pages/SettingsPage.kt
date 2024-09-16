@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 import ru.beryukhov.coffeegram.BuildConfig
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.changeIcon
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeIntent
 import ru.beryukhov.coffeegram.model.ThemeState
@@ -109,6 +110,27 @@ fun ColumnScope.SettingsPage(
                 stringResource(R.string.app_theme_dynamic)
             )
         }
+
+        val scope = rememberCoroutineScope()
+        val context = LocalContext.current
+        ThemeCheckBoxWithText(
+            checked = themeState.isSummer,
+            onCheckedChange = {
+                if (it) {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = "Summer starting",
+                            actionLabel = "OK",
+                        )
+                    }
+                }
+                changeIcon(context, it)
+                themeStore.newIntent(
+                    if (it) ThemeIntent.SetSummerIntent else ThemeIntent.UnSetSummerIntent
+                )
+            },
+            stringResource(R.string.app_theme_summer)
+        )
         HorizontalDivider()
         if (BuildConfig.DEBUG) {
             Button(onClick = { startWearableActivity() }, modifier = Modifier.padding(16.dp)) {
