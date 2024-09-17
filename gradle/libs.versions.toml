@@ -23,7 +23,7 @@ cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertin
 
 coroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/datastore
-koin = "3.6.0-Beta2" # https://github.com/InsertKoinIO/koin#setup--current-version
+koin = "4.0.0-RC2" # https://github.com/InsertKoinIO/koin#setup--current-version
 lifecycle = "2.8.5" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 core = "1.13.1" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.1.0" # https://developer.android.com/jetpack/androidx/releases/glance
