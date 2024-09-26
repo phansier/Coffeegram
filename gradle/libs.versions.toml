@@ -7,15 +7,15 @@ wearMinSdk = "25"
 kotlin = "2.0.20" # https://kotlinlang.org/docs/releases.html#release-details
 agp = "8.6.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "2.3.12" # https://github.com/ktorio/ktor
-androidxRoom = "2.7.0-alpha07" # https://developer.android.com/jetpack/androidx/releases/room
-sqlite = "2.5.0-alpha07" # https://developer.android.com/jetpack/androidx/releases/sqlite
+androidxRoom = "2.7.0-alpha08" # https://developer.android.com/jetpack/androidx/releases/room
+sqlite = "2.5.0-alpha08" # https://developer.android.com/jetpack/androidx/releases/sqlite
 ksp = "2.0.20-1.0.25"
 screenshot = "0.0.1-alpha07"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt
 detektCompose = "0.4.12" # https://github.com/mrmans0n/compose-rules
 
-compose = "1.7.1" # https://developer.android.com/jetpack/androidx/releases/compose-ui
+compose = "1.7.2" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 wearCompose = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
 jetbrainsCompose = "1.6.11" # https://github.com/JetBrains/compose-multiplatform
@@ -24,7 +24,7 @@ cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertin
 coroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/datastore
 koin = "4.0.0" # https://github.com/InsertKoinIO/koin#setup--current-version
-lifecycle = "2.8.5" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+lifecycle = "2.8.6" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 core = "1.13.1" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.1.0" # https://developer.android.com/jetpack/androidx/releases/glance
 
@@ -33,7 +33,7 @@ sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 material = "1.12.0" # https://github.com/material-components/material-components-android
 activity = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
 
-protobuf = "4.28.1"
+protobuf = "4.28.2"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -64,7 +64,7 @@ compose-activity = "androidx.activity:activity-compose:1.9.2" # https://develope
 compose-constraint = "androidx.constraintlayout:constraintlayout-compose:1.0.1" # https://developer.android.com/jetpack/androidx/releases/constraintlayout
 
 compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
-kakao-compose = { module = "io.github.kakaocup:compose", version = "0.4.4" }
+kakao-compose = { module = "io.github.kakaocup:compose", version = "0.4.5" }
 
 composeWear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
 composeWear-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }
