@@ -1,0 +1,38 @@
+name: iOS Multiplatform CI
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+          distribution: 'adopt'
+          java-version: '17'
+          cache: 'gradle'
+
+    # Workaround for https://youtrack.jetbrains.com/issue/KT-62773/iOS-application-build-failing-if-generateDummyFramework-task-was-not-executed-before-pod-install
+    - shell: bash
+      run: make generateFramework
+    
+    - name: Set up cocoapods
+      uses: maxim-lobanov/setup-cocoapods@v1
+      with:
+        version: latest
+    
+    - shell: bash
+      name: Install Dependencies
+      run: |
+        cd cmp-iosApp
+        pod install --verbose
+    - name: Build iOS
+      run: xcodebuild build -workspace cmp-iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 15' -verbose

@@ -22,11 +22,11 @@ jobs:
         distribution: 'adopt'
         java-version: '17'
 
-    -   name: Gradle Setup
-        uses: gradle/actions/setup-gradle@v4
-        with:
-            gradle-home-cache-cleanup: true
-            cache-encryption-key: ${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
+    - name: Gradle Setup
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-home-cache-cleanup: true
+        cache-encryption-key: ${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
 
     - name: Build App Gradle
       run: make buildApp
