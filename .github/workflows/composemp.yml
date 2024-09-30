@@ -24,3 +24,5 @@ jobs:
       run: make testCommon
     - name: Build Android
       run: make buildAndroid
+    - name: Build Desktop
+      run: make buildDesktop

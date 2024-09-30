@@ -20,6 +20,9 @@ buildWear:
 buildAndroid:
 	./gradlew :cmp-app:assemble $(params)
 
+buildDesktop:
+	./gradlew :cmp-app:assemble $(params)
+
 testCommon:
 	./gradlew :cmp-common:testDebugUnitTest $(params)
 
@@ -38,7 +41,7 @@ compose_report:
       -classMetrics app/build/compose_metrics/app_release-classes.txt \
       -o app/build/compose_report/
 
-# Удаляет локальные ветки которые отсутствуют на remote
+# Removes local branches absent in remote
 # from: https://stackoverflow.com/a/17029936/981330
 unsafe_clear_branches:
 	git fetch --prune && \
@@ -47,11 +50,11 @@ unsafe_clear_branches:
 
 ## Run on Desktop jvm
 runDesktop:
-	./gradlew run
+	./gradlew run $(params)
 
 
 runWasm:
-	./gradlew :cmp-common:wasmJsRun --no-configuration-cache
+	./gradlew :cmp-common:wasmJsRun --no-configuration-cache $(params)
 
 buildWasm:
-	./gradlew :cmp-common:wasmJsBrowserDistribution --no-configuration-cache
+	./gradlew :cmp-common:wasmJsBrowserDistribution --no-configuration-cache $(params)
