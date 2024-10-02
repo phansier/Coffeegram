@@ -5,7 +5,7 @@ minSdk = "24"
 wearMinSdk = "25"
 
 kotlin = "2.0.20" # https://kotlinlang.org/docs/releases.html#release-details
-agp = "8.6.1" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.7.0" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "2.3.12" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha08" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-alpha08" # https://developer.android.com/jetpack/androidx/releases/sqlite
