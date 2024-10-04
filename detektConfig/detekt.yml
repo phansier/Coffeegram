@@ -763,7 +763,7 @@ Compose:
     ComposableParamOrder:
         active: true
     PreviewNaming:
-        active: true
+        active: false
     PreviewPublic:
         active: true
     RememberMissing:
