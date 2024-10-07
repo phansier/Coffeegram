@@ -1,6 +1,5 @@
 package ru.beryukhov.coffeegram.pages
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -39,6 +38,9 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import org.koin.androidx.compose.koinViewModel
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.model.NavigationIntent
@@ -46,7 +48,6 @@ import ru.beryukhov.coffeegram.view.MonthTable
 import ru.beryukhov.date_time_utils.getFullMonthName
 import ru.beryukhov.date_time_utils.toYearMonth
 
-@OptIn(ExperimentalFoundationApi::class)
 @ExperimentalMaterial3Api
 @Composable
 fun TableAppBar(
@@ -94,7 +95,6 @@ fun TableAppBar(
     )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ColumnScope.TablePage(
     pagerState: PagerState,
@@ -112,6 +112,7 @@ fun ColumnScope.TablePage(
         HorizontalPager(state = pagerState) {
             MonthTable(
                 yearMonth = yearMonth,
+                today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
                 filledDayItemsMap = tablePageViewModel.getFilledDayItemsMap(yearMonth).toPersistentMap(),
                 onClick = { dayOfMonth: Int ->
                     tablePageViewModel.newIntent(
@@ -138,7 +139,6 @@ fun ColumnScope.TablePage(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Preview
 @Composable
 private fun Preview() {

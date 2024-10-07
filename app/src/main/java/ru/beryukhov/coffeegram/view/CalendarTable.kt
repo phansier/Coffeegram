@@ -3,6 +3,7 @@ package ru.beryukhov.coffeegram.view
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,6 +32,7 @@ import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.datetime.DayOfWeek
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.times
@@ -41,6 +44,7 @@ import ru.beryukhov.coffeegram.common.R as common_R
 
 data class DayItem(
     val day: String,
+    val isToday: Boolean = false,
     @DrawableRes val iconId: Int? = null,
     val dayOfMonth: Int? = null
 )
@@ -56,7 +60,7 @@ fun DayCell(
         modifier = modifier.clickable(
             enabled = onClick != null,
             onClick = onClick ?: {}
-        )
+        ).background(if (dayItem.isToday) MaterialTheme.colorScheme.primaryContainer else Color.Transparent)
     ) {
         with(dayItem) {
             if (iconId != null) {
@@ -132,15 +136,17 @@ fun MonthTableAdjusted(
 data class WeekDayVectorPair(
     val day: Int,
     val weekDay: DayOfWeek,
+    val isToday: Boolean,
     @DrawableRes var iconId: Int? = null
 ) {
     fun toDayItem(): DayItem =
-        DayItem("$day", iconId, day)
+        DayItem("$day", isToday, iconId, day)
 }
 
 @Composable
 fun MonthTable(
     yearMonth: YearMonth,
+    today: LocalDate,
     filledDayItemsMap: PersistentMap<Int, Int?>,
     onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
@@ -157,8 +163,9 @@ fun MonthTable(
             { it },
             {
                 WeekDayVectorPair(
-                    it,
-                    yearMonth.atDay(it).dayOfWeek
+                    day = it,
+                    weekDay = yearMonth.atDay(it).dayOfWeek,
+                    isToday = yearMonth.atDay(it) == today
                 )
             }
         )
@@ -203,6 +210,7 @@ private fun TablePreview() {
 internal fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         yearMonth = YearMonth(2020, Month(7)),
+        today = LocalDate(2020, 7, 14),
         filledDayItemsMap = mapOf(2 to common_R.drawable.coffee).toPersistentMap(),
         onClick = {},
         modifier = modifier,

@@ -2,7 +2,6 @@
 
 package ru.beryukhov.coffeegram
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -54,7 +53,6 @@ internal fun DefaultPreview() {
     PagesContent()
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PagesContent(
     modifier: Modifier = Modifier,
