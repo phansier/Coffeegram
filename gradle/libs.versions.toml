@@ -18,7 +18,7 @@ detektCompose = "0.4.15" # https://github.com/mrmans0n/compose-rules
 compose = "1.7.3" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 wearCompose = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
-jetbrainsCompose = "1.7.0+build1877-release-1.7" # https://github.com/JetBrains/compose-multiplatform
+jetbrainsCompose = "1.7.0-rc01" # https://github.com/JetBrains/compose-multiplatform
 cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertino
 
 coroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines
