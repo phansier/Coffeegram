@@ -4,7 +4,7 @@ compileSdk = "34"
 minSdk = "24"
 wearMinSdk = "25"
 
-kotlin = "2.0.20" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin = "2.0.21" # https://kotlinlang.org/docs/releases.html#release-details
 agp = "8.7.0" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.0.0" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha09" # https://developer.android.com/jetpack/androidx/releases/room
