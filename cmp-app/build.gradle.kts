@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("android")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")

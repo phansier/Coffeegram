@@ -1,6 +1,7 @@
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("com.autonomousapps.dependency-analysis")
     id("app.cash.sqldelight")
 }
 

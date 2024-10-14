@@ -7,6 +7,7 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.protobuf")
@@ -100,8 +101,8 @@ dependencies {
     implementation(libs.compose.constraint)
     implementation(libs.compose.activity)
     implementation(libs.glance.appwidget)
-    debugImplementation(libs.glance.preview)
-    debugImplementation(libs.glance.appwidget.preview)
+    implementation(libs.glance.preview)
+    implementation(libs.glance.appwidget.preview)
 
     implementation(libs.google.maps.compose)
 

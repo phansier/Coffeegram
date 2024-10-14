@@ -61,3 +61,6 @@ buildWasm:
 
 generateFramework:
 	./gradlew :cmp-common:generateDummyFramework $(params)
+
+buildHealth:
+	./gradlew buildHealth $(params)
