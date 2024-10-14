@@ -7,9 +7,9 @@ import ru.beryukhov.coffeegram.data.CoffeeType.Americano
 import ru.beryukhov.coffeegram.data.CoffeeType.Cappuccino
 import ru.beryukhov.coffeegram.data.CoffeeType.Latte
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.withEmpty
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.changeCoffeeCount
-import ru.beryukhov.coffeegram.pages.withEmpty
 import ru.beryukhov.coffeegram.repository.toDaysCoffeesList
 import ru.beryukhov.coffeegram.repository.toState
 import kotlin.test.Test

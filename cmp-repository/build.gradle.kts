@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("com.autonomousapps.dependency-analysis")
 }
 
 version = "1.0"

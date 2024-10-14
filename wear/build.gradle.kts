@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("android")
     id("org.jetbrains.kotlin.plugin.compose")
 }
@@ -40,7 +41,6 @@ android {
 
 dependencies {
     implementation(projects.appWearCommon)
-    implementation(libs.androidx.wear)
     implementation(libs.composeWear.material)
     implementation(libs.composeWear.foundation)
 

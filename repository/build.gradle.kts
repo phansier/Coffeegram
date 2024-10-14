@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    id("com.autonomousapps.dependency-analysis")
     id("androidx.room")
     id("com.google.devtools.ksp")
 }

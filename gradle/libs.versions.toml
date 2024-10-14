@@ -9,7 +9,7 @@ agp = "8.7.0" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.0.0" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha09" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-alpha09" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.0.20-1.0.25"
+ksp = "2.0.21-1.0.25" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha07"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt

@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    id("com.autonomousapps.dependency-analysis")
     kotlin("android")
 }
 
