@@ -97,12 +97,9 @@ dependencies {
     screenshotTestImplementation(libs.compose.uiTooling)
 
     implementation(libs.compose.preview)
-
-    implementation(libs.compose.constraint)
     implementation(libs.compose.activity)
     implementation(libs.glance.appwidget)
     implementation(libs.glance.preview)
-    implementation(libs.glance.appwidget.preview)
 
     implementation(libs.google.maps.compose)
 
@@ -111,12 +108,12 @@ dependencies {
 
     implementation(libs.kotlinx.immutableCollections)
 
-    testImplementation(libs.kotlin.test.junit)
+    testRuntimeOnly(libs.kotlin.test.junit)
 
     implementation(projects.dateTimeUtils)
 
     implementation(libs.coroutines.core)
-    implementation(libs.coroutines.android)
+    runtimeOnly(libs.coroutines.android)
 
     implementation(libs.datastore.preferences)
 
@@ -124,9 +121,7 @@ dependencies {
     implementation(libs.protobuf.javalite)
 
     implementation(libs.koin.android)
-    implementation(libs.koin.compose)
-
-    implementation(libs.androidx.lifecycle) // lifecycleScope
+    implementation(libs.koin.compose) // lifecycleScope
 
     // Wearable
     implementation(libs.playServices.wearable)
