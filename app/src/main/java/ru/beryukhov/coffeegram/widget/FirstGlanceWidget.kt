@@ -7,6 +7,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.Button
+import androidx.glance.ButtonDefaults.buttonColors
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -150,74 +151,62 @@ private fun HorizontalWidget(
 ) {
     val padding = 16.dp
     Row(
-        modifier = modifier
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Column(
-            verticalAlignment = Alignment.CenterVertically,
+
+        Image(
+            provider = ImageProvider(resId = coffeeType.iconId),
+            contentDescription = "",
             modifier = GlanceModifier
                 .fillMaxHeight()
-        ) {
-            Image(
-                provider = ImageProvider(resId = coffeeType.iconId),
-                contentDescription = "",
-                modifier = GlanceModifier
-                    .fillMaxHeight()
-                    .size(48.dp)
-            )
-        }
+                .size(48.dp)
+        )
         Spacer(GlanceModifier.width(16.dp))
-        // workaround for aligning text in center by vertical
-        Column(
-            verticalAlignment = Alignment.CenterVertically,
+        Text(
+            text = LocalContext.current.getString(coffeeType.nameId),
+            style = TextStyle(
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                color = GlanceTheme.colors.primary,
+            ),
             modifier = GlanceModifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .defaultWeight()
-        ) {
-            Text(
-                text = LocalContext.current.getString(coffeeType.nameId),
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    textAlign = TextAlign.Center,
-                    color = ColorProvider(Color.White),
-                ),
-                modifier = GlanceModifier
-                    .fillMaxWidth()
+        )
+        Spacer(GlanceModifier.width(padding))
+
+        val isReduceCountAllowed = count > 0
+        val buttonColors = buttonColors(
+            backgroundColor = GlanceTheme.colors.background,
+            contentColor = GlanceTheme.colors.primary
+        )
+        Button(
+            text = "-",
+            enabled = isReduceCountAllowed,
+            modifier = GlanceModifier.width(32.dp).height(48.dp).padding(0.dp),
+            colors = buttonColors,
+            onClick = actionStartActivity<MainActivity>() // todo replace action
+        )
+        Spacer(GlanceModifier.width(padding))
+
+        Text(
+            "$count",
+            style = TextStyle(
+                fontSize = 20.sp,
+                color = GlanceTheme.colors.secondary,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+            ),
+
             )
-        }
-        Column(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = GlanceModifier
-                .fillMaxHeight()
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Spacer(GlanceModifier.width(16.dp))
-                val isReduceCountAllowed = count > 0
-                Button(
-                    text = "-",
-                    enabled = isReduceCountAllowed,
-                    modifier = GlanceModifier.width(32.dp).height(48.dp),
-                    onClick = actionStartActivity<MainActivity>() // todo replace action
-                )
-                Spacer(GlanceModifier.width(padding))
-
-                Text(
-                    "$count",
-                    style = TextStyle(
-                        fontSize = 20.sp,
-                        color = ColorProvider(Color.White),
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                    ),
-
-                    )
-                Spacer(GlanceModifier.width(padding))
-                Button(
-                    text = "+",
-                    modifier = GlanceModifier.width(32.dp).height(48.dp),
-                    onClick = actionStartActivity<MainActivity>() // todo replace action
-                )
-            }
-        }
+        Spacer(GlanceModifier.width(padding))
+        Button(
+            text = "+",
+            modifier = GlanceModifier.width(32.dp).height(48.dp).padding(0.dp),
+            colors = buttonColors,
+            onClick = actionStartActivity<MainActivity>() // todo replace action
+        )
     }
 }
 
