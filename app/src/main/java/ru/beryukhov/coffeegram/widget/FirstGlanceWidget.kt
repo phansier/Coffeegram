@@ -15,6 +15,8 @@ import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.LocalSize
+import androidx.glance.action.ActionParameters
+import androidx.glance.action.actionParametersOf
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
@@ -45,6 +47,8 @@ import androidx.glance.unit.ColorProvider
 import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.model.NavigationState.Companion.NAVIGATION_STATE_KEY
+import ru.beryukhov.coffeegram.model.NavigationState.Companion.TODAYS_COFFEE_LIST
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.HORIZONTAL_RECTANGLE
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.SMALL_SQUARE
 import ru.beryukhov.coffeegram.common.R as common_R
@@ -110,7 +114,9 @@ private fun SmallWidget(
             .fillMaxSize()
             .clickable(
                 actionStartActivity<MainActivity>(
-                    /*todo add parameters to open daycoffees list*/
+                    actionParametersOf(
+                        ActionParameters.Key<String>(NAVIGATION_STATE_KEY) to TODAYS_COFFEE_LIST
+                    )
                 )
             )
     ) {
