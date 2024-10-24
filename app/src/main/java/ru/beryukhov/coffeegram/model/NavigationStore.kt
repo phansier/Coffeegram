@@ -39,9 +39,9 @@ class NavigationStore(val yearMonth: YearMonth = nowYM()) : InMemoryStore<Naviga
 sealed interface NavigationIntent {
     data class OpenCoffeeListPage(val dayOfMonth: Int) : NavigationIntent
     data class SetYearMonth(val yearMonth: YearMonth) : NavigationIntent
-    object ReturnToTablePage : NavigationIntent
-    object ToSettingsPage : NavigationIntent
-    object ToMapPage : NavigationIntent
+    data object ReturnToTablePage : NavigationIntent
+    data object ToSettingsPage : NavigationIntent
+    data object ToMapPage : NavigationIntent
 }
 
 sealed interface NavigationState {
@@ -54,6 +54,10 @@ sealed interface NavigationState {
 
     class TablePage(val yearMonth: YearMonth) : NavigationState
     data class CoffeeListPage(val date: LocalDate) : NavigationState
-    object SettingsPage : NavigationState
-    object MapPage : NavigationState
+    data object SettingsPage : NavigationState
+    data object MapPage : NavigationState
+    companion object {
+        const val NAVIGATION_STATE_KEY = "NavigationState"
+        const val TODAYS_COFFEE_LIST = "TodaysCoffeeList"
+    }
 }

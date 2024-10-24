@@ -1,4 +1,3 @@
-
 package ru.beryukhov.coffeegram
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
@@ -19,12 +18,20 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import org.koin.compose.koinInject
 import ru.beryukhov.coffeegram.animations.TransitionSlot
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DAY_COFFEE_PATH
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.START_ACTIVITY_PATH
 import ru.beryukhov.coffeegram.data.toDataMap
+import ru.beryukhov.coffeegram.model.NavigationIntent
+import ru.beryukhov.coffeegram.model.NavigationState.Companion.NAVIGATION_STATE_KEY
+import ru.beryukhov.coffeegram.model.NavigationState.Companion.TODAYS_COFFEE_LIST
+import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.pages.LandingPage
 
 class MainActivity : ComponentActivity() {
@@ -39,6 +46,7 @@ class MainActivity : ComponentActivity() {
             var doAnimationState by rememberSaveable {
                 mutableStateOf(true)
             }
+            val navigationStore: NavigationStore = koinInject()
             TransitionSlot(
                 doAnimation = doAnimationState,
                 StartPage = { modifier -> LandingPage(modifier = modifier) },
@@ -47,11 +55,20 @@ class MainActivity : ComponentActivity() {
                         modifier = modifier,
                         topPadding = topPadding,
                         startWearableActivity = ::startWearableActivity,
-                        showMap = checkCoarseLocationPermission()
+                        showMap = checkCoarseLocationPermission(),
+                        navigationStore = navigationStore
                     )
                 },
             ) {
                 doAnimationState = false
+                if (intent.getStringExtra(NAVIGATION_STATE_KEY) == TODAYS_COFFEE_LIST) {
+                    navigationStore.newIntent(
+                        NavigationIntent.OpenCoffeeListPage(
+                            dayOfMonth = Clock.System.now()
+                                .toLocalDateTime(TimeZone.currentSystemDefault()).date.dayOfMonth
+                        )
+                    )
+                }
             }
         }
     }

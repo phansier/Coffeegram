@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.AppWidget.AppWidget.Container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="24dp"
+    android:theme="@style/Theme.AppWidget.AppWidgetContainer">
+
+    <ImageView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/latte"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="@string/latte"
+        android:layout_marginStart="16dp"
+        android:textColor="?colorPrimary"
+        android:textSize="16sp"
+        android:layout_weight="1"
+        />
+
+
+    <Button
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/white"
+        android:padding="0dp"
+        android:text="-"
+        android:layout_marginStart="16dp"
+        android:textColor="?colorPrimary"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="3"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:textColor="?colorSecondary"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:layout_width="32dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/white"
+        android:padding="0dp"
+        android:text="+"
+        android:layout_marginStart="16dp"
+        android:textColor="?colorPrimary"
+        tools:ignore="HardcodedText" />
+</LinearLayout>
