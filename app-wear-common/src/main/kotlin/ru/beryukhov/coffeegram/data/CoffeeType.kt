@@ -23,3 +23,8 @@ enum class CoffeeType(
     // icons from here: https://www.freepik.com/free-vector/list-different-types-coffee_951047.htm
     // app logo is here: https://www.flaticon.com/free-icon/coffee-cup_766408
 }
+
+data class CoffeeTypeWithCount(
+    val coffee: CoffeeType,
+    val count: Int
+)

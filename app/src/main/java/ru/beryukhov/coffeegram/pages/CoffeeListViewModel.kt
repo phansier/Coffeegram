@@ -8,6 +8,7 @@ import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.withEmpty
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
@@ -19,18 +20,29 @@ import ru.beryukhov.date_time_utils.nowLD
 
 interface CoffeeListViewModel {
     @Composable
-    fun getDayCoffeesWithEmpty(localDate: LocalDate): PersistentList<Pair<CoffeeType, Int>>
+    fun getDayCoffeesWithEmpty(localDate: LocalDate): PersistentList<CoffeeTypeWithCount>
 
-    fun newIntent(intent: DaysCoffeesIntent)
+    fun decrementCoffee(
+        localDate: LocalDate,
+        coffeeType: CoffeeType
+    )
+
+    fun incrementCoffee(
+        localDate: LocalDate,
+        coffeeType: CoffeeType
+    )
+
     fun newIntent(intent: NavigationIntent)
 }
 
 object CoffeeListViewModelStub : CoffeeListViewModel {
-    override fun newIntent(intent: DaysCoffeesIntent) = Unit
     override fun newIntent(intent: NavigationIntent) = Unit
 
+    override fun decrementCoffee(localDate: LocalDate, coffeeType: CoffeeType) = Unit
+    override fun incrementCoffee(localDate: LocalDate, coffeeType: CoffeeType) = Unit
+
     @Composable
-    override fun getDayCoffeesWithEmpty(localDate: LocalDate): PersistentList<Pair<CoffeeType, Int>> =
+    override fun getDayCoffeesWithEmpty(localDate: LocalDate): PersistentList<CoffeeTypeWithCount> =
         emptyMap<CoffeeType, Int>().withEmpty().toPersistentList()
 }
 
@@ -41,13 +53,37 @@ class CoffeeListViewModelImpl(
     private val navigationStore: NavigationStore
 ) : ViewModel(), CoffeeListViewModel {
     @Composable
-    override fun getDayCoffeesWithEmpty(localDate: LocalDate): PersistentList<Pair<CoffeeType, Int>> {
+    override fun getDayCoffeesWithEmpty(localDate: LocalDate): PersistentList<CoffeeTypeWithCount> {
         val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
         val dayCoffee = dayCoffeeState.value[localDate] ?: DayCoffee()
         return dayCoffee.coffeeCountMap.withEmpty().toPersistentList()
     }
 
-    override fun newIntent(intent: DaysCoffeesIntent) {
+    override fun decrementCoffee(
+        localDate: LocalDate,
+        coffeeType: CoffeeType
+    ) {
+        newIntent(
+            DaysCoffeesIntent.MinusCoffee(
+                localDate = localDate,
+                coffeeType = coffeeType
+            )
+        )
+    }
+
+    override fun incrementCoffee(
+        localDate: LocalDate,
+        coffeeType: CoffeeType
+    ) {
+        newIntent(
+            DaysCoffeesIntent.PlusCoffee(
+                localDate = localDate,
+                coffeeType = coffeeType
+            )
+        )
+    }
+
+    private fun newIntent(intent: DaysCoffeesIntent) {
         daysCoffeesStore.newIntent(intent)
     }
 

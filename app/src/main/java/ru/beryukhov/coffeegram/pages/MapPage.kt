@@ -212,7 +212,6 @@ fun Marker(
                         lineHeight = 18.sp,
                         fontWeight = FontWeight(350),
                         color = textColor,
-
                         ),
                     maxLines = if (highlighted) 3 else 1,
                     overflow = TextOverflow.Ellipsis

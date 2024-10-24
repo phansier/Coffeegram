@@ -23,7 +23,7 @@ import kotlinx.datetime.LocalDate
 import org.koin.androidx.compose.koinViewModel
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
-import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
+import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 import ru.beryukhov.date_time_utils.getFullMonthName
@@ -63,22 +63,12 @@ fun CoffeeListPage(
     BackHandler { coffeeListViewModel.newIntent(NavigationIntent.ReturnToTablePage) }
     val onPlusClick = remember(localDate, coffeeListViewModel) {
         { coffeeType: CoffeeType ->
-            coffeeListViewModel.newIntent(
-                DaysCoffeesIntent.PlusCoffee(
-                    localDate,
-                    coffeeType
-                )
-            )
+            coffeeListViewModel.incrementCoffee(localDate, coffeeType)
         }
     }
     val onMinusClick = remember(localDate, coffeeListViewModel) {
         { coffeeType: CoffeeType ->
-            coffeeListViewModel.newIntent(
-                DaysCoffeesIntent.MinusCoffee(
-                    localDate,
-                    coffeeType
-                )
-            )
+            coffeeListViewModel.decrementCoffee(localDate, coffeeType)
         }
     }
     CoffeeList(
@@ -91,7 +81,7 @@ fun CoffeeListPage(
 
 @Composable
 private fun CoffeeList(
-    coffeeItems: PersistentList<Pair<CoffeeType, Int>>,
+    coffeeItems: PersistentList<CoffeeTypeWithCount>,
     onPlusClick: (coffeeType: CoffeeType) -> Unit,
     modifier: Modifier = Modifier,
     onMinusClick: (coffeeType: CoffeeType) -> Unit
