@@ -9,7 +9,7 @@ agp = "8.7.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.0.0" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha10" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-alpha10" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.0.21-1.0.25" # https://github.com/google/ksp/releases
+ksp = "2.0.21-1.0.26" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha07"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt
@@ -33,7 +33,7 @@ sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 material = "1.12.0" # https://github.com/material-components/material-components-android
 activity = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
 
-protobuf = "4.28.2"
+protobuf = "4.28.3"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
