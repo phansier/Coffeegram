@@ -16,6 +16,7 @@ import androidx.glance.ImageProvider
 import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.ActionParameters
+import androidx.glance.action.action
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
@@ -44,16 +45,24 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
+import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.model.NavigationState.Companion.NAVIGATION_STATE_KEY
 import ru.beryukhov.coffeegram.model.NavigationState.Companion.TODAYS_COFFEE_LIST
+import ru.beryukhov.coffeegram.pages.AppWidgetViewModel
+import ru.beryukhov.coffeegram.pages.AppWidgetViewModelImpl
+import ru.beryukhov.coffeegram.pages.AppWidgetViewModelStub
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.HORIZONTAL_RECTANGLE
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.SMALL_SQUARE
 import ru.beryukhov.coffeegram.common.R as common_R
 
-class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error) {
+class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error), KoinComponent {
 
     // override val sizeMode: SizeMode = SizeMode.Exact
     // for Android 12 Responsive layouts feature
@@ -61,8 +70,9 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
         SizeMode.Responsive(setOf(SMALL_SQUARE, HORIZONTAL_RECTANGLE, BIG_SQUARE))
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val viewModel: AppWidgetViewModelImpl by inject()
         provideContent {
-            WidgetContent()
+            WidgetContent(viewModel)
         }
     }
 
@@ -85,7 +95,9 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
 @Preview(widthDp = 260, heightDp = 60)
 @Preview(widthDp = 280, heightDp = 150)
 @Composable
-internal fun WidgetContent() {
+internal fun WidgetContent(
+    viewModel: AppWidgetViewModel = AppWidgetViewModelStub(),
+) {
     val size = LocalSize.current
     GlanceTheme {
         Scaffold(
@@ -93,11 +105,23 @@ internal fun WidgetContent() {
             horizontalPadding = 0.dp,
         ) {
             when {
-                size.width <= SMALL_SQUARE.width && size.height <= SMALL_SQUARE.height -> SmallWidget()
-                size.width <= HORIZONTAL_RECTANGLE.width && size.height <= HORIZONTAL_RECTANGLE.height ->
-                    HorizontalWidget()
+                size.width <= SMALL_SQUARE.width && size.height <= SMALL_SQUARE.height ->
+                    SmallWidget(
+                        count = viewModel.getCurrentDayCupsCount()
+                    )
 
-                else -> BigWidget()
+                size.width <= HORIZONTAL_RECTANGLE.width && size.height <= HORIZONTAL_RECTANGLE.height ->
+                    HorizontalWidget(
+                        coffeeTypeWithCount = viewModel.getCurrentDayMostPopularWithCount(),
+                        increment = viewModel::currentDayIncrement,
+                        decrement = viewModel::currentDayDecrement
+                    )
+
+                else -> BigWidget(
+                    list = viewModel.getCurrentDayList(),
+                    increment = viewModel::currentDayIncrement,
+                    decrement = viewModel::currentDayDecrement
+                )
             }
         }
     }
@@ -128,7 +152,6 @@ private fun SmallWidget(
                 .height(64.dp)
                 .width(64.dp)
         )
-        // workaround for aligning text in center by vertical
         Column(
             verticalAlignment = Alignment.CenterVertically,
             modifier = GlanceModifier
@@ -152,8 +175,9 @@ private fun SmallWidget(
 @Composable
 private fun HorizontalWidget(
     modifier: GlanceModifier = GlanceModifier.padding(24.dp).fillMaxSize(),
-    coffeeType: CoffeeType = CoffeeType.Cappuccino,
-    count: Int = 5,
+    coffeeTypeWithCount: CoffeeTypeWithCount = CoffeeTypeWithCount(CoffeeType.Cappuccino, 5),
+    increment: (CoffeeType) -> Unit = {},
+    decrement: (CoffeeType) -> Unit = {},
 ) {
     val padding = 16.dp
     Row(
@@ -162,7 +186,7 @@ private fun HorizontalWidget(
     ) {
 
         Image(
-            provider = ImageProvider(resId = coffeeType.iconId),
+            provider = ImageProvider(resId = coffeeTypeWithCount.coffee.iconId),
             contentDescription = "",
             modifier = GlanceModifier
                 .fillMaxHeight()
@@ -170,7 +194,7 @@ private fun HorizontalWidget(
         )
         Spacer(GlanceModifier.width(16.dp))
         Text(
-            text = LocalContext.current.getString(coffeeType.nameId),
+            text = LocalContext.current.getString(coffeeTypeWithCount.coffee.nameId),
             style = TextStyle(
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
@@ -182,7 +206,7 @@ private fun HorizontalWidget(
         )
         Spacer(GlanceModifier.width(padding))
 
-        val isReduceCountAllowed = count > 0
+        val isReduceCountAllowed = coffeeTypeWithCount.count > 0
         val buttonColors = buttonColors(
             backgroundColor = GlanceTheme.colors.background,
             contentColor = GlanceTheme.colors.primary
@@ -192,12 +216,14 @@ private fun HorizontalWidget(
             enabled = isReduceCountAllowed,
             modifier = GlanceModifier.width(32.dp).height(48.dp).padding(0.dp),
             colors = buttonColors,
-            onClick = actionStartActivity<MainActivity>() // todo replace action
+            onClick = action {
+                decrement(coffeeTypeWithCount.coffee)
+            }
         )
         Spacer(GlanceModifier.width(padding))
 
         Text(
-            "$count",
+            "${coffeeTypeWithCount.count}",
             style = TextStyle(
                 fontSize = 20.sp,
                 color = GlanceTheme.colors.secondary,
@@ -211,18 +237,35 @@ private fun HorizontalWidget(
             text = "+",
             modifier = GlanceModifier.width(32.dp).height(48.dp).padding(0.dp),
             colors = buttonColors,
-            onClick = actionStartActivity<MainActivity>() // todo replace action
+            onClick = action {
+                increment(coffeeTypeWithCount.coffee)
+            }
         )
     }
 }
 
+// todo actual data
 @Composable
-private fun BigWidget(modifier: GlanceModifier = GlanceModifier) {
+private fun BigWidget(
+    modifier: GlanceModifier = GlanceModifier,
+    list: PersistentList<CoffeeTypeWithCount> = mockList,
+    increment: (CoffeeType) -> Unit = {},
+    decrement: (CoffeeType) -> Unit = {},
+) {
     LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
-        items(listOf(Unit, Unit, Unit)) {
+        items(list) {
             HorizontalWidget(
-                modifier = GlanceModifier.padding(24.dp).fillMaxWidth().height(100.dp)
+                modifier = GlanceModifier.padding(24.dp).fillMaxWidth().height(100.dp),
+                coffeeTypeWithCount = it,
+                increment = increment,
+                decrement = decrement
             )
         }
     }
 }
+
+private val mockList: PersistentList<CoffeeTypeWithCount> = persistentListOf(
+    CoffeeTypeWithCount(CoffeeType.Cappuccino, 5),
+    CoffeeTypeWithCount(CoffeeType.Espresso, 3),
+    CoffeeTypeWithCount(CoffeeType.Latte, 2),
+)

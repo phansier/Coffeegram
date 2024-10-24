@@ -26,6 +26,7 @@ import androidx.wear.compose.material.LocalContentAlpha
 import androidx.wear.compose.material.Text
 import kotlinx.coroutines.flow.MutableStateFlow
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.withEmpty
 
@@ -57,8 +58,8 @@ internal fun PagesContent() {
     ) {
         itemsIndexed(
             items = dayCoffee.coffeeCountMap.withEmpty(),
-            itemContent = { _, pair: Pair<CoffeeType, Int> ->
-                CoffeeItem(c = pair.first, count = pair.second)
+            itemContent = { _, pair: CoffeeTypeWithCount ->
+                CoffeeItem(c = pair.coffee, count = pair.count)
             }
         )
     }
