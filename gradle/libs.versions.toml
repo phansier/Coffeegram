@@ -13,7 +13,7 @@ ksp = "2.0.21-1.0.26" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha07"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt
-detektCompose = "0.4.16" # https://github.com/mrmans0n/compose-rules
+detektCompose = "0.4.17" # https://github.com/mrmans0n/compose-rules
 
 compose = "1.7.4" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 wearCompose = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/wear-compose
@@ -106,7 +106,7 @@ playServices-wearable = "com.google.android.gms:play-services-wearable:18.2.0" #
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8" # https://github.com/Kotlin/kotlinx.collections.immutable
 
 
-lottie-compose = "com.airbnb.android:lottie-compose:6.5.2" # https://github.com/airbnb/lottie-android
+lottie-compose = "com.airbnb.android:lottie-compose:6.6.0" # https://github.com/airbnb/lottie-android
 
 ###
 
