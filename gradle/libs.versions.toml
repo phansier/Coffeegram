@@ -6,14 +6,14 @@ wearMinSdk = "25"
 
 kotlin = "2.0.21" # https://kotlinlang.org/docs/releases.html#release-details
 agp = "8.7.1" # https://developer.android.com/studio/releases/gradle-plugin
-ktor = "3.0.0" # https://github.com/ktorio/ktor
+ktor = "3.0.1" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha10" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-alpha10" # https://developer.android.com/jetpack/androidx/releases/sqlite
 ksp = "2.0.21-1.0.26" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha07"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt
-detektCompose = "0.4.16" # https://github.com/mrmans0n/compose-rules
+detektCompose = "0.4.17" # https://github.com/mrmans0n/compose-rules
 
 compose = "1.7.4" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 wearCompose = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/wear-compose
@@ -95,7 +95,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
-google-maps-compose = "com.google.maps.android:maps-compose:6.1.2"
+google-maps-compose = "com.google.maps.android:maps-compose:6.2.0"
 
 
 androidx-annotation = "androidx.annotation:annotation:1.9.0"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
@@ -106,7 +106,7 @@ playServices-wearable = "com.google.android.gms:play-services-wearable:18.2.0" #
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8" # https://github.com/Kotlin/kotlinx.collections.immutable
 
 
-lottie-compose = "com.airbnb.android:lottie-compose:6.5.2" # https://github.com/airbnb/lottie-android
+lottie-compose = "com.airbnb.android:lottie-compose:6.6.0" # https://github.com/airbnb/lottie-android
 
 ###
 
