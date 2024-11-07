@@ -95,7 +95,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
-google-maps-compose = "com.google.maps.android:maps-compose:6.2.0"
+google-maps-compose = "com.google.maps.android:maps-compose:6.2.1"
 
 
 androidx-annotation = "androidx.annotation:annotation:1.9.1"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
