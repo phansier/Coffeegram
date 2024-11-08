@@ -9,7 +9,7 @@ agp = "8.7.2" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.0.1" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha11" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-alpha11" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.0.21-1.0.26" # https://github.com/google/ksp/releases
+ksp = "2.0.21-1.0.27" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha07"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt
@@ -95,7 +95,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
-google-maps-compose = "com.google.maps.android:maps-compose:6.2.0"
+google-maps-compose = "com.google.maps.android:maps-compose:6.2.1"
 
 
 androidx-annotation = "androidx.annotation:annotation:1.9.1"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
