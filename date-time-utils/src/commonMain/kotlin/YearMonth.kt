@@ -3,27 +3,8 @@ package ru.beryukhov.date_time_utils
 import kotlinx.datetime.Clock.System.now
 import kotlinx.datetime.DateTimeUnit.Companion.MONTH
 import kotlinx.datetime.DayOfWeek
-import kotlinx.datetime.DayOfWeek.FRIDAY
-import kotlinx.datetime.DayOfWeek.MONDAY
-import kotlinx.datetime.DayOfWeek.SATURDAY
-import kotlinx.datetime.DayOfWeek.SUNDAY
-import kotlinx.datetime.DayOfWeek.THURSDAY
-import kotlinx.datetime.DayOfWeek.TUESDAY
-import kotlinx.datetime.DayOfWeek.WEDNESDAY
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
-import kotlinx.datetime.Month.APRIL
-import kotlinx.datetime.Month.AUGUST
-import kotlinx.datetime.Month.DECEMBER
-import kotlinx.datetime.Month.FEBRUARY
-import kotlinx.datetime.Month.JANUARY
-import kotlinx.datetime.Month.JULY
-import kotlinx.datetime.Month.JUNE
-import kotlinx.datetime.Month.MARCH
-import kotlinx.datetime.Month.MAY
-import kotlinx.datetime.Month.NOVEMBER
-import kotlinx.datetime.Month.OCTOBER
-import kotlinx.datetime.Month.SEPTEMBER
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.plus
@@ -59,18 +40,18 @@ data class YearMonth(val year: Int, val month: Month) {
 
 fun getFullMonthName(month: Month): String =
     when (month) {
-        JANUARY -> "JANUARY"
-        FEBRUARY -> "FEBRUARY"
-        MARCH -> "MARCH"
-        APRIL -> "APRIL"
-        MAY -> "MAY"
-        JUNE -> "JUNE"
-        JULY -> "JULY"
-        AUGUST -> "AUGUST"
-        SEPTEMBER -> "SEPTEMBER"
-        OCTOBER -> "OCTOBER"
-        NOVEMBER -> "NOVEMBER"
-        DECEMBER -> "DECEMBER"
+        Month.JANUARY -> "JANUARY"
+        Month.FEBRUARY -> "FEBRUARY"
+        Month.MARCH -> "MARCH"
+        Month.APRIL -> "APRIL"
+        Month.MAY -> "MAY"
+        Month.JUNE -> "JUNE"
+        Month.JULY -> "JULY"
+        Month.AUGUST -> "AUGUST"
+        Month.SEPTEMBER -> "SEPTEMBER"
+        Month.OCTOBER -> "OCTOBER"
+        Month.NOVEMBER -> "NOVEMBER"
+        Month.DECEMBER -> "DECEMBER"
         else -> ""
     }.lowercase().replaceFirstChar { it.titlecase() }
 
@@ -85,23 +66,23 @@ fun nowLD(): LocalDate {
 
 fun DayOfWeek.getShortDisplayName(): String =
     when (this) {
-        MONDAY -> "MON"
-        TUESDAY -> "TUE"
-        WEDNESDAY -> "WED"
-        THURSDAY -> "THU"
-        FRIDAY -> "FRI"
-        SATURDAY -> "SAT"
-        SUNDAY -> "SUN"
+        DayOfWeek.MONDAY -> "MON"
+        DayOfWeek.TUESDAY -> "TUE"
+        DayOfWeek.WEDNESDAY -> "WED"
+        DayOfWeek.THURSDAY -> "THU"
+        DayOfWeek.FRIDAY -> "FRI"
+        DayOfWeek.SATURDAY -> "SAT"
+        DayOfWeek.SUNDAY -> "SUN"
         else -> ""
     }.lowercase().replaceFirstChar { it.titlecase() }
 
 private fun Month.days(leapYear: Boolean): Int =
     when (this) {
-        FEBRUARY -> if (leapYear) 29 else 28
-        APRIL,
-        JUNE,
-        SEPTEMBER,
-        NOVEMBER -> 30
+        Month.FEBRUARY -> if (leapYear) 29 else 28
+        Month.APRIL,
+        Month.JUNE,
+        Month.SEPTEMBER,
+        Month.NOVEMBER -> 30
         else -> 31
     }
 
