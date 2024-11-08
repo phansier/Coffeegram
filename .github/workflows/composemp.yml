@@ -26,3 +26,5 @@ jobs:
       run: make buildAndroid
     - name: Build Desktop
       run: make buildDesktop
+    - name: Build WASM
+      run: make buildWasm
