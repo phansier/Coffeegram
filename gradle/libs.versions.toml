@@ -4,12 +4,12 @@ compileSdk = "35"
 minSdk = "24"
 wearMinSdk = "25"
 
-kotlin = "2.1.0-RC2" # https://kotlinlang.org/docs/releases.html#release-details
+kotlin = "2.1.0" # https://kotlinlang.org/docs/releases.html#release-details
 agp = "8.7.2" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.0.1" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha11" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-alpha11" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.1.0-RC2-1.0.28" # https://github.com/google/ksp/releases
+ksp = "2.1.0-1.0.29" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha08"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt
@@ -33,7 +33,7 @@ sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 material = "1.12.0" # https://github.com/material-components/material-components-android
 activity = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
 
-protobuf = "4.28.3"
+protobuf = "4.29.0"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -102,7 +102,7 @@ androidx-annotation = "androidx.annotation:annotation:1.9.1"        # https://mv
 androidx-wear = "androidx.wear:wear:1.3.0"                          # https://developer.android.com/jetpack/androidx/releases/wear
 material = { module = "com.google.android.material:material", version.ref = "material" }
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
-playServices-wearable = "com.google.android.gms:play-services-wearable:18.2.0" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
+playServices-wearable = "com.google.android.gms:play-services-wearable:19.0.0" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8" # https://github.com/Kotlin/kotlinx.collections.immutable
 
 
