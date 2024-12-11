@@ -5,15 +5,15 @@ minSdk = "24"
 wearMinSdk = "25"
 
 kotlin = "2.1.0" # https://kotlinlang.org/docs/releases.html#release-details
-agp = "8.7.2" # https://developer.android.com/studio/releases/gradle-plugin
-ktor = "3.0.1" # https://github.com/ktorio/ktor
+agp = "8.7.3" # https://developer.android.com/studio/releases/gradle-plugin
+ktor = "3.0.2" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-alpha11" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-alpha11" # https://developer.android.com/jetpack/androidx/releases/sqlite
 ksp = "2.1.0-1.0.29" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha08"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt
-detektCompose = "0.4.19" # https://github.com/mrmans0n/compose-rules
+detektCompose = "0.4.22" # https://github.com/mrmans0n/compose-rules
 
 compose = "1.7.5" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 wearCompose = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/wear-compose
@@ -33,7 +33,7 @@ sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 material = "1.12.0" # https://github.com/material-components/material-components-android
 activity = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/activity
 
-protobuf = "4.29.0"
+protobuf = "4.29.1"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -95,7 +95,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
-google-maps-compose = "com.google.maps.android:maps-compose:6.2.1"
+google-maps-compose = "com.google.maps.android:maps-compose:6.4.0"
 
 
 androidx-annotation = "androidx.annotation:annotation:1.9.1"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
@@ -106,7 +106,7 @@ playServices-wearable = "com.google.android.gms:play-services-wearable:19.0.0" #
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8" # https://github.com/Kotlin/kotlinx.collections.immutable
 
 
-lottie-compose = "com.airbnb.android:lottie-compose:6.6.0" # https://github.com/airbnb/lottie-android
+lottie-compose = "com.airbnb.android:lottie-compose:6.6.1" # https://github.com/airbnb/lottie-android
 
 ###
 
