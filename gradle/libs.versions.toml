@@ -7,15 +7,15 @@ wearMinSdk = "25"
 kotlin = "2.1.0" # https://kotlinlang.org/docs/releases.html#release-details
 agp = "8.7.3" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.0.2" # https://github.com/ktorio/ktor
-androidxRoom = "2.7.0-alpha11" # https://developer.android.com/jetpack/androidx/releases/room
-sqlite = "2.5.0-alpha11" # https://developer.android.com/jetpack/androidx/releases/sqlite
+androidxRoom = "2.7.0-alpha12" # https://developer.android.com/jetpack/androidx/releases/room
+sqlite = "2.5.0-alpha12" # https://developer.android.com/jetpack/androidx/releases/sqlite
 ksp = "2.1.0-1.0.29" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha08"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt
 detektCompose = "0.4.22" # https://github.com/mrmans0n/compose-rules
 
-compose = "1.7.5" # https://developer.android.com/jetpack/androidx/releases/compose-ui
+compose = "1.7.6" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 wearCompose = "1.4.0" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
 jetbrainsCompose = "1.8.0-dev1920" # https://github.com/JetBrains/compose-multiplatform
