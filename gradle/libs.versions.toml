@@ -106,7 +106,7 @@ playServices-wearable = "com.google.android.gms:play-services-wearable:19.0.0" #
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8" # https://github.com/Kotlin/kotlinx.collections.immutable
 
 
-lottie-compose = "com.airbnb.android:lottie-compose:6.6.1" # https://github.com/airbnb/lottie-android
+lottie-compose = "com.airbnb.android:lottie-compose:6.6.2" # https://github.com/airbnb/lottie-android
 
 ###
 
