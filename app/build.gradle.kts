@@ -100,6 +100,7 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.glance.appwidget)
     implementation(libs.glance.preview)
+    implementation(libs.glance.appwidget.preview)
 
     implementation(libs.google.maps.compose)
 
