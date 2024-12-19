@@ -109,7 +109,6 @@ lottie-compose = "com.airbnb.android:lottie-compose:6.6.1" # https://github.com/
 composeGradle = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "jetbrainsCompose" }
 sqldelightGradle = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 
-jetbrains-compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jetbrainsCompose" }
 
 kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.1" # https://github.com/Kotlin/kotlinx-datetime
 

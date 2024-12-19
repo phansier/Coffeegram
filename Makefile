@@ -54,7 +54,7 @@ runDesktop:
 
 
 runWasm:
-	./gradlew :cmp-common:wasmJsRun --no-configuration-cache $(params)
+	./gradlew :cmp-common:wasmJsBrowserDevelopmentRun $(params)
 
 buildWasm:
 	./gradlew :cmp-common:wasmJsBrowserDistribution --no-configuration-cache $(params)
