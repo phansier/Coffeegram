@@ -2,7 +2,7 @@
 ## Android & Multiplatform Compose based project #KMP
 
 [![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.7.6-yellow)](https://developer.android.com/jetpack/compose)
-[![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.8.0--alpha01-yellow)](https://github.com/JetBrains/compose-multiplatform)
+[![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.7.3-yellow)](https://github.com/JetBrains/compose-multiplatform)
 [![WearCompose Version](https://img.shields.io/badge/Wear%20Compose-1.4.0-yellow)](https://developer.android.com/jetpack/androidx/releases/wear-compose)
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-2.1.0-blue.svg)](https://kotlinlang.org)
 [![Android CI](https://github.com/phansier/Coffeegram/actions/workflows/android.yml/badge.svg)](https://github.com/phansier/Coffeegram/actions/workflows/android.yml)
