@@ -6,7 +6,7 @@ wearMinSdk = "25"
 
 kotlin = "2.1.0" # https://github.com/JetBrains/kotlin/releases
 compose = "1.7.6" # https://developer.android.com/jetpack/androidx/releases/compose-ui
-jetbrainsCompose = "1.7.3" # https://github.com/JetBrains/compose-multiplatform/releases
+jetbrainsCompose = "1.8.0+dev1992" # https://github.com/JetBrains/compose-multiplatform/releases
 
 agp = "8.7.3" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.0.3" # https://github.com/ktorio/ktor
@@ -92,7 +92,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
-google-maps-compose = "com.google.maps.android:maps-compose:6.4.0"
+google-maps-compose = "com.google.maps.android:maps-compose:6.4.1"
 
 
 androidx-annotation = "androidx.annotation:annotation:1.9.1"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
