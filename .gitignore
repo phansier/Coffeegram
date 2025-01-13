@@ -12,6 +12,10 @@ local.properties
 
 key.properties
 
+iosApp/Podfile.lock
+iosApp/Pods/*
+iosApp/iosApp.xcodeproj/*
+
 cmp-iosApp/Podfile.lock
 cmp-iosApp/Pods/*
 cmp-iosApp/iosApp.xcodeproj/*

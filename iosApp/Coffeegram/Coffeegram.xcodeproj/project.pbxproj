@@ -1,0 +1,618 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3024E1FC2D350C4700A8404B /* CoffeegramApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E1FB2D350C4700A8404B /* CoffeegramApp.swift */; };
+		3024E1FE2D350C4700A8404B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E1FD2D350C4700A8404B /* ContentView.swift */; };
+		3024E2002D350C4700A8404B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E1FF2D350C4700A8404B /* Item.swift */; };
+		3024E2022D350C4800A8404B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3024E2012D350C4800A8404B /* Assets.xcassets */; };
+		3024E2062D350C4800A8404B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3024E2052D350C4800A8404B /* Preview Assets.xcassets */; };
+		3024E2102D350C4800A8404B /* CoffeegramTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E20F2D350C4800A8404B /* CoffeegramTests.swift */; };
+		3024E21A2D350C4800A8404B /* CoffeegramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E2192D350C4800A8404B /* CoffeegramUITests.swift */; };
+		3024E21C2D350C4800A8404B /* CoffeegramUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E21B2D350C4800A8404B /* CoffeegramUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3024E20C2D350C4800A8404B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3024E1F02D350C4700A8404B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3024E1F72D350C4700A8404B;
+			remoteInfo = Coffeegram;
+		};
+		3024E2162D350C4800A8404B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3024E1F02D350C4700A8404B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3024E1F72D350C4700A8404B;
+			remoteInfo = Coffeegram;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3024E1F82D350C4700A8404B /* Coffeegram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coffeegram.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3024E1FB2D350C4700A8404B /* CoffeegramApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeegramApp.swift; sourceTree = "<group>"; };
+		3024E1FD2D350C4700A8404B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3024E1FF2D350C4700A8404B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		3024E2012D350C4800A8404B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3024E2032D350C4800A8404B /* Coffeegram.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coffeegram.entitlements; sourceTree = "<group>"; };
+		3024E2052D350C4800A8404B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3024E20B2D350C4800A8404B /* CoffeegramTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeegramTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3024E20F2D350C4800A8404B /* CoffeegramTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeegramTests.swift; sourceTree = "<group>"; };
+		3024E2152D350C4800A8404B /* CoffeegramUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeegramUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3024E2192D350C4800A8404B /* CoffeegramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeegramUITests.swift; sourceTree = "<group>"; };
+		3024E21B2D350C4800A8404B /* CoffeegramUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeegramUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3024E1F52D350C4700A8404B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3024E2082D350C4800A8404B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3024E2122D350C4800A8404B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3024E1EF2D350C4700A8404B = {
+			isa = PBXGroup;
+			children = (
+				3024E1FA2D350C4700A8404B /* Coffeegram */,
+				3024E20E2D350C4800A8404B /* CoffeegramTests */,
+				3024E2182D350C4800A8404B /* CoffeegramUITests */,
+				3024E1F92D350C4700A8404B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3024E1F92D350C4700A8404B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3024E1F82D350C4700A8404B /* Coffeegram.app */,
+				3024E20B2D350C4800A8404B /* CoffeegramTests.xctest */,
+				3024E2152D350C4800A8404B /* CoffeegramUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3024E1FA2D350C4700A8404B /* Coffeegram */ = {
+			isa = PBXGroup;
+			children = (
+				3024E1FB2D350C4700A8404B /* CoffeegramApp.swift */,
+				3024E1FD2D350C4700A8404B /* ContentView.swift */,
+				3024E1FF2D350C4700A8404B /* Item.swift */,
+				3024E2012D350C4800A8404B /* Assets.xcassets */,
+				3024E2032D350C4800A8404B /* Coffeegram.entitlements */,
+				3024E2042D350C4800A8404B /* Preview Content */,
+			);
+			path = Coffeegram;
+			sourceTree = "<group>";
+		};
+		3024E2042D350C4800A8404B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				3024E2052D350C4800A8404B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3024E20E2D350C4800A8404B /* CoffeegramTests */ = {
+			isa = PBXGroup;
+			children = (
+				3024E20F2D350C4800A8404B /* CoffeegramTests.swift */,
+			);
+			path = CoffeegramTests;
+			sourceTree = "<group>";
+		};
+		3024E2182D350C4800A8404B /* CoffeegramUITests */ = {
+			isa = PBXGroup;
+			children = (
+				3024E2192D350C4800A8404B /* CoffeegramUITests.swift */,
+				3024E21B2D350C4800A8404B /* CoffeegramUITestsLaunchTests.swift */,
+			);
+			path = CoffeegramUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3024E1F72D350C4700A8404B /* Coffeegram */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3024E21F2D350C4800A8404B /* Build configuration list for PBXNativeTarget "Coffeegram" */;
+			buildPhases = (
+				3024E1F42D350C4700A8404B /* Sources */,
+				3024E1F52D350C4700A8404B /* Frameworks */,
+				3024E1F62D350C4700A8404B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Coffeegram;
+			productName = Coffeegram;
+			productReference = 3024E1F82D350C4700A8404B /* Coffeegram.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3024E20A2D350C4800A8404B /* CoffeegramTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3024E2222D350C4800A8404B /* Build configuration list for PBXNativeTarget "CoffeegramTests" */;
+			buildPhases = (
+				3024E2072D350C4800A8404B /* Sources */,
+				3024E2082D350C4800A8404B /* Frameworks */,
+				3024E2092D350C4800A8404B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3024E20D2D350C4800A8404B /* PBXTargetDependency */,
+			);
+			name = CoffeegramTests;
+			productName = CoffeegramTests;
+			productReference = 3024E20B2D350C4800A8404B /* CoffeegramTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		3024E2142D350C4800A8404B /* CoffeegramUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3024E2252D350C4800A8404B /* Build configuration list for PBXNativeTarget "CoffeegramUITests" */;
+			buildPhases = (
+				3024E2112D350C4800A8404B /* Sources */,
+				3024E2122D350C4800A8404B /* Frameworks */,
+				3024E2132D350C4800A8404B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3024E2172D350C4800A8404B /* PBXTargetDependency */,
+			);
+			name = CoffeegramUITests;
+			productName = CoffeegramUITests;
+			productReference = 3024E2152D350C4800A8404B /* CoffeegramUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3024E1F02D350C4700A8404B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					3024E1F72D350C4700A8404B = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					3024E20A2D350C4800A8404B = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 3024E1F72D350C4700A8404B;
+					};
+					3024E2142D350C4800A8404B = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 3024E1F72D350C4700A8404B;
+					};
+				};
+			};
+			buildConfigurationList = 3024E1F32D350C4700A8404B /* Build configuration list for PBXProject "Coffeegram" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3024E1EF2D350C4700A8404B;
+			productRefGroup = 3024E1F92D350C4700A8404B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3024E1F72D350C4700A8404B /* Coffeegram */,
+				3024E20A2D350C4800A8404B /* CoffeegramTests */,
+				3024E2142D350C4800A8404B /* CoffeegramUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3024E1F62D350C4700A8404B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3024E2062D350C4800A8404B /* Preview Assets.xcassets in Resources */,
+				3024E2022D350C4800A8404B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3024E2092D350C4800A8404B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3024E2132D350C4800A8404B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3024E1F42D350C4700A8404B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3024E1FE2D350C4700A8404B /* ContentView.swift in Sources */,
+				3024E2002D350C4700A8404B /* Item.swift in Sources */,
+				3024E1FC2D350C4700A8404B /* CoffeegramApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3024E2072D350C4800A8404B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3024E2102D350C4800A8404B /* CoffeegramTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3024E2112D350C4800A8404B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3024E21A2D350C4800A8404B /* CoffeegramUITests.swift in Sources */,
+				3024E21C2D350C4800A8404B /* CoffeegramUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3024E20D2D350C4800A8404B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3024E1F72D350C4700A8404B /* Coffeegram */;
+			targetProxy = 3024E20C2D350C4800A8404B /* PBXContainerItemProxy */;
+		};
+		3024E2172D350C4800A8404B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3024E1F72D350C4700A8404B /* Coffeegram */;
+			targetProxy = 3024E2162D350C4800A8404B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3024E21D2D350C4800A8404B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		3024E21E2D350C4800A8404B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		3024E2202D350C4800A8404B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Coffeegram/Coffeegram.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Coffeegram/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.beryukhov.Coffeegram;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3024E2212D350C4800A8404B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Coffeegram/Coffeegram.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Coffeegram/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.beryukhov.Coffeegram;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3024E2232D350C4800A8404B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.beryukhov.CoffeegramTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coffeegram.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Coffeegram";
+			};
+			name = Debug;
+		};
+		3024E2242D350C4800A8404B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.beryukhov.CoffeegramTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Coffeegram.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Coffeegram";
+			};
+			name = Release;
+		};
+		3024E2262D350C4800A8404B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.beryukhov.CoffeegramUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Coffeegram;
+			};
+			name = Debug;
+		};
+		3024E2272D350C4800A8404B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ru.beryukhov.CoffeegramUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Coffeegram;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3024E1F32D350C4700A8404B /* Build configuration list for PBXProject "Coffeegram" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3024E21D2D350C4800A8404B /* Debug */,
+				3024E21E2D350C4800A8404B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3024E21F2D350C4800A8404B /* Build configuration list for PBXNativeTarget "Coffeegram" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3024E2202D350C4800A8404B /* Debug */,
+				3024E2212D350C4800A8404B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3024E2222D350C4800A8404B /* Build configuration list for PBXNativeTarget "CoffeegramTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3024E2232D350C4800A8404B /* Debug */,
+				3024E2242D350C4800A8404B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3024E2252D350C4800A8404B /* Build configuration list for PBXNativeTarget "CoffeegramUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3024E2262D350C4800A8404B /* Debug */,
+				3024E2272D350C4800A8404B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3024E1F02D350C4700A8404B /* Project object */;
+}
