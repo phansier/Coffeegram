@@ -4,21 +4,16 @@ import SwiftData
 @main
 struct CoffeegramApp: App {
     var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-                                CoffeeDrink.self,
-                            ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
         do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+            return try ModelContainer(for: CoffeeDrink.self, DailyConsumption.self)
         } catch {
-            fatalError("Could not create ModelContainer: \(error)")
+            fatalError("Failed to create ModelContainer: \(error.localizedDescription)")
         }
     }()
 
     var body: some Scene {
         WindowGroup {
-            CalendarView()
+            CalendarView(viewModel: CalendarViewModel(modelContext: sharedModelContainer.mainContext))
         }
         .modelContainer(sharedModelContainer)
     }

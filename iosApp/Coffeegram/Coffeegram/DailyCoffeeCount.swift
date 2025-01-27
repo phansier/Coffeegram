@@ -1,6 +1,17 @@
 import Foundation
+import SwiftData
 
-struct DailyCoffeeCount {
+@Model
+class DailyConsumption {
+    let id: UUID
     let date: Date
-    var totalCups: Int
+    var count: Int
+    var drink: CoffeeDrink?
+
+    init(date: Date, count: Int, drink: CoffeeDrink?) {
+        self.id = UUID()
+        self.date = date
+        self.count = count
+        self.drink = drink
+    }
 }

@@ -1,8 +1,12 @@
 import SwiftUI
+import SwiftData
 
 struct CalendarView: View {
-    @StateObject private var viewModel = CalendarViewModel()
+    @ObservedObject var viewModel: CalendarViewModel
+    @Environment(\.modelContext) private var modelContext
+    //var modelContext: ModelContext
     @Environment(\.calendar) var calendar
+
 
     private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     private let columns = Array(repeating: GridItem(.flexible()), count: 7)
@@ -41,13 +45,15 @@ struct CalendarView: View {
 
                     }
                 }
+                
+                // todo calendar not updated after back navigation from list
 
                 // Calendar grid
                 LazyVGrid(columns: columns, spacing: 8) {
                     ForEach(daysInMonth(), id: \.self) { date in
                         if let date = date {
-                            NavigationLink(destination: ListView()) {
-                                DayCell(date: date, count: viewModel.getCupsForDate(date))
+                            NavigationLink(destination: ListView(date:date, viewModel: ListViewModel(modelContext:modelContext))) {
+                                DayCell(date: date, count: viewModel.getTotalCupsForDate(date))
                             }
                         } else {
                             Color.clear
@@ -79,7 +85,7 @@ struct CalendarView: View {
 
         let daysInMonth = calendar.dateComponents([.day], from: interval.start, to: interval.end).day! + 1
 
-        var dates: [Date?] = Array(repeating: nil, count: offsetDays)
+        var dates: [Date?] = Array(repeating: nil, count: offsetDays) //todo count <0 if switching to previous month
 
         for day in 0..<daysInMonth {
             if let date = calendar.date(byAdding: .day, value: day, to: interval.start) {
@@ -134,6 +140,6 @@ struct DayCell: View {
     }
 }
 
-#Preview {
-    CalendarView()
-}
+//#Preview {
+//    CalendarView()
+//}

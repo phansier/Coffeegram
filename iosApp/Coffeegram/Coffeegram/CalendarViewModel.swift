@@ -1,31 +1,45 @@
 import Foundation
+import SwiftData
 
 class CalendarViewModel: ObservableObject {
     @Published var selectedDate = Date()
-    @Published var dailyCounts: [DailyCoffeeCount] = []
+    private var modelContext: ModelContext
 
-    // Sample data - replace with actual data storage
-    init() {
-        // Generate some sample data for the current month
-        let calendar = Calendar.current
-        let currentMonth = calendar.component(.month, from: Date())
-        let year = calendar.component(.year, from: Date())
-
-        for day in 1...31 {
-            if let date = calendar.date(from: DateComponents(year: year, month: currentMonth, day: day)) {
-                dailyCounts.append(DailyCoffeeCount(date: date, totalCups: Int.random(in: 0...5)))
-            }
-        }
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
     }
 
     func moveMonth(by monthOffset: Int) {
         if let newDate = Calendar.current.date(byAdding: .month, value: monthOffset, to: selectedDate) {
             selectedDate = newDate
-            // Here you would typically fetch data for the new month
         }
     }
 
-    func getCupsForDate(_ date: Date) -> Int {
-        return dailyCounts.first(where: { Calendar.current.isDate($0.date, inSameDayAs: date) })?.totalCups ?? 0
+    func getTotalCupsForDate(_ date: Date) -> Int {
+//        let calendar = Calendar.current
+//        let predicate = #Predicate<DailyConsumption> { consumption in
+//            calendar.isDate(consumption.date, inSameDayAs: date)
+//        }
+//        let descriptor = FetchDescriptor<DailyConsumption>(predicate:predicate)
+        let calendar = Calendar.current
+//        let targetDateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+//
+//        let predicate = #Predicate<DailyConsumption> { consumption in
+//            let consumptionDateComponents = calendar.dateComponents([.year, .month, .day], from: consumption.date)
+//            return consumptionDateComponents.year == targetDateComponents.year &&
+//                   consumptionDateComponents.month == targetDateComponents.month &&
+//                   consumptionDateComponents.day == targetDateComponents.day
+//        }
+        let startOfDay = calendar.startOfDay(for: date)
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+
+        let predicate = #Predicate<DailyConsumption> { consumption in
+            consumption.date >= startOfDay && consumption.date < endOfDay
+        }
+        let descriptor = FetchDescriptor<DailyConsumption>(predicate:predicate)
+//        let descriptor = FetchDescriptor<DailyConsumption>(predicate:CalendarViewModel.predicater(date, calendar))
+
+        guard let consumptions = try? modelContext.fetch(descriptor) else { return 0 }
+        return consumptions.reduce(0) { $0 + $1.count }
     }
 }
