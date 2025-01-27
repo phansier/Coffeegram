@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		30072ACF2D47F0760009FC39 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30072ACE2D47F0760009FC39 /* ListViewModel.swift */; };
+		30072AD12D47F2B30009FC39 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30072AD02D47F2B30009FC39 /* CalendarView.swift */; };
+		30072AD32D47F6520009FC39 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30072AD22D47F6520009FC39 /* CalendarViewModel.swift */; };
+		30072AD52D47F6730009FC39 /* DailyCoffeeCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30072AD42D47F6730009FC39 /* DailyCoffeeCount.swift */; };
 		3024E1FC2D350C4700A8404B /* CoffeegramApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E1FB2D350C4700A8404B /* CoffeegramApp.swift */; };
 		3024E1FE2D350C4700A8404B /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E1FD2D350C4700A8404B /* ListView.swift */; };
 		3024E2022D350C4800A8404B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3024E2012D350C4800A8404B /* Assets.xcassets */; };
@@ -34,6 +37,9 @@
 
 /* Begin PBXFileReference section */
 		30072ACE2D47F0760009FC39 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		30072AD02D47F2B30009FC39 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		30072AD22D47F6520009FC39 /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		30072AD42D47F6730009FC39 /* DailyCoffeeCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCoffeeCount.swift; sourceTree = "<group>"; };
 		3024E1F82D350C4700A8404B /* Coffeegram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coffeegram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3024E1FB2D350C4700A8404B /* CoffeegramApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeegramApp.swift; sourceTree = "<group>"; };
 		3024E1FD2D350C4700A8404B /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
@@ -92,12 +98,15 @@
 			isa = PBXGroup;
 			children = (
 				3024E1FB2D350C4700A8404B /* CoffeegramApp.swift */,
-				3024E1FD2D350C4700A8404B /* ListView.swift */,
 				3024E2012D350C4800A8404B /* Assets.xcassets */,
 				3024E2032D350C4800A8404B /* Coffeegram.entitlements */,
 				3024E2042D350C4800A8404B /* Preview Content */,
 				65F643B9172343A28DCE7419 /* CoffeeDrink.swift */,
 				30072ACE2D47F0760009FC39 /* ListViewModel.swift */,
+				30072AD02D47F2B30009FC39 /* CalendarView.swift */,
+				3024E1FD2D350C4700A8404B /* ListView.swift */,
+				30072AD22D47F6520009FC39 /* CalendarViewModel.swift */,
+				30072AD42D47F6730009FC39 /* DailyCoffeeCount.swift */,
 			);
 			path = Coffeegram;
 			sourceTree = "<group>";
@@ -240,6 +249,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30072AD52D47F6730009FC39 /* DailyCoffeeCount.swift in Sources */,
+				30072AD32D47F6520009FC39 /* CalendarViewModel.swift in Sources */,
+				30072AD12D47F2B30009FC39 /* CalendarView.swift in Sources */,
 				30072ACF2D47F0760009FC39 /* ListViewModel.swift in Sources */,
 				3024E1FE2D350C4700A8404B /* ListView.swift in Sources */,
 				3024E1FC2D350C4700A8404B /* CoffeegramApp.swift in Sources */,
@@ -311,6 +323,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -372,6 +385,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -399,6 +413,7 @@
 				CODE_SIGN_ENTITLEMENTS = Coffeegram/Coffeegram.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Coffeegram/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -435,6 +450,7 @@
 				CODE_SIGN_ENTITLEMENTS = Coffeegram/Coffeegram.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Coffeegram/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -470,6 +486,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
@@ -492,6 +509,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
@@ -513,6 +531,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;
@@ -534,6 +553,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				MACOSX_DEPLOYMENT_TARGET = 14.4;

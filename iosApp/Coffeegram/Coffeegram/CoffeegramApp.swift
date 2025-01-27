@@ -18,7 +18,7 @@ struct CoffeegramApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ListView()
+            CalendarView()
         }
         .modelContainer(sharedModelContainer)
     }

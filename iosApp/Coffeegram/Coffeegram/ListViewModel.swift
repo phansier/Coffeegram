@@ -1,5 +1,4 @@
-import SwiftData
-import SwiftUI
+import Foundation
 
 class ListViewModel: ObservableObject {
     @Published var drinks: [CoffeeDrink] = [

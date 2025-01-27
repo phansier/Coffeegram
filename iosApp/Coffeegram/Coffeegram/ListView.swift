@@ -1,5 +1,4 @@
 import SwiftUI
-import SwiftData
 
 struct ListView: View {
     @StateObject private var viewModel = ListViewModel()
