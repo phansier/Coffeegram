@@ -1,10 +1,3 @@
-//
-//  CoffeegramApp.swift
-//  Coffeegram
-//
-//  Created by Andrei Beriukhov on 13/01/2025.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -12,7 +5,7 @@ import SwiftData
 struct CoffeegramApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            CoffeeDrink.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,7 +18,7 @@ struct CoffeegramApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CoffeeTrackerView()
         }
         .modelContainer(sharedModelContainer)
     }

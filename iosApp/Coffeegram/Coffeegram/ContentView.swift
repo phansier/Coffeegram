@@ -1,66 +1,77 @@
-//
-//  ContentView.swift
-//  Coffeegram
-//
-//  Created by Andrei Beriukhov on 13/01/2025.
-//
-
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+class CoffeeTrackerViewModel: ObservableObject {
+    @Published var drinks: [CoffeeDrink] = [
+        CoffeeDrink(name: "Espresso", icon: "cup.and.saucer.fill", count: 0),
+        CoffeeDrink(name: "Cappuccino", icon: "cup.and.saucer", count: 0),
+        CoffeeDrink(name: "Latte", icon: "mug.fill", count: 0),
+        CoffeeDrink(name: "Americano", icon: "mug", count: 0)
+    ]
+    
+    func increment(drinkId: UUID) {
+        if let index = drinks.firstIndex(where: { $0.id == drinkId }) {
+            drinks[index].count += 1
+        }
+    }
+    
+    func decrement(drinkId: UUID) {
+        if let index = drinks.firstIndex(where: { $0.id == drinkId }),
+           drinks[index].count > 0 {
+            drinks[index].count -= 1
+        }
+    }
+}
 
+
+struct CoffeeTrackerView: View {
+    @StateObject private var viewModel = CoffeeTrackerViewModel()
+    
     var body: some View {
-        NavigationSplitView {
+        
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                ForEach(viewModel.drinks) { drink in
+                    HStack {
+                        
+                        // Drink info
+                        HStack {
+                            Image(systemName: drink.icon)
+                                .foregroundColor(.brown)
+                                .imageScale(.large)
+                            Text(drink.name)
+                                .font(.body)
+                            Spacer()
+                            
+                        }
+                        
+                        // Decrement button
+                        Button(action: {
+                            viewModel.decrement(drinkId: drink.id)
+                        }) {
+                            Image(systemName: "minus.circle.fill")
+                                .foregroundColor(.red)
+                                .imageScale(.large)
+                        }
+                        Text("\(drink.count)")
+                            .font(.headline)
+                            .monospacedDigit()
+                        // Increment button
+                        Button(action: {
+                            viewModel.increment(drinkId: drink.id)
+                        }) {
+                            Image(systemName: "plus.circle.fill")
+                                .foregroundColor(.green)
+                                .imageScale(.large)
+                        }
                     }
-                }
-                .onDelete(perform: deleteItems)
+                    .padding(.vertical, 4)
+                
             }
-#if os(macOS)
-            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-#endif
-            .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-#endif
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+            
         }
     }
 }
 
 #Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+    CoffeeTrackerView()
 }

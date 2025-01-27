@@ -12,9 +12,6 @@
 		3024E2002D350C4700A8404B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E1FF2D350C4700A8404B /* Item.swift */; };
 		3024E2022D350C4800A8404B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3024E2012D350C4800A8404B /* Assets.xcassets */; };
 		3024E2062D350C4800A8404B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3024E2052D350C4800A8404B /* Preview Assets.xcassets */; };
-		3024E2102D350C4800A8404B /* CoffeegramTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E20F2D350C4800A8404B /* CoffeegramTests.swift */; };
-		3024E21A2D350C4800A8404B /* CoffeegramUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E2192D350C4800A8404B /* CoffeegramUITests.swift */; };
-		3024E21C2D350C4800A8404B /* CoffeegramUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E21B2D350C4800A8404B /* CoffeegramUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,10 +40,7 @@
 		3024E2032D350C4800A8404B /* Coffeegram.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coffeegram.entitlements; sourceTree = "<group>"; };
 		3024E2052D350C4800A8404B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3024E20B2D350C4800A8404B /* CoffeegramTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeegramTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3024E20F2D350C4800A8404B /* CoffeegramTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeegramTests.swift; sourceTree = "<group>"; };
 		3024E2152D350C4800A8404B /* CoffeegramUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeegramUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3024E2192D350C4800A8404B /* CoffeegramUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeegramUITests.swift; sourceTree = "<group>"; };
-		3024E21B2D350C4800A8404B /* CoffeegramUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeegramUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				3024E1FA2D350C4700A8404B /* Coffeegram */,
-				3024E20E2D350C4800A8404B /* CoffeegramTests */,
-				3024E2182D350C4800A8404B /* CoffeegramUITests */,
 				3024E1F92D350C4700A8404B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -113,23 +105,6 @@
 				3024E2052D350C4800A8404B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		3024E20E2D350C4800A8404B /* CoffeegramTests */ = {
-			isa = PBXGroup;
-			children = (
-				3024E20F2D350C4800A8404B /* CoffeegramTests.swift */,
-			);
-			path = CoffeegramTests;
-			sourceTree = "<group>";
-		};
-		3024E2182D350C4800A8404B /* CoffeegramUITests */ = {
-			isa = PBXGroup;
-			children = (
-				3024E2192D350C4800A8404B /* CoffeegramUITests.swift */,
-				3024E21B2D350C4800A8404B /* CoffeegramUITestsLaunchTests.swift */,
-			);
-			path = CoffeegramUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,7 +247,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3024E2102D350C4800A8404B /* CoffeegramTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,8 +254,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3024E21A2D350C4800A8404B /* CoffeegramUITests.swift in Sources */,
-				3024E21C2D350C4800A8404B /* CoffeegramUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
