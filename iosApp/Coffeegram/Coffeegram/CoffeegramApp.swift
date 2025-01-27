@@ -5,8 +5,8 @@ import SwiftData
 struct CoffeegramApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            CoffeeDrink.self,
-        ])
+                                CoffeeDrink.self,
+                            ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {
@@ -18,7 +18,7 @@ struct CoffeegramApp: App {
 
     var body: some Scene {
         WindowGroup {
-            CoffeeTrackerView()
+            ListView()
         }
         .modelContainer(sharedModelContainer)
     }

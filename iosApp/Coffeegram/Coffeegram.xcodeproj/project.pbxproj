@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		30072ACF2D47F0760009FC39 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30072ACE2D47F0760009FC39 /* ListViewModel.swift */; };
 		3024E1FC2D350C4700A8404B /* CoffeegramApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E1FB2D350C4700A8404B /* CoffeegramApp.swift */; };
-		3024E1FE2D350C4700A8404B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E1FD2D350C4700A8404B /* ContentView.swift */; };
-		3024E2002D350C4700A8404B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E1FF2D350C4700A8404B /* Item.swift */; };
+		3024E1FE2D350C4700A8404B /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3024E1FD2D350C4700A8404B /* ListView.swift */; };
 		3024E2022D350C4800A8404B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3024E2012D350C4800A8404B /* Assets.xcassets */; };
 		3024E2062D350C4800A8404B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3024E2052D350C4800A8404B /* Preview Assets.xcassets */; };
+		65F645073950D63F6C2CFCF6 /* CoffeeDrink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F643B9172343A28DCE7419 /* CoffeeDrink.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,15 +33,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		30072ACE2D47F0760009FC39 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		3024E1F82D350C4700A8404B /* Coffeegram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coffeegram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3024E1FB2D350C4700A8404B /* CoffeegramApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeegramApp.swift; sourceTree = "<group>"; };
-		3024E1FD2D350C4700A8404B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		3024E1FF2D350C4700A8404B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		3024E1FD2D350C4700A8404B /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		3024E2012D350C4800A8404B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3024E2032D350C4800A8404B /* Coffeegram.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Coffeegram.entitlements; sourceTree = "<group>"; };
 		3024E2052D350C4800A8404B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3024E20B2D350C4800A8404B /* CoffeegramTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeegramTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3024E2152D350C4800A8404B /* CoffeegramUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoffeegramUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		65F643B9172343A28DCE7419 /* CoffeeDrink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoffeeDrink.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,11 +92,12 @@
 			isa = PBXGroup;
 			children = (
 				3024E1FB2D350C4700A8404B /* CoffeegramApp.swift */,
-				3024E1FD2D350C4700A8404B /* ContentView.swift */,
-				3024E1FF2D350C4700A8404B /* Item.swift */,
+				3024E1FD2D350C4700A8404B /* ListView.swift */,
 				3024E2012D350C4800A8404B /* Assets.xcassets */,
 				3024E2032D350C4800A8404B /* Coffeegram.entitlements */,
 				3024E2042D350C4800A8404B /* Preview Content */,
+				65F643B9172343A28DCE7419 /* CoffeeDrink.swift */,
+				30072ACE2D47F0760009FC39 /* ListViewModel.swift */,
 			);
 			path = Coffeegram;
 			sourceTree = "<group>";
@@ -237,9 +240,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3024E1FE2D350C4700A8404B /* ContentView.swift in Sources */,
-				3024E2002D350C4700A8404B /* Item.swift in Sources */,
+				30072ACF2D47F0760009FC39 /* ListViewModel.swift in Sources */,
+				3024E1FE2D350C4700A8404B /* ListView.swift in Sources */,
 				3024E1FC2D350C4700A8404B /* CoffeegramApp.swift in Sources */,
+				65F645073950D63F6C2CFCF6 /* CoffeeDrink.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,9 +12,11 @@ local.properties
 
 key.properties
 
-iosApp/Podfile.lock
-iosApp/Pods/*
-iosApp/iosApp.xcodeproj/*
+iosApp/.idea
+iosApp/Coffeegram/Podfile.lock
+iosApp/Coffeegram/Pods/*
+iosApp/Coffeegram/Coffeegram.xcodeproj/*
+!iosApp/Coffeegram/Coffeegram.xcodeproj/project.pbxproj
 
 cmp-iosApp/Podfile.lock
 cmp-iosApp/Pods/*
