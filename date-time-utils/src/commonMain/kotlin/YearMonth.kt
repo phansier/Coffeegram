@@ -33,7 +33,7 @@ data class YearMonth(val year: Int, val month: Month) {
         return dayOfMonth >= 1 && dayOfMonth <= lengthOfMonth()
     }
 
-    private fun lengthOfMonth(): Int {
+    fun lengthOfMonth(): Int {
         return month.days(isLeapYear(year))
     }
 }
@@ -90,7 +90,7 @@ private fun isLeapYear(prolepticYear: Int): Boolean =
     prolepticYear and 3 == 0 && (prolepticYear % 100 != 0 || prolepticYear % 400 == 0)
 
 fun dateFormatSymbolsShortWeekdays(): List<String> =
-    DayOfWeek.values().map { it.getShortDisplayName() }
+    DayOfWeek.entries.map { it.getShortDisplayName() }
 
 fun YearMonth.toTotalMonths(): Int {
     val yearsInMonths = this.year * 12
