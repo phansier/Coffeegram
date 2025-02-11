@@ -1,6 +1,6 @@
 plugins {
     id("convention.detekt")
-    id("com.autonomousapps.dependency-analysis") version "2.8.0"
+    id("com.autonomousapps.dependency-analysis") version "2.8.2"
 }
 
 buildscript {
