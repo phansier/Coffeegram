@@ -22,7 +22,7 @@ wearCompose = "1.4.1" # https://developer.android.com/jetpack/androidx/releases/
 cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertino
 
 coroutines = "1.10.1" # https://github.com/Kotlin/kotlinx.coroutines
-datastore = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/datastore
+datastore = "1.1.2" # https://developer.android.com/jetpack/androidx/releases/datastore
 koin = "4.0.2" # https://github.com/InsertKoinIO/koin#setup--current-version
 lifecycle = "2.8.7" # https://developer.android.com/jetpack/androidx/releases/lifecycle
 core = "1.15.0" # https://developer.android.com/jetpack/androidx/releases/core
