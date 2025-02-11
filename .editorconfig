@@ -11,3 +11,6 @@ insert_final_newline = true
 max_line_length = 120
 
 ij_kotlin_imports_layout = *, java.**, javax.**, kotlin.**, ^
+
+[.github/dependabot.yml]
+indent_size = 2
