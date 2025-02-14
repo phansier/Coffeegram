@@ -8,7 +8,7 @@ kotlin = "2.1.10" # https://github.com/JetBrains/kotlin/releases
 compose = "1.7.8" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.8.0-alpha02" # https://github.com/JetBrains/compose-multiplatform/releases
 
-agp = "8.8.0" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.8.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.1.0" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-beta01" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-beta01" # https://developer.android.com/jetpack/androidx/releases/sqlite
