@@ -91,7 +91,7 @@ kotlin {
             implementation(libs.coroutines.test)
         }
         androidMain.dependencies {
-            // api(libs.core.coreKtx)
+            implementation(compose.uiTooling)
         }
         val androidUnitTest by getting {
             dependencies {
