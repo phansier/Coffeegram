@@ -1,6 +1,5 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.KotlinJsCompile
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
@@ -114,10 +113,6 @@ kotlin {
             isStatic = true
         }
     }
-}
-
-tasks.withType<KotlinJsCompile>().configureEach {
-    kotlinOptions.freeCompilerArgs += listOf("-Xwasm-use-traps-instead-of-exceptions")
 }
 
 android {
