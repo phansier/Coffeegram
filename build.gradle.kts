@@ -17,6 +17,7 @@ buildscript {
         classpath(libs.ksp)
 
         classpath(libs.composeGradle)
+        classpath(libs.serializationGradle)
         classpath(libs.sqldelightGradle)
         classpath(libs.composeKotlinGradle)
         classpath(libs.protobufGradle)

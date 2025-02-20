@@ -11,6 +11,7 @@ plugins {
     kotlin("native.cocoapods")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.kotlin.plugin.serialization")
     id("org.jetbrains.compose.hot-reload") version "1.0.0-alpha01"
 
     `maven-publish`
@@ -75,6 +76,10 @@ kotlin {
 
             implementation(libs.cupertino.adaptive)
             implementation(libs.cupertino.iconsExtended)
+
+            api(libs.decompose.core)
+            api(libs.essenty)
+            implementation(libs.decompose.compose)
 
             api(libs.koin.core)
         }

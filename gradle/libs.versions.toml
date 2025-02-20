@@ -14,6 +14,9 @@ sqlite = "2.5.0-rc02" # https://developer.android.com/jetpack/androidx/releases/
 ksp = "2.1.20-1.0.31" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha09"
 
+decompose = "3.2.2"
+essenty = "2.2.1"
+
 detekt = "1.23.8" # https://github.com/detekt/detekt
 detektCompose = "0.4.22" # https://github.com/mrmans0n/compose-rules
 wearCompose = "1.4.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
@@ -108,6 +111,8 @@ lottie-compose = "com.airbnb.android:lottie-compose:6.6.4" # https://github.com/
 
 composeGradle = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "jetbrainsCompose" }
 sqldelightGradle = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
+serializationGradle = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+
 
 
 kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.2" # https://github.com/Kotlin/kotlinx-datetime
@@ -121,6 +126,10 @@ sqldelight-webWorkerDriver = { module = "app.cash.sqldelight:web-worker-driver",
 
 cupertino-adaptive = { module = "io.github.schott12521:cupertino-adaptive", version.ref = "cupertino" }
 cupertino-iconsExtended = { module = "io.github.schott12521:cupertino-icons-extended", version.ref = "cupertino" }
+
+decompose-core = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+decompose-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }
+essenty = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" }
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-annotations = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
