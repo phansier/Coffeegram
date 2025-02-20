@@ -4,22 +4,22 @@ compileSdk = "35"
 minSdk = "24"
 wearMinSdk = "25"
 
-kotlin = "2.1.10" # https://github.com/JetBrains/kotlin/releases
+kotlin = "2.0.21" # https://github.com/JetBrains/kotlin/releases
 compose = "1.7.8" # https://developer.android.com/jetpack/androidx/releases/compose-ui
-jetbrainsCompose = "1.8.0-alpha02" # https://github.com/JetBrains/compose-multiplatform/releases
+jetbrainsCompose = "1.7.3" # https://github.com/JetBrains/compose-multiplatform/releases
 
 agp = "8.8.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.1.0" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-beta01" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-beta01" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.1.10-1.0.30" # https://github.com/google/ksp/releases
+ksp = "2.0.21-1.0.26" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha08"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt
 detektCompose = "0.4.22" # https://github.com/mrmans0n/compose-rules
 wearCompose = "1.4.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
-cupertino = "0.1.0-alpha04" # https://github.com/alexzhirkevich/compose-cupertino
+cupertino = "2.0.8" # https://github.com/schott12521/compose-cupertino
 
 coroutines = "1.10.1" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.1.2" # https://developer.android.com/jetpack/androidx/releases/datastore
@@ -119,8 +119,8 @@ sqldelight-nativeDriver = { module = "app.cash.sqldelight:native-driver", versio
 sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-webWorkerDriver = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqldelight" }
 
-cupertino-adaptive = { module = "io.github.alexzhirkevich:cupertino-adaptive", version.ref = "cupertino" }
-cupertino-iconsExtended = { module = "io.github.alexzhirkevich:cupertino-icons-extended", version.ref = "cupertino" }
+cupertino-adaptive = { module = "io.github.schott12521:cupertino-adaptive", version.ref = "cupertino" }
+cupertino-iconsExtended = { module = "io.github.schott12521:cupertino-icons-extended", version.ref = "cupertino" }
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-annotations = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }

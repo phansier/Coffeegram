@@ -19,11 +19,11 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
-import io.github.alexzhirkevich.cupertino.adaptive.icons.AdaptiveIcons
-import io.github.alexzhirkevich.cupertino.adaptive.icons.KeyboardArrowLeft
-import io.github.alexzhirkevich.cupertino.adaptive.icons.KeyboardArrowRight
+import com.slapps.cupertino.adaptive.AdaptiveIconButton
+import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
+import com.slapps.cupertino.adaptive.icons.AdaptiveIcons
+import com.slapps.cupertino.adaptive.icons.KeyboardArrowLeft
+import com.slapps.cupertino.adaptive.icons.KeyboardArrowRight
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee

@@ -25,8 +25,8 @@ import coffeegram.cmp_common.generated.resources.app_theme_dark
 import coffeegram.cmp_common.generated.resources.app_theme_light
 import coffeegram.cmp_common.generated.resources.app_theme_system
 import coffeegram.cmp_common.generated.resources.settings
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveSwitch
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
+import com.slapps.cupertino.adaptive.AdaptiveSwitch
+import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource

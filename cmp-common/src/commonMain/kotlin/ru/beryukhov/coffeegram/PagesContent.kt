@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.calendar
 import coffeegram.cmp_common.generated.resources.settings
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBar
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveNavigationBarItem
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveScaffold
+import com.slapps.cupertino.adaptive.AdaptiveNavigationBar
+import com.slapps.cupertino.adaptive.AdaptiveNavigationBarItem
+import com.slapps.cupertino.adaptive.AdaptiveScaffold
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore

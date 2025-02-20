@@ -11,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveIconButton
-import io.github.alexzhirkevich.cupertino.adaptive.AdaptiveTopAppBar
+import com.slapps.cupertino.adaptive.AdaptiveIconButton
+import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
