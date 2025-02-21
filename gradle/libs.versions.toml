@@ -13,7 +13,7 @@ ktor = "3.1.0" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-beta01" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-beta01" # https://developer.android.com/jetpack/androidx/releases/sqlite
 ksp = "2.1.10-1.0.30" # https://github.com/google/ksp/releases
-screenshot = "0.0.1-alpha08"
+screenshot = "0.0.1-alpha09"
 
 detekt = "1.23.7" # https://github.com/detekt/detekt
 detektCompose = "0.4.22" # https://github.com/mrmans0n/compose-rules
