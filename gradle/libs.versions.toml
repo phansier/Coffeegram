@@ -9,17 +9,17 @@ compose = "1.7.8" # https://developer.android.com/jetpack/androidx/releases/comp
 jetbrainsCompose = "1.7.3" # https://github.com/JetBrains/compose-multiplatform/releases
 
 agp = "8.8.1" # https://developer.android.com/studio/releases/gradle-plugin
-ktor = "3.1.0" # https://github.com/ktorio/ktor
+ktor = "3.1.1" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-beta01" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-beta01" # https://developer.android.com/jetpack/androidx/releases/sqlite
 ksp = "2.1.10-1.0.30" # https://github.com/google/ksp/releases
-screenshot = "0.0.1-alpha08"
+screenshot = "0.0.1-alpha09"
 
-detekt = "1.23.7" # https://github.com/detekt/detekt
+detekt = "1.23.8" # https://github.com/detekt/detekt
 detektCompose = "0.4.22" # https://github.com/mrmans0n/compose-rules
 wearCompose = "1.4.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
-cupertino = "2.0.8" # https://github.com/schott12521/compose-cupertino
+cupertino = "2.1.0" # https://github.com/schott12521/compose-cupertino
 
 coroutines = "1.10.1" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.1.2" # https://developer.android.com/jetpack/androidx/releases/datastore
@@ -62,7 +62,7 @@ compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.r
 compose-activity = "androidx.activity:activity-compose:1.10.0" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
 
 compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
-kakao-compose = { module = "io.github.kakaocup:compose", version = "0.4.5" }
+kakao-compose = { module = "io.github.kakaocup:compose", version = "1.0.0" }
 
 composeWear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
 composeWear-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }
