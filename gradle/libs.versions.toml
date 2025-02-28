@@ -8,11 +8,11 @@ kotlin = "2.1.10" # https://github.com/JetBrains/kotlin/releases
 compose = "1.7.8" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.7.3" # https://github.com/JetBrains/compose-multiplatform/releases
 
-agp = "8.8.1" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.8.2" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.1.1" # https://github.com/ktorio/ktor
-androidxRoom = "2.7.0-beta01" # https://developer.android.com/jetpack/androidx/releases/room
-sqlite = "2.5.0-beta01" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.1.10-1.0.30" # https://github.com/google/ksp/releases
+androidxRoom = "2.7.0-rc01" # https://developer.android.com/jetpack/androidx/releases/room
+sqlite = "2.5.0-rc01" # https://developer.android.com/jetpack/androidx/releases/sqlite
+ksp = "2.1.10-1.0.31" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha09"
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
@@ -59,7 +59,7 @@ compose-material3 = "androidx.compose.material3:material3:1.3.1" # https://devel
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
-compose-activity = "androidx.activity:activity-compose:1.10.0" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
+compose-activity = "androidx.activity:activity-compose:1.10.1" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
 
 compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 kakao-compose = { module = "io.github.kakaocup:compose", version = "1.0.0" }
