@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.singleWindowApplication
+import org.jetbrains.compose.reload.DevelopmentEntryPoint
 import org.koin.core.context.GlobalContext.startKoin
 import ru.beryukhov.coffeegram.DefaultPreview
 import ru.beryukhov.coffeegram.appModule
@@ -25,18 +26,20 @@ fun main() = singleWindowApplication(
     state = WindowState(width = 800.dp, height = 600.dp),
     icon = TrayIcon
 ) {
-    MaterialTheme {
-        CompositionLocalProvider(
-            LocalScrollbarStyle provides ScrollbarStyle(
-                minimalHeight = 16.dp,
-                thickness = 8.dp,
-                shape = MaterialTheme.shapes.small,
-                hoverDurationMillis = 300,
-                unhoverColor = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
-                hoverColor = MaterialTheme.colors.onSurface.copy(alpha = 0.50f)
-            )
-        ) {
-            DefaultPreview(koinApp.get())
+    DevelopmentEntryPoint {
+        MaterialTheme {
+            CompositionLocalProvider(
+                LocalScrollbarStyle provides ScrollbarStyle(
+                    minimalHeight = 16.dp,
+                    thickness = 8.dp,
+                    shape = MaterialTheme.shapes.small,
+                    hoverDurationMillis = 300,
+                    unhoverColor = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
+                    hoverColor = MaterialTheme.colors.onSurface.copy(alpha = 0.50f)
+                )
+            ) {
+                DefaultPreview(koinApp.get())
+            }
         }
     }
 }

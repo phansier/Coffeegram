@@ -2,9 +2,9 @@
 ## Android & Multiplatform Compose based project #KMP
 
 [![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.7.8-yellow)](https://developer.android.com/jetpack/compose)
-[![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.8.0--alpha02-yellow)](https://github.com/JetBrains/compose-multiplatform)
+[![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.7.3-yellow)](https://github.com/JetBrains/compose-multiplatform)
 [![WearCompose Version](https://img.shields.io/badge/Wear%20Compose-1.4.1-yellow)](https://developer.android.com/jetpack/androidx/releases/wear-compose)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.1.10-blue.svg)](https://kotlinlang.org)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.1.20--RC-blue.svg)](https://kotlinlang.org)
 [![Android CI](https://github.com/phansier/Coffeegram/actions/workflows/android.yml/badge.svg)](https://github.com/phansier/Coffeegram/actions/workflows/android.yml)
 [![Jetc.dev](https://img.shields.io/badge/jetc.dev-25-blue)](https://jetc.dev/issues/025.html)
 [![Hits-of-Code](https://hitsofcode.com/github/phansier/Coffeegram?branch=develop)](https://hitsofcode.com/github/phansier/Coffeegram/view?branch=develop)
@@ -48,6 +48,9 @@ Native iOS look & feel by [Compose Cupertino](https://github.com/alexzhirkevich/
 
 ## Run on Desktop jvm
 `./gradlew run`
+
+## Run on Desktop - Hot Reload!
+`./gradlew runHot`
 
 ## Run on iOS
 [Using KMM plugin](https://github.com/JetBrains/compose-multiplatform-ios-android-template#on-ios)

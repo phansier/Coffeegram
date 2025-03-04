@@ -4,7 +4,7 @@ compileSdk = "35"
 minSdk = "24"
 wearMinSdk = "25"
 
-kotlin = "2.1.10" # https://github.com/JetBrains/kotlin/releases
+kotlin = "2.1.20-RC" # https://github.com/JetBrains/kotlin/releases
 compose = "1.7.8" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.7.3" # https://github.com/JetBrains/compose-multiplatform/releases
 
@@ -12,7 +12,7 @@ agp = "8.8.2" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.1.1" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-rc01" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-rc01" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.1.10-1.0.31" # https://github.com/google/ksp/releases
+ksp = "2.1.20-RC-1.0.31" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha09"
 
 detekt = "1.23.8" # https://github.com/detekt/detekt

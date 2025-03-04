@@ -1,4 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.compose.reload.ComposeHotRun
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
@@ -9,6 +11,7 @@ plugins {
     kotlin("native.cocoapods")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.compose.hot-reload") version "1.0.0-alpha01"
 
     `maven-publish`
 }
@@ -133,6 +136,10 @@ android {
     }
 }
 
+tasks.register<ComposeHotRun>("runHot") {
+    mainClass.set("Main_desktopKt")
+}
+
 compose.desktop {
     application {
         mainClass = "Main_desktopKt"
@@ -160,4 +167,8 @@ compose.desktop {
             }
         }
     }
+}
+
+composeCompiler {
+    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
 }
