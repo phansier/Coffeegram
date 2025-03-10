@@ -11,8 +11,7 @@
     <string name="app_theme_dark">Dark</string>
     <string name="app_theme_dynamic">Dynamic</string>
     <string name="app_theme_summer">Summer</string>
-    <string name="app_widget_description">App Widget Description</string>
+    <string name="app_widget_title">Today\'s coffee consumption</string>
+    <string name="app_widget_description">Quick access to coffee tracking</string>
     <string name="loading_widget">Loading widget</string>
-    <string name="first_glance_widget">Widget</string>
-
 </resources>

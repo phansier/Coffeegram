@@ -13,23 +13,4 @@
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="3"
     android:targetCellHeight="3"
-    android:widgetCategory="home_screen|keyguard|searchbox" />
-
-<!--
-    >before Android 12
-    android:minWidth="180dp"
-    android:minHeight="50dp"
-    >since Android 12
-    android:minResizeHeight="50dp"
-    android:minResizeWidth="180dp"
-    android:maxResizeHeight="450dp"
-    android:maxResizeWidth="570dp"
-
-    >before Android 12
-    android:previewImage="@drawable/logo_splash"
-    >since Android 12
-    android:previewLayout="@layout/widget_first_glance_preview"
-    android:description="@string/app_widget_description"
-
-
--->
+    android:widgetCategory="home_screen" />

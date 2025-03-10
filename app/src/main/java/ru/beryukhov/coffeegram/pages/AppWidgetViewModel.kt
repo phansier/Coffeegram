@@ -1,6 +1,5 @@
 package ru.beryukhov.coffeegram.pages
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -11,6 +10,7 @@ import kotlinx.datetime.todayIn
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.withEmpty
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -28,15 +28,21 @@ class AppWidgetViewModelStub : AppWidgetViewModel {
     override fun getCurrentDayCupsCount(): Int = 0
 
     override fun getCurrentDayMostPopularWithCount(): CoffeeTypeWithCount =
-        CoffeeTypeWithCount(CoffeeType.Cappuccino, 0)
+        mockList.first()
 
     override fun getCurrentDayList(): PersistentList<CoffeeTypeWithCount> =
-        persistentListOf(CoffeeTypeWithCount(CoffeeType.Cappuccino, 0))
+        mockList
 
     override fun currentDayIncrement(coffeeType: CoffeeType) = Unit
 
     override fun currentDayDecrement(coffeeType: CoffeeType) = Unit
 }
+
+private val mockList: PersistentList<CoffeeTypeWithCount> = persistentListOf(
+    CoffeeTypeWithCount(CoffeeType.Cappuccino, 5),
+    CoffeeTypeWithCount(CoffeeType.Espresso, 3),
+    CoffeeTypeWithCount(CoffeeType.Macchiato, 2),
+)
 
 class AppWidgetViewModelImpl(
     private val daysCoffeesStore: DaysCoffeesStore,
@@ -56,11 +62,10 @@ class AppWidgetViewModelImpl(
     override fun getCurrentDayList(): PersistentList<CoffeeTypeWithCount> {
         val dayCoffeeState: DaysCoffeesState = daysCoffeesStore.state.value
         val dayCoffee = dayCoffeeState.value[getCurrentDay()] ?: DayCoffee()
-        val list = dayCoffee.coffeeCountMap.toList()
-            .sortedByDescending { it.second }
-            .map { CoffeeTypeWithCount(it.first, it.second) }
+        val list = dayCoffee.coffeeCountMap.withEmpty().toList()
+            .sortedByDescending { it.count }
         val emptyListMock = listOf(CoffeeTypeWithCount(CoffeeType.Cappuccino, 0))
-        return list.ifEmpty { emptyListMock }.toPersistentList()
+        return list.toPersistentList()
     }
 
     override fun currentDayDecrement(coffeeType: CoffeeType) {
@@ -73,7 +78,6 @@ class AppWidgetViewModelImpl(
     }
 
     override fun currentDayIncrement(coffeeType: CoffeeType) {
-        Log.d("TEST||", "currentDayIncrement: coffeeType = $coffeeType")
         newIntent(
             DaysCoffeesIntent.PlusCoffee(
                 localDate = getCurrentDay(),
