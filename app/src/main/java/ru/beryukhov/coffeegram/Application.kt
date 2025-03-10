@@ -1,7 +1,6 @@
 package ru.beryukhov.coffeegram
 
 import android.app.Application
-import android.util.Log
 import androidx.glance.appwidget.updateAll
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.launchIn
@@ -28,6 +27,7 @@ import ru.beryukhov.coffeegram.repository.CoffeeStorage
 import ru.beryukhov.coffeegram.repository.ThemeDataStoreProtoStorage
 import ru.beryukhov.coffeegram.store_lib.Storage
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget
+import ru.beryukhov.coffeegram.widget.setWidgetPreview
 
 class Application : Application() {
 
@@ -44,8 +44,8 @@ class Application : Application() {
         // or in a snapshot that has not yet been applied
         GlobalScope.launch {
             FirstGlanceWidget().updateAll(this@Application)
+            setWidgetPreview(this@Application)
             get<DaysCoffeesStore>().state.onEach {
-                Log.d("TEST||", "onCreate: $it")
                 FirstGlanceWidget().updateAll(this@Application) }.launchIn(this)
         }
     }
