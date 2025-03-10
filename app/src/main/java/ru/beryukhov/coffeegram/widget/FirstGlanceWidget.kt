@@ -129,13 +129,7 @@ private fun SmallWidget(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .fillMaxSize()
-            .clickable(
-                actionStartActivity<MainActivity>(
-                    actionParametersOf(
-                        ActionParameters.Key<String>(NAVIGATION_STATE_KEY) to TODAYS_COFFEE_LIST
-                    )
-                )
-            )
+            .clickable(openAppAction)
     ) {
         Image(
             provider = ImageProvider(resId = common_R.drawable.cappuccino),
@@ -159,6 +153,12 @@ private fun SmallWidget(
     }
 }
 
+private val openAppAction = actionStartActivity<MainActivity>(
+    actionParametersOf(
+        ActionParameters.Key<String>(NAVIGATION_STATE_KEY) to TODAYS_COFFEE_LIST
+    )
+)
+
 @Composable
 private fun HorizontalWidget(
     coffeeTypeWithCount: CoffeeTypeWithCount,
@@ -168,7 +168,7 @@ private fun HorizontalWidget(
 ) {
     val padding = 6.dp
     Row(
-        modifier = modifier,
+        modifier = modifier.clickable(openAppAction),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         val isReduceCountAllowed = coffeeTypeWithCount.count > 0
