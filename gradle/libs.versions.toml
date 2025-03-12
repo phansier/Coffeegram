@@ -30,7 +30,7 @@ glance = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/glanc
 sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 
 material = "1.12.0" # https://github.com/material-components/material-components-android
-vico = "1.12.0"
+vico = "2.0.3"
 protobuf = "4.30.0"
 
 [libraries]
