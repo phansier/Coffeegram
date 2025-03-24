@@ -16,19 +16,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.data.CoffeeType
-import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
-import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 
 @Composable
 fun CoffeeTypeItem(
-    localDate: LocalDate,
     coffeeType: CoffeeType,
     count: Int,
-    daysCoffeesStore: DaysCoffeesStore,
+    onIncrement: () -> Unit,
+    onDecrement: () -> Unit,
     modifier: Modifier = Modifier,
     ) {
     Row(
@@ -56,7 +53,7 @@ fun CoffeeTypeItem(
                     minHeight = 0.dp
                 )
             TextButton(
-                onClick = { daysCoffeesStore.newIntent(DaysCoffeesIntent.MinusCoffee(localDate, coffeeType)) },
+                onClick = onDecrement,
                 contentPadding = PaddingValues(0.dp),
                 modifier = textButtonModifier
             ) {
@@ -68,7 +65,7 @@ fun CoffeeTypeItem(
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
             TextButton(
-                onClick = { daysCoffeesStore.newIntent(DaysCoffeesIntent.PlusCoffee(localDate, coffeeType)) },
+                onClick = onIncrement,
                 contentPadding = PaddingValues(0.dp),
                 modifier = textButtonModifier
             ) {

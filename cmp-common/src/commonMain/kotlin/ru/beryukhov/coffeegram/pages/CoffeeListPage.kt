@@ -18,6 +18,7 @@ import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.coffeeTypeValues
 import ru.beryukhov.coffeegram.model.CoffeeTypeWithCount
+import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
@@ -59,8 +60,13 @@ fun CoffeeList(
     LazyColumn(modifier = modifier.fillMaxHeight()) {
         itemsIndexed(
             items = dayCoffee.coffeeCountMap.withEmpty(),
-            itemContent = { _, pair: CoffeeTypeWithCount ->
-                CoffeeTypeItem(localDate, pair.coffee, pair.count, daysCoffeesStore)
+            itemContent = { _, (coffee, count): CoffeeTypeWithCount ->
+                CoffeeTypeItem(
+                    coffeeType = coffee,
+                    count = count,
+                    onIncrement = { daysCoffeesStore.newIntent(DaysCoffeesIntent.PlusCoffee(localDate, coffee)) },
+                    onDecrement = { daysCoffeesStore.newIntent(DaysCoffeesIntent.MinusCoffee(localDate, coffee)) }
+                )
             }
         )
     }

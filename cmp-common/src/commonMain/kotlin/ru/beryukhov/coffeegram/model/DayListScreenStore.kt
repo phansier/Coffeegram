@@ -2,6 +2,7 @@ package ru.beryukhov.coffeegram.model
 
 import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.pages.withEmpty
 import ru.beryukhov.coffeegram.store_lib.InMemoryStore
 
@@ -24,7 +25,7 @@ class DayListScreenStore(date: LocalDate, initialStoreState: DaysCoffeesState) :
 }
 
 private fun DaysCoffeesState.calculate(date: LocalDate): List<CoffeeTypeWithCount> =
-    this.coffees[date]?.coffeeCountMap?.withEmpty() ?: emptyList()
+    (this.coffees[date] ?: DayCoffee()).coffeeCountMap.withEmpty()
 
 sealed interface DayListScreenIntent {
     data class NewDaysCoffeesState(val state: DaysCoffeesState) : DayListScreenIntent

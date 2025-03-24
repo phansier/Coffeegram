@@ -1,5 +1,8 @@
 package ru.beryukhov.coffeegram.screens
 
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -15,6 +18,8 @@ import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.DayListComponent
+import ru.beryukhov.coffeegram.model.CoffeeTypeWithCount
+import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 import ru.beryukhov.date_time_utils.getFullMonthName
 
 @Composable
@@ -23,6 +28,19 @@ fun DayListScreen(
     modifier: Modifier = Modifier
 ) {
     val screenState by component.models.collectAsState()
+    LazyColumn(modifier = modifier.fillMaxHeight()) {
+        itemsIndexed(
+            items = screenState.dayItems,
+            itemContent = { _, (coffee, count): CoffeeTypeWithCount ->
+                CoffeeTypeItem(
+                    coffeeType = coffee,
+                    count = count,
+                    onIncrement = { component.onPlusCoffee(coffee) },
+                    onDecrement = { component.onMinusCoffee(coffee) },
+                )
+            }
+        )
+    }
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)
