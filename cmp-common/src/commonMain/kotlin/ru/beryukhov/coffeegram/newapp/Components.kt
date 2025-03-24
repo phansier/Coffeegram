@@ -4,19 +4,20 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import com.arkivanov.decompose.ComponentContext
-import com.arkivanov.decompose.router.stack.ChildStack
-import com.arkivanov.decompose.router.stack.StackNavigation
-import com.arkivanov.decompose.router.stack.childStack
-import com.arkivanov.decompose.router.stack.pushNew
+import com.arkivanov.decompose.router.pages.ChildPages
+import com.arkivanov.decompose.router.pages.Pages
+import com.arkivanov.decompose.router.pages.PagesNavigation
+import com.arkivanov.decompose.router.pages.childPages
+import com.arkivanov.decompose.router.pages.select
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
 import kotlinx.serialization.Serializable
-import kotlin.reflect.KClass
 
 interface RootComponent {
-    val stack: Value<ChildStack<*, Child>>
+    val pages: Value<ChildPages<*, Child>>
     val isMaterial: State<Boolean>
+    fun selectPage(childIndex: Int)
 
     sealed interface Child {
         class Table(
@@ -31,23 +32,27 @@ interface RootComponent {
 class DefaultRootComponent(
     context: ComponentContext,
 ) : RootComponent, ComponentContext by context {
-    private val navigation = StackNavigation<Config>()
+    private val navigation = PagesNavigation<Config>()
     private val model =
         instanceKeeper.getOrCreate {
             RootViewModel()
         }
 
-    override val stack: Value<ChildStack<*, RootComponent.Child>> =
-        childStack(
+    override val pages: Value<ChildPages<*, RootComponent.Child>> =
+        childPages(
             source = navigation,
             serializer = Config.serializer(),
-            initialConfiguration = Config.Table,
+            initialPages = { Pages(items = listOf(Config.Table,Config.Settings), selectedIndex = 0) },
             handleBackButton = true,
             childFactory = ::child,
         )
 
     override val isMaterial: State<Boolean>
         get() = model.isMaterial
+
+    override fun selectPage(childIndex: Int) {
+        navigation.select(childIndex)
+    }
 
     private fun child(
         config: Config,
@@ -58,15 +63,6 @@ class DefaultRootComponent(
                 DefaultTableComponent(
                     context = context,
                     isMaterial = model.isMaterial,
-                    onNavigate = {
-                        val screen =
-                            when (it) {
-                                RootComponent.Child.Table::class -> Config.Table // todo actual child screens
-                                RootComponent.Child.Settings::class -> Config.Settings
-                                else -> return@DefaultTableComponent
-                            }
-                        navigation.pushNew(screen)
-                    }
                 )
             )
             Config.Settings -> RootComponent.Child.Settings(
@@ -95,22 +91,19 @@ interface TableComponent {
 
     fun onThemeChanged()
 
-    fun onNavigate(child: KClass<out RootComponent.Child>)
+    // fun onNavigate(child: KClass<out RootComponent.Child>)
 }
 
 class DefaultTableComponent(
     context: ComponentContext,
     override val isMaterial: MutableState<Boolean>,
-    private val onNavigate: (KClass<out RootComponent.Child>) -> Unit,
 ) : TableComponent, ComponentContext by context {
 
     override fun onThemeChanged() {
         isMaterial.value = !isMaterial.value
     }
 
-    override fun onNavigate(child: KClass<out RootComponent.Child>) {
-        onNavigate.invoke(child)
-    }
+//    override fun onNavigate(child: KClass<out RootComponent.Child>) {}
 }
 
 interface SettingsComponent {

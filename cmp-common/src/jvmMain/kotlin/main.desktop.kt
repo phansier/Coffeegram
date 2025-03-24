@@ -9,19 +9,42 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.singleWindowApplication
+import com.arkivanov.decompose.DefaultComponentContext
+import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.jetbrains.compose.reload.DevelopmentEntryPoint
 import org.koin.core.context.GlobalContext.startKoin
 import ru.beryukhov.coffeegram.DefaultPreview
 import ru.beryukhov.coffeegram.appModule
+import ru.beryukhov.coffeegram.newapp.DefaultRootComponent
+import ru.beryukhov.coffeegram.newapp.NewApp
 
 private val koinApp = initKoin().koin
 
- private fun initKoin() =
+private fun initKoin() =
     startKoin {
         modules(appModule)
     }
 
-fun main() = singleWindowApplication(
+fun main() {
+    val lifecycle = LifecycleRegistry()
+
+    val root =
+        DefaultRootComponent(
+            DefaultComponentContext(lifecycle = lifecycle),
+        )
+
+    singleWindowApplication(
+        title = "Coffeegram",
+        state = WindowState(width = 800.dp, height = 600.dp),
+        icon = TrayIcon
+    ) {
+        DevelopmentEntryPoint {
+            NewApp(root)
+        }
+    }
+}
+
+fun mainOld() = singleWindowApplication(
     title = "Coffeegram",
     state = WindowState(width = 800.dp, height = 600.dp),
     icon = TrayIcon

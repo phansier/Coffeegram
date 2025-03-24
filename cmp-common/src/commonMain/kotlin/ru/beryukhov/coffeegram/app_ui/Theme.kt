@@ -8,6 +8,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import com.slapps.cupertino.adaptive.AdaptiveTheme
 import com.slapps.cupertino.adaptive.CupertinoThemeSpec
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import com.slapps.cupertino.adaptive.MaterialThemeSpec
 import com.slapps.cupertino.adaptive.Theme
 import com.slapps.cupertino.theme.darkColorScheme
@@ -75,6 +76,7 @@ private val DarkThemeColors = darkColorScheme(
     inversePrimary = md_theme_dark_inversePrimary,
 )
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun CoffeegramTheme(
     themeState: ThemeState = ThemeStateDefault,
