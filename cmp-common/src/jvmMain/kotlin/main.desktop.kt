@@ -31,6 +31,7 @@ fun main() {
     val root =
         DefaultRootComponent(
             DefaultComponentContext(lifecycle = lifecycle),
+            themeStore = koinApp.get()
         )
 
     singleWindowApplication(
@@ -50,19 +51,17 @@ fun mainOld() = singleWindowApplication(
     icon = TrayIcon
 ) {
     DevelopmentEntryPoint {
-        MaterialTheme {
-            CompositionLocalProvider(
-                LocalScrollbarStyle provides ScrollbarStyle(
-                    minimalHeight = 16.dp,
-                    thickness = 8.dp,
-                    shape = MaterialTheme.shapes.small,
-                    hoverDurationMillis = 300,
-                    unhoverColor = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
-                    hoverColor = MaterialTheme.colors.onSurface.copy(alpha = 0.50f)
-                )
-            ) {
-                DefaultPreview(koinApp.get())
-            }
+        CompositionLocalProvider(
+            LocalScrollbarStyle provides ScrollbarStyle(
+                minimalHeight = 16.dp,
+                thickness = 8.dp,
+                shape = MaterialTheme.shapes.small,
+                hoverDurationMillis = 300,
+                unhoverColor = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
+                hoverColor = MaterialTheme.colors.onSurface.copy(alpha = 0.50f)
+            )
+        ) {
+            DefaultPreview(koinApp.get())
         }
     }
 }

@@ -6,6 +6,7 @@ import com.arkivanov.essenty.lifecycle.resume
 import com.arkivanov.essenty.lifecycle.stop
 import kotlinx.browser.document
 import org.w3c.dom.Document
+import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.newapp.DefaultRootComponent
 import ru.beryukhov.coffeegram.newapp.NewApp
 
@@ -13,9 +14,9 @@ import ru.beryukhov.coffeegram.newapp.NewApp
 fun main() {
     val lifecycle = LifecycleRegistry()
 
-    val root =
-        DefaultRootComponent(
+    val root = DefaultRootComponent(
             DefaultComponentContext(lifecycle = lifecycle),
+            themeStore = ThemeStore(LocalThemePrefStorage())
         )
 
     lifecycle.attachToDocument()

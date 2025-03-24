@@ -13,8 +13,7 @@ class ThemeStore(storage: Storage<ThemeState>) : PersistentStore<ThemeIntent, Th
             ThemeIntent.SetDarkIntent -> state.value.copy(useDarkTheme = DarkThemeState.DARK)
             ThemeIntent.SetLightIntent -> state.value.copy(useDarkTheme = DarkThemeState.LIGHT)
             ThemeIntent.SetSystemIntent -> state.value.copy(useDarkTheme = DarkThemeState.SYSTEM)
-            ThemeIntent.SetCupertinoIntent -> state.value.copy(isCupertino = true)
-            ThemeIntent.UnSetCupertinoIntent -> state.value.copy(isCupertino = false)
+            is ThemeIntent.SetCupertinoIntent -> state.value.copy(isCupertino = intent.enabled)
         }
     }
 }
@@ -23,8 +22,7 @@ sealed interface ThemeIntent {
     object SetDarkIntent : ThemeIntent
     object SetLightIntent : ThemeIntent
     object SetSystemIntent : ThemeIntent
-    object SetCupertinoIntent : ThemeIntent
-    object UnSetCupertinoIntent : ThemeIntent
+    data class SetCupertinoIntent(val enabled: Boolean) : ThemeIntent
 }
 
 data class ThemeState(val useDarkTheme: DarkThemeState, val isCupertino: Boolean)

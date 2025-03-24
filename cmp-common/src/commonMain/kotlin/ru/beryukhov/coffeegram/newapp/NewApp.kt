@@ -1,20 +1,16 @@
 package ru.beryukhov.coffeegram.newapp
 
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.calendar
 import coffeegram.cmp_common.generated.resources.settings
@@ -26,19 +22,17 @@ import com.slapps.cupertino.adaptive.AdaptiveScaffold
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
-import ru.beryukhov.coffeegram.model.DarkThemeState
-import ru.beryukhov.coffeegram.model.ThemeState
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 @Suppress("ModifierMissing")
-fun NewApp(rootComponent: RootComponent) {
+fun NewApp(rootComponent: RootComponent, modifier: Modifier = Modifier) {
 
     CoffeegramTheme(
-        themeState = ThemeState(useDarkTheme = DarkThemeState.SYSTEM, isCupertino = rootComponent.isMaterial.value)
+        themeState = rootComponent.themeState.collectAsState().value,
     ) {
         AdaptiveScaffold(
-            modifier = Modifier.defaultMinSize(minWidth = 800.dp, minHeight = 600.dp),
+            modifier = modifier,
             topBar = {
                 ChildPages(
                     pages = rootComponent.pages,
@@ -82,11 +76,11 @@ fun NewApp(rootComponent: RootComponent) {
                     )
                 }
             }
-        ) {
+        ) { paddingValues ->
             ChildPages(
                 pages = rootComponent.pages,
                 onPageSelected = rootComponent::selectPage,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.padding(paddingValues),
             ) { index, page ->
                 when (val c = page) {
                     is RootComponent.Child.Table -> TableScreen(c.component)

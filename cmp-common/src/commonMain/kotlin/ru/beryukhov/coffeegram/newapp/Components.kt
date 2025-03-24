@@ -12,17 +12,23 @@ import com.arkivanov.decompose.router.pages.select
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
+import ru.beryukhov.coffeegram.model.ThemeIntent
+import ru.beryukhov.coffeegram.model.ThemeState
+import ru.beryukhov.coffeegram.model.ThemeStore
 
 interface RootComponent {
     val pages: Value<ChildPages<*, Child>>
-    val isMaterial: State<Boolean>
+    val themeState: StateFlow<ThemeState>
+
     fun selectPage(childIndex: Int)
 
     sealed interface Child {
         class Table(
             val component: TableComponent,
         ) : Child
+
         class Settings(
             val component: SettingsComponent,
         ) : Child
@@ -31,6 +37,7 @@ interface RootComponent {
 
 class DefaultRootComponent(
     context: ComponentContext,
+    val themeStore: ThemeStore,
 ) : RootComponent, ComponentContext by context {
     private val navigation = PagesNavigation<Config>()
     private val model =
@@ -42,13 +49,12 @@ class DefaultRootComponent(
         childPages(
             source = navigation,
             serializer = Config.serializer(),
-            initialPages = { Pages(items = listOf(Config.Table,Config.Settings), selectedIndex = 0) },
+            initialPages = { Pages(items = listOf(Config.Table, Config.Settings), selectedIndex = 0) },
             handleBackButton = true,
             childFactory = ::child,
         )
 
-    override val isMaterial: State<Boolean>
-        get() = model.isMaterial
+    override val themeState: StateFlow<ThemeState> = themeStore.state
 
     override fun selectPage(childIndex: Int) {
         navigation.select(childIndex)
@@ -65,9 +71,11 @@ class DefaultRootComponent(
                     isMaterial = model.isMaterial,
                 )
             )
+
             Config.Settings -> RootComponent.Child.Settings(
                 DefaultSettingsComponent(
                     context = context,
+                    themeStore = themeStore,
                 )
             )
         }
@@ -107,10 +115,35 @@ class DefaultTableComponent(
 }
 
 interface SettingsComponent {
+    val models: StateFlow<ThemeState>
+
+    fun onSetSystemTheme()
+    fun onSetLightTheme()
+    fun onSetDarkTheme()
+
+    fun onSetCupertinoTheme(enabled: Boolean)
 }
 
 class DefaultSettingsComponent(
     context: ComponentContext,
+    val themeStore: ThemeStore,
 ) : SettingsComponent, ComponentContext by context {
+    override val models: StateFlow<ThemeState> = themeStore.state
+
+    override fun onSetSystemTheme() {
+        themeStore.newIntent(ThemeIntent.SetSystemIntent)
+    }
+
+    override fun onSetLightTheme() {
+        themeStore.newIntent(ThemeIntent.SetLightIntent)
+    }
+
+    override fun onSetDarkTheme() {
+        themeStore.newIntent(ThemeIntent.SetDarkIntent)
+    }
+
+    override fun onSetCupertinoTheme(enabled: Boolean) {
+        themeStore.newIntent(ThemeIntent.SetCupertinoIntent(enabled))
+    }
 
 }

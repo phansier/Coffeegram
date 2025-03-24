@@ -59,7 +59,7 @@ runDesktop:
 	./gradlew run $(params)
 
 runHot:
-	./gradlew runHot $(params)
+	./gradlew runHot --no-configuration-cache $(params)
 
 runWasm:
 	./gradlew :cmp-common:wasmJsBrowserDevelopmentRun --no-configuration-cache $(params)

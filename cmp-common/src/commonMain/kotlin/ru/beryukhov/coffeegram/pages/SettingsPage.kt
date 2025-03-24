@@ -76,7 +76,7 @@ fun ColumnScope.SettingsPage(
                     }
                 }
                 themeStore.newIntent(
-                    if (it) ThemeIntent.SetCupertinoIntent else ThemeIntent.UnSetCupertinoIntent
+                    ThemeIntent.SetCupertinoIntent(it)
                 )
             },
             label = stringResource(Res.string.app_theme_cupertino)

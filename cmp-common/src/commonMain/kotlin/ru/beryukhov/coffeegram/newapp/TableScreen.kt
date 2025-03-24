@@ -2,6 +2,7 @@ package ru.beryukhov.coffeegram.newapp
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 
@@ -9,8 +10,9 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 @Composable
 fun TableScreen(
     component: TableComponent,
+    modifier: Modifier = Modifier
 ) {
-    Text("Table")
+    Text("Table", modifier = modifier)
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)
