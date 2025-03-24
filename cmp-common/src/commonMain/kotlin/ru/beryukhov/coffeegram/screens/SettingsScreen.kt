@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.newapp
+package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -19,6 +19,7 @@ import coffeegram.cmp_common.generated.resources.settings
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
+import ru.beryukhov.coffeegram.components.SettingsComponent
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.pages.ThemeRadioButtonWithText
 import ru.beryukhov.coffeegram.pages.ThemeSwitchWithText

@@ -7,11 +7,11 @@ import com.arkivanov.essenty.lifecycle.stop
 import kotlinx.browser.document
 import org.w3c.dom.Document
 import repository.InMemoryCoffeeRepository
+import ru.beryukhov.coffeegram.components.DefaultRootComponent
 import ru.beryukhov.coffeegram.model.DaysCoffeesStoreImpl
 import ru.beryukhov.coffeegram.model.ThemeStore
-import ru.beryukhov.coffeegram.newapp.DefaultRootComponent
-import ru.beryukhov.coffeegram.newapp.NewApp
 import ru.beryukhov.coffeegram.repository.CoffeeStorage
+import ru.beryukhov.coffeegram.screens.RootScreen
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
@@ -26,7 +26,7 @@ fun main() {
     lifecycle.attachToDocument()
 
     ComposeViewport(document.body!!) {
-        NewApp(root)
+        RootScreen(root)
     }
 }
 

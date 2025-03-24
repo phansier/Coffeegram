@@ -15,8 +15,8 @@ import org.jetbrains.compose.reload.DevelopmentEntryPoint
 import org.koin.core.context.GlobalContext.startKoin
 import ru.beryukhov.coffeegram.DefaultPreview
 import ru.beryukhov.coffeegram.appModule
-import ru.beryukhov.coffeegram.newapp.DefaultRootComponent
-import ru.beryukhov.coffeegram.newapp.NewApp
+import ru.beryukhov.coffeegram.components.DefaultRootComponent
+import ru.beryukhov.coffeegram.screens.RootScreen
 
 private val koinApp = initKoin().koin
 
@@ -41,7 +41,7 @@ fun main() {
         icon = TrayIcon
     ) {
         DevelopmentEntryPoint {
-            NewApp(root)
+            RootScreen(root)
         }
     }
 }

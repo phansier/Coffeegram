@@ -28,7 +28,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.data.Cappuccino
 import ru.beryukhov.coffeegram.data.CoffeeType
-import ru.beryukhov.coffeegram.times
 import ru.beryukhov.date_time_utils.YearMonth
 import ru.beryukhov.date_time_utils.dateFormatSymbolsShortWeekdays
 import ru.beryukhov.date_time_utils.getShortDisplayName
@@ -196,10 +195,10 @@ fun SampleTable(modifier: Modifier = Modifier) =
 fun getWeekDaysNames(): List<String> =
     dateFormatSymbolsShortWeekdays()
 
-fun getEmptyWeek(start: Int, end: Int): List<DayItem> {
-    val list = mutableListOf<DayItem>()
-    for (i in start until end + 1) {
-        list.add(DayItem("$i"))
+private operator fun <E> List<E>.times(i: Int): List<E> {
+    val result = mutableListOf<E>()
+    repeat(i) {
+        result.addAll(this)
     }
-    return list
+    return result
 }

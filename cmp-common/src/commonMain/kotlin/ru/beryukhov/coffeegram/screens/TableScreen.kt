@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.newapp
+package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +24,7 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import com.slapps.cupertino.adaptive.icons.AdaptiveIcons
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowLeft
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowRight
+import ru.beryukhov.coffeegram.components.TableComponent
 import ru.beryukhov.coffeegram.view.MonthTable
 import ru.beryukhov.date_time_utils.getFullMonthName
 

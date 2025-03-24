@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.newapp
+package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,12 +19,13 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.collections.immutable.PersistentList
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.components.RootComponent
 import ru.beryukhov.coffeegram.model.NavBarItem
 import ru.beryukhov.coffeegram.model.getNavBarItems
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
-fun NewApp(rootComponent: RootComponent, modifier: Modifier = Modifier) {
+fun RootScreen(rootComponent: RootComponent, modifier: Modifier = Modifier) {
     val navBarItems = remember { getNavBarItems() }
     CoffeegramTheme(
         themeState = rootComponent.themeState.collectAsState().value,

@@ -10,12 +10,12 @@ import com.arkivanov.decompose.DefaultComponentContext
 import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 import ru.beryukhov.coffeegram.animations.newSplashTransition
+import ru.beryukhov.coffeegram.components.DefaultRootComponent
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.model.ThemeStore
-import ru.beryukhov.coffeegram.newapp.DefaultRootComponent
-import ru.beryukhov.coffeegram.newapp.NewApp
 import ru.beryukhov.coffeegram.pages.LandingPage
+import ru.beryukhov.coffeegram.screens.RootScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                 LandingPage(
                     modifier = Modifier.alpha(transition.splashAlpha),
                 )
-                NewApp(
+                RootScreen(
                     rootComponent = DefaultRootComponent(
                         DefaultComponentContext(lifecycle = lifecycle),
                         themeStore = get(),
