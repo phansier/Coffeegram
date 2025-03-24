@@ -74,7 +74,6 @@ fun PagesContent(
                 Spacer(Modifier.padding(top = topPadding).align(Alignment.CenterHorizontally))
                 when (currentNavigationState) {
                     is NavigationState.TablePage -> TablePage(
-                        yearMonth = currentNavigationState.yearMonth,
                         daysCoffeesStore = daysCoffeesStore,
                         navigationStore = navigationStore
                     )

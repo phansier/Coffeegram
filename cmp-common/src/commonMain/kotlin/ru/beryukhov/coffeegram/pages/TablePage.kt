@@ -9,7 +9,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.contentDescription
@@ -25,12 +27,11 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import com.slapps.cupertino.adaptive.icons.AdaptiveIcons
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowLeft
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowRight
-import kotlinx.collections.immutable.toPersistentMap
-import kotlinx.datetime.LocalDate
-import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
+import ru.beryukhov.coffeegram.model.NavigationState
 import ru.beryukhov.coffeegram.model.NavigationStore
+import ru.beryukhov.coffeegram.model.calculate
 import ru.beryukhov.coffeegram.view.MonthTable
 import ru.beryukhov.date_time_utils.YearMonth
 import ru.beryukhov.date_time_utils.getFullMonthName
@@ -41,7 +42,7 @@ fun TableAppBar(
     yearMonth: YearMonth,
     navigationStore: NavigationStore,
     modifier: Modifier = Modifier,
-    ) {
+) {
     AdaptiveTopAppBar(
         modifier = modifier,
         title = {
@@ -76,7 +77,6 @@ fun TableAppBar(
 
 @Composable
 fun ColumnScope.TablePage(
-    yearMonth: YearMonth,
     daysCoffeesStore: DaysCoffeesStore,
     navigationStore: NavigationStore,
     modifier: Modifier = Modifier,
@@ -84,14 +84,18 @@ fun ColumnScope.TablePage(
     val coffeesState by daysCoffeesStore.state.collectAsState()
 
     Column(horizontalAlignment = Alignment.End, modifier = modifier.weight(1f)) {
+        val navState by navigationStore.state.collectAsState()
+        val yearMonth by remember(navState) { derivedStateOf { (navState as NavigationState.TablePage).yearMonth } }
         MonthTable(
-            yearMonth,
-            coffeesState.coffees.filter { entry: Map.Entry<LocalDate, DayCoffee> ->
-                entry.key.year == yearMonth.year && entry.key.month == yearMonth.month
-            }
-                .mapKeys { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth }
-                .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getCoffeeType() }.toPersistentMap(),
-            navigationStore,
+            yearMonth = yearMonth,
+            filledDayItemsMap = coffeesState.calculate(yearMonth),
+            onClick = { dayOfMonth: Int ->
+                navigationStore.newIntent(
+                    NavigationIntent.OpenCoffeeListPage(
+                        dayOfMonth
+                    )
+                )
+            },
             modifier = Modifier.weight(1f)
         )
         Text("${yearMonth.year}", modifier = Modifier.padding(16.dp))

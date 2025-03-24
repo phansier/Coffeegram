@@ -34,7 +34,8 @@ class MainActivity : ComponentActivity() {
                 NewApp(
                     rootComponent = DefaultRootComponent(
                         DefaultComponentContext(lifecycle = lifecycle),
-                        themeStore = get()
+                        themeStore = get(),
+                        daysCoffeesStore = get(),
                     ),
                     modifier = Modifier.alpha(transition.contentAlpha),
                 )

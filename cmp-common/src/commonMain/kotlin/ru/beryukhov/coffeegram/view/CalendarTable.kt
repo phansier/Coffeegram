@@ -28,8 +28,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.data.Cappuccino
 import ru.beryukhov.coffeegram.data.CoffeeType
-import ru.beryukhov.coffeegram.model.NavigationIntent
-import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.times
 import ru.beryukhov.date_time_utils.YearMonth
 import ru.beryukhov.date_time_utils.dateFormatSymbolsShortWeekdays
@@ -44,7 +42,7 @@ data class DayItem(
 @Composable
 fun DayCell(
     dayItem: DayItem,
-    navigationStore: NavigationStore,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
     ) {
     Column(
@@ -52,13 +50,7 @@ fun DayCell(
         modifier = if (dayItem.dayOfMonth == null) {
             modifier
         } else {
-            modifier.clickable(onClick = {
-                navigationStore.newIntent(
-                    NavigationIntent.OpenCoffeeListPage(
-                        dayItem.dayOfMonth
-                    )
-                )
-            })
+            modifier.clickable(onClick = onClick)
         }
     ) {
         with(dayItem) {
@@ -90,7 +82,11 @@ fun DayCell(
 }
 
 @Composable
-fun WeekRow(dayItems: PersistentList<DayItem?>, navigationStore: NavigationStore, modifier: Modifier = Modifier) {
+fun WeekRow(
+    dayItems: PersistentList<DayItem?>,
+    onClick: (dayOfMonth: Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val weekDaysItems = dayItems.toMutableList()
     weekDaysItems.addAll(listOf(DayItem("")) * (7 - weekDaysItems.size))
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -99,7 +95,7 @@ fun WeekRow(dayItems: PersistentList<DayItem?>, navigationStore: NavigationStore
                 DayCell(
                     dayItem = dayItem
                         ?: DayItem(""),
-                    navigationStore = navigationStore,
+                    onClick = { dayItem?.dayOfMonth?.let { onClick(it) } },
                     modifier = Modifier.weight(1f)
                 )
             }
@@ -111,11 +107,11 @@ fun WeekRow(dayItems: PersistentList<DayItem?>, navigationStore: NavigationStore
 @Composable
 fun MonthTableAdjusted(
     weekItems: PersistentList<PersistentList<DayItem?>>,
-    navigationStore: NavigationStore,
+    onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
-        weekItems.map { WeekRow(dayItems = it, navigationStore = navigationStore) }
+        weekItems.map { WeekRow(dayItems = it, onClick) }
     }
 }
 
@@ -128,11 +124,12 @@ class WeekDayVectorPair(
         DayItem("$day", coffeeType, day)
 }
 
+// todo - replace by app's MonthTable with more features and better table implementation
 @Composable
 fun MonthTable(
     yearMonth: YearMonth,
     filledDayItemsMap: PersistentMap<Int, CoffeeType?>,
-    navigationStore: NavigationStore,
+    onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val weekDays: PersistentList<DayItem> = getWeekDaysNames().map { DayItem(it) }.toPersistentList()
@@ -174,7 +171,7 @@ fun MonthTable(
 
     return MonthTableAdjusted(
         weekItems.toPersistentList(),
-        navigationStore,
+        onClick,
         modifier = modifier
     )
 }
@@ -193,7 +190,7 @@ fun SampleTable(modifier: Modifier = Modifier) =
         YearMonth(2020, Month.JULY),
         mapOf(2 to Cappuccino).toPersistentMap(),
         modifier = modifier,
-        navigationStore = NavigationStore()
+        onClick = {},
     )
 
 fun getWeekDaysNames(): List<String> =

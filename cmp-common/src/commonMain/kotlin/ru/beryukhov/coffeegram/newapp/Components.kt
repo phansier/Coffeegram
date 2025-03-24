@@ -1,8 +1,5 @@
 package ru.beryukhov.coffeegram.newapp
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.pages.ChildPages
 import com.arkivanov.decompose.router.pages.Pages
@@ -10,10 +7,17 @@ import com.arkivanov.decompose.router.pages.PagesNavigation
 import com.arkivanov.decompose.router.pages.childPages
 import com.arkivanov.decompose.router.pages.select
 import com.arkivanov.decompose.value.Value
-import com.arkivanov.essenty.instancekeeper.InstanceKeeper
-import com.arkivanov.essenty.instancekeeper.getOrCreate
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.Serializable
+import ru.beryukhov.coffeegram.model.DaysCoffeesStore
+import ru.beryukhov.coffeegram.model.TableScreenIntent
+import ru.beryukhov.coffeegram.model.TableScreenState
+import ru.beryukhov.coffeegram.model.TableScreenStore
 import ru.beryukhov.coffeegram.model.ThemeIntent
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
@@ -38,12 +42,9 @@ interface RootComponent {
 class DefaultRootComponent(
     context: ComponentContext,
     val themeStore: ThemeStore,
+    val daysCoffeesStore: DaysCoffeesStore,
 ) : RootComponent, ComponentContext by context {
     private val navigation = PagesNavigation<Config>()
-    private val model =
-        instanceKeeper.getOrCreate {
-            RootViewModel()
-        }
 
     override val pages: Value<ChildPages<*, RootComponent.Child>> =
         childPages(
@@ -68,7 +69,7 @@ class DefaultRootComponent(
             Config.Table -> RootComponent.Child.Table(
                 DefaultTableComponent(
                     context = context,
-                    isMaterial = model.isMaterial,
+                    daysCoffeesStore = daysCoffeesStore,
                 )
             )
 
@@ -90,25 +91,43 @@ class DefaultRootComponent(
     }
 }
 
-class RootViewModel : InstanceKeeper.Instance {
-    val isMaterial = mutableStateOf(false)
-}
-
 interface TableComponent {
-    val isMaterial: State<Boolean>
 
-    fun onThemeChanged()
+    val models: StateFlow<TableScreenState>
+
+    fun onIncrementMonth()
+    fun onDecrementMonth()
+    fun onDayClick(dayOfMonth: Int)
 
     // fun onNavigate(child: KClass<out RootComponent.Child>)
 }
 
 class DefaultTableComponent(
     context: ComponentContext,
-    override val isMaterial: MutableState<Boolean>,
+    val daysCoffeesStore: DaysCoffeesStore,
+    val tableScreenStore: TableScreenStore = TableScreenStore(
+        initialStoreState = daysCoffeesStore.state.value
+    ), // todo move into DI
 ) : TableComponent, ComponentContext by context {
 
-    override fun onThemeChanged() {
-        isMaterial.value = !isMaterial.value
+    override val models: StateFlow<TableScreenState> = tableScreenStore.state
+
+    init {
+        daysCoffeesStore.state.onEach {
+            tableScreenStore.newIntent(TableScreenIntent.NewDaysCoffeesState(it))
+        }.launchIn(CoroutineScope(Dispatchers.Default + SupervisorJob()))
+    }
+
+    override fun onIncrementMonth() {
+        tableScreenStore.newIntent(TableScreenIntent.NextMonth)
+    }
+
+    override fun onDecrementMonth() {
+        tableScreenStore.newIntent(TableScreenIntent.PreviousMonth)
+    }
+
+    override fun onDayClick(dayOfMonth: Int) {
+        println("onDayClick $dayOfMonth")
     }
 
 //    override fun onNavigate(child: KClass<out RootComponent.Child>) {}

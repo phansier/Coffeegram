@@ -31,7 +31,8 @@ fun main() {
     val root =
         DefaultRootComponent(
             DefaultComponentContext(lifecycle = lifecycle),
-            themeStore = koinApp.get()
+            themeStore = koinApp.get(),
+            daysCoffeesStore = koinApp.get(),
         )
 
     singleWindowApplication(
