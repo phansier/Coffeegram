@@ -7,7 +7,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
@@ -35,24 +34,22 @@ fun SettingsScreen(component: SettingsComponent, modifier: Modifier = Modifier) 
         )
         ThemeRadioButtonWithText(
             selected = themeState.useDarkTheme == DarkThemeState.SYSTEM,
-            onClick = (component::onSetSystemTheme),
+            onClick = component::onSetSystemTheme,
             label = stringResource(Res.string.app_theme_system),
         )
         ThemeRadioButtonWithText(
             selected = themeState.useDarkTheme == DarkThemeState.LIGHT,
-            onClick = (component::onSetLightTheme),
+            onClick = component::onSetLightTheme,
             label = stringResource(Res.string.app_theme_light),
         )
         ThemeRadioButtonWithText(
             selected = themeState.useDarkTheme == DarkThemeState.DARK,
-            onClick = (component::onSetDarkTheme),
+            onClick = component::onSetDarkTheme,
             label = stringResource(Res.string.app_theme_dark),
         )
         ThemeSwitchWithText(
             checked = themeState.isCupertino,
-            onCheckedChange = {
-                component.onSetCupertinoTheme(enabled = it)
-            },
+            onCheckedChange = component::onSetCupertinoTheme,
             label = stringResource(Res.string.app_theme_cupertino)
         )
     }
@@ -62,6 +59,10 @@ fun SettingsScreen(component: SettingsComponent, modifier: Modifier = Modifier) 
 @Composable
 fun SettingsAppBar(
     component: SettingsComponent,
+    modifier: Modifier = Modifier
 ) {
-    AdaptiveTopAppBar(title = { Text(stringResource(Res.string.settings)) })
+    AdaptiveTopAppBar(
+        title = { Text(stringResource(Res.string.settings)) },
+        modifier = modifier,
+    )
 }

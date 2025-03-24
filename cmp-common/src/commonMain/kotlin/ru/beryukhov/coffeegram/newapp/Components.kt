@@ -145,5 +145,4 @@ class DefaultSettingsComponent(
     override fun onSetCupertinoTheme(enabled: Boolean) {
         themeStore.newIntent(ThemeIntent.SetCupertinoIntent(enabled))
     }
-
 }

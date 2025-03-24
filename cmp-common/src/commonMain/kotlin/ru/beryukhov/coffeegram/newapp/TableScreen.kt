@@ -19,10 +19,10 @@ fun TableScreen(
 @Composable
 fun TableAppBar(
     component: TableComponent,
+    modifier: Modifier = Modifier
 ) {
     AdaptiveTopAppBar(
-        title = {
-            Text("Table")
-        },
+        title = { Text("Table") },
+        modifier = modifier,
     )
 }
