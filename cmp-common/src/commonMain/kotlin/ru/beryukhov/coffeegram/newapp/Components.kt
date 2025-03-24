@@ -7,20 +7,23 @@ import com.arkivanov.decompose.ComponentContext
 import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
-import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.instancekeeper.getOrCreate
 import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
 
-interface RootComponent : ComponentContext {
+interface RootComponent {
     val stack: Value<ChildStack<*, Child>>
     val isMaterial: State<Boolean>
 
     sealed interface Child {
         class Table(
             val component: TableComponent,
+        ) : Child
+        class Settings(
+            val component: SettingsComponent,
         ) : Child
     }
 }
@@ -59,10 +62,16 @@ class DefaultRootComponent(
                         val screen =
                             when (it) {
                                 RootComponent.Child.Table::class -> Config.Table // todo actual child screens
+                                RootComponent.Child.Settings::class -> Config.Settings
                                 else -> return@DefaultTableComponent
                             }
-                        navigation.push(screen)
+                        navigation.pushNew(screen)
                     }
+                )
+            )
+            Config.Settings -> RootComponent.Child.Settings(
+                DefaultSettingsComponent(
+                    context = context,
                 )
             )
         }
@@ -71,6 +80,9 @@ class DefaultRootComponent(
     private sealed interface Config {
         @Serializable
         data object Table : Config
+
+        @Serializable
+        data object Settings : Config
     }
 }
 
@@ -99,4 +111,13 @@ class DefaultTableComponent(
     override fun onNavigate(child: KClass<out RootComponent.Child>) {
         onNavigate.invoke(child)
     }
+}
+
+interface SettingsComponent {
+}
+
+class DefaultSettingsComponent(
+    context: ComponentContext,
+) : SettingsComponent, ComponentContext by context {
+
 }

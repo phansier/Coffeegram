@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.slapps.cupertino.adaptive.AdaptiveIconButton
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import com.slapps.cupertino.adaptive.icons.AdaptiveIcons
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowLeft
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowRight
@@ -34,6 +35,7 @@ import ru.beryukhov.coffeegram.view.MonthTable
 import ru.beryukhov.date_time_utils.YearMonth
 import ru.beryukhov.date_time_utils.getFullMonthName
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun TableAppBar(
     yearMonth: YearMonth,

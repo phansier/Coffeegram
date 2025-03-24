@@ -23,6 +23,7 @@ import coffeegram.cmp_common.generated.resources.settings
 import com.slapps.cupertino.adaptive.AdaptiveNavigationBar
 import com.slapps.cupertino.adaptive.AdaptiveNavigationBarItem
 import com.slapps.cupertino.adaptive.AdaptiveScaffold
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -38,6 +39,7 @@ import ru.beryukhov.coffeegram.pages.SettingsPage
 import ru.beryukhov.coffeegram.pages.TableAppBar
 import ru.beryukhov.coffeegram.pages.TablePage
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun PagesContent(
     navigationStore: NavigationStore,
