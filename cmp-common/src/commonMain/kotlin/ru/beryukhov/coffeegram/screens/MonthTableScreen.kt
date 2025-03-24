@@ -24,38 +24,38 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import com.slapps.cupertino.adaptive.icons.AdaptiveIcons
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowLeft
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowRight
-import ru.beryukhov.coffeegram.components.TableComponent
+import ru.beryukhov.coffeegram.components.MonthTableComponent
 import ru.beryukhov.coffeegram.view.MonthTable
 import ru.beryukhov.date_time_utils.getFullMonthName
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
-fun TableScreen(
-    component: TableComponent,
+fun MonthTableScreen(
+    component: MonthTableComponent,
     modifier: Modifier = Modifier
 ) {
-    val tableScreenState by component.models.collectAsState()
+    val monthTableScreenState by component.models.collectAsState()
 
     Column(horizontalAlignment = Alignment.End, modifier = modifier) {
         MonthTable(
-            yearMonth = tableScreenState.yearMonth,
-            filledDayItemsMap = tableScreenState.filledDayItemsMap,
+            yearMonth = monthTableScreenState.yearMonth,
+            filledDayItemsMap = monthTableScreenState.filledDayItemsMap,
             onClick = { dayOfMonth: Int ->
                 component.onDayClick(dayOfMonth)
             },
             modifier = Modifier.weight(1f)
         )
-        Text("${tableScreenState.yearMonth.year}", modifier = Modifier.padding(16.dp))
+        Text("${monthTableScreenState.yearMonth.year}", modifier = Modifier.padding(16.dp))
     }
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
-fun TableAppBar(
-    component: TableComponent,
+fun MonthTableAppBar(
+    component: MonthTableComponent,
     modifier: Modifier = Modifier
 ) {
-    val tableScreenState by component.models.collectAsState()
+    val screenState by component.models.collectAsState()
 
     AdaptiveTopAppBar(
         modifier = modifier,
@@ -64,7 +64,7 @@ fun TableAppBar(
                 Text(
                     modifier = Modifier.weight(1f),
                     text = AnnotatedString(
-                        text = getFullMonthName(tableScreenState.yearMonth.month),
+                        text = getFullMonthName(screenState.yearMonth.month),
                         paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
                     )
                 )

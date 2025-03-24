@@ -13,4 +13,6 @@
     <string name="settings">Settings</string>
     <string name="calendar">Calendar</string>
 
+    <string name="add_drink">Add drink</string>
+
 </resources>

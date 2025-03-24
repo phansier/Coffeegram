@@ -7,49 +7,46 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
-import ru.beryukhov.coffeegram.model.TableScreenIntent
-import ru.beryukhov.coffeegram.model.TableScreenState
-import ru.beryukhov.coffeegram.model.TableScreenStore
+import ru.beryukhov.coffeegram.model.MonthTableScreenIntent
+import ru.beryukhov.coffeegram.model.MonthTableScreenState
+import ru.beryukhov.coffeegram.model.MonthTableScreenStore
 
-interface TableComponent {
-
-    val models: StateFlow<TableScreenState>
+interface MonthTableComponent {
+    val models: StateFlow<MonthTableScreenState>
 
     fun onIncrementMonth()
     fun onDecrementMonth()
     fun onDayClick(dayOfMonth: Int)
-
-    // fun onNavigate(child: KClass<out RootComponent.Child>)
 }
 
-class DefaultTableComponent(
+class DefaultMonthTableComponent(
     context: ComponentContext,
     val daysCoffeesStore: DaysCoffeesStore,
-    val tableScreenStore: TableScreenStore = TableScreenStore(
+    val monthTableScreenStore: MonthTableScreenStore = MonthTableScreenStore(
         initialStoreState = daysCoffeesStore.state.value
     ), // todo move into DI
-) : TableComponent, ComponentContext by context {
+    val onNavigate: (LocalDate) -> Unit,
+) : MonthTableComponent, ComponentContext by context {
 
-    override val models: StateFlow<TableScreenState> = tableScreenStore.state
+    override val models: StateFlow<MonthTableScreenState> = monthTableScreenStore.state
 
     init {
         daysCoffeesStore.state.onEach {
-            tableScreenStore.newIntent(TableScreenIntent.NewDaysCoffeesState(it))
+            monthTableScreenStore.newIntent(MonthTableScreenIntent.NewDaysCoffeesState(it))
         }.launchIn(CoroutineScope(Dispatchers.Default + SupervisorJob()))
     }
 
     override fun onIncrementMonth() {
-        tableScreenStore.newIntent(TableScreenIntent.NextMonth)
+        monthTableScreenStore.newIntent(MonthTableScreenIntent.NextMonth)
     }
 
     override fun onDecrementMonth() {
-        tableScreenStore.newIntent(TableScreenIntent.PreviousMonth)
+        monthTableScreenStore.newIntent(MonthTableScreenIntent.PreviousMonth)
     }
 
     override fun onDayClick(dayOfMonth: Int) {
-        println("onDayClick $dayOfMonth")
+        onNavigate(models.value.yearMonth.atDay(dayOfMonth))
     }
-
-//    override fun onNavigate(child: KClass<out RootComponent.Child>) {}
 }

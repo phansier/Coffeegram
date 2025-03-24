@@ -20,8 +20,8 @@ interface RootComponent {
     fun selectPage(childIndex: Int)
 
     sealed interface Child {
-        class Table(
-            val component: TableComponent,
+        class CoffeeEdit(
+            val component: CoffeeEditComponent,
         ) : Child
 
         class Settings(
@@ -41,7 +41,7 @@ class DefaultRootComponent(
         childPages(
             source = navigation,
             serializer = Config.serializer(),
-            initialPages = { Pages(items = listOf(Config.Table, Config.Settings), selectedIndex = 0) },
+            initialPages = { Pages(items = listOf(Config.CoffeeEdit, Config.Settings), selectedIndex = 0) },
             handleBackButton = true,
             childFactory = ::child,
         )
@@ -57,8 +57,8 @@ class DefaultRootComponent(
         context: ComponentContext,
     ): RootComponent.Child =
         when (config) {
-            Config.Table -> RootComponent.Child.Table(
-                DefaultTableComponent(
+            Config.CoffeeEdit -> RootComponent.Child.CoffeeEdit(
+                DefaultCoffeeEditComponent(
                     context = context,
                     daysCoffeesStore = daysCoffeesStore,
                 )
@@ -75,7 +75,7 @@ class DefaultRootComponent(
     @Serializable
     private sealed interface Config {
         @Serializable
-        data object Table : Config
+        data object CoffeeEdit : Config
 
         @Serializable
         data object Settings : Config

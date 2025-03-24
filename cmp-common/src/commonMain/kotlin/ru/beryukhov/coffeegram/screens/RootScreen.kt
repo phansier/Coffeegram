@@ -48,7 +48,7 @@ private fun TopBar(rootComponent: RootComponent) {
         modifier = Modifier.fillMaxWidth(),
     ) { index, page ->
         when (val c = page) {
-            is RootComponent.Child.Table -> TableAppBar(c.component)
+            is RootComponent.Child.CoffeeEdit -> CoffeeEditAppBar(c.component)
             is RootComponent.Child.Settings -> SettingsAppBar(c.component)
         }
     }
@@ -65,7 +65,7 @@ private fun CurrentScreen(
         modifier = Modifier.padding(paddingValues),
     ) { index, page ->
         when (val c = page) {
-            is RootComponent.Child.Table -> TableScreen(c.component)
+            is RootComponent.Child.CoffeeEdit -> CoffeeEditScreen(c.component)
             is RootComponent.Child.Settings -> SettingsScreen(c.component)
         }
     }
@@ -79,11 +79,11 @@ private fun BottomBar(
 ) {
     AdaptiveNavigationBar {
         val currentIndex by rootComponent.pages.subscribeAsState()
-        navBarItems.forEach { item ->
+        navBarItems.forEachIndexed { index, item ->
             AdaptiveNavigationBarItem(
-                selected = currentIndex.selectedIndex == 0,
+                selected = currentIndex.selectedIndex == index,
                 onClick = {
-                    rootComponent.selectPage(0)
+                    rootComponent.selectPage(index)
                 },
                 label = { Text(stringResource(item.title)) },
                 icon = {

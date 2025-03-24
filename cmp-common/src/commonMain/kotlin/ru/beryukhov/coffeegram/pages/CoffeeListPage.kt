@@ -17,6 +17,7 @@ import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.coffeeTypeValues
+import ru.beryukhov.coffeegram.model.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationIntent
@@ -58,8 +59,8 @@ fun CoffeeList(
     LazyColumn(modifier = modifier.fillMaxHeight()) {
         itemsIndexed(
             items = dayCoffee.coffeeCountMap.withEmpty(),
-            itemContent = { _, pair: Pair<CoffeeType, Int> ->
-                CoffeeTypeItem(localDate, pair.first, pair.second, daysCoffeesStore)
+            itemContent = { _, pair: CoffeeTypeWithCount ->
+                CoffeeTypeItem(localDate, pair.coffee, pair.count, daysCoffeesStore)
             }
         )
     }
@@ -68,11 +69,11 @@ fun CoffeeList(
 class MutablePair(val ct: CoffeeType, var count: Int)
 
 // @VisibleForTesting
-internal fun Map<CoffeeType, Int>.withEmpty(): List<Pair<CoffeeType, Int>> {
+internal fun Map<CoffeeType, Int>.withEmpty(): List<CoffeeTypeWithCount> {
     val emptyList: MutableList<MutablePair> =
         coffeeTypeValues().toList().map { MutablePair(it, 0) }.toMutableList()
     this.forEach { entry: Map.Entry<CoffeeType, Int> ->
         emptyList.filter { it.ct == entry.key }.forEach { it.count = entry.value }
     }
-    return emptyList.map { it.ct to it.count }
+    return emptyList.map { CoffeeTypeWithCount(it.ct, it.count) }
 }

@@ -10,41 +10,41 @@ import ru.beryukhov.coffeegram.store_lib.InMemoryStore
 import ru.beryukhov.date_time_utils.YearMonth
 import ru.beryukhov.date_time_utils.nowYM
 
-class TableScreenStore(yearMonth: YearMonth = nowYM(), initialStoreState: DaysCoffeesState) :
-    InMemoryStore<TableScreenIntent, TableScreenState>(
-        initialState = TableScreenState(
+class MonthTableScreenStore(yearMonth: YearMonth = nowYM(), initialStoreState: DaysCoffeesState) :
+    InMemoryStore<MonthTableScreenIntent, MonthTableScreenState>(
+        initialState = MonthTableScreenState(
             yearMonth = yearMonth,
             daysCoffeesState = initialStoreState,
             filledDayItemsMap = initialStoreState.calculate(yearMonth)
         )
     ) {
 
-    override fun TableScreenState.handleIntent(intent: TableScreenIntent): TableScreenState =
+    override fun MonthTableScreenState.handleIntent(intent: MonthTableScreenIntent): MonthTableScreenState =
         when (intent) {
-            TableScreenIntent.NextMonth ->
+            MonthTableScreenIntent.NextMonth ->
                 copy(
                     yearMonth = increaseMonth(),
                     filledDayItemsMap = daysCoffeesState.calculate(increaseMonth())
                 )
 
-            TableScreenIntent.PreviousMonth ->
+            MonthTableScreenIntent.PreviousMonth ->
                 copy(
                     yearMonth = decreaseMonth(),
                     filledDayItemsMap = daysCoffeesState.calculate(decreaseMonth())
                 )
 
-            is TableScreenIntent.NewDaysCoffeesState ->
+            is MonthTableScreenIntent.NewDaysCoffeesState ->
                 copy(
                     daysCoffeesState = intent.state,
                     filledDayItemsMap = intent.state.calculate(yearMonth)
                 )
         }
 
-    private fun TableScreenState.increaseMonth(): YearMonth {
+    private fun MonthTableScreenState.increaseMonth(): YearMonth {
         return this.yearMonth.plusMonths(1)
     }
 
-    private fun TableScreenState.decreaseMonth(): YearMonth {
+    private fun MonthTableScreenState.decreaseMonth(): YearMonth {
         return this.yearMonth.minusMonths(1)
     }
 }
@@ -57,13 +57,13 @@ internal fun DaysCoffeesState.calculate(yearMonth: YearMonth): PersistentMap<Int
         .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getDayIconCoffeeType() }
         .toPersistentMap()
 
-sealed interface TableScreenIntent {
-    object NextMonth : TableScreenIntent
-    object PreviousMonth : TableScreenIntent
-    data class NewDaysCoffeesState(val state: DaysCoffeesState) : TableScreenIntent
+sealed interface MonthTableScreenIntent {
+    object NextMonth : MonthTableScreenIntent
+    object PreviousMonth : MonthTableScreenIntent
+    data class NewDaysCoffeesState(val state: DaysCoffeesState) : MonthTableScreenIntent
 }
 
-data class TableScreenState(
+data class MonthTableScreenState(
     val yearMonth: YearMonth,
     val daysCoffeesState: DaysCoffeesState,
     val filledDayItemsMap: PersistentMap<Int, CoffeeType?>,
