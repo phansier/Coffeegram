@@ -1,14 +1,25 @@
 import androidx.compose.ui.window.ComposeUIViewController
-import org.koin.core.Koin
+import com.arkivanov.decompose.DefaultComponentContext
+import com.arkivanov.essenty.lifecycle.ApplicationLifecycle
 import org.koin.core.context.startKoin
-import ru.beryukhov.coffeegram.DefaultPreview
 import ru.beryukhov.coffeegram.appModule
+import ru.beryukhov.coffeegram.components.DefaultRootComponent
+import ru.beryukhov.coffeegram.screens.RootScreen
 
-val koinApp: Koin by lazy { initKoin().koin }
-
-fun MainViewController() = ComposeUIViewController { DefaultPreview(koinApp.get()) }
+private val koinApp = initKoin().koin
 
 private fun initKoin() =
     startKoin {
         modules(appModule)
     }
+
+fun MainViewController() = ComposeUIViewController {
+    val lifecycle = ApplicationLifecycle()
+
+    val root = DefaultRootComponent(
+            DefaultComponentContext(lifecycle = lifecycle),
+            themeStore = koinApp.get(),
+            daysCoffeesStore = koinApp.get(),
+        )
+    RootScreen(root)
+}

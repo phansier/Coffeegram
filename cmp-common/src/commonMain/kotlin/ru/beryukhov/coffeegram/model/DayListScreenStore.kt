@@ -3,7 +3,6 @@ package ru.beryukhov.coffeegram.model
 import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
-import ru.beryukhov.coffeegram.pages.withEmpty
 import ru.beryukhov.coffeegram.store_lib.InMemoryStore
 
 class DayListScreenStore(date: LocalDate, initialStoreState: DaysCoffeesState) :

@@ -53,7 +53,7 @@ Native iOS look & feel by [Compose Cupertino](https://github.com/alexzhirkevich/
 `./gradlew runHot`
 
 ## Run on iOS
-[Using KMM plugin](https://github.com/JetBrains/compose-multiplatform-ios-android-template#on-ios)
+[Using KMP plugin](https://kotlinlang.org/docs/multiplatform-plugin-releases.html)
 
 ---
 

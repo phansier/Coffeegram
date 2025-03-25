@@ -1,16 +1,19 @@
 package ru.beryukhov.coffeegram
 
+import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.LocalDate
 import repository.model.DbDayCoffee
 import ru.beryukhov.coffeegram.data.Americano
 import ru.beryukhov.coffeegram.data.Cappuccino
-import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CommonCoffee
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.Latte
+import ru.beryukhov.coffeegram.model.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.changeCoffeeCount
-import ru.beryukhov.coffeegram.pages.withEmpty
+import ru.beryukhov.coffeegram.model.withEmpty
+import ru.beryukhov.coffeegram.repository.toDaysCoffeesList
+import ru.beryukhov.coffeegram.repository.toState
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -45,30 +48,28 @@ class DataMappingTest {
         DbDayCoffee("2022-10-23", "Cappuccino", 3),
     )
 
-// todo need mocking resources or rewriting architecture without it
-//    @Test
-//    fun toList() = runTest {
-//        val actual = exampleDaysCoffeesState.coffees.toDaysCoffeesList()
-//        assertEquals(exampleDbDayCoffeeList, actual)
-//    }
+    @Test
+    fun toList() = runTest {
+        val actual = exampleDaysCoffeesState.coffees.toDaysCoffeesList()
+        assertEquals(exampleDbDayCoffeeList, actual)
+    }
 
     @Test
     fun parseDate() {
         assertEquals(LocalDate(2021, 8, 15), LocalDate.parse("2021-08-15"))
     }
 
-// todo need mocking resources or rewriting architecture without it
-//    @Test
-//    fun toListAndBack() = runTest {
-//        val actual: DaysCoffeesState = exampleDaysCoffeesState.coffees.toDaysCoffeesList().toState()
-//        assertEquals(exampleDaysCoffeesState, actual)
-//    }
+    @Test
+    fun toListAndBack() = runTest {
+        val actual: DaysCoffeesState = exampleDaysCoffeesState.coffees.toDaysCoffeesList().toState()
+        assertEquals(exampleDaysCoffeesState, actual)
+    }
 
-//    @Test
-//    fun toStateAndBack() = runTest {
-//        val actual: List<DbDayCoffee> = exampleDbDayCoffeeList.toState().coffees.toDaysCoffeesList()
-//        assertEquals(exampleDbDayCoffeeList, actual)
-//    }
+    @Test
+    fun toStateAndBack() = runTest {
+        val actual: List<DbDayCoffee> = exampleDbDayCoffeeList.toState().coffees.toDaysCoffeesList()
+        assertEquals(exampleDbDayCoffeeList, actual)
+    }
 
     @Test
     fun changeCoffeeCountToAbsentDateTest() {
@@ -135,16 +136,16 @@ class DataMappingTest {
 
     @Test
     fun withEmptyTest() {
-        val map = mapOf<CoffeeType, Int>(
+        val map = mapOf(
             Cappuccino to 2,
             Latte to 3
         )
         val actual = map.withEmpty()
         val expected = listOf(
-            Latte to 3,
-            Cappuccino to 2,
-            Americano to 0,
-            CommonCoffee to 0
+            CoffeeTypeWithCount(Latte, 3),
+            CoffeeTypeWithCount(Cappuccino, 2),
+            CoffeeTypeWithCount(Americano, 0),
+            CoffeeTypeWithCount(CommonCoffee, 0),
         )
         assertEquals(expected, actual)
     }

@@ -8,20 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import com.arkivanov.decompose.DefaultComponentContext
 import org.koin.android.ext.android.get
-import org.koin.android.ext.android.inject
 import ru.beryukhov.coffeegram.animations.newSplashTransition
 import ru.beryukhov.coffeegram.components.DefaultRootComponent
-import ru.beryukhov.coffeegram.model.DaysCoffeesStore
-import ru.beryukhov.coffeegram.model.NavigationStore
-import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.pages.LandingPage
 import ru.beryukhov.coffeegram.screens.RootScreen
 
 class MainActivity : ComponentActivity() {
-
-    private val navigationStore: NavigationStore by inject()
-    private val daysCoffeesStore: DaysCoffeesStore by inject()
-    private val themeStore: ThemeStore by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,13 +31,6 @@ class MainActivity : ComponentActivity() {
                     ),
                     modifier = Modifier.alpha(transition.contentAlpha),
                 )
-//                PagesContent(
-//                    modifier = Modifier.alpha(transition.contentAlpha),
-//                    topPadding = transition.contentTopPadding,
-//                    navigationStore = navigationStore,
-//                    daysCoffeesStore = daysCoffeesStore,
-//                    themeStore = themeStore,
-//                )
             }
         }
     }

@@ -21,8 +21,8 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.SettingsComponent
 import ru.beryukhov.coffeegram.model.DarkThemeState
-import ru.beryukhov.coffeegram.pages.ThemeRadioButtonWithText
-import ru.beryukhov.coffeegram.pages.ThemeSwitchWithText
+import ru.beryukhov.coffeegram.view.ThemeRadioButtonWithText
+import ru.beryukhov.coffeegram.view.ThemeSwitchWithText
 
 @Composable
 fun SettingsScreen(component: SettingsComponent, modifier: Modifier = Modifier) {
