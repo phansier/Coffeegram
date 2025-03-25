@@ -7,7 +7,7 @@ kotlin = "2.1.20" # https://github.com/JetBrains/kotlin/releases
 compose = "1.7.8" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.7.3" # https://github.com/JetBrains/compose-multiplatform/releases
 
-agp = "8.9.0" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.9.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.1.1" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-rc02" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-rc02" # https://developer.android.com/jetpack/androidx/releases/sqlite
@@ -30,7 +30,7 @@ glance = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/glanc
 sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 
 material = "1.12.0" # https://github.com/material-components/material-components-android
-vico = "2.1.0"
+vico = "2.1.1"
 protobuf = "4.30.1"
 
 [libraries]
@@ -91,7 +91,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
-google-maps-compose = "com.google.maps.android:maps-compose:6.5.1"
+google-maps-compose = "com.google.maps.android:maps-compose:6.5.2"
 
 
 androidx-annotation = "androidx.annotation:annotation:1.9.1"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
