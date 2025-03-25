@@ -15,6 +15,7 @@ project.withVersionCatalog { libs ->
     dependencies {
         detektPlugins(libs.detektFormatting)
         detektPlugins(libs.detektCompose)
+        detektPlugins(libs.detektDecompose)
     }
 }
 

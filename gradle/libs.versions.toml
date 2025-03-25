@@ -20,6 +20,7 @@ essenty = "2.5.0"
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
 detektCompose = "0.4.22" # https://github.com/mrmans0n/compose-rules
+detektDecompose = "0.2.0" # https://github.com/AJIEKCX/decompose-detekt-rules
 wearCompose = "1.4.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
 cupertino = "2.1.0" # https://github.com/schott12521/compose-cupertino
@@ -50,6 +51,7 @@ screenshotGradle = { module = "com.android.compose.screenshot:screenshot-test-gr
 
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detektCompose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
+detektDecompose = { module = "io.github.ajiekcx.detekt:decompose-detekt-rules", version.ref = "detektDecompose" }
 
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
