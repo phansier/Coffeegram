@@ -42,7 +42,6 @@ class DefaultRootComponent(
             source = navigation,
             serializer = Config.serializer(),
             initialPages = { Pages(items = listOf(Config.CoffeeEdit, Config.Settings), selectedIndex = 0) },
-            handleBackButton = true,
             childFactory = ::child,
         )
 

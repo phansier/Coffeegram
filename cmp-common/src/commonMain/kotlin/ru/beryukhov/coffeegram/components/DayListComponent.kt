@@ -1,6 +1,7 @@
 package ru.beryukhov.coffeegram.components
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.backhandler.BackHandlerOwner
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -15,7 +16,7 @@ import ru.beryukhov.coffeegram.model.DayListScreenStore
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 
-interface DayListComponent {
+interface DayListComponent : BackHandlerOwner {
     val models: StateFlow<DayListScreenState>
 
     fun onMinusCoffee(coffeeType: CoffeeType)
@@ -51,6 +52,7 @@ class DefaultDayListComponent(
     }
 
     override fun onBackClicked() {
+        println("DayListComponentonBackClicked")
         onBackNavigation()
     }
 }
