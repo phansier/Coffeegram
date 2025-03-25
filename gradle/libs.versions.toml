@@ -6,6 +6,7 @@ minSdk = "26"
 kotlin = "2.1.20" # https://github.com/JetBrains/kotlin/releases
 compose = "1.7.8" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.7.3" # https://github.com/JetBrains/compose-multiplatform/releases
+hotReload = "1.0.0-alpha03" # https://github.com/JetBrains/compose-hot-reload/releases
 
 agp = "8.9.0" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.1.1" # https://github.com/ktorio/ktor
@@ -14,8 +15,8 @@ sqlite = "2.5.0-rc02" # https://developer.android.com/jetpack/androidx/releases/
 ksp = "2.1.20-1.0.31" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha09"
 
-decompose = "3.2.2"
-essenty = "2.2.1"
+decompose = "3.3.0"
+essenty = "2.5.0"
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
 detektCompose = "0.4.22" # https://github.com/mrmans0n/compose-rules
@@ -33,7 +34,7 @@ glance = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/glanc
 sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
 
 material = "1.12.0" # https://github.com/material-components/material-components-android
-vico = "2.1.0"
+vico = "2.1.1"
 protobuf = "4.30.1"
 
 [libraries]
@@ -44,8 +45,8 @@ detektGradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", ve
 composeKotlinGradle = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 protobufGradle = { module = "com.google.protobuf:protobuf-gradle-plugin", version = "0.9.4" }
 secretsGradle = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
-ksp = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-screenshot = { module = "com.android.compose.screenshot:screenshot-test-gradle-plugin", version.ref = "screenshot"}
+kspGradle = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+screenshotGradle = { module = "com.android.compose.screenshot:screenshot-test-gradle-plugin", version.ref = "screenshot"}
 
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detektCompose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
@@ -94,7 +95,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
-google-maps-compose = "com.google.maps.android:maps-compose:6.5.1"
+google-maps-compose = "com.google.maps.android:maps-compose:6.5.2"
 
 
 androidx-annotation = "androidx.annotation:annotation:1.9.1"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
@@ -112,7 +113,7 @@ lottie-compose = "com.airbnb.android:lottie-compose:6.6.4" # https://github.com/
 composeGradle = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "jetbrainsCompose" }
 sqldelightGradle = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 serializationGradle = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
-
+hotReloadGradle = { module = "org.jetbrains.compose.hot-reload:gradle-plugin", version.ref = "hotReload" }
 
 
 kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.2" # https://github.com/Kotlin/kotlinx-datetime

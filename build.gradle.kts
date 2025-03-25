@@ -1,6 +1,6 @@
 plugins {
     id("convention.detekt")
-    id("com.autonomousapps.dependency-analysis") version "2.13.0"
+    id("com.autonomousapps.dependency-analysis") version "2.13.1"
 }
 
 buildscript {
@@ -14,7 +14,7 @@ buildscript {
         classpath(libs.androidGradle)
         classpath(libs.kotlinGradle)
         classpath(libs.roomGradle)
-        classpath(libs.ksp)
+        classpath(libs.kspGradle)
 
         classpath(libs.composeGradle)
         classpath(libs.serializationGradle)
@@ -22,7 +22,8 @@ buildscript {
         classpath(libs.composeKotlinGradle)
         classpath(libs.protobufGradle)
         classpath(libs.secretsGradle)
-        classpath(libs.screenshot)
+        classpath(libs.screenshotGradle)
+        classpath(libs.hotReloadGradle)
     }
 }
 
