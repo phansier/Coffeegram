@@ -8,7 +8,7 @@ compose = "1.7.8" # https://developer.android.com/jetpack/androidx/releases/comp
 jetbrainsCompose = "1.7.3" # https://github.com/JetBrains/compose-multiplatform/releases
 hotReload = "1.0.0-alpha03" # https://github.com/JetBrains/compose-hot-reload/releases
 
-agp = "8.9.0" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.9.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.1.1" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.0-rc02" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.0-rc02" # https://developer.android.com/jetpack/androidx/releases/sqlite
