@@ -1,5 +1,5 @@
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.window.ComposeViewport
+import androidx.compose.ui.window.CanvasBasedWindow
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.essenty.lifecycle.resume
@@ -49,14 +49,16 @@ fun main() {
 //            daysCoffeesStore = koinApp.get(),
 //        )
     val root = DefaultRootComponent(
-            DefaultComponentContext(lifecycle = lifecycle),
-            themeStore = ThemeStore(LocalThemePrefStorage()),
-            daysCoffeesStore = DaysCoffeesStoreImpl(CoffeeStorage(InMemoryCoffeeRepository())),
-        )
+        DefaultComponentContext(lifecycle = lifecycle),
+        themeStore = ThemeStore(LocalThemePrefStorage()),
+        daysCoffeesStore = DaysCoffeesStoreImpl(CoffeeStorage(InMemoryCoffeeRepository())),
+    )
 
     lifecycle.attachToDocument()
 
-    ComposeViewport(document.body!!) {
+    val title = "Compose Counting Grid on JS/Wasm"
+    @OptIn(ExperimentalComposeUiApi::class)
+    CanvasBasedWindow(title, canvasElementId = "ComposeTarget") {
         RootScreen(root)
     }
 }
