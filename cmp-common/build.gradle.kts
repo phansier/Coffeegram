@@ -82,6 +82,7 @@ kotlin {
             implementation(libs.decompose.compose)
 
             api(libs.koin.core)
+            implementation(libs.koin.compose)
         }
         val notWasm by getting {
             dependencies {

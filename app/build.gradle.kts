@@ -122,7 +122,7 @@ dependencies {
     implementation(libs.protobuf.javalite)
 
     implementation(libs.koin.android)
-    implementation(libs.koin.compose) // lifecycleScope
+    implementation(libs.koin.android.compose) // lifecycleScope
 
     implementation(libs.vico.multiplatform)
     implementation(libs.vico.multiplatform.m3)
