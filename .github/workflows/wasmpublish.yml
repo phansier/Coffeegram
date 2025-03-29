@@ -54,6 +54,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy 'cmp-common/build/dist/wasmJs/productionExecutable' --project-name=coffeegram
+          command: pages deploy cmp-common/build/dist/wasmJs/productionExecutable --project-name=coffeegram
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
