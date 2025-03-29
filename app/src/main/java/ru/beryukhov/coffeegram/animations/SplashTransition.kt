@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -130,7 +130,7 @@ fun InnerContent(topPadding: Dp, modifier: Modifier = Modifier) {
 fun newSplashTransition(): SplashTransition {
     val visibleState = remember { MutableTransitionState(SplashState.Shown) }
     visibleState.targetState = SplashState.Completed
-    val transition = updateTransition(visibleState, label = "splashTransition")
+    val transition = rememberTransition(visibleState, "splashTransition")
     val splashAlpha by transition.animateFloat(
         transitionSpec = { tween(3000) },
         label = "splashTransitionAlpha"

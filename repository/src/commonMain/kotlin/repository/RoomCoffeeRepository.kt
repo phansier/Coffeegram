@@ -5,11 +5,6 @@ import repository.room.AppDatabase
 import repository.room.DayCoffee
 import repository.room.DayCoffeeDao
 
-interface CoffeeRepository {
-    suspend fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>)
-    suspend fun getAll(): List<DbDayCoffee>
-}
-
 class RoomCoffeeRepository(private val database: AppDatabase) : CoffeeRepository {
 
     private val dao: DayCoffeeDao by lazy {

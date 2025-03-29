@@ -1,6 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -12,12 +9,9 @@ plugins {
 version = "1.0"
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        unitTestVariant {
-            sourceSetTree.set(KotlinSourceSetTree.test)
-        }
-    }
+    androidTarget()
+
+    jvm()
 
     iosX64()
     iosArm64()
@@ -25,6 +19,8 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            implementation(projects.cmpRepository)
+
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
             implementation(libs.sqlite)
@@ -37,18 +33,11 @@ kotlin {
             implementation(kotlin("test-common"))
             implementation(kotlin("test-annotations-common"))
         }
-
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test.junit)
-            }
-        }
     }
 }
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
     }

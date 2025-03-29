@@ -11,8 +11,7 @@ internal class SqldCoffeeRepository(private val db: SqlDayCoffeeQueries) : Coffe
         db.createSqlDayCoffeeTable()
     }
 
-    // blocking
-    override fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>) {
+    override suspend fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>) {
         val all = db.selectAll().executeAsList()
         if (all.isEmpty()) {
             create(dbDateCoffees)
@@ -49,7 +48,7 @@ internal class SqldCoffeeRepository(private val db: SqlDayCoffeeQueries) : Coffe
         }
     }
 
-    override fun getAll(): List<DbDayCoffee> {
+    override suspend fun getAll(): List<DbDayCoffee> {
         return db.selectAll().executeAsList().map { it.toDb() }
     }
 }

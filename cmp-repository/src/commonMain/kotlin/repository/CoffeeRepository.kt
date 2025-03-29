@@ -3,19 +3,19 @@ package repository
 import repository.model.DbDayCoffee
 
 interface CoffeeRepository {
-    fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>)
-    fun getAll(): List<DbDayCoffee>
+    suspend fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>)
+    suspend fun getAll(): List<DbDayCoffee>
 }
 
 class InMemoryCoffeeRepository : CoffeeRepository {
     private val db = mutableListOf<DbDayCoffee>()
 
-    override fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>) {
+    override suspend fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>) {
         db.removeAll { dbDateCoffees.contains(it) }
         db.addAll(dbDateCoffees)
     }
 
-    override fun getAll(): List<DbDayCoffee> {
+    override suspend fun getAll(): List<DbDayCoffee> {
         return db
     }
 }

@@ -84,6 +84,7 @@ android {
 
 dependencies {
 
+    implementation(projects.cmpRepository)
     implementation(projects.repository)
     implementation(projects.appWearCommon)
 

@@ -67,7 +67,6 @@ fun DayOfWeek.getShortDisplayName(): String =
         DayOfWeek.FRIDAY -> "FRI"
         DayOfWeek.SATURDAY -> "SAT"
         DayOfWeek.SUNDAY -> "SUN"
-        else -> ""
     }.lowercase().replaceFirstChar { it.titlecase() }
 
 private fun Month.days(leapYear: Boolean): Int =
