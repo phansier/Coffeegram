@@ -60,7 +60,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.cmpRepository)
+            implementation(projects.repository)
             implementation(projects.dateTimeUtils)
 
             implementation(compose.runtime)
@@ -86,7 +86,7 @@ kotlin {
         }
         val notWasm by getting {
             dependencies {
-                implementation(projects.cmpSqldelight)
+                implementation(projects.repositorySqldelight)
 
                 implementation(libs.datastore.preferencesCore)
                 implementation(libs.datastore.coreOkio)

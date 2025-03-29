@@ -84,8 +84,8 @@ android {
 
 dependencies {
 
-    implementation(projects.cmpRepository)
     implementation(projects.repository)
+    implementation(projects.repositoryRoom)
     implementation(projects.appWearCommon)
 
     implementation(libs.core.coreKtx)

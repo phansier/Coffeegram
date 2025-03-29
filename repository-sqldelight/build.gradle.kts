@@ -28,7 +28,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(projects.cmpRepository)
+            implementation(projects.repository)
 
             implementation(libs.coroutines.core)
 
