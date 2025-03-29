@@ -37,8 +37,7 @@ fun main() {
 
     lifecycle.attachToDocument()
 
-    val title = "Compose Counting Grid on JS/Wasm"
-    @OptIn(ExperimentalComposeUiApi::class)
+    val title = "Coffeegram"
     CanvasBasedWindow(title, canvasElementId = "ComposeTarget") {
         KoinApplication(application = {
             modules(appModule)
