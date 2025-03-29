@@ -7,7 +7,7 @@ import repository.SqldCoffeeRepository
 
 expect fun sqlDriverModule(): Module
 
-val sqlDatabaseModule = module {
+val databaseModule = module {
     includes(sqlDriverModule())
 
     single<SqlDayCoffeeQueries> {

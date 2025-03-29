@@ -7,7 +7,7 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
-actual fun roomModule() = module {
+actual fun roomDriverModule() = module {
     single<AppDatabase> { getDatabase(get()) }
 }
 

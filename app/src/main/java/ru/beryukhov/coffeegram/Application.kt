@@ -11,9 +11,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
-import repository.CoffeeRepository
-import repository.RoomCoffeeRepository
-import repository.room.roomModule
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.HeavyDaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationStore
@@ -29,6 +26,7 @@ import ru.beryukhov.coffeegram.repository.ThemeDataStoreProtoStorage
 import ru.beryukhov.coffeegram.store_lib.Storage
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget
 import ru.beryukhov.coffeegram.widget.setWidgetPreview
+import ru.beryukhov.repository.databaseModule
 
 class Application : Application() {
 
@@ -38,7 +36,7 @@ class Application : Application() {
             androidContext(this@Application)
             modules(
                 appModule,
-                roomModule()
+                databaseModule
             )
         }
         // causes java.lang.IllegalStateException: Reading a state that was created after the snapshot was taken
@@ -61,7 +59,6 @@ internal val appModule = module {
     single {
         ThemeStore(get())
     }
-    single<CoffeeRepository> { RoomCoffeeRepository(get()) }
     single<CoffeeStorage> { CoffeeStorage(get()) }
     single<DaysCoffeesStore> { HeavyDaysCoffeesStore(get()) }
 //        single<DaysCoffeesStore> { LightDaysCoffeesStore() }

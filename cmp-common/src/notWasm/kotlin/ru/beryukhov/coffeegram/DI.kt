@@ -9,10 +9,10 @@ import ru.beryukhov.coffeegram.repository.CoffeeStorage
 import ru.beryukhov.coffeegram.repository.ThemeDataStorePrefStorage
 import ru.beryukhov.coffeegram.repository.datastoreModule
 import ru.beryukhov.coffeegram.store_lib.Storage
-import ru.beryukhov.repository.sqlDatabaseModule
+import ru.beryukhov.repository.databaseModule
 
 val appModule = module {
-    includes(sqlDatabaseModule)
+    includes(databaseModule)
     includes(datastoreModule())
 
     single<Storage<ThemeState>> {
