@@ -1,10 +1,10 @@
 package ru.beryukhov.coffeegram.model
 
 import ru.beryukhov.coffeegram.app_ui.isCupertinoDefault
-import ru.beryukhov.coffeegram.store_lib.PersistentStore
 import ru.beryukhov.coffeegram.store_lib.Storage
+import ru.beryukhov.coffeegram.store_lib.StoreImpl
 
-class ThemeStore(storage: Storage<ThemeState>) : PersistentStore<ThemeIntent, ThemeState>(
+class ThemeStore(storage: Storage<ThemeState>) : StoreImpl<ThemeIntent, ThemeState>(
     initialState = ThemeStateDefault,
     storage = storage
 ) {

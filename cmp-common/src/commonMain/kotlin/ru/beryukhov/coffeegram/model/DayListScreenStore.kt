@@ -4,10 +4,10 @@ import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.withEmpty
-import ru.beryukhov.coffeegram.store_lib.InMemoryStore
+import ru.beryukhov.coffeegram.store_lib.StoreImpl
 
 class DayListScreenStore(date: LocalDate, initialStoreState: DaysCoffeesState) :
-    InMemoryStore<DayListScreenIntent, DayListScreenState>(
+    StoreImpl<DayListScreenIntent, DayListScreenState>(
         initialState = DayListScreenState(
             date = date,
             daysCoffeesState = initialStoreState,

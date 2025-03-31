@@ -4,14 +4,14 @@ import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.repository.CoffeeStorage
-import ru.beryukhov.coffeegram.store_lib.PersistentStore
 import ru.beryukhov.coffeegram.store_lib.Store
+import ru.beryukhov.coffeegram.store_lib.StoreImpl
 
 interface DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>
 
 // todo make internal after apps merge will be finished
 class DaysCoffeesStoreImpl(coffeeStorage: CoffeeStorage) : DaysCoffeesStore,
-    PersistentStore<DaysCoffeesIntent, DaysCoffeesState>(
+    StoreImpl<DaysCoffeesIntent, DaysCoffeesState>(
         initialState = DaysCoffeesState(),
         storage = coffeeStorage
     ) {

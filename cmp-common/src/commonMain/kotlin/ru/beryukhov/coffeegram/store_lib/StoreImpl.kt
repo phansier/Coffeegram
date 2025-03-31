@@ -1,14 +1,21 @@
 package ru.beryukhov.coffeegram.store_lib
 
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-abstract class PersistentStore<Intent : Any, State : Any>(initialState: State, private val storage: Storage<State>) :
-    Store<Intent, State> {
+/**
+ * This store implementation can work as InMemoryStore without provided storage
+ * or as PersistentStore with provided storage.
+ */
+abstract class StoreImpl<Intent : Any, State : Any>(
+    initialState: State,
+    private val storage: Storage<State>? = null
+) : Store<Intent, State> {
     private val intentFlow = MutableSharedFlow<Intent>()
     private val stateFlow = MutableStateFlow(initialState)
 
@@ -16,16 +23,18 @@ abstract class PersistentStore<Intent : Any, State : Any>(initialState: State, p
         get() = stateFlow
 
     init {
-        GlobalScope.launch {
-            getStoredState()?.let {
-                stateFlow.value = it
+        MainScope().launch {
+            withContext(Dispatchers.Default) {
+                getStoredState()?.let {
+                    stateFlow.value = it
+                }
             }
             handleIntents()
         }
     }
 
     override fun newIntent(intent: Intent) {
-        GlobalScope.launch {
+        MainScope().launch {
             intentFlow.emit(intent)
         }
     }
@@ -33,12 +42,14 @@ abstract class PersistentStore<Intent : Any, State : Any>(initialState: State, p
     private suspend fun handleIntents() {
         intentFlow.collect {
             stateFlow.value = stateFlow.value.handleIntent(intent = it)
-            storage.saveState(stateFlow.value)
+            withContext(Dispatchers.Default) {
+                storage?.saveState(stateFlow.value)
+            }
         }
     }
 
     private suspend fun getStoredState(): State? {
-        return storage.getState()
+        return storage?.getState()
     }
 
     protected abstract fun State.handleIntent(intent: Intent): State

@@ -2,11 +2,11 @@ package ru.beryukhov.coffeegram.model
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.LocalDate
-import ru.beryukhov.coffeegram.store_lib.InMemoryStore
+import ru.beryukhov.coffeegram.store_lib.StoreImpl
 import ru.beryukhov.date_time_utils.YearMonth
 import ru.beryukhov.date_time_utils.nowYM
 
-class NavigationStore(val yearMonth: YearMonth = nowYM()) : InMemoryStore<NavigationIntent, NavigationState>(
+class NavigationStore(val yearMonth: YearMonth = nowYM()) : StoreImpl<NavigationIntent, NavigationState>(
     initialState = NavigationState.TablePage(yearMonth = yearMonth)
 ) {
 

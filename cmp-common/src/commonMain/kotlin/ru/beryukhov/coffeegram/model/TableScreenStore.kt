@@ -6,12 +6,12 @@ import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.Picture
 import ru.beryukhov.coffeegram.data.getDayIconCoffeeType
-import ru.beryukhov.coffeegram.store_lib.InMemoryStore
+import ru.beryukhov.coffeegram.store_lib.StoreImpl
 import ru.beryukhov.date_time_utils.YearMonth
 import ru.beryukhov.date_time_utils.nowYM
 
 class MonthTableScreenStore(yearMonth: YearMonth = nowYM(), initialStoreState: DaysCoffeesState) :
-    InMemoryStore<MonthTableScreenIntent, MonthTableScreenState>(
+    StoreImpl<MonthTableScreenIntent, MonthTableScreenState>(
         initialState = MonthTableScreenState(
             yearMonth = yearMonth,
             daysCoffeesState = initialStoreState,

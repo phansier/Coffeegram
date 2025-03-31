@@ -3,9 +3,9 @@ package ru.beryukhov.coffeegram.model
 import kotlinx.datetime.LocalDate
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.DayCoffee
-import ru.beryukhov.coffeegram.store_lib.InMemoryStore
+import ru.beryukhov.coffeegram.store_lib.StoreImpl
 
-class LightDaysCoffeesStore : InMemoryStore<DaysCoffeesIntent, DaysCoffeesState>(
+class LightDaysCoffeesStore : StoreImpl<DaysCoffeesIntent, DaysCoffeesState>(
     initialState = DaysCoffeesState(mapOf())
 ), DaysCoffeesStore {
 

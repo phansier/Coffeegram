@@ -2,10 +2,12 @@ package ru.beryukhov.coffeegram
 
 import android.app.Application
 import androidx.glance.appwidget.updateAll
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -41,11 +43,14 @@ class Application : Application() {
         }
         // causes java.lang.IllegalStateException: Reading a state that was created after the snapshot was taken
         // or in a snapshot that has not yet been applied
-        GlobalScope.launch {
-            FirstGlanceWidget().updateAll(this@Application)
-            setWidgetPreview(this@Application)
-            get<DaysCoffeesStore>().state.onEach {
-                FirstGlanceWidget().updateAll(this@Application) }.launchIn(this)
+        MainScope().launch {
+            withContext(Dispatchers.Default) {
+                FirstGlanceWidget().updateAll(this@Application)
+                setWidgetPreview(this@Application)
+                get<DaysCoffeesStore>().state.onEach {
+                    FirstGlanceWidget().updateAll(this@Application)
+                }.launchIn(this)
+            }
         }
     }
 }

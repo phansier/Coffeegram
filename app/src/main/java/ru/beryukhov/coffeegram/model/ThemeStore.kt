@@ -2,10 +2,10 @@ package ru.beryukhov.coffeegram.model
 
 import android.content.Context
 import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
-import ru.beryukhov.coffeegram.store_lib.PersistentStore
 import ru.beryukhov.coffeegram.store_lib.Storage
+import ru.beryukhov.coffeegram.store_lib.StoreImpl
 
-class ThemeStore(storage: Storage<ThemeState>) : PersistentStore<ThemeIntent, ThemeState>(
+class ThemeStore(storage: Storage<ThemeState>) : StoreImpl<ThemeIntent, ThemeState>(
     initialState = ThemeStateDefault,
     storage = storage
 ) {
