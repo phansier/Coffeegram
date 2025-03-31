@@ -55,7 +55,7 @@ class CoffeeListViewModelImpl(
     @Composable
     override fun getDayCoffeesWithEmpty(localDate: LocalDate): PersistentList<CoffeeTypeWithCount> {
         val dayCoffeeState: DaysCoffeesState by daysCoffeesStore.state.collectAsState()
-        val dayCoffee = dayCoffeeState.value[localDate] ?: DayCoffee()
+        val dayCoffee = dayCoffeeState.coffees[localDate] ?: DayCoffee()
         return dayCoffee.coffeeCountMap.withEmpty().toPersistentList()
     }
 

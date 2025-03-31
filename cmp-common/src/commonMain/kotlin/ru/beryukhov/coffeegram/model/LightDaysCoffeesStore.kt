@@ -32,8 +32,8 @@ class LightDaysCoffeesStore : InMemoryStore<DaysCoffeesIntent, DaysCoffeesState>
         )
     }
 
-    private fun getCoffeeOrNull(localDate: LocalDate, coffeeType: CoffeeType): Int? {
-        return state.value.value[localDate]?.coffeeCountMap?.get(coffeeType)
+    private fun DaysCoffeesState.getCoffeeOrNull(localDate: LocalDate, coffeeType: CoffeeType): Int? {
+        return coffees[localDate]?.coffeeCountMap?.get(coffeeType)
     }
 
     private fun DaysCoffeesState.putCoffeeCount(
@@ -42,7 +42,7 @@ class LightDaysCoffeesStore : InMemoryStore<DaysCoffeesIntent, DaysCoffeesState>
         count: Int
     ): DaysCoffeesState {
         return copy(
-            value = value.toMutableMap().also {
+            coffees = coffees.toMutableMap().also {
                 if (it[localDate] == null) {
                     it[localDate] = DayCoffee()
                 }

@@ -33,7 +33,7 @@ class TablePageViewModelImpl(
     @Composable
     override fun getFilledDayItemsMap(yearMonth: YearMonth): Map<Int, Picture> {
         val coffeesState by daysCoffeesStore.state.collectAsState()
-        return coffeesState.value
+        return coffeesState.coffees
             .filter { entry: Map.Entry<LocalDate, DayCoffee> ->
                 entry.key.year == yearMonth.year
                     && entry.key.month == yearMonth.month

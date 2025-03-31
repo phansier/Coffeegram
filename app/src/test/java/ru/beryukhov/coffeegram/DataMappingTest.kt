@@ -58,7 +58,7 @@ class DataMappingTest {
 
     @Test
     fun toList() {
-        val actual = exampleDaysCoffeesState.value.toDaysCoffeesList()
+        val actual = exampleDaysCoffeesState.coffees.toDaysCoffeesList()
         assertEquals(exampleDbDayCoffeeList, actual)
     }
 
@@ -69,20 +69,20 @@ class DataMappingTest {
 
     @Test
     fun toListAndBack() {
-        val actual: DaysCoffeesState = exampleDaysCoffeesState.value.toDaysCoffeesList().toState()
+        val actual: DaysCoffeesState = exampleDaysCoffeesState.coffees.toDaysCoffeesList().toState()
         assertEquals(exampleDaysCoffeesState, actual)
     }
 
     @Test
     fun toStateAndBack() {
-        val actual: List<DbDayCoffee> = exampleDbDayCoffeeList.toState().value.toDaysCoffeesList()
+        val actual: List<DbDayCoffee> = exampleDbDayCoffeeList.toState().coffees.toDaysCoffeesList()
         assertEquals(exampleDbDayCoffeeList, actual)
     }
 
     @Test
     fun changeCoffeeCountToAbsentDateTest() {
         val actual: Map<LocalDate, DayCoffee> = changeCoffeeCount(
-            oldValue = exampleDaysCoffeesState.value,
+            oldValue = exampleDaysCoffeesState.coffees,
             localDate = LocalDate(2021, 8, 14),
             coffeeType = Cappuccino,
             count = 1
@@ -116,7 +116,7 @@ class DataMappingTest {
     @Test
     fun changeCoffeeCountToEmptyDateTest() {
         val actual: Map<LocalDate, DayCoffee> = changeCoffeeCount(
-            oldValue = exampleDaysCoffeesState.value,
+            oldValue = exampleDaysCoffeesState.coffees,
             localDate = LocalDate(2021, 8, 15),
             coffeeType = Cappuccino,
             count = 1

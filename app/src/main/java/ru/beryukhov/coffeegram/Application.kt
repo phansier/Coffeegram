@@ -12,7 +12,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
-import ru.beryukhov.coffeegram.model.HeavyDaysCoffeesStore
+import ru.beryukhov.coffeegram.model.DaysCoffeesStoreImpl
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
@@ -60,7 +60,7 @@ internal val appModule = module {
         ThemeStore(get())
     }
     single<CoffeeStorage> { CoffeeStorage(get()) }
-    single<DaysCoffeesStore> { HeavyDaysCoffeesStore(get()) }
+    single<DaysCoffeesStore> { DaysCoffeesStoreImpl(get()) }
 //        single<DaysCoffeesStore> { LightDaysCoffeesStore() }
     single { NavigationStore() }
     viewModel { CoffeeListViewModelImpl(daysCoffeesStore = get(), navigationStore = get()) }

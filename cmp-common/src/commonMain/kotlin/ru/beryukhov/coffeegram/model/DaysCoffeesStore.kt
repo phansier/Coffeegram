@@ -9,7 +9,8 @@ import ru.beryukhov.coffeegram.store_lib.Store
 
 interface DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>
 
-internal class DaysCoffeesStoreImpl(coffeeStorage: CoffeeStorage) : DaysCoffeesStore,
+// todo make internal after apps merge will be finished
+class DaysCoffeesStoreImpl(coffeeStorage: CoffeeStorage) : DaysCoffeesStore,
     PersistentStore<DaysCoffeesIntent, DaysCoffeesState>(
         initialState = DaysCoffeesState(),
         storage = coffeeStorage
@@ -55,7 +56,7 @@ internal class DaysCoffeesStoreImpl(coffeeStorage: CoffeeStorage) : DaysCoffeesS
 }
 
 // @VisibleForTesting
-internal fun changeCoffeeCount(
+fun changeCoffeeCount(
     oldValue: Map<LocalDate, DayCoffee>,
     localDate: LocalDate,
     coffeeType: CoffeeType,

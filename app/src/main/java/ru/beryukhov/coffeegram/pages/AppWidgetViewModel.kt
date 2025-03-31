@@ -62,7 +62,7 @@ class AppWidgetViewModelImpl(
     // coffee list does not contains 0 values and sorted by count
     override fun getCurrentDayList(): PersistentList<CoffeeTypeWithCount> {
         val dayCoffeeState: DaysCoffeesState = daysCoffeesStore.state.value
-        val dayCoffee = dayCoffeeState.value[getCurrentDay()] ?: DayCoffee()
+        val dayCoffee = dayCoffeeState.coffees[getCurrentDay()] ?: DayCoffee()
         val list = dayCoffee.coffeeCountMap.withEmpty().toList()
             .sortedByDescending { it.count }
         val emptyListMock = listOf(CoffeeTypeWithCount(CoffeeTypes.Cappuccino, 0))
