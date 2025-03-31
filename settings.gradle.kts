@@ -6,7 +6,6 @@ include(":repository-room")
 
 includeBuild("build-logic")
 include(":wear")
-include(":app-wear-common")
 
 include("cmp-app")
 include("cmp-common")

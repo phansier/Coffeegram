@@ -7,11 +7,4 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <!--Android Academy app colors-->
-    <color name="aa_background">#FF191926</color>
-    <color name="aa_white_text">#FFFFFF</color>
-    <color name="aa_whitable_text">#FFECECEC</color>
-    <color name="aa_contrast_text">#FFFF3466</color>
-    <color name="aa_disabled_text">#FF6D6D80</color>
 </resources>

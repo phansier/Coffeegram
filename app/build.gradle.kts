@@ -87,7 +87,6 @@ dependencies {
     implementation(projects.cmpCommon)
     implementation(projects.repository)
     implementation(projects.repositoryRoom)
-    implementation(projects.appWearCommon)
     implementation(projects.dateTimeUtils)
 
     implementation(libs.core.coreKtx)

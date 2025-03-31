@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="aa_background">#E6E6D9</color>
-    <color name="aa_white_text">#000000</color>
-    <color name="aa_whitable_text">#131313</color>
-    <color name="aa_contrast_text">#00CB99</color>
-    <color name="aa_disabled_text">#92927F</color>
-</resources>

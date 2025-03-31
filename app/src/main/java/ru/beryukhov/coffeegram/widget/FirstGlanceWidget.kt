@@ -69,7 +69,7 @@ import ru.beryukhov.coffeegram.pages.AppWidgetViewModelStub
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.BIG_SQUARE
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.HORIZONTAL_RECTANGLE
 import kotlin.math.roundToInt
-import ru.beryukhov.coffeegram.common.R as common_R
+import ru.beryukhov.compose_common.R as common_R
 
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error), KoinComponent {
 
@@ -143,7 +143,7 @@ private fun SmallWidget(
             .clickable(openAppAction)
     ) {
         Image(
-            provider = ImageProvider(resId = common_R.drawable.latte),
+            provider = ImageProvider(resId = common_R.drawable.widget_preview_latte),
             contentDescription = "",
             modifier = GlanceModifier
                 .fillMaxSize()
