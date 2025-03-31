@@ -32,7 +32,7 @@ abstract class PersistentStore<Intent : Any, State : Any>(initialState: State, p
 
     private suspend fun handleIntents() {
         intentFlow.collect {
-            stateFlow.value = handleIntent(it)
+            stateFlow.value = stateFlow.value.handleIntent(intent = it)
             storage.saveState(stateFlow.value)
         }
     }
@@ -41,5 +41,5 @@ abstract class PersistentStore<Intent : Any, State : Any>(initialState: State, p
         return storage.getState()
     }
 
-    protected abstract fun handleIntent(intent: Intent): State
+    protected abstract fun State.handleIntent(intent: Intent): State
 }

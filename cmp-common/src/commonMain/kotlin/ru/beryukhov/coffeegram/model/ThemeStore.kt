@@ -8,12 +8,12 @@ class ThemeStore(storage: Storage<ThemeState>) : PersistentStore<ThemeIntent, Th
     initialState = ThemeStateDefault,
     storage = storage
 ) {
-    override fun handleIntent(intent: ThemeIntent): ThemeState {
+    override fun ThemeState.handleIntent(intent: ThemeIntent): ThemeState {
         return when (intent) {
-            ThemeIntent.SetDarkIntent -> state.value.copy(useDarkTheme = DarkThemeState.DARK)
-            ThemeIntent.SetLightIntent -> state.value.copy(useDarkTheme = DarkThemeState.LIGHT)
-            ThemeIntent.SetSystemIntent -> state.value.copy(useDarkTheme = DarkThemeState.SYSTEM)
-            is ThemeIntent.SetCupertinoIntent -> state.value.copy(isCupertino = intent.enabled)
+            ThemeIntent.SetDarkIntent -> copy(useDarkTheme = DarkThemeState.DARK)
+            ThemeIntent.SetLightIntent -> copy(useDarkTheme = DarkThemeState.LIGHT)
+            ThemeIntent.SetSystemIntent -> copy(useDarkTheme = DarkThemeState.SYSTEM)
+            is ThemeIntent.SetCupertinoIntent -> copy(isCupertino = intent.enabled)
         }
     }
 }

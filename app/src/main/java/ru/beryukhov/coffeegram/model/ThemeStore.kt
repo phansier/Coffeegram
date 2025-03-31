@@ -9,15 +9,15 @@ class ThemeStore(storage: Storage<ThemeState>) : PersistentStore<ThemeIntent, Th
     initialState = ThemeStateDefault,
     storage = storage
 ) {
-    override fun handleIntent(intent: ThemeIntent): ThemeState {
+    override fun ThemeState.handleIntent(intent: ThemeIntent): ThemeState {
         return when (intent) {
-            ThemeIntent.SetDarkIntent -> state.value.copy(useDarkTheme = DarkThemeState.DARK)
-            ThemeIntent.SetLightIntent -> state.value.copy(useDarkTheme = DarkThemeState.LIGHT)
-            ThemeIntent.SetSystemIntent -> state.value.copy(useDarkTheme = DarkThemeState.SYSTEM)
-            ThemeIntent.SetDynamicIntent -> state.value.copy(isDynamic = true)
-            ThemeIntent.UnSetDynamicIntent -> state.value.copy(isDynamic = false)
-            ThemeIntent.SetSummerIntent -> state.value.copy(isSummer = true)
-            ThemeIntent.UnSetSummerIntent -> state.value.copy(isSummer = false)
+            ThemeIntent.SetDarkIntent -> copy(useDarkTheme = DarkThemeState.DARK)
+            ThemeIntent.SetLightIntent -> copy(useDarkTheme = DarkThemeState.LIGHT)
+            ThemeIntent.SetSystemIntent -> copy(useDarkTheme = DarkThemeState.SYSTEM)
+            ThemeIntent.SetDynamicIntent -> copy(isDynamic = true)
+            ThemeIntent.UnSetDynamicIntent -> copy(isDynamic = false)
+            ThemeIntent.SetSummerIntent -> copy(isSummer = true)
+            ThemeIntent.UnSetSummerIntent -> copy(isSummer = false)
         }
     }
 }

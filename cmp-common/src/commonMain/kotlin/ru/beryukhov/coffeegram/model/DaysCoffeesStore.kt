@@ -16,14 +16,14 @@ class DaysCoffeesStoreImpl(coffeeStorage: CoffeeStorage) : DaysCoffeesStore,
         storage = coffeeStorage
     ) {
 
-    override fun handleIntent(intent: DaysCoffeesIntent): DaysCoffeesState {
+    override fun DaysCoffeesState.handleIntent(intent: DaysCoffeesIntent): DaysCoffeesState {
         return when (intent) {
             is DaysCoffeesIntent.PlusCoffee -> increaseCoffee(intent.localDate, intent.coffeeType)
             is DaysCoffeesIntent.MinusCoffee -> decreaseCoffee(intent.localDate, intent.coffeeType)
         }
     }
 
-    private fun increaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
+    private fun DaysCoffeesState.increaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
         return putCoffeeCount(
             localDate = localDate,
             coffeeType = coffeeType,
@@ -31,7 +31,7 @@ class DaysCoffeesStoreImpl(coffeeStorage: CoffeeStorage) : DaysCoffeesStore,
         )
     }
 
-    private fun decreaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
+    private fun DaysCoffeesState.decreaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
         return putCoffeeCount(
             localDate = localDate,
             coffeeType = coffeeType,
@@ -39,14 +39,18 @@ class DaysCoffeesStoreImpl(coffeeStorage: CoffeeStorage) : DaysCoffeesStore,
         )
     }
 
-    private fun getCoffeeOrNull(localDate: LocalDate, coffeeType: CoffeeType): Int? {
-        return state.value.coffees[localDate]?.coffeeCountMap?.get(coffeeType)
+    private fun DaysCoffeesState.getCoffeeOrNull(localDate: LocalDate, coffeeType: CoffeeType): Int? {
+        return coffees[localDate]?.coffeeCountMap?.get(coffeeType)
     }
 
-    private fun putCoffeeCount(localDate: LocalDate, coffeeType: CoffeeType, count: Int): DaysCoffeesState {
+    private fun DaysCoffeesState.putCoffeeCount(
+        localDate: LocalDate,
+        coffeeType: CoffeeType,
+        count: Int
+    ): DaysCoffeesState {
         return DaysCoffeesState(
             changeCoffeeCount(
-                oldValue = state.value.coffees,
+                oldValue = coffees,
                 localDate = localDate,
                 coffeeType = coffeeType,
                 count = count
