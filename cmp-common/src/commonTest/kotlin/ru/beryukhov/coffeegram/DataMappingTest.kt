@@ -2,15 +2,26 @@ package ru.beryukhov.coffeegram
 
 import kotlinx.datetime.LocalDate
 import repository.model.DbDayCoffee
-import ru.beryukhov.coffeegram.data.Americano
-import ru.beryukhov.coffeegram.data.Cappuccino
-import ru.beryukhov.coffeegram.data.CommonCoffee
+import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Americano
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Cappuccino
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Chocolate
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Cocoa
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Espresso
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Frappe
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Fredo
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Glace
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Irish
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Latte
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Macchiato
+import ru.beryukhov.coffeegram.data.CoffeeTypes.Mocha
 import ru.beryukhov.coffeegram.data.DayCoffee
-import ru.beryukhov.coffeegram.data.Latte
-import ru.beryukhov.coffeegram.model.CoffeeTypeWithCount
+import ru.beryukhov.coffeegram.data.withEmpty
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.changeCoffeeCount
-import ru.beryukhov.coffeegram.model.withEmpty
+import ru.beryukhov.coffeegram.repository.toDaysCoffeesList
+import ru.beryukhov.coffeegram.repository.toState
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -45,30 +56,28 @@ class DataMappingTest {
         DbDayCoffee("2022-10-23", "Cappuccino", 3),
     )
 
-// todo need mocking resources or rewriting architecture without it
-//    @Test
-//    fun toList() = runTest {
-//        val actual = exampleDaysCoffeesState.coffees.toDaysCoffeesList()
-//        assertEquals(exampleDbDayCoffeeList, actual)
-//    }
+    @Test
+    fun toList() {
+        val actual = exampleDaysCoffeesState.coffees.toDaysCoffeesList()
+        assertEquals(exampleDbDayCoffeeList, actual)
+    }
 
     @Test
     fun parseDate() {
         assertEquals(LocalDate(2021, 8, 15), LocalDate.parse("2021-08-15"))
     }
 
-// todo need mocking resources or rewriting architecture without it
-//    @Test
-//    fun toListAndBack() = runTest {
-//        val actual: DaysCoffeesState = exampleDaysCoffeesState.coffees.toDaysCoffeesList().toState()
-//        assertEquals(exampleDaysCoffeesState, actual)
-//    }
+    @Test
+    fun toListAndBack() {
+        val actual: DaysCoffeesState = exampleDaysCoffeesState.coffees.toDaysCoffeesList().toState()
+        assertEquals(exampleDaysCoffeesState, actual)
+    }
 
-//    @Test
-//    fun toStateAndBack() = runTest {
-//        val actual: List<DbDayCoffee> = exampleDbDayCoffeeList.toState().coffees.toDaysCoffeesList()
-//        assertEquals(exampleDbDayCoffeeList, actual)
-//    }
+    @Test
+    fun toStateAndBack() {
+        val actual: List<DbDayCoffee> = exampleDbDayCoffeeList.toState().coffees.toDaysCoffeesList()
+        assertEquals(exampleDbDayCoffeeList, actual)
+    }
 
     @Test
     fun changeCoffeeCountToAbsentDateTest() {
@@ -135,16 +144,24 @@ class DataMappingTest {
 
     @Test
     fun withEmptyTest() {
-        val map = mapOf(
+        val map = mapOf<CoffeeType, Int>(
             Cappuccino to 2,
             Latte to 3
         )
         val actual = map.withEmpty()
         val expected = listOf(
-            CoffeeTypeWithCount(Latte, 3),
-            CoffeeTypeWithCount(Cappuccino, 2),
-            CoffeeTypeWithCount(Americano, 0),
-            CoffeeTypeWithCount(CommonCoffee, 0),
+            CoffeeTypeWithCount(coffee = Cappuccino, count = 2),
+            CoffeeTypeWithCount(coffee = Latte, count = 3),
+            CoffeeTypeWithCount(coffee = Americano, count = 0),
+            CoffeeTypeWithCount(coffee = Macchiato, count = 0),
+            CoffeeTypeWithCount(coffee = Glace, count = 0),
+            CoffeeTypeWithCount(coffee = Frappe, count = 0),
+            CoffeeTypeWithCount(coffee = Espresso, count = 0),
+            CoffeeTypeWithCount(coffee = Mocha, count = 0),
+            CoffeeTypeWithCount(coffee = Fredo, count = 0),
+            CoffeeTypeWithCount(coffee = Irish, count = 0),
+            CoffeeTypeWithCount(coffee = Cocoa, count = 0),
+            CoffeeTypeWithCount(coffee = Chocolate, count = 0)
         )
         assertEquals(expected, actual)
     }

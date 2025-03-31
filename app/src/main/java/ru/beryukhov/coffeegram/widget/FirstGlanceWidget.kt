@@ -2,8 +2,18 @@ package ru.beryukhov.coffeegram.widget
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.ImageBitmapConfig
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.Button
@@ -13,7 +23,6 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
-import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.action
@@ -51,6 +60,7 @@ import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
+import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.model.NavigationState.Companion.NAVIGATION_STATE_KEY
 import ru.beryukhov.coffeegram.model.NavigationState.Companion.TODAYS_COFFEE_LIST
 import ru.beryukhov.coffeegram.pages.AppWidgetViewModel
@@ -58,6 +68,7 @@ import ru.beryukhov.coffeegram.pages.AppWidgetViewModelImpl
 import ru.beryukhov.coffeegram.pages.AppWidgetViewModelStub
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.BIG_SQUARE
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.HORIZONTAL_RECTANGLE
+import kotlin.math.roundToInt
 import ru.beryukhov.coffeegram.common.R as common_R
 
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error), KoinComponent {
@@ -132,7 +143,7 @@ private fun SmallWidget(
             .clickable(openAppAction)
     ) {
         Image(
-            provider = ImageProvider(resId = common_R.drawable.cappuccino),
+            provider = ImageProvider(resId = common_R.drawable.latte),
             contentDescription = "",
             modifier = GlanceModifier
                 .fillMaxSize()
@@ -208,7 +219,7 @@ private fun HorizontalWidget(
         )
         Spacer(GlanceModifier.width(padding))
         Text(
-            text = LocalContext.current.getString(coffeeTypeWithCount.coffee.nameId),
+            text = printableText(coffeeTypeWithCount.coffee.localizedName),
             style = TextStyle(
                 fontSize = 16.sp,
                 textAlign = TextAlign.Center,
@@ -218,15 +229,22 @@ private fun HorizontalWidget(
 
         )
         Spacer(GlanceModifier.width(padding).defaultWeight())
-        coffeeTypeWithCount.coffee.iconId?.let {
-            Image(
-                provider = ImageProvider(resId = it),
-                contentDescription = "",
-                modifier = GlanceModifier
-                    .fillMaxHeight()
-                    .size(36.dp)
-            )
+        val painter = coffeeTypeWithCount.coffee.icon.painter()
+        val bitmap = remember {
+            painter.toImageBitmap(
+                density = Density(density = 1f),
+                layoutDirection = LayoutDirection.Ltr,
+                size = Size(36.dp.value, 36.dp.value)
+            ).asAndroidBitmap()
         }
+
+        Image(
+            provider = ImageProvider(bitmap),
+            contentDescription = "",
+            modifier = GlanceModifier
+                .fillMaxHeight()
+                .size(36.dp)
+        )
     }
 }
 
@@ -247,4 +265,18 @@ private fun BigWidget(
             )
         }
     }
+}
+
+private fun Painter.toImageBitmap(
+    density: Density,
+    layoutDirection: LayoutDirection,
+    size: Size = intrinsicSize,
+    config: ImageBitmapConfig = ImageBitmapConfig.Argb8888,
+): ImageBitmap {
+    val image = ImageBitmap(width = size.width.roundToInt(), height = size.height.roundToInt(), config = config)
+    val canvas = Canvas(image)
+    CanvasDrawScope().draw(density = density, layoutDirection = layoutDirection, canvas = canvas, size = size) {
+        draw(size = this.size)
+    }
+    return image
 }

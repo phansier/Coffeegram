@@ -5,7 +5,7 @@ import com.google.android.gms.wearable.DataMap
 fun DayCoffee.toDataMap(map: DataMap) {
     map.putIntegerArrayList(
         KEY,
-        ArrayList(coffeeCountMap.entries.sortedBy { it.key.key }.map { it.value })
+        ArrayList(coffeeCountMap.entries.sortedBy { it.key.dbKey }.map { it.value })
     ) // Fragile
 }
 

@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.cmpCommon)
     implementation(projects.appWearCommon)
     implementation(libs.composeWear.material)
     implementation(libs.composeWear.foundation)

@@ -9,14 +9,14 @@ class LightDaysCoffeesStore : InMemoryStore<DaysCoffeesIntent, DaysCoffeesState>
     initialState = DaysCoffeesState(mapOf())
 ), DaysCoffeesStore {
 
-    override suspend fun handleIntent(intent: DaysCoffeesIntent): DaysCoffeesState {
+    override fun DaysCoffeesState.handleIntent(intent: DaysCoffeesIntent): DaysCoffeesState {
         return when (intent) {
             is DaysCoffeesIntent.PlusCoffee -> increaseCoffee(intent.localDate, intent.coffeeType)
             is DaysCoffeesIntent.MinusCoffee -> decreaseCoffee(intent.localDate, intent.coffeeType)
         }
     }
 
-    private fun increaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
+    private fun DaysCoffeesState.increaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
         return putCoffeeCount(
             localDate = localDate,
             coffeeType = coffeeType,
@@ -24,7 +24,7 @@ class LightDaysCoffeesStore : InMemoryStore<DaysCoffeesIntent, DaysCoffeesState>
         )
     }
 
-    private fun decreaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
+    private fun DaysCoffeesState.decreaseCoffee(localDate: LocalDate, coffeeType: CoffeeType): DaysCoffeesState {
         return putCoffeeCount(
             localDate = localDate,
             coffeeType = coffeeType,
@@ -36,9 +36,13 @@ class LightDaysCoffeesStore : InMemoryStore<DaysCoffeesIntent, DaysCoffeesState>
         return state.value.value[localDate]?.coffeeCountMap?.get(coffeeType)
     }
 
-    private fun putCoffeeCount(localDate: LocalDate, coffeeType: CoffeeType, count: Int): DaysCoffeesState {
-        return state.value.copy(
-            value = state.value.value.toMutableMap().also {
+    private fun DaysCoffeesState.putCoffeeCount(
+        localDate: LocalDate,
+        coffeeType: CoffeeType,
+        count: Int
+    ): DaysCoffeesState {
+        return copy(
+            value = value.toMutableMap().also {
                 if (it[localDate] == null) {
                     it[localDate] = DayCoffee()
                 }

@@ -3,6 +3,15 @@
     <string name="latte">Latte</string>
     <string name="americano">Americano</string>
     <string name="common">Common Coffee</string>
+    <string name="macchiato">Espresso Macchiato</string>
+    <string name="glace">Glace</string>
+    <string name="frappe">Frappe</string>
+    <string name="espresso">Espresso</string>
+    <string name="mocha">Mocha</string>
+    <string name="fredo">Fredo</string>
+    <string name="irish">Irish</string>
+    <string name="cocoa">Cocoa</string>
+    <string name="chocolate">Chocolate</string>
 
     <string name="app_theme">App theme</string>
     <string name="app_theme_system">System</string>

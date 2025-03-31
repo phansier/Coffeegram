@@ -3,14 +3,12 @@
 package ru.beryukhov.coffeegram.repository
 
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDate.Companion.parse
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.getString
 import repository.CoffeeRepository
 import repository.model.DbDayCoffee
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
-import ru.beryukhov.coffeegram.data.coffeeTypeValueOf
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.store_lib.Storage
 
@@ -25,23 +23,21 @@ class CoffeeStorage(private val repository: CoffeeRepository) :
     }
 }
 
-// @VisibleForTesting
-internal suspend fun List<DbDayCoffee>.toState(): DaysCoffeesState {
+fun List<DbDayCoffee>.toState(): DaysCoffeesState {
     val map = mutableMapOf<LocalDate, DayCoffee>()
     this.forEach {
-        val date: LocalDate = parse(it.date)
-        val dayCoffee1 = map[date]?.let { map_date ->
-            val dayCoffee: MutableMap<CoffeeType, Int> = map_date.coffeeCountMap.toMutableMap()
-            dayCoffee[coffeeTypeValueOf(it.coffeeName)] = it.count
+        val date: LocalDate = LocalDate.parse(it.date)
+        val dayCoffee1: Map<CoffeeType, Int> = map[date]?.let { mapDate ->
+            val dayCoffee: MutableMap<CoffeeType, Int> = mapDate.coffeeCountMap.toMutableMap()
+            dayCoffee[CoffeeTypes.valueOf(it.coffeeName)] = it.count
             dayCoffee
-        } ?: mapOf(coffeeTypeValueOf(it.coffeeName) to it.count)
+        } ?: mapOf(CoffeeTypes.valueOf(it.coffeeName) to it.count)
         map[date] = DayCoffee(dayCoffee1)
     }
     return DaysCoffeesState(map)
 }
 
-// @VisibleForTesting
-internal suspend fun Map<LocalDate, DayCoffee>.toDaysCoffeesList(): List<DbDayCoffee> {
+fun Map<LocalDate, DayCoffee>.toDaysCoffeesList(): List<DbDayCoffee> {
     val list = mutableListOf<DbDayCoffee>()
     this.forEach { entry: Map.Entry<LocalDate, DayCoffee> ->
         val date = entry.key.toString()
@@ -50,7 +46,7 @@ internal suspend fun Map<LocalDate, DayCoffee>.toDaysCoffeesList(): List<DbDayCo
             list.add(
                 DbDayCoffee(
                     date = date,
-                    coffeeName = getString(inner_entry.key.name),
+                    coffeeName = inner_entry.key.dbKey,
                     count = inner_entry.value
                 )
             )

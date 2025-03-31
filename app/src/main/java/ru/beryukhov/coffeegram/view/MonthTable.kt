@@ -1,8 +1,6 @@
 package ru.beryukhov.coffeegram.view
 
 import android.content.Context
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,10 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -36,15 +30,15 @@ import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.data.Picture
 import ru.beryukhov.date_time_utils.YearMonth
 import java.text.DateFormatSymbols
 import java.util.Locale
-import ru.beryukhov.coffeegram.common.R as common_R
 
 private data class DayItem(
     val day: String,
     val isToday: Boolean = false,
-    @DrawableRes val iconId: Int? = null,
+    val coffeePicture: Picture = Picture.EMPTY,
     val dayOfMonth: Int? = null
 )
 
@@ -65,23 +59,12 @@ private fun DayCell(
             .testTag("Day")
     ) {
         with(dayItem) {
-            if (iconId != null) {
-                Image(
-                    painter = painterResource(id = iconId),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(32.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally)
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "",
-                    tint = Color.Transparent,
-                    modifier = Modifier.size(32.dp)
-                )
-            }
+            coffeePicture(
+                modifier = Modifier
+                    .size(32.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+            )
 
             Text(
                 AnnotatedString(
@@ -98,7 +81,7 @@ private fun DayCell(
 fun MonthTable(
     yearMonth: YearMonth,
     today: LocalDate,
-    filledDayItemsMap: PersistentMap<Int, Int?>,
+    filledDayItemsMap: PersistentMap<Int, Picture>,
     onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -131,7 +114,7 @@ fun MonthTable(
                     val dayItem = DayItem(
                         day = (day + 1).toString(),
                         isToday = yearMonth.atDay(day + 1) == today,
-                        iconId = filledDayItemsMap[day + 1],
+                        coffeePicture = filledDayItemsMap[day + 1] ?: Picture.EMPTY,
                         dayOfMonth = day + 1
                     )
                     DayCell(dayItem = dayItem, onClick = { onClick(day + 1) })
@@ -154,7 +137,7 @@ internal fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         yearMonth = YearMonth(2020, Month(7)),
         today = LocalDate(2020, 7, 14),
-        filledDayItemsMap = mapOf(2 to common_R.drawable.coffee).toPersistentMap(),
+        filledDayItemsMap = mapOf(2 to Picture.EMPTY).toPersistentMap(),
         onClick = {},
         modifier = modifier,
     )

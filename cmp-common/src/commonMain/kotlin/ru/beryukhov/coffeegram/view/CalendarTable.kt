@@ -5,14 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -26,20 +22,24 @@ import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.Month
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
-import ru.beryukhov.coffeegram.data.Cappuccino
-import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.CoffeeTypes
+import ru.beryukhov.coffeegram.data.Picture
 import ru.beryukhov.date_time_utils.YearMonth
 import ru.beryukhov.date_time_utils.dateFormatSymbolsShortWeekdays
 import ru.beryukhov.date_time_utils.getShortDisplayName
 
-data class DayItem(
+private data class DayItem(
     val day: String,
-    val coffeeType: CoffeeType? = null,
+    val coffeePicture: Picture,
     val dayOfMonth: Int? = null
-)
+) {
+    companion object {
+        val EMPTY: DayItem = DayItem("", Picture.EMPTY)
+    }
+}
 
 @Composable
-fun DayCell(
+private fun DayCell(
     dayItem: DayItem,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -53,22 +53,12 @@ fun DayCell(
         }
     ) {
         with(dayItem) {
-            if (coffeeType != null) {
-                Image(
-                    coffeeType = coffeeType,
-                    modifier = Modifier
-                        .size(32.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.CenterHorizontally)
-                )
-            } else {
-                Icon(
-                    Icons.Default.Delete,
-                    contentDescription = "",
-                    tint = Color(0x00000000), // Color.Transparent,
-                    modifier = Modifier.size(32.dp)
-                )
-            }
+            coffeePicture(
+                modifier = Modifier
+                    .size(32.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.CenterHorizontally)
+            )
 
             Text(
                 AnnotatedString(
@@ -81,19 +71,19 @@ fun DayCell(
 }
 
 @Composable
-fun WeekRow(
+private fun WeekRow(
     dayItems: PersistentList<DayItem?>,
     onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val weekDaysItems = dayItems.toMutableList()
-    weekDaysItems.addAll(listOf(DayItem("")) * (7 - weekDaysItems.size))
+    weekDaysItems.addAll(listOf(DayItem.EMPTY) * (7 - weekDaysItems.size))
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Row(modifier = Modifier.fillMaxWidth()) {
             for (dayItem in weekDaysItems) {
                 DayCell(
                     dayItem = dayItem
-                        ?: DayItem(""),
+                        ?: DayItem.EMPTY,
                     onClick = { dayItem?.dayOfMonth?.let { onClick(it) } },
                     modifier = Modifier.weight(1f)
                 )
@@ -104,7 +94,7 @@ fun WeekRow(
 }
 
 @Composable
-fun MonthTableAdjusted(
+private fun MonthTableAdjusted(
     weekItems: PersistentList<PersistentList<DayItem?>>,
     onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
@@ -114,24 +104,25 @@ fun MonthTableAdjusted(
     }
 }
 
-class WeekDayVectorPair(
+private class WeekDayVectorPair(
     val day: Int,
     val weekDay: DayOfWeek,
-    var coffeeType: CoffeeType? = null,
+    var coffeePicture: Picture,
 ) {
     fun toDayItem(): DayItem =
-        DayItem("$day", coffeeType, day)
+        DayItem("$day", coffeePicture, day)
 }
 
 // todo - replace by app's MonthTable with more features and better table implementation
 @Composable
 fun MonthTable(
     yearMonth: YearMonth,
-    filledDayItemsMap: PersistentMap<Int, CoffeeType?>,
+    filledDayItemsMap: PersistentMap<Int, Picture>,
     onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val weekDays: PersistentList<DayItem> = getWeekDaysNames().map { DayItem(it) }.toPersistentList()
+    val weekDays: PersistentList<DayItem> = getWeekDaysNames().map { DayItem(it, Picture.EMPTY) }
+        .toPersistentList()
     val days1to31 = mutableListOf<Int>()
     for (i in 1..31) {
         days1to31.add(i)
@@ -142,19 +133,20 @@ fun MonthTable(
             {
                 WeekDayVectorPair(
                     it,
-                    yearMonth.atDay(it).dayOfWeek
+                    yearMonth.atDay(it).dayOfWeek,
+                    Picture.EMPTY
                 )
             }
         )
         .toMutableMap()
-    filledDayItemsMap.forEach { days[it.key]?.coffeeType = it.value }
+    filledDayItemsMap.forEach { days[it.key]?.coffeePicture = it.value }
     val weekDaysStrings = getWeekDaysNames()
     val numberOfFirstDay = weekDaysStrings.indexOf(
         days[1]!!.weekDay.getShortDisplayName()
     )
     val daysList: List<WeekDayVectorPair> = days.toList().sortedBy { it.first }.map { it.second }
     val firstWeek: PersistentList<DayItem> =
-        (listOf(DayItem("")) * numberOfFirstDay + daysList.take(7 - numberOfFirstDay)
+        (listOf(DayItem.EMPTY) * numberOfFirstDay + daysList.take(7 - numberOfFirstDay)
             .map(WeekDayVectorPair::toDayItem)).toPersistentList()
 
     val secondToSixWeeks: List<PersistentList<DayItem>> = listOf(2, 3, 4, 5, 6).map {
@@ -187,7 +179,7 @@ private fun TablePreview() {
 fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         YearMonth(2020, Month.JULY),
-        mapOf(2 to Cappuccino).toPersistentMap(),
+        mapOf(2 to CoffeeTypes.Cappuccino.icon).toPersistentMap(),
         modifier = modifier,
         onClick = {},
     )

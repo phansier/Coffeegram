@@ -1,8 +1,9 @@
 package ru.beryukhov.coffeegram.model
 
 import kotlinx.datetime.LocalDate
-import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.withEmpty
 import ru.beryukhov.coffeegram.store_lib.InMemoryStore
 
 class DayListScreenStore(date: LocalDate, initialStoreState: DaysCoffeesState) :
@@ -34,9 +35,4 @@ data class DayListScreenState(
     val date: LocalDate,
     val daysCoffeesState: DaysCoffeesState,
     val dayItems: List<CoffeeTypeWithCount>
-)
-
-data class CoffeeTypeWithCount(
-    val coffee: CoffeeType,
-    val count: Int
 )

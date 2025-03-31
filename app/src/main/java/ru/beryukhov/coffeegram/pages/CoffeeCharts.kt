@@ -19,7 +19,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.patrykandpatrick.vico.multiplatform.cartesian.CartesianChartHost
@@ -46,6 +45,7 @@ import kotlinx.datetime.toLocalDateTime
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.date_time_utils.YearMonth
 
@@ -239,7 +239,7 @@ private fun ColumnChart(coffeeState: DaysCoffeesState) {
         }
     }
 
-    val names = typeDistribution.map { stringResource(it.type.nameId) }
+    val names = typeDistribution.map { printableText(it.type.localizedName) }
 
     // Column chart for type distribution
     CartesianChartHost(

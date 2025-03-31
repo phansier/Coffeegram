@@ -12,7 +12,7 @@ class NavigationStore(val yearMonth: YearMonth = nowYM()) : InMemoryStore<Naviga
 
     private val currentYearMonth = MutableStateFlow(nowYM())
 
-    override suspend fun handleIntent(intent: NavigationIntent): NavigationState {
+    override fun NavigationState.handleIntent(intent: NavigationIntent): NavigationState {
         return when (intent) {
             is NavigationIntent.OpenCoffeeListPage -> NavigationState.CoffeeListPage(
                 LocalDate(

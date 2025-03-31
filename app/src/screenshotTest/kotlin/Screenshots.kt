@@ -4,8 +4,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
-import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.Picture
+import ru.beryukhov.coffeegram.data.PrintableText
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 import ru.beryukhov.coffeegram.view.MonthTable
 import ru.beryukhov.date_time_utils.YearMonth
@@ -19,11 +20,9 @@ import ru.beryukhov.date_time_utils.YearMonth
 @Composable
 private fun Preview() {
     CoffeeTypeItem(object : CoffeeType {
-        override val nameId: Int
-            get() = R.string.app_name
-        override val iconId: Int?
-            get() = null
-        override val key: String = "Cappuccino"
+        override val localizedName: PrintableText = PrintableText("Coffeegram")
+        override val icon: Picture = Picture.EMPTY
+        override val dbKey: String = "Cappuccino"
     }, 5, {}, {})
 }
 

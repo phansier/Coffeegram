@@ -84,9 +84,11 @@ android {
 
 dependencies {
 
+    implementation(projects.cmpCommon)
     implementation(projects.repository)
     implementation(projects.repositoryRoom)
     implementation(projects.appWearCommon)
+    implementation(projects.dateTimeUtils)
 
     implementation(libs.core.coreKtx)
     implementation(libs.material)
@@ -109,10 +111,6 @@ dependencies {
     implementation(libs.ktor.logging)
 
     implementation(libs.kotlinx.immutableCollections)
-
-    testRuntimeOnly(libs.kotlin.test.junit)
-
-    implementation(projects.dateTimeUtils)
 
     implementation(libs.coroutines.core)
     runtimeOnly(libs.coroutines.android)
@@ -140,7 +138,8 @@ dependencies {
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.kotlin.test.annotations)
-    testImplementation(libs.kotlin.test.junit)
+//    testImplementation(libs.kotlin.test.junit)
+    testRuntimeOnly(libs.kotlin.test.junit)
 }
 
 protobuf {

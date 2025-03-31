@@ -6,7 +6,6 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -26,12 +25,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes.Cappuccino
+import ru.beryukhov.coffeegram.data.printableText
 
 @Composable
 fun CoffeeTypeItem(
@@ -44,18 +42,14 @@ fun CoffeeTypeItem(
     Row(
         modifier = modifier.padding(16.dp)
     ) {
-        coffeeType.iconId?.let {
-            Image(
-                painter = painterResource(id = it),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(48.dp)
-                    .align(Alignment.CenterVertically)
-            )
-        }
+        coffeeType.icon(
+            modifier = Modifier
+                .size(48.dp)
+                .align(Alignment.CenterVertically)
+        )
         Spacer(Modifier.width(16.dp))
         Text(
-            stringResource(coffeeType.nameId),
+            printableText(coffeeType.localizedName),
             style = typography.bodyMedium,
             modifier = Modifier
                 .align(Alignment.CenterVertically)

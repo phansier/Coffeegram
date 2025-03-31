@@ -25,6 +25,7 @@ android {
 }
 
 dependencies {
+    implementation(projects.cmpCommon)
 
     implementation(libs.androidx.annotation)
     // Wearable

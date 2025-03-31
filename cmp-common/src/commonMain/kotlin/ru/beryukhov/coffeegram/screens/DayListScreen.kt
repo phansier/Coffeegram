@@ -24,7 +24,7 @@ import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.DayListComponent
-import ru.beryukhov.coffeegram.model.CoffeeTypeWithCount
+import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 import ru.beryukhov.date_time_utils.getFullMonthName
 

@@ -17,8 +17,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.data.CoffeeType
+import ru.beryukhov.coffeegram.data.printableText
 
 @Composable
 fun CoffeeTypeItem(
@@ -31,15 +31,14 @@ fun CoffeeTypeItem(
     Row(
         modifier = modifier.padding(16.dp)
     ) {
-        Image(
-            coffeeType = coffeeType,
+        coffeeType.icon(
             modifier = Modifier
                 .size(48.dp)
                 .align(Alignment.CenterVertically)
         )
         Spacer(Modifier.width(16.dp))
         Text(
-            text = stringResource(coffeeType.name),
+            text = printableText(coffeeType.localizedName),
             style = typography.bodyMedium,
             modifier = Modifier.align(Alignment.CenterVertically).weight(1f)
         )
