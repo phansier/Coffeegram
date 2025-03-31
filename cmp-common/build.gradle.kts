@@ -83,6 +83,8 @@ kotlin {
 
             api(libs.koin.core)
             implementation(libs.koin.compose)
+
+            implementation(libs.coil.compose)
         }
         val notWasm by getting {
             dependencies {
@@ -100,6 +102,7 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(compose.uiTooling)
+            implementation(libs.coil.ktor.android)
         }
         val androidUnitTest by getting {
             dependencies {
@@ -108,6 +111,10 @@ kotlin {
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
+            implementation(libs.coil.ktor.java)
+        }
+        iosMain.dependencies {
+            implementation(libs.coil.ktor.darwin)
         }
     }
 
