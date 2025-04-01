@@ -13,14 +13,21 @@ import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.app_theme
 import coffeegram.cmp_common.generated.resources.app_theme_cupertino
 import coffeegram.cmp_common.generated.resources.app_theme_dark
+import coffeegram.cmp_common.generated.resources.app_theme_dynamic
 import coffeegram.cmp_common.generated.resources.app_theme_light
+import coffeegram.cmp_common.generated.resources.app_theme_summer
 import coffeegram.cmp_common.generated.resources.app_theme_system
 import coffeegram.cmp_common.generated.resources.settings
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.components.SettingsComponent
 import ru.beryukhov.coffeegram.model.DarkThemeState
+import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.view.ThemeRadioButtonWithText
 import ru.beryukhov.coffeegram.view.ThemeSwitchWithText
 
@@ -33,26 +40,80 @@ fun SettingsScreen(component: SettingsComponent, modifier: Modifier = Modifier) 
             style = typography.titleMedium,
             modifier = Modifier.padding(start = 24.dp, top = 16.dp)
         )
-        ThemeRadioButtonWithText(
-            selected = themeState.useDarkTheme == DarkThemeState.SYSTEM,
-            onClick = component::onSetSystemTheme,
-            label = stringResource(Res.string.app_theme_system),
-        )
-        ThemeRadioButtonWithText(
-            selected = themeState.useDarkTheme == DarkThemeState.LIGHT,
-            onClick = component::onSetLightTheme,
-            label = stringResource(Res.string.app_theme_light),
-        )
-        ThemeRadioButtonWithText(
-            selected = themeState.useDarkTheme == DarkThemeState.DARK,
-            onClick = component::onSetDarkTheme,
-            label = stringResource(Res.string.app_theme_dark),
-        )
-        ThemeSwitchWithText(
-            checked = themeState.isCupertino,
-            onCheckedChange = component::onSetCupertinoTheme,
-            label = stringResource(Res.string.app_theme_cupertino)
-        )
+        DarkThemeRadioGroup(themeState.useDarkTheme, component)
+
+        if (themeState.isCupertino != null) {
+            ThemeSwitchWithText(
+                checked = themeState.isCupertino == true,
+                onCheckedChange = component::onSetCupertinoTheme,
+                label = stringResource(Res.string.app_theme_cupertino)
+            )
+        }
+        if (themeState.isDynamic != null) {
+            ThemeSwitchWithText(
+                checked = themeState.isDynamic == true,
+                onCheckedChange = component::onSetDynamicTheme,
+                stringResource(Res.string.app_theme_dynamic)
+            )
+        }
+        if (themeState.isSummer != null) {
+            ThemeSwitchWithText(
+                checked = themeState.isSummer == true,
+                onCheckedChange = component::onSetSummerTheme,
+                stringResource(Res.string.app_theme_summer)
+            )
+        }
+    }
+}
+
+@Composable
+private fun DarkThemeRadioGroup(
+    useDarkTheme: DarkThemeState?,
+    component: SettingsComponent
+) {
+    ThemeRadioButtonWithText(
+        selected = useDarkTheme == DarkThemeState.SYSTEM,
+        onClick = component::onSetSystemTheme,
+        label = stringResource(Res.string.app_theme_system),
+    )
+    ThemeRadioButtonWithText(
+        selected = useDarkTheme == DarkThemeState.LIGHT,
+        onClick = component::onSetLightTheme,
+        label = stringResource(Res.string.app_theme_light),
+    )
+    ThemeRadioButtonWithText(
+        selected = useDarkTheme == DarkThemeState.DARK,
+        onClick = component::onSetDarkTheme,
+        label = stringResource(Res.string.app_theme_dark),
+    )
+}
+
+@Preview
+@Composable
+private fun SettingsScreenPreview() {
+    CoffeegramTheme() {
+        SettingsScreen(component = object : SettingsComponent {
+            override val models: StateFlow<ThemeState> = MutableStateFlow(
+                ThemeState(
+                    useDarkTheme = DarkThemeState.SYSTEM,
+                    isCupertino = true,
+                    isDynamic = null,
+                    isSummer = null
+                )
+            )
+
+            override fun onSetSystemTheme() = Unit
+
+            override fun onSetLightTheme() = Unit
+
+            override fun onSetDarkTheme() = Unit
+
+            override fun onSetCupertinoTheme(enabled: Boolean) = Unit
+
+            override fun onSetDynamicTheme(enabled: Boolean) = Unit
+
+            override fun onSetSummerTheme(enabled: Boolean) = Unit
+        })
     }
 }
 

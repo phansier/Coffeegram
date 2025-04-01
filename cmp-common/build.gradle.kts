@@ -115,6 +115,7 @@ kotlin {
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.coil.ktor.java)
+            implementation(libs.coroutines.swing)
         }
         iosMain.dependencies {
             implementation(libs.coil.ktor.darwin)

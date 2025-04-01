@@ -52,21 +52,25 @@ class ThemeDataStoreProtoStorage(private val context: Context) : Storage<ThemeSt
         // do not confuse with `lastOrNull()`, it will be waiting for completion inside otherwise
         val proto = context.dataStore.data.firstOrNull()
         val darkThemeState = proto?.themeState.mapOrNull() ?: return null
-        val isDynamic = proto?.dynamic ?: return null
-        val isSummer = proto.summer
+        val isCupertino = proto?.cupertino
+        val isDynamic = proto?.dynamic
+        val isSummer = proto?.summer
         return ThemeState(
             useDarkTheme = darkThemeState,
+            isCupertino = isCupertino,
             isDynamic = isDynamic,
-            isSummer = isSummer
+            isSummer = isSummer,
         )
     }
 
     override suspend fun saveState(state: ThemeState) {
         context.dataStore.updateData { preferences ->
-            preferences.toBuilder()
-                .setThemeState(state.map())
-                .setDynamic(state.isDynamic)
-                .setSummer(state.isSummer).build()
+            preferences.toBuilder().apply {
+                setThemeState(state.map())
+                state.isCupertino?.let { setCupertino(it) }
+                state.isDynamic?.let { setDynamic(it) }
+                state.isSummer?.let { setSummer(it) }
+            }.build()
         }
     }
 }

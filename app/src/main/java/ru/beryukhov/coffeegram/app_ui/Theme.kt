@@ -179,7 +179,7 @@ fun CoffeegramTheme(themeState: ThemeState = ThemeStateDefault, content: @Compos
     val isDynamic = themeState.isDynamic
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-        HarmonizedTheme(useDarkTheme = darkTheme, isDynamic = isDynamic, content = content)
+        HarmonizedTheme(useDarkTheme = darkTheme, isDynamic = isDynamic ?: false, content = content)
     } else {
         AppTheme(useDarkTheme = darkTheme, content = content)
     }

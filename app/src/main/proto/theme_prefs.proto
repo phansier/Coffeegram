@@ -12,6 +12,7 @@ message ThemePreferences {
 
     // user selected tasks sorting order
     ProtoThemeState theme_state = 3;
-    bool dynamic = 4;
-    bool summer = 5;
+    optional bool dynamic = 4;
+    optional bool summer = 5;
+    optional bool cupertino = 6;
 }

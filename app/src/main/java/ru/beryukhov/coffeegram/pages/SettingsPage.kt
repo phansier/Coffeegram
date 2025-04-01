@@ -2,6 +2,7 @@
 
 package ru.beryukhov.coffeegram.pages
 
+import android.content.Context
 import android.os.Build
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -39,7 +40,7 @@ import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeIntent
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
-import ru.beryukhov.coffeegram.model.getThemeStoreStub
+import ru.beryukhov.coffeegram.repository.ThemeInMemoryStorage
 
 @Preview
 @Composable
@@ -93,7 +94,7 @@ fun ColumnScope.SettingsPage(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val scope = rememberCoroutineScope()
             ThemeCheckBoxWithText(
-                checked = themeState.isDynamic,
+                checked = themeState.isDynamic == true,
                 onCheckedChange = {
                     if (it) {
                         scope.launch {
@@ -103,9 +104,7 @@ fun ColumnScope.SettingsPage(
                             )
                         }
                     }
-                    themeStore.newIntent(
-                        if (it) ThemeIntent.SetDynamicIntent else ThemeIntent.UnSetDynamicIntent
-                    )
+                    themeStore.newIntent(ThemeIntent.SetDynamicIntent(it))
                 },
                 stringResource(R.string.app_theme_dynamic)
             )
@@ -114,7 +113,7 @@ fun ColumnScope.SettingsPage(
         val scope = rememberCoroutineScope()
         val context = LocalContext.current
         ThemeCheckBoxWithText(
-            checked = themeState.isSummer,
+            checked = themeState.isSummer == true,
             onCheckedChange = {
                 if (it) {
                     scope.launch {
@@ -125,9 +124,7 @@ fun ColumnScope.SettingsPage(
                     }
                 }
                 changeIcon(context, it)
-                themeStore.newIntent(
-                    if (it) ThemeIntent.SetSummerIntent else ThemeIntent.UnSetSummerIntent
-                )
+                themeStore.newIntent(ThemeIntent.SetSummerIntent(it))
             },
             stringResource(R.string.app_theme_summer)
         )
@@ -173,3 +170,5 @@ fun ThemeCheckBoxWithText(
         Text(text = label, modifier = Modifier.align(CenterVertically))
     }
 }
+
+private fun getThemeStoreStub(context: Context) = ThemeStore(ThemeInMemoryStorage())

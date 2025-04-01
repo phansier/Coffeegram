@@ -106,7 +106,7 @@ fun CoffeegramTheme(
                 lightColorScheme()
             },
         ),
-        target = if (themeState.isCupertino) Theme.Cupertino else Theme.Material3,
+        target = if (themeState.isCupertino == true) Theme.Cupertino else Theme.Material3,
         content = content
     )
 }

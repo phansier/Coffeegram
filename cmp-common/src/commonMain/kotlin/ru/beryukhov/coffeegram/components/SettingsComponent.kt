@@ -14,6 +14,8 @@ interface SettingsComponent {
     fun onSetDarkTheme()
 
     fun onSetCupertinoTheme(enabled: Boolean)
+    fun onSetDynamicTheme(enabled: Boolean)
+    fun onSetSummerTheme(enabled: Boolean)
 }
 
 class DefaultSettingsComponent(
@@ -36,5 +38,13 @@ class DefaultSettingsComponent(
 
     override fun onSetCupertinoTheme(enabled: Boolean) {
         themeStore.newIntent(ThemeIntent.SetCupertinoIntent(enabled))
+    }
+
+    override fun onSetDynamicTheme(enabled: Boolean) {
+        themeStore.newIntent(ThemeIntent.SetDynamicIntent(enabled))
+    }
+
+    override fun onSetSummerTheme(enabled: Boolean) {
+        themeStore.newIntent(ThemeIntent.SetSummerIntent(enabled))
     }
 }

@@ -18,6 +18,8 @@
     <string name="app_theme_light">Light</string>
     <string name="app_theme_dark">Dark</string>
     <string name="app_theme_cupertino">Cupertino</string>
+    <string name="app_theme_dynamic">Dynamic</string>
+    <string name="app_theme_summer">Summer</string>
 
     <string name="settings">Settings</string>
     <string name="calendar">Calendar</string>

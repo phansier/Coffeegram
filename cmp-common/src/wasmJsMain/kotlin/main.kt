@@ -17,12 +17,13 @@ import ru.beryukhov.coffeegram.model.DaysCoffeesStoreImpl
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.repository.CoffeeStorage
+import ru.beryukhov.coffeegram.repository.ThemeInMemoryStorage
 import ru.beryukhov.coffeegram.screens.RootScreen
 import ru.beryukhov.coffeegram.store_lib.Storage
 
 private val appModule = module {
     single<Storage<ThemeState>> {
-        LocalThemePrefStorage()
+        ThemeInMemoryStorage()
     }
     single {
         ThemeStore(get())
@@ -72,12 +73,3 @@ private fun LifecycleRegistry.attachToDocument() {
 
 @JsFun("(document) => document.visibilityState")
 private external fun visibilityState(document: Document): String
-
-class LocalThemePrefStorage : Storage<ThemeState> {
-    private var themeState: ThemeState? = null
-
-    override suspend fun getState(): ThemeState? = themeState
-    override suspend fun saveState(state: ThemeState) {
-        themeState = state
-    }
-}
