@@ -99,7 +99,7 @@ fun MonthTable(
                 }
             }
         }
-        val itemsOffset = yearMonth.atDay(1).dayOfWeek.ordinal + 1
+        val itemsOffset = yearMonth.atDay(1).dayOfWeek.ordinal
         val daysInMonth = yearMonth.lengthOfMonth()
         LazyVerticalGrid(
             columns = GridCells.Fixed(7),
@@ -134,7 +134,7 @@ private fun TablePreview() {
 fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         yearMonth = YearMonth(2020, Month.JULY),
-        today = LocalDate(2020, 7, 14),
+        today = LocalDate(2020, 7, 14), // tuesday
         filledDayItemsMap = mapOf(2 to CoffeeTypes.Cappuccino.icon).toPersistentMap(),
         modifier = modifier,
         onClick = {},
