@@ -44,7 +44,7 @@ private val specialty = NavBarItem(
     Icons.Default.LocationOn
 )
 
-internal fun getNavBarItems(showMap: Boolean) =
+internal fun getNavBarItemsOld(showMap: Boolean) =
     if (showMap) {
         persistentListOf(calendar, stats, settings, specialty)
     } else {

@@ -32,7 +32,7 @@ import ru.beryukhov.coffeegram.model.NavigationState
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
-import ru.beryukhov.coffeegram.model.getNavBarItems
+import ru.beryukhov.coffeegram.model.getNavBarItemsOld
 import ru.beryukhov.coffeegram.pages.CoffeeListAppBar
 import ru.beryukhov.coffeegram.pages.CoffeeListPage
 import ru.beryukhov.coffeegram.pages.MapAppBar
@@ -74,7 +74,7 @@ fun PagesContent(
         }
     )
 
-    val navBarItems = remember(showMap) { getNavBarItems(showMap) }
+    val navBarItems = remember(showMap) { getNavBarItemsOld(showMap) }
 
     CoffeegramTheme(
         themeState = themeState()
