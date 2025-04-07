@@ -24,6 +24,9 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import com.slapps.cupertino.adaptive.icons.AdaptiveIcons
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowLeft
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowRight
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import ru.beryukhov.coffeegram.components.MonthTableComponent
 import ru.beryukhov.coffeegram.view.MonthTable
 import ru.beryukhov.date_time_utils.getFullMonthName
@@ -39,6 +42,7 @@ fun MonthTableScreen(
     Column(horizontalAlignment = Alignment.End, modifier = modifier) {
         MonthTable(
             yearMonth = monthTableScreenState.yearMonth,
+            today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
             filledDayItemsMap = monthTableScreenState.filledDayItemsMap,
             onClick = { dayOfMonth: Int ->
                 component.onDayClick(dayOfMonth)
