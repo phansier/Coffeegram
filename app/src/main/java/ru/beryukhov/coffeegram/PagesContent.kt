@@ -21,7 +21,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -30,6 +29,7 @@ import org.koin.compose.koinInject
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.model.NavigationState
 import ru.beryukhov.coffeegram.model.NavigationStore
+import ru.beryukhov.coffeegram.model.Text
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.model.getNavBarItemsOld
@@ -126,10 +126,10 @@ fun PagesContent(
                         NavigationBarItem(
                             selected = currentNavigationState.instanceOf(item.page),
                             onClick = { navigationStore.newIntent(item.intent) },
-                            label = { Text(stringResource(id = item.title)) },
+                            label = { item.navBarItem.Text() },
                             icon = {
                                 Icon(
-                                    imageVector = item.icon,
+                                    imageVector = item.navBarItem.icon,
                                     contentDescription = "",
                                 )
                             }
