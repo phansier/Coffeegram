@@ -56,7 +56,7 @@ fun CoffeeTypeItem(
                 .weight(1f)
                 .testTag("CoffeeName")
         )
-        Row(modifier = Modifier.align(Alignment.CenterVertically)) {
+        Row(modifier = Modifier.align(Alignment.CenterVertically).testTag("CoffeeNam1e")) {
             Spacer(Modifier.width(16.dp))
             val textButtonModifier = Modifier
                 .align(Alignment.CenterVertically)

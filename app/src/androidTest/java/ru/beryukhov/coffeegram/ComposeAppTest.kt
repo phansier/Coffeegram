@@ -1,8 +1,15 @@
 package ru.beryukhov.coffeegram
 
 import androidx.compose.ui.test.ExperimentalTestApi
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.printToLog
+import io.github.kakaocup.compose.KakaoCompose
 import io.github.kakaocup.compose.node.element.ComposeScreen
+import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
+import io.github.kakaocup.compose.rule.KakaoComposeTestRule
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -10,25 +17,33 @@ import org.junit.Test
 class ComposeAppTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<MainActivity>()
+
+    @get:Rule
+    val kakaoComposeTestRule = KakaoComposeTestRule(composeTestRule)
+
+    @Before
+    fun setUp() {
+        KakaoCompose.Override.useUnmergedTree = true
+    }
+
     @Test
     fun testDayOpen() {
-        ComposeScreen.onComposeScreen<TableScreen>(composeTestRule) {
+        onComposeScreen<TableScreen> {
             assertIsDisplayed()
             day("1").apply {
                 assertIsDisplayed()
                 performClick()
             }
         }
-        ComposeScreen.onComposeScreen<CoffeeListScreen>(composeTestRule) {
-            // composeTestRule.onRoot().printToLog("TEST_")
+        onComposeScreen<CoffeeListScreen> {
             assertIsDisplayed()
             coffeeList.assertLengthEquals(12)
             coffeeList.childAt<CoffeeItemNode>(0) {
-                title.assertTextEquals("Cappuccino")
+                hasText("Cappuccino")
             }
             coffeeList.childAt<CoffeeItemNode>(1) {
-                title.assertTextEquals("Latte")
+                hasText("Latte")
             }
         }
-        }
+    }
 }

@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
+import io.github.kakaocup.compose.rule.KakaoComposeTestRule
 import kotlinx.datetime.Month
 import org.junit.Rule
 import org.junit.Test
@@ -16,11 +17,14 @@ class ComposeScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    @get:Rule
+    val kakaoComposeTestRule = KakaoComposeTestRule(composeTestRule)
+
     @Test
     fun testYear() {
         withRule(yearMonth = YearMonth(2020, Month(1))) {
             onNodeWithText("2020").assertIsDisplayed()
-            onComposeScreen<TableScreen>(composeTestRule) {
+            onComposeScreen<TableScreen> {
                 yearName.assertIsDisplayed()
                 monthName.assertIsDisplayed()
                 yearName.assertTextEquals("2020")
@@ -32,7 +36,7 @@ class ComposeScreenTest {
     @Test
     fun testMonthChange() {
         withRule(yearMonth = YearMonth(2020, Month(9))) {
-            onComposeScreen<TableScreen>(composeTestRule) {
+            onComposeScreen<TableScreen> {
                 monthName.assertTextEquals("September")
                 leftArrowButton {
                     assertIsDisplayed()
