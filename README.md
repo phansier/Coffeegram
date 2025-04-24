@@ -63,6 +63,11 @@ Native iOS look & feel by [Compose Cupertino](https://github.com/alexzhirkevich/
 ## WASM
 <img src="images/wasm.png" alt="drawing" width="300"/>
 
+### Run WASM
+`./gradlew :cmp-common:wasmJsBrowserDevelopmentRun`
+or
+`make runWasm`
+
 ---
 
 

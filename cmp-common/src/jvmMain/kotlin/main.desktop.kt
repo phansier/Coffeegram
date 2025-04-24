@@ -7,7 +7,6 @@ import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.singleWindowApplication
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import org.jetbrains.compose.reload.DevelopmentEntryPoint
 import org.koin.core.context.GlobalContext.startKoin
 import ru.beryukhov.coffeegram.appModule
 import ru.beryukhov.coffeegram.components.DefaultRootComponent
@@ -35,9 +34,7 @@ fun main() {
         state = WindowState(width = 800.dp, height = 600.dp),
         icon = TrayIcon
     ) {
-        DevelopmentEntryPoint {
-            RootScreen(root)
-        }
+        RootScreen(root)
     }
 }
 
