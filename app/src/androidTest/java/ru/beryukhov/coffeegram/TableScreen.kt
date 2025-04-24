@@ -1,10 +1,10 @@
 package ru.beryukhov.coffeegram
 
 import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
+import androidx.compose.ui.test.hasAnyDescendant
+import androidx.compose.ui.test.hasText
 import io.github.kakaocup.compose.node.element.ComposeScreen
 import io.github.kakaocup.compose.node.element.KNode
-import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.hasAnyDescendant
 
 class TableScreen(semanticsProvider: SemanticsNodeInteractionsProvider? = null) :
     ComposeScreen<TableScreen>(

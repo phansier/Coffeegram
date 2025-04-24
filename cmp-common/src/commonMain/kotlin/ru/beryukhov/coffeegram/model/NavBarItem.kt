@@ -44,4 +44,5 @@ val settings = NavBarItem(
 internal fun getNavBarItems() = persistentListOf(calendar, settings)
 
 @Composable
+@Suppress("ModifierMissing")
 fun NavBarItem.Text() = Text(stringResource(title))
