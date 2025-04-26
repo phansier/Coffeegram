@@ -73,6 +73,7 @@ compose-activity = "androidx.activity:activity-compose:1.10.1" # https://develop
 
 compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 kakao-compose = { module = "io.github.kakaocup:compose", version = "1.0.0" }
+robolectric = { module = "org.robolectric:robolectric", version = "4.14.1" }
 
 composeWear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
 composeWear-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }
