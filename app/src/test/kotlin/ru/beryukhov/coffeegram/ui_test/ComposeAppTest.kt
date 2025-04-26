@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.test.core.app.ActivityScenario
 import io.github.kakaocup.compose.KakaoCompose
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import io.github.kakaocup.compose.rule.KakaoComposeTestRule
@@ -13,8 +12,12 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.core.context.loadKoinModules
+import org.koin.dsl.module
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
+import repository.CoffeeRepository
+import repository.InMemoryCoffeeRepository
 import ru.beryukhov.coffeegram.MainActivity
 
 @OptIn(ExperimentalTestApi::class)
@@ -22,8 +25,10 @@ import ru.beryukhov.coffeegram.MainActivity
 class ComposeAppTest {
     @get:Rule
     val composeTestRule by lazy {
+        replaceRoomWithInMemoryStorage()
         setupAndroidContextProvider()
-        createAndroidComposeRule<MainActivity>() }
+        createAndroidComposeRule<MainActivity>()
+    }
 
     @get:Rule
     val kakaoComposeTestRule by lazy {
@@ -57,25 +62,30 @@ class ComposeAppTest {
 
     @Test
     fun testDayOpen() {
-        setupAndroidContextProvider()
-        ActivityScenario.launch(MainActivity::class.java).use { scenario ->
-            onComposeScreen<TableScreen> {
+        onComposeScreen<TableScreen> {
+            assertIsDisplayed()
+            day("1").apply {
                 assertIsDisplayed()
-                day("1").apply {
-                    assertIsDisplayed()
-                    performClick()
-                }
+                performClick()
             }
-            onComposeScreen<CoffeeListScreen> {
-                assertIsDisplayed()
-                coffeeList.assertLengthEquals(12)
-                coffeeList.childAt<CoffeeItemNode>(0) {
-                    hasText("Cappuccino")
-                }
-                coffeeList.childAt<CoffeeItemNode>(1) {
-                    hasText("Latte")
-                }
+        }
+        onComposeScreen<CoffeeListScreen> {
+            assertIsDisplayed()
+            coffeeList.assertLengthEquals(12)
+            coffeeList.childAt<CoffeeItemNode>(0) {
+                hasText("Cappuccino")
+            }
+            coffeeList.childAt<CoffeeItemNode>(1) {
+                hasText("Latte")
             }
         }
     }
+}
+
+private fun replaceRoomWithInMemoryStorage() {
+    val testModule = module {
+        single<CoffeeRepository> { InMemoryCoffeeRepository() }
+    }
+
+    loadKoinModules(testModule)
 }
