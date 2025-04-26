@@ -19,6 +19,9 @@ import org.robolectric.RobolectricTestRunner
 import repository.CoffeeRepository
 import repository.InMemoryCoffeeRepository
 import ru.beryukhov.coffeegram.MainActivity
+import ru.beryukhov.coffeegram.ui_test_screens.CoffeeItemNode
+import ru.beryukhov.coffeegram.ui_test_screens.CoffeeListScreen
+import ru.beryukhov.coffeegram.ui_test_screens.TableScreen
 
 @OptIn(ExperimentalTestApi::class)
 @RunWith(RobolectricTestRunner::class)
