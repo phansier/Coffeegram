@@ -80,6 +80,12 @@ android {
     namespace = "ru.beryukhov.coffeegram"
 
     experimentalProperties["android.experimental.enableScreenshotTest"] = true
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -132,8 +138,9 @@ dependencies {
 
     implementation(libs.lottie.compose)
 
-    androidTestImplementation(libs.compose.uiTestJunit4)
-    androidTestImplementation(libs.kakao.compose)
+    testImplementation("org.robolectric:robolectric:4.13")
+    testImplementation(libs.compose.uiTestJunit4)
+    testImplementation(libs.kakao.compose)
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.kotlin.test.annotations)

@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram
+package ru.beryukhov.coffeegram.ui_test
 
 import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
 import androidx.compose.ui.test.hasAnyDescendant

@@ -1,18 +1,22 @@
-package ru.beryukhov.coffeegram
+package ru.beryukhov.coffeegram.ui_test
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import io.github.kakaocup.compose.rule.KakaoComposeTestRule
 import kotlinx.datetime.Month
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import ru.beryukhov.coffeegram.PagesContent
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.date_time_utils.YearMonth
 import ru.beryukhov.date_time_utils.nowYM
 
+@RunWith(AndroidJUnit4::class)
 class ComposeScreenTest {
     @get:Rule
     val composeTestRule = createComposeRule()
