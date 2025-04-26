@@ -8,20 +8,19 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import io.github.kakaocup.compose.KakaoCompose
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import io.github.kakaocup.compose.rule.KakaoComposeTestRule
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.core.context.loadKoinModules
+import org.koin.core.context.stopKoin
 import org.koin.dsl.module
 import org.robolectric.Robolectric
 import org.robolectric.RobolectricTestRunner
 import repository.CoffeeRepository
 import repository.InMemoryCoffeeRepository
 import ru.beryukhov.coffeegram.MainActivity
-import ru.beryukhov.coffeegram.ui_test_screens.CoffeeItemNode
-import ru.beryukhov.coffeegram.ui_test_screens.CoffeeListScreen
-import ru.beryukhov.coffeegram.ui_test_screens.TableScreen
 
 @OptIn(ExperimentalTestApi::class)
 @RunWith(RobolectricTestRunner::class)
@@ -41,6 +40,11 @@ class ComposeAppTest {
     @Before
     fun setUp() {
         KakaoCompose.Override.useUnmergedTree = true
+    }
+
+    @After
+    fun tearDown() {
+        stopKoin()
     }
 
     // Configures Compose's AndroidContextProvider to access resources in tests.
@@ -85,7 +89,7 @@ class ComposeAppTest {
     }
 }
 
-private fun replaceRoomWithInMemoryStorage() {
+internal fun replaceRoomWithInMemoryStorage() {
     val testModule = module {
         single<CoffeeRepository> { InMemoryCoffeeRepository() }
     }

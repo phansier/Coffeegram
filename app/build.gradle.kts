@@ -139,8 +139,8 @@ dependencies {
     implementation(libs.lottie.compose)
 
     testImplementation("org.robolectric:robolectric:4.13")
-    debugImplementation(libs.compose.uiTestJunit4) // both test & androidTest
-    debugImplementation(libs.kakao.compose) // both test & androidTest
+    testImplementation(libs.compose.uiTestJunit4)
+    testImplementation(libs.kakao.compose)
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.kotlin.test.annotations)

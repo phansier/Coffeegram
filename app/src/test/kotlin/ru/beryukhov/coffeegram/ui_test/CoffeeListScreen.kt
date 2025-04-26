@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.ui_test_screens
+package ru.beryukhov.coffeegram.ui_test
 
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.test.SemanticsMatcher
