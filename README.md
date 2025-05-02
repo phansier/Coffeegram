@@ -2,7 +2,7 @@
 ## Kotlin & Compose Multiplatform project
 
 [![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.8.0-green)](https://developer.android.com/jetpack/compose)
-[![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.7.3-green)](https://github.com/JetBrains/compose-multiplatform)
+[![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.8.0--rc01-green)](https://github.com/JetBrains/compose-multiplatform)
 [![Kotlin Version](https://img.shields.io/badge/Kotlin-2.1.20-green.svg)](https://kotlinlang.org)
 <br>
 [![Android CI](https://github.com/phansier/Coffeegram/actions/workflows/android.yml/badge.svg)](https://github.com/phansier/Coffeegram/actions/workflows/android.yml)

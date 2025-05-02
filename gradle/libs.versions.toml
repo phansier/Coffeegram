@@ -5,7 +5,7 @@ minSdk = "26"
 
 kotlin = "2.1.20" # https://github.com/JetBrains/kotlin/releases
 compose = "1.8.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
-jetbrainsCompose = "1.9.0+dev2409" # https://github.com/JetBrains/compose-multiplatform/releases
+jetbrainsCompose = "1.8.0-rc01" # https://github.com/JetBrains/compose-multiplatform/releases
 hotReload = "1.0.0-alpha07" # https://github.com/JetBrains/compose-hot-reload/releases
 
 agp = "8.9.2" # https://developer.android.com/studio/releases/gradle-plugin
