@@ -65,8 +65,9 @@ kotlin {
 
             implementation(compose.runtime)
             implementation(compose.foundation)
-
             implementation(compose.material3) // for explicit up to date version
+            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
+
             implementation(libs.coroutines.core)
 
             implementation(compose.components.uiToolingPreview)
