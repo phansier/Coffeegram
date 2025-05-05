@@ -6,8 +6,7 @@ import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import com.arkivanov.essenty.lifecycle.resume
 import com.arkivanov.essenty.lifecycle.stop
 import kotlinx.browser.document
-import org.koin.compose.KoinApplication
-import org.koin.compose.koinInject
+import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import org.w3c.dom.Document
 import repository.InMemoryCoffeeRepository
@@ -21,7 +20,10 @@ import ru.beryukhov.coffeegram.repository.ThemeInMemoryStorage
 import ru.beryukhov.coffeegram.screens.RootScreen
 import ru.beryukhov.coffeegram.store_lib.Storage
 
+private val koinApp = initKoin().koin
+
 private val appModule = module {
+
     single<Storage<ThemeState>> {
         ThemeInMemoryStorage()
     }
@@ -30,7 +32,12 @@ private val appModule = module {
     }
     single<DaysCoffeesStore> { DaysCoffeesStoreImpl(coffeeStorage = get()) }
     single { CoffeeStorage(repository = InMemoryCoffeeRepository()) }
- }
+}
+
+private fun initKoin() =
+    startKoin {
+        modules(appModule)
+    }
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
@@ -40,20 +47,15 @@ fun main() {
 
     val title = "Coffeegram"
     CanvasBasedWindow(title, canvasElementId = "ComposeTarget") {
-        KoinApplication(application = {
-            modules(appModule)
-        }) {
-            val themeStore = koinInject<ThemeStore>()
-            val daysCoffeesStore = koinInject<DaysCoffeesStore>()
-            val root = remember {
-                DefaultRootComponent(
-                    DefaultComponentContext(lifecycle = lifecycle),
-                    themeStore = themeStore,
-                    daysCoffeesStore = daysCoffeesStore,
-                )
-            }
-            RootScreen(root)
+        val root = remember {
+            DefaultRootComponent(
+                DefaultComponentContext(lifecycle = lifecycle),
+                themeStore = koinApp.get(),
+                daysCoffeesStore = koinApp.get(),
+            )
         }
+        RootScreen(root)
+
     }
 }
 

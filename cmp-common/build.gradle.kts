@@ -83,7 +83,6 @@ kotlin {
             implementation(libs.decompose.compose)
 
             api(libs.koin.core)
-            implementation(libs.koin.compose)
 
             implementation(libs.coil.compose)
         }
