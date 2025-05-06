@@ -6,7 +6,7 @@ minSdk = "26"
 kotlin = "2.1.20" # https://github.com/JetBrains/kotlin/releases
 compose = "1.8.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.8.0" # https://github.com/JetBrains/compose-multiplatform/releases
-hotReload = "1.0.0-alpha07" # https://github.com/JetBrains/compose-hot-reload/releases
+hotReload = "1.0.0-alpha09" # https://github.com/JetBrains/compose-hot-reload/releases
 
 agp = "8.9.2" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.1.3" # https://github.com/ktorio/ktor
@@ -25,11 +25,10 @@ wearCompose = "1.4.1" # https://developer.android.com/jetpack/androidx/releases/
 
 cupertino = "2.1.0" # https://github.com/schott12521/compose-cupertino
 
-coil = "3.1.0" # https://github.com/coil-kt/coil/releases
+coil = "3.2.0-rc02" # https://github.com/coil-kt/coil/releases
 coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
-datastore = "1.1.3" # https://developer.android.com/jetpack/androidx/releases/datastore
-koin = "4.0.4" # https://github.com/InsertKoinIO/koin#setup--current-version
-lifecycle = "2.8.7" # https://developer.android.com/jetpack/androidx/releases/lifecycle
+datastore = "1.2.0-alpha01" # https://developer.android.com/jetpack/androidx/releases/datastore
+koin = "4.1.0-Beta8" # https://github.com/InsertKoinIO/koin#setup--current-version
 core = "1.16.0" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/glance
 
@@ -60,9 +59,9 @@ sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sql
 sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
-coil-ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "coil" }
-coil-ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "coil" }
-coil-ktor-java = { module = "io.ktor:ktor-client-java", version.ref = "coil" }
+ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
+ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-java = { module = "io.ktor:ktor-client-java", version.ref = "ktor" }
 
 compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 compose-material3 = "androidx.compose.material3:material3:1.3.2" # https://developer.android.com/jetpack/androidx/releases/compose-material3
@@ -108,7 +107,6 @@ glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview"
 google-maps-compose = "com.google.maps.android:maps-compose:6.6.0"
 
 
-androidx-annotation = "androidx.annotation:annotation:1.9.1"        # https://mvnrepository.com/artifact/androidx.annotation/annotation
 material = { module = "com.google.android.material:material", version.ref = "material" }
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
 playServices-wearable = "com.google.android.gms:play-services-wearable:19.0.0" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable

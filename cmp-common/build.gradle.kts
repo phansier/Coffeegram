@@ -63,10 +63,11 @@ kotlin {
             implementation(projects.repository)
             implementation(projects.dateTimeUtils)
 
+            implementation(compose.ui)  // for explicit up to date version
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3) // for explicit up to date version
-            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3")
+            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3") // todo version catalog or compose dependency
 
             implementation(libs.coroutines.core)
 
@@ -103,7 +104,7 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(compose.uiTooling)
-            implementation(libs.coil.ktor.android)
+            implementation(libs.ktor.android)
             // Wearable
             implementation(libs.playServices.wearable)
         }
@@ -114,11 +115,11 @@ kotlin {
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation(libs.coil.ktor.java)
+            implementation(libs.ktor.java)
             implementation(libs.coroutines.swing)
         }
         iosMain.dependencies {
-            implementation(libs.coil.ktor.darwin)
+            implementation(libs.ktor.darwin)
         }
     }
 

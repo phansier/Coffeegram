@@ -4,6 +4,7 @@ import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.rememberTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
@@ -25,7 +26,7 @@ data class SplashTransition(
 fun newSplashTransition(): SplashTransition {
     val visibleState = remember { MutableTransitionState(SplashState.Shown) }
     visibleState.targetState = SplashState.Completed
-    val transition = updateTransition(visibleState)
+    val transition = rememberTransition(visibleState)
     val splashAlpha by transition.animateFloat(
         transitionSpec = { tween(1000) }
     ) { splashState ->
