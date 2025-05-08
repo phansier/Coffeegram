@@ -63,11 +63,11 @@ kotlin {
             implementation(projects.repository)
             implementation(projects.dateTimeUtils)
 
-            implementation(compose.ui)  // for explicit up to date version
+            implementation(compose.ui) // for explicit up to date version
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3) // for explicit up to date version
-            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3") // todo version catalog or compose dependency
+            implementation(libs.material.icons.core)
 
             implementation(libs.coroutines.core)
 
