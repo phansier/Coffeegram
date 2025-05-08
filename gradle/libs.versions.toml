@@ -28,7 +28,7 @@ cupertino = "2.2.4" # https://github.com/schott12521/compose-cupertino
 coil = "3.2.0-rc02" # https://github.com/coil-kt/coil/releases
 coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.2.0-alpha02" # https://developer.android.com/jetpack/androidx/releases/datastore
-koin = "4.1.0-Beta8" # https://github.com/InsertKoinIO/koin#setup--current-version
+koin = "4.0.4" # https://github.com/InsertKoinIO/koin#setup--current-version
 core = "1.16.0" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/glance
 
