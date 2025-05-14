@@ -3,16 +3,16 @@ targetSdk = "34"
 compileSdk = "35"
 minSdk = "26"
 
-kotlin = "2.1.20" # https://github.com/JetBrains/kotlin/releases
+kotlin = "2.1.21" # https://github.com/JetBrains/kotlin/releases
 compose = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.8.0" # https://github.com/JetBrains/compose-multiplatform/releases
 hotReload = "1.0.0-alpha09" # https://github.com/JetBrains/compose-hot-reload/releases
 
-agp = "8.9.2" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.10.0" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.1.3" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.1" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.1" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.1.20-2.0.1" # https://github.com/google/ksp/releases
+ksp = "2.1.21-2.0.1" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha09"
 
 decompose = "3.3.0"
@@ -23,9 +23,9 @@ detektCompose = "0.4.22" # https://github.com/mrmans0n/compose-rules
 detektDecompose = "0.2.0" # https://github.com/AJIEKCX/decompose-detekt-rules
 wearCompose = "1.4.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
-cupertino = "2.2.4" # https://github.com/schott12521/compose-cupertino
+cupertino = "2.2.5" # https://github.com/schott12521/compose-cupertino
 
-coil = "3.2.0-rc02" # https://github.com/coil-kt/coil/releases
+coil = "3.2.0" # https://github.com/coil-kt/coil/releases
 coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.2.0-alpha02" # https://developer.android.com/jetpack/androidx/releases/datastore
 koin = "4.0.4" # https://github.com/InsertKoinIO/koin#setup--current-version
