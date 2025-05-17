@@ -32,7 +32,8 @@ koin = "4.0.4" # https://github.com/InsertKoinIO/koin#setup--current-version
 core = "1.16.0" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/glance
 
-sqldelight = "2.0.2" # https://github.com/cashapp/sqldelight/releases
+sqldelight = "2.1.0" # https://github.com/cashapp/sqldelight/releases
+sqljs = "1.8.0" # https://github.com/sqldelight/sqldelight/blob/master/gradle/libs.versions.toml
 
 material = "1.12.0" # https://github.com/material-components/material-components-android
 vico = "2.1.2"
@@ -133,6 +134,7 @@ sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", vers
 sqldelight-nativeDriver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
 sqldelight-sqliteDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-webWorkerDriver = { module = "app.cash.sqldelight:web-worker-driver", version.ref = "sqldelight" }
+sqldelight-webWorkerDriverWasmJs = { module = "app.cash.sqldelight:web-worker-driver-wasm-js", version.ref = "sqldelight" }
 
 cupertino-adaptive = { module = "io.github.schott12521:cupertino-adaptive", version.ref = "cupertino" }
 cupertino-iconsExtended = { module = "io.github.schott12521:cupertino-icons-extended", version.ref = "cupertino" }

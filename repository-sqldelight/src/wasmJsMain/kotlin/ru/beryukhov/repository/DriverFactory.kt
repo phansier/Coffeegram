@@ -1,14 +1,11 @@
 package ru.beryukhov.repository
 
 import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.worker.createDefaultWebWorkerDriver
+import org.koin.dsl.module
 
-internal actual class DriverFactory {
-    actual fun createDriver(): SqlDriver {
-        val driver = WebWorkerDriver(
-            Worker(
-                js("""new URL("@cashapp/sqldelight-sqljs-worker/sqljs.worker.js", import.meta.url)""")
-            )
-        )
-        return driver
-    }
+private fun createDriver(): SqlDriver = createDefaultWebWorkerDriver()
+
+actual fun sqlDriverModule() = module {
+    single<SqlDriver> { createDriver() }
 }
