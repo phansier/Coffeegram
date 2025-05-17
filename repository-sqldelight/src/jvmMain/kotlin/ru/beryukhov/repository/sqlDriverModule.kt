@@ -5,7 +5,7 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import org.koin.dsl.module
 
 private fun createDriver(): SqlDriver {
-    val driver: SqlDriver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+    val driver: SqlDriver = JdbcSqliteDriver("jdbc:sqlite:myDatabase.db")
     CoffeeDb.Schema.create(driver)
     return driver
 }
