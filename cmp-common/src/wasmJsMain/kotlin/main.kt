@@ -20,6 +20,7 @@ import ru.beryukhov.coffeegram.repository.CoffeeStorage
 import ru.beryukhov.coffeegram.repository.ThemeInMemoryStorage
 import ru.beryukhov.coffeegram.screens.RootScreen
 import ru.beryukhov.coffeegram.store_lib.Storage
+import ru.beryukhov.repository.databaseModule
 
 private val appModule = module {
     single<Storage<ThemeState>> {
@@ -28,8 +29,9 @@ private val appModule = module {
     single {
         ThemeStore(get())
     }
+    includes(databaseModule)
     single<DaysCoffeesStore> { DaysCoffeesStoreImpl(coffeeStorage = get()) }
-    single { CoffeeStorage(repository = InMemoryCoffeeRepository()) }
+    single { CoffeeStorage(repository = get()/* InMemoryCoffeeRepository()*/) }
  }
 
 @OptIn(ExperimentalComposeUiApi::class)
