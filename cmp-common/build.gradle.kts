@@ -62,7 +62,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.repository)
             implementation(projects.dateTimeUtils)
-            // implementation(projects.repositorySqldelight) // fs and path issue in sql.js
+             implementation(projects.repositorySqldelight)
 
             implementation(compose.ui) // for explicit up to date version
             implementation(compose.runtime)
@@ -91,7 +91,7 @@ kotlin {
         }
         val notWasm by getting {
             dependencies {
-                implementation(projects.repositorySqldelight)
+//                implementation(projects.repositorySqldelight)
 
                 implementation(libs.datastore.preferencesCore)
                 implementation(libs.datastore.coreOkio)
