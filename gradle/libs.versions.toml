@@ -4,7 +4,7 @@ compileSdk = "35"
 minSdk = "26"
 
 kotlin = "2.1.21" # https://github.com/JetBrains/kotlin/releases
-compose = "1.8.1" # https://developer.android.com/jetpack/androidx/releases/compose-ui
+compose = "1.8.2" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.8.0" # https://github.com/JetBrains/compose-multiplatform/releases
 hotReload = "1.0.0-alpha09" # https://github.com/JetBrains/compose-hot-reload/releases
 
@@ -37,7 +37,7 @@ sqljs = "1.8.0" # https://github.com/sqldelight/sqldelight/blob/master/gradle/li
 
 material = "1.12.0" # https://github.com/material-components/material-components-android
 vico = "2.1.2"
-protobuf = "4.30.2"
+protobuf = "4.31.0"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -112,7 +112,7 @@ google-maps-compose = "com.google.maps.android:maps-compose:6.6.0"
 material = { module = "com.google.android.material:material", version.ref = "material" }
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
 playServices-wearable = "com.google.android.gms:play-services-wearable:19.0.0" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
-kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.8" # https://github.com/Kotlin/kotlinx.collections.immutable
+kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0" # https://github.com/Kotlin/kotlinx.collections.immutable
 vico-multiplatform = { module = "com.patrykandpatrick.vico:multiplatform", version.ref = "vico" }
 vico-multiplatform-m3 = { module = "com.patrykandpatrick.vico:multiplatform-m3", version.ref = "vico" }
 
