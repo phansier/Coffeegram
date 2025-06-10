@@ -106,6 +106,7 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
+google-maps-utils = "com.google.maps.android:maps-ktx:5.2.0"
 google-maps-compose = "com.google.maps.android:maps-compose:6.6.0"
 
 

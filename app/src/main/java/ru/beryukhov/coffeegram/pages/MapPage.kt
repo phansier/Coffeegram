@@ -20,7 +20,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Place
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -35,25 +39,30 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.CameraUpdate
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerComposable
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import com.google.maps.android.ktx.model.cameraPosition
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -61,6 +70,7 @@ import org.koin.androidx.compose.koinViewModel
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.repository.CoffeeShop
 import ru.beryukhov.coffeegram.repository.coffeeShops
+import ru.beryukhov.coffeegram.repository.latlng
 
 @Composable
 internal fun MapPagePreview() {
@@ -94,7 +104,10 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
         val coffeeShops by viewModel.coffeeShops.collectAsState()
 
         val cameraPositionState = rememberCameraPositionState {
-            position = CameraPosition.fromLatLngZoom(/* target = */ coarseLocation, /* zoom = */ 10f)
+            position = cameraPosition {
+                target(coarseLocation)
+                zoom(10f)
+            }
         }
         LaunchedEffect(cameraPositionState.position.zoom) {
             viewModel.newZoom(cameraPositionState.position.zoom)
@@ -105,8 +118,8 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
                 properties = MapProperties().copy(
-                        isMyLocationEnabled = true
-                    ),
+                    isMyLocationEnabled = true
+                ),
                 uiSettings = MapUiSettings(
                     compassEnabled = false,
                     zoomControlsEnabled = false,
@@ -117,7 +130,7 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
                 coffeeShops.list.forEach {
                     MarkerComposable(
                         keys = arrayOf(it.highlighted, coffeeShops.expanded),
-                        state = MarkerState(LatLng(it.coffeeShop.latitude, it.coffeeShop.longitude)),
+                        state = MarkerState(it.coffeeShop.latlng()),
                         onClick = { _ ->
                             viewModel.markerClick(it.coffeeShop)
                             true
@@ -133,6 +146,23 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
                     }
                 }
             }
+
+            val density = LocalDensity.current.density
+            Button(
+                onClick = {
+                    panMapToFitAllMarkers(coffeeShops.list.map { it.coffeeShop.latlng() }, density)?.let {
+                        cameraPositionState.move(
+                            it
+                        )
+                    }
+                },
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Place,
+                    contentDescription = ""
+                )
+            }
         }
     } else {
         Box(
@@ -142,6 +172,31 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
         }
     }
 }
+
+private fun Dp.toPx(density: Float): Int {
+    return (value * density).toInt()
+}
+
+fun panMapToFitAllMarkers(locations: List<LatLng>, density: Float): CameraUpdate? =
+    when {
+        locations.isEmpty() -> {
+            null
+        }
+        locations.size == 1 -> {
+            CameraUpdateFactory.newCameraPosition(cameraPosition {
+                target(locations.first())
+            })
+        }
+        else -> {
+            val latLng = LatLngBounds.builder().apply {
+                locations.forEach { include(it) }
+            }.build()
+            CameraUpdateFactory.newLatLngBounds(
+                /* bounds = */ latLng,
+                /* padding = */ 72.dp.toPx(density)
+            )
+        }
+    }
 
 @Composable
 @Preview
@@ -220,7 +275,7 @@ fun Marker(
                         lineHeight = 18.sp,
                         fontWeight = FontWeight(350),
                         color = textColor,
-                        ),
+                    ),
                     maxLines = if (highlighted) 3 else 1,
                     overflow = TextOverflow.Ellipsis
                 )
