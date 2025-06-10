@@ -97,8 +97,8 @@ private fun CoffeeList(
             CoffeeTypeItem(
                 coffeeType = type,
                 count = count,
-                onPlusClick = { onPlusClick(type) },
-                onMinusClick = { onMinusClick(type) },
+                onIncrement = { onPlusClick(type) },
+                onDecrement = { onMinusClick(type) },
                 modifier = Modifier.lazyListItemPosition(index)
             )
         }

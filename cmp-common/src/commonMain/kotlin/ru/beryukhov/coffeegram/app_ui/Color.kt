@@ -1,8 +1,6 @@
 package ru.beryukhov.coffeegram.app_ui
 import androidx.compose.ui.graphics.Color
 
-// todo reuse with app
-
 val md_theme_light_primary = Color(0xFF9a4523)
 val md_theme_light_onPrimary = Color(0xFFffffff)
 val md_theme_light_primaryContainer = Color(0xFFffdbcd)
