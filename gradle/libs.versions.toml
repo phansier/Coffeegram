@@ -8,12 +8,12 @@ compose = "1.8.2" # https://developer.android.com/jetpack/androidx/releases/comp
 jetbrainsCompose = "1.8.0" # https://github.com/JetBrains/compose-multiplatform/releases
 hotReload = "1.0.0-alpha09" # https://github.com/JetBrains/compose-hot-reload/releases
 
-agp = "8.10.0" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.10.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.1.3" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.1" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.1" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.1.21-2.0.1" # https://github.com/google/ksp/releases
-screenshot = "0.0.1-alpha09"
+ksp = "2.1.21-2.0.2" # https://github.com/google/ksp/releases
+screenshot = "0.0.1-alpha10"
 
 decompose = "3.3.0"
 essenty = "2.5.0"
@@ -28,7 +28,7 @@ cupertino = "2.2.5" # https://github.com/schott12521/compose-cupertino
 coil = "3.2.0" # https://github.com/coil-kt/coil/releases
 coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
 datastore = "1.2.0-alpha02" # https://developer.android.com/jetpack/androidx/releases/datastore
-koin = "4.0.4" # https://github.com/InsertKoinIO/koin#setup--current-version
+koin = "4.1.0" # https://github.com/InsertKoinIO/koin#setup--current-version
 core = "1.16.0" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/glance
 
@@ -36,8 +36,8 @@ sqldelight = "2.1.0" # https://github.com/cashapp/sqldelight/releases
 sqljs = "1.8.0" # https://github.com/sqldelight/sqldelight/blob/master/gradle/libs.versions.toml
 
 material = "1.12.0" # https://github.com/material-components/material-components-android
-vico = "2.1.2"
-protobuf = "4.31.0"
+vico = "2.1.3"
+protobuf = "4.31.1"
 
 [libraries]
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
