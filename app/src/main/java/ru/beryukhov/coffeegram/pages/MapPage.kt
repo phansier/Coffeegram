@@ -50,6 +50,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.MarkerComposable
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -103,7 +104,14 @@ fun ColumnScope.MapPage(modifier: Modifier = Modifier) {
         ) {
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
-                properties = MapProperties().copy(isMyLocationEnabled = true),
+                properties = MapProperties().copy(
+                        isMyLocationEnabled = true
+                    ),
+                uiSettings = MapUiSettings(
+                    compassEnabled = false,
+                    zoomControlsEnabled = false,
+                    myLocationButtonEnabled = false
+                ),
                 cameraPositionState = cameraPositionState
             ) {
                 coffeeShops.list.forEach {

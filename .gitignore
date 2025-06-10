@@ -9,6 +9,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+secrets.properties
 
 key.properties
 
