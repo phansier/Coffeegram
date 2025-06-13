@@ -45,14 +45,14 @@ struct CalendarView: View {
 
                     }
                 }
-                
+
                 // todo calendar not updated after back navigation from list
 
                 // Calendar grid
                 LazyVGrid(columns: columns, spacing: 8) {
                     ForEach(daysInMonth(), id: \.self) { date in
                         if let date = date {
-                            NavigationLink(destination: ListView(date:date, viewModel: ListViewModel(modelContext:modelContext))) {
+                            NavigationLink(destination: ListView(date: date, viewModel: ListViewModel(modelContext: modelContext))) {
                                 DayCell(date: date, count: viewModel.getTotalCupsForDate(date))
                             }
                         } else {
@@ -81,11 +81,14 @@ struct CalendarView: View {
         )
 
         let firstWeekday = calendar.component(.weekday, from: interval.start)
-        let offsetDays = firstWeekday - 2
+        var offsetDays = firstWeekday - 2
+        if (offsetDays < 0) {
+            offsetDays = 6
+        }
 
         let daysInMonth = calendar.dateComponents([.day], from: interval.start, to: interval.end).day! + 1
 
-        var dates: [Date?] = Array(repeating: nil, count: offsetDays) //todo count <0 if switching to previous month
+        var dates: [Date?] = Array(repeating: nil, count: offsetDays)
 
         for day in 0..<daysInMonth {
             if let date = calendar.date(byAdding: .day, value: day, to: interval.start) {
