@@ -13,7 +13,18 @@ struct CoffeegramApp: App {
 
     var body: some Scene {
         WindowGroup {
-            CalendarView(viewModel: CalendarViewModel(modelContext: sharedModelContainer.mainContext))
+            TabView {
+                CalendarView(viewModel: CalendarViewModel(modelContext: sharedModelContainer.mainContext))
+                    .tabItem {
+                        Label("1", systemImage: "person.3")
+                    }
+
+                CalendarView(viewModel: CalendarViewModel(modelContext: sharedModelContainer.mainContext))
+                    .tabItem {
+                        Label("2", systemImage: "checkmark.circle")
+                    }
+            }
+
         }
         .modelContainer(sharedModelContainer)
     }
