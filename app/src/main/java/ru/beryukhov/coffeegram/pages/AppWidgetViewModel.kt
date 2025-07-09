@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import ru.beryukhov.coffeegram.data.CoffeeType
@@ -15,6 +14,8 @@ import ru.beryukhov.coffeegram.data.withEmpty
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 interface AppWidgetViewModel {
     fun getCurrentDayCupsCount(): Int
@@ -49,6 +50,7 @@ class AppWidgetViewModelImpl(
     private val daysCoffeesStore: DaysCoffeesStore,
 ) : ViewModel(), AppWidgetViewModel {
 
+    @OptIn(ExperimentalTime::class)
     private fun getCurrentDay() = Clock.System.todayIn(TimeZone.currentSystemDefault())
 
     override fun getCurrentDayCupsCount(): Int {

@@ -38,7 +38,7 @@ class TablePageViewModelImpl(
                 entry.key.year == yearMonth.year
                     && entry.key.month == yearMonth.month
             }
-            .mapKeys { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.dayOfMonth }
+            .mapKeys { entry: Map.Entry<LocalDate, DayCoffee> -> entry.key.day }
             .mapValues { entry: Map.Entry<Int, DayCoffee> -> entry.value.getDayIconCoffeeType() }
     }
 

@@ -60,7 +60,7 @@ fun DayListAppBar(
     AdaptiveTopAppBar(
         title = {
             Text(
-                "${localDate.dayOfMonth} ${getFullMonthName(localDate.month).take(3)} "
+                "${localDate.day} ${getFullMonthName(localDate.month).take(3)} "
                     + stringResource(Res.string.add_drink)
             )
             BackHandler(backHandler = component.backHandler) {

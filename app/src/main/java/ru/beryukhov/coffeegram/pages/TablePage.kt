@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalTime::class)
+
 package ru.beryukhov.coffeegram.pages
 
 import androidx.compose.foundation.layout.Arrangement
@@ -38,7 +40,6 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.launch
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.koin.androidx.compose.koinViewModel
@@ -47,6 +48,8 @@ import ru.beryukhov.coffeegram.model.NavigationIntent
 import ru.beryukhov.coffeegram.view.MonthTable
 import ru.beryukhov.date_time_utils.getFullMonthName
 import ru.beryukhov.date_time_utils.toYearMonth
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 @ExperimentalMaterial3Api
 @Composable
