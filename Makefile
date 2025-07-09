@@ -34,9 +34,6 @@ testCommon:
 
 localCheck: detekt testApp buildApp buildWear buildAndroid testCommon
 
-compose_metrics:
-	$(path)gradlew :app:assembleRelease \-Pmyapp.enableComposeCompilerReports=true
-
 # https://github.com/PatilShreyas/compose-report-to-html
 compose_report:
 	java -jar composeReport2Html.jar \
