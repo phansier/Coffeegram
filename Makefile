@@ -22,10 +22,6 @@ buildApp:
 buildWear:
 	./gradlew :wear:assemble $(params)
 
-
-buildAndroid:
-	./gradlew :cmp-app:assemble $(params)
-
 buildDesktop:
 	./gradlew :cmp-app:assemble $(params)
 
@@ -55,8 +51,8 @@ unsafe_clear_branches:
 runDesktop:
 	./gradlew run $(params)
 
-runHot:
-	./gradlew runHot --no-configuration-cache $(params)
+hotRun:
+	./gradlew hotRunJvm --autoReload $(params)
 
 runWasm:
 	./gradlew :cmp-common:wasmJsBrowserDevelopmentRun --no-configuration-cache $(params)
