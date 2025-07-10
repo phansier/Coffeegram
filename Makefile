@@ -28,7 +28,7 @@ buildDesktop:
 testCommon:
 	./gradlew :cmp-common:testDebugUnitTest $(params)
 
-localCheck: detekt testApp buildApp buildWear buildAndroid testCommon
+localCheck: detekt testApp buildApp buildWear buildDesktop testCommon
 
 # https://github.com/PatilShreyas/compose-report-to-html
 compose_report:
