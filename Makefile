@@ -22,20 +22,13 @@ buildApp:
 buildWear:
 	./gradlew :wear:assemble $(params)
 
-
-buildAndroid:
-	./gradlew :cmp-app:assemble $(params)
-
 buildDesktop:
 	./gradlew :cmp-app:assemble $(params)
 
 testCommon:
 	./gradlew :cmp-common:testDebugUnitTest $(params)
 
-localCheck: detekt testApp buildApp buildWear buildAndroid testCommon
-
-compose_metrics:
-	$(path)gradlew :app:assembleRelease \-Pmyapp.enableComposeCompilerReports=true
+localCheck: detekt testApp buildApp buildWear buildDesktop testCommon
 
 # https://github.com/PatilShreyas/compose-report-to-html
 compose_report:
@@ -58,8 +51,8 @@ unsafe_clear_branches:
 runDesktop:
 	./gradlew run $(params)
 
-runHot:
-	./gradlew runHot --no-configuration-cache $(params)
+hotRun:
+	./gradlew hotRunJvm --autoReload $(params)
 
 runWasm:
 	./gradlew :cmp-common:wasmJsBrowserDevelopmentRun --no-configuration-cache $(params)

@@ -18,7 +18,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.koin.compose.koinInject
@@ -33,7 +32,10 @@ import ru.beryukhov.coffeegram.model.NavigationState.Companion.NAVIGATION_STATE_
 import ru.beryukhov.coffeegram.model.NavigationState.Companion.TODAYS_COFFEE_LIST
 import ru.beryukhov.coffeegram.model.NavigationStore
 import ru.beryukhov.coffeegram.pages.LandingPage
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
+@OptIn(ExperimentalTime::class)
 class MainActivity : ComponentActivity() {
 
     internal val nodeClient by lazy { Wearable.getNodeClient(this) }
@@ -65,7 +67,7 @@ class MainActivity : ComponentActivity() {
                     navigationStore.newIntent(
                         NavigationIntent.OpenCoffeeListPage(
                             dayOfMonth = Clock.System.now()
-                                .toLocalDateTime(TimeZone.currentSystemDefault()).date.dayOfMonth
+                                .toLocalDateTime(TimeZone.currentSystemDefault()).date.day
                         )
                     )
                 }

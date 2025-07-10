@@ -1,9 +1,9 @@
 # Coffeegram
 ## Kotlin & Compose Multiplatform project
 
-[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.8.0-green)](https://developer.android.com/jetpack/compose)
-[![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.8.0-green)](https://github.com/JetBrains/compose-multiplatform)
-[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.1.20-green.svg)](https://kotlinlang.org)
+[![Compose Version](https://img.shields.io/badge/Jetpack%20Compose-1.8.3-green)](https://developer.android.com/jetpack/compose)
+[![Compose Version](https://img.shields.io/badge/Compose%20Multiplatform-1.8.2-green)](https://github.com/JetBrains/compose-multiplatform)
+[![Kotlin Version](https://img.shields.io/badge/Kotlin-2.2.0-green.svg)](https://kotlinlang.org)
 <br>
 [![Android CI](https://github.com/phansier/Coffeegram/actions/workflows/android.yml/badge.svg)](https://github.com/phansier/Coffeegram/actions/workflows/android.yml)
 [![Hits-of-Code](https://hitsofcode.com/github/phansier/Coffeegram?branch=develop)](https://hitsofcode.com/github/phansier/Coffeegram/view?branch=develop)

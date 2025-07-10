@@ -1,6 +1,7 @@
+@file:OptIn(ExperimentalTime::class)
+
 package ru.beryukhov.date_time_utils
 
-import kotlinx.datetime.Clock.System.now
 import kotlinx.datetime.DateTimeUnit.Companion.MONTH
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
@@ -9,6 +10,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.number
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 data class YearMonth(val year: Int, val month: Month) : Comparable<YearMonth> {
 
@@ -55,7 +58,7 @@ fun nowYM(): YearMonth {
 }
 
 fun nowLD(): LocalDate {
-    return now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+    return Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
 }
 
 fun DayOfWeek.getShortDisplayName(): String =

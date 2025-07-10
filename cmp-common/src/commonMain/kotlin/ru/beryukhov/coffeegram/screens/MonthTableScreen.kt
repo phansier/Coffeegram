@@ -24,14 +24,15 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import com.slapps.cupertino.adaptive.icons.AdaptiveIcons
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowLeft
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowRight
-import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import ru.beryukhov.coffeegram.components.MonthTableComponent
 import ru.beryukhov.coffeegram.view.MonthTable
 import ru.beryukhov.date_time_utils.getFullMonthName
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalAdaptiveApi::class)
+@OptIn(ExperimentalAdaptiveApi::class, ExperimentalTime::class)
 @Composable
 fun MonthTableScreen(
     component: MonthTableComponent,

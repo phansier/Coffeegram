@@ -18,7 +18,7 @@ class NavigationStore(val yearMonth: YearMonth = nowYM()) : StoreImpl<Navigation
                 LocalDate(
                     year = currentYearMonth.value.year,
                     month = currentYearMonth.value.month,
-                    dayOfMonth = intent.dayOfMonth
+                    day = intent.dayOfMonth
                 )
             )
             is NavigationIntent.SetYearMonth -> NavigationState.TablePage(

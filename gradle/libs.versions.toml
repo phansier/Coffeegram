@@ -1,12 +1,12 @@
 [versions]
 targetSdk = "35"
-compileSdk = "35"
+compileSdk = "36"
 minSdk = "26"
 
 kotlin = "2.2.0" # https://github.com/JetBrains/kotlin/releases
 compose = "1.8.3" # https://developer.android.com/jetpack/androidx/releases/compose-ui
-jetbrainsCompose = "1.8.1" # https://github.com/JetBrains/compose-multiplatform/releases
-hotReload = "1.0.0-alpha10" # https://github.com/JetBrains/compose-hot-reload/releases
+jetbrainsCompose = "1.8.2" # https://github.com/JetBrains/compose-multiplatform/releases
+hotReload = "1.0.0-beta03" # https://github.com/JetBrains/compose-hot-reload/releases
 
 agp = "8.11.0" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.2.1" # https://github.com/ktorio/ktor
@@ -124,10 +124,10 @@ lottie-compose = "com.airbnb.android:lottie-compose:6.6.7" # https://github.com/
 composeGradle = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "jetbrainsCompose" }
 sqldelightGradle = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 serializationGradle = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
-hotReloadGradle = { module = "org.jetbrains.compose.hot-reload:gradle-plugin", version.ref = "hotReload" }
+hotReloadGradle = { module = "org.jetbrains.compose.hot-reload:hot-reload-gradle-plugin", version.ref = "hotReload" }
 
 
-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.7.0-0.6.x-compat" # https://github.com/Kotlin/kotlinx-datetime
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.7.1" # https://github.com/Kotlin/kotlinx-datetime
 
 sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
 sqldelight-coroutinesExt = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }

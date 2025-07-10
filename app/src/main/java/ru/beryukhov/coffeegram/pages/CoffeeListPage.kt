@@ -39,7 +39,7 @@ fun CoffeeListAppBar(
         modifier = modifier,
         title = {
             Text(
-                "${localDate.dayOfMonth} ${getFullMonthName(localDate.month).take(3)} "
+                "${localDate.day} ${getFullMonthName(localDate.month).take(3)} "
                     + stringResource(R.string.add_drink)
             )
         },

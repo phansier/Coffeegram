@@ -1,5 +1,4 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.compose.reload.ComposeHotRun
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -153,10 +152,6 @@ android {
     kotlin {
         jvmToolchain(17)
     }
-}
-
-tasks.register<ComposeHotRun>("runHot") {
-    mainClass.set("Main_desktopKt")
 }
 
 compose.desktop {

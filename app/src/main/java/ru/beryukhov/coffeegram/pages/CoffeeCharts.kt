@@ -1,4 +1,5 @@
 @file:Suppress("ModifierMissing")
+@file:OptIn(ExperimentalTime::class)
 
 package ru.beryukhov.coffeegram.pages
 
@@ -34,7 +35,6 @@ import com.patrykandpatrick.vico.multiplatform.common.ProvideVicoTheme
 import com.patrykandpatrick.vico.multiplatform.m3.common.rememberM3VicoTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.datetime.Clock
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
@@ -48,6 +48,8 @@ import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.date_time_utils.YearMonth
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 @Composable
 fun CoffeeCharts(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
@@ -291,7 +293,7 @@ private fun LineChart(aggregatedData: ImmutableList<AggregatedData>) {
 internal fun dailyAggregation(coffeeState: DaysCoffeesState): List<AggregatedData> =
     coffeeState.coffees.map { (date, dayCoffee) ->
         AggregatedData(
-            label = "${date.month.name.take(3)} ${date.dayOfMonth}",
+            label = "${date.month.name.take(3)} ${date.day}",
             totalCount = dayCoffee.coffeeCountMap.values.sum(),
         ) to date
     }.sortedBy { it.second }.map { it.first }
