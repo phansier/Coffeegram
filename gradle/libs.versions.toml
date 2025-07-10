@@ -127,7 +127,7 @@ serializationGradle = { module = "org.jetbrains.kotlin:kotlin-serialization", ve
 hotReloadGradle = { module = "org.jetbrains.compose.hot-reload:hot-reload-gradle-plugin", version.ref = "hotReload" }
 
 
-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.7.1" # https://github.com/Kotlin/kotlinx-datetime
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.7.1-0.6.x-compat" # https://github.com/Kotlin/kotlinx-datetime
 
 sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
 sqldelight-coroutinesExt = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
