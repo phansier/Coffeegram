@@ -8,7 +8,7 @@ compose = "1.8.3" # https://developer.android.com/jetpack/androidx/releases/comp
 jetbrainsCompose = "1.8.2" # https://github.com/JetBrains/compose-multiplatform/releases
 hotReload = "1.0.0-beta03" # https://github.com/JetBrains/compose-hot-reload/releases
 
-agp = "8.11.0" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.11.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.2.1" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.2" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.2" # https://developer.android.com/jetpack/androidx/releases/sqlite
@@ -127,7 +127,7 @@ serializationGradle = { module = "org.jetbrains.kotlin:kotlin-serialization", ve
 hotReloadGradle = { module = "org.jetbrains.compose.hot-reload:hot-reload-gradle-plugin", version.ref = "hotReload" }
 
 
-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.7.1" # https://github.com/Kotlin/kotlinx-datetime
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.7.1-0.6.x-compat" # https://github.com/Kotlin/kotlinx-datetime
 
 sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
 sqldelight-coroutinesExt = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }
