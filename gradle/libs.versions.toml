@@ -19,7 +19,7 @@ decompose = "3.3.0"
 essenty = "2.5.0"
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
-detektCompose = "0.4.22" # https://github.com/mrmans0n/compose-rules
+detektCompose = "0.4.24" # https://github.com/mrmans0n/compose-rules
 detektDecompose = "0.2.0" # https://github.com/AJIEKCX/decompose-detekt-rules
 wearCompose = "1.4.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
@@ -107,7 +107,7 @@ glance-preview = { module = "androidx.glance:glance-preview", version.ref = "gla
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
 google-maps-utils = "com.google.maps.android:maps-ktx:5.2.0"
-google-maps-compose = "com.google.maps.android:maps-compose:6.6.0"
+google-maps-compose = "com.google.maps.android:maps-compose:6.7.0"
 
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
