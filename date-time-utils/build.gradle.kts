@@ -17,9 +17,15 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    js {
+        browser()
+        binaries.executable()
+    }
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        browser {}
+        browser()
+        binaries.executable()
     }
 
     sourceSets {

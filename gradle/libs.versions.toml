@@ -3,7 +3,9 @@ targetSdk = "36"
 compileSdk = "36"
 minSdk = "26"
 
-kotlin = "2.2.10" # https://github.com/JetBrains/kotlin/releases
+kotlin = "2.2.20-RC2" # https://github.com/JetBrains/kotlin/releases
+ksp = "2.2.20-RC2-2.0.2" # https://github.com/google/ksp/releases
+
 compose = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.10.0-alpha01" # https://github.com/JetBrains/compose-multiplatform/releases
 hotReload = "1.0.0-beta06" # https://github.com/JetBrains/compose-hot-reload/releases
@@ -12,11 +14,12 @@ agp = "8.13.0" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.2.3" # https://github.com/ktorio/ktor
 androidxRoom = "2.7.2" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.5.2" # https://developer.android.com/jetpack/androidx/releases/sqlite
-ksp = "2.2.10-2.0.2" # https://github.com/google/ksp/releases
 screenshot = "0.0.1-alpha11"
 
 decompose = "3.3.0"
 essenty = "2.5.0"
+jetbrainsKotlinWrappers = "2025.9.3"
+
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
 detektCompose = "0.4.27" # https://github.com/mrmans0n/compose-rules
@@ -148,3 +151,5 @@ essenty = { module = "com.arkivanov.essenty:lifecycle", version.ref = "essenty" 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-annotations = { module = "org.jetbrains.kotlin:kotlin-test-annotations-common", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+
+jetbrains-kotlinWrappers-kotlinWrappersBom = { group = "org.jetbrains.kotlin-wrappers", name = "kotlin-wrappers-bom", version.ref = "jetbrainsKotlinWrappers" }

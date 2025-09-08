@@ -23,9 +23,13 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    js {
+        browser()
+        binaries.executable()
+    }
+
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        outputModuleName = "composeApp"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
@@ -119,6 +123,10 @@ kotlin {
         }
         iosMain.dependencies {
             implementation(libs.ktor.darwin)
+        }
+        jsMain.dependencies {
+            implementation(project.dependencies.enforcedPlatform(libs.jetbrains.kotlinWrappers.kotlinWrappersBom.get()))
+            implementation("org.jetbrains.kotlin-wrappers:kotlin-browser")
         }
     }
 

@@ -39,6 +39,10 @@ android {
     namespace = "ru.beryukhov.coffeegram.wear"
 }
 
+kotlin {
+    jvmToolchain(21)
+}
+
 dependencies {
     implementation(projects.cmpCommon)
     implementation(libs.composeWear.material)

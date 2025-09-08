@@ -3,13 +3,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
-import com.arkivanov.essenty.lifecycle.resume
-import com.arkivanov.essenty.lifecycle.stop
-import kotlinx.browser.document
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import org.koin.dsl.module
-import org.w3c.dom.Document
 import repository.InMemoryCoffeeRepository
 import ru.beryukhov.coffeegram.components.DefaultRootComponent
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -38,13 +34,14 @@ fun main() {
 
     lifecycle.attachToDocument()
 
-    ComposeViewport("ComposeTarget") {
+    ComposeViewport {
         KoinApplication(application = {
             modules(appModule)
         }) {
             val themeStore = koinInject<ThemeStore>()
             val daysCoffeesStore = koinInject<DaysCoffeesStore>()
             val root = remember {
+                // withWebHistory { stateKeeper, deepLink ->
                 DefaultRootComponent(
                     DefaultComponentContext(lifecycle = lifecycle),
                     themeStore = themeStore,
@@ -56,19 +53,4 @@ fun main() {
     }
 }
 
-private fun LifecycleRegistry.attachToDocument() {
-    fun onVisibilityChanged() {
-        if (visibilityState(document) == "visible") {
-            resume()
-        } else {
-            stop()
-        }
-    }
-
-    onVisibilityChanged()
-
-    document.addEventListener(type = "visibilitychange", callback = { onVisibilityChanged() })
-}
-
-@JsFun("(document) => document.visibilityState")
-private external fun visibilityState(document: Document): String
+expect fun LifecycleRegistry.attachToDocument()
