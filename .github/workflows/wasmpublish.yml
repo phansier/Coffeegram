@@ -37,7 +37,7 @@ jobs:
       - name: Build WASM
         run: make buildWasm
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           # Upload entire repository
           path: 'cmp-common/build/dist/wasmJs/productionExecutable'
