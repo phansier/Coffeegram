@@ -50,8 +50,8 @@ android {
         }
     }
     compileOptions {
-        targetCompatibility = JavaVersion.VERSION_17
-        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_21
     }
     buildFeatures {
         compose = true
@@ -77,6 +77,7 @@ kotlin {
     compilerOptions {
         optIn.add("kotlin.RequiresOptIn")
     }
+    jvmToolchain(21)
 }
 
 dependencies {
@@ -91,6 +92,7 @@ dependencies {
 
     implementation(libs.compose.ui)
     implementation(libs.compose.material3)
+    implementation(libs.compose.icons.core)
 
     debugImplementation(libs.compose.uiTooling)
     screenshotTestImplementation(libs.compose.uiTooling)

@@ -13,11 +13,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v5
-    - name: set up JDK 17
+    - name: set up JDK 21
       uses: actions/setup-java@v5
       with:
           distribution: 'adopt'
-          java-version: '17'
+          java-version: '21'
           cache: 'gradle'
 
     # Workaround for https://youtrack.jetbrains.com/issue/KT-62773/iOS-application-build-failing-if-generateDummyFramework-task-was-not-executed-before-pod-install
