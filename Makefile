@@ -61,7 +61,7 @@ buildWasm:
 	./gradlew :cmp-common:wasmJsBrowserDistribution --no-configuration-cache $(params)
 
 buildWeb:
-	./gradlew :cmp-common:composeCompatibilityBrowserDistribution --no-configuration-cache $(params)
+	./gradlew :cmp-common:composeCompatibilityBrowserDistribution $(params)
 
 generateFramework:
 	./gradlew :cmp-common:generateDummyFramework $(params)

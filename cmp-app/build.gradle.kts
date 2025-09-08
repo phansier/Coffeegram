@@ -31,6 +31,10 @@ android {
     namespace = "ru.beryukhov.coffeegram"
 }
 
+kotlin {
+    jvmToolchain(21)
+}
+
 dependencies {
 
     implementation(projects.cmpCommon)
