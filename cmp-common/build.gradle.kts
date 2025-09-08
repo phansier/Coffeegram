@@ -124,6 +124,10 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.ktor.darwin)
         }
+        jsMain.dependencies {
+            implementation(project.dependencies.enforcedPlatform(libs.jetbrains.kotlinWrappers.kotlinWrappersBom.get()))
+            implementation("org.jetbrains.kotlin-wrappers:kotlin-browser")
+        }
     }
 
     cocoapods {
