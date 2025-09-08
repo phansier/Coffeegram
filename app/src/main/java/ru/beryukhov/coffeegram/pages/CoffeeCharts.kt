@@ -10,8 +10,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -57,7 +57,7 @@ fun CoffeeCharts(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
     val tabs = listOf("Weekly", "All Time")
 
     Column(modifier = modifier.fillMaxWidth()) {
-        TabRow(selectedTabIndex = selectedTabIndex) {
+        SecondaryTabRow(selectedTabIndex = selectedTabIndex) {
             tabs.forEachIndexed { index, title ->
                 Tab(
                     text = { Text(title) },
