@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
@@ -28,11 +26,6 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser {}
-    }
-
     sourceSets {
         commonMain.dependencies {
             implementation(projects.repository)
@@ -54,12 +47,6 @@ kotlin {
 
         jvmMain.dependencies {
             implementation(libs.sqldelight.sqliteDriver)
-        }
-        wasmJsMain.dependencies {
-            implementation(libs.sqldelight.webWorkerDriver)
-            implementation(npm("sql.js", libs.versions.sqljs.get()))
-            implementation(npm("@cashapp/sqldelight-sqljs-worker", libs.versions.sqldelight.get()))
-            implementation(devNpm("copy-webpack-plugin", "9.1.0"))
         }
     }
 }

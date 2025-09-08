@@ -34,18 +34,18 @@ jobs:
           distribution: 'adopt'
           java-version: '21'
           cache: 'gradle'
-      - name: Build WASM
-        run: make buildWasm
+      - name: Build Web
+        run: make buildWeb
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
           # Upload entire repository
-          path: 'cmp-common/build/dist/wasmJs/productionExecutable'
+          path: 'cmp-common/build/dist/composeWebCompatibility/productionExecutable'
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy cmp-common/build/dist/wasmJs/productionExecutable --project-name=coffeegram
+          command: pages deploy cmp-common/build/dist/composeWebCompatibility/productionExecutable --project-name=coffeegram
           # Optional: Enable this if you want to have GitHub Deployments triggered
           gitHubToken: ${{ github.token }}

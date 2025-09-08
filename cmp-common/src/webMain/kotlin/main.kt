@@ -36,9 +36,9 @@ private val appModule = module {
 fun main() {
     val lifecycle = LifecycleRegistry()
 
-    lifecycle.attachToDocument()
+//    lifecycle.attachToDocument()
 
-    ComposeViewport("ComposeTarget") {
+    ComposeViewport {
         KoinApplication(application = {
             modules(appModule)
         }) {
@@ -56,19 +56,19 @@ fun main() {
     }
 }
 
-private fun LifecycleRegistry.attachToDocument() {
-    fun onVisibilityChanged() {
-        if (visibilityState(document) == "visible") {
-            resume()
-        } else {
-            stop()
-        }
-    }
-
-    onVisibilityChanged()
-
-    document.addEventListener(type = "visibilitychange", callback = { onVisibilityChanged() })
-}
-
-@JsFun("(document) => document.visibilityState")
-private external fun visibilityState(document: Document): String
+//private fun LifecycleRegistry.attachToDocument() {
+//    fun onVisibilityChanged() {
+//        if (visibilityState(document) == "visible") {
+//            resume()
+//        } else {
+//            stop()
+//        }
+//    }
+//
+//    onVisibilityChanged()
+//
+//    document.addEventListener(type = "visibilitychange", callback = { onVisibilityChanged() })
+//}
+//
+//@JsFun("(document) => document.visibilityState")
+//private external fun visibilityState(document: Document): String
