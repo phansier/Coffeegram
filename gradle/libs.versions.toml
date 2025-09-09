@@ -4,7 +4,7 @@ compileSdk = "36"
 minSdk = "26"
 
 kotlin = "2.2.20-RC2" # https://github.com/JetBrains/kotlin/releases
-ksp = "2.2.20-RC2-2.0.2" # https://github.com/google/ksp/releases
+ksp = "2.2.20-RC-2.0.2" # https://github.com/google/ksp/releases
 
 compose = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.10.0-alpha01" # https://github.com/JetBrains/compose-multiplatform/releases
