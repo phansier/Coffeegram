@@ -4,7 +4,7 @@ compileSdk = "36"
 minSdk = "26"
 
 kotlin = "2.2.20-RC2" # https://github.com/JetBrains/kotlin/releases
-ksp = "2.2.20-RC2-2.0.2" # https://github.com/google/ksp/releases
+ksp = "2.2.20-RC-2.0.2" # https://github.com/google/ksp/releases
 
 compose = "1.9.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.10.0-alpha01" # https://github.com/JetBrains/compose-multiplatform/releases
@@ -18,7 +18,7 @@ screenshot = "0.0.1-alpha11"
 
 decompose = "3.3.0"
 essenty = "2.5.0"
-jetbrainsKotlinWrappers = "2025.9.3"
+jetbrainsKotlinWrappers = "2025.9.4"
 
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
@@ -111,7 +111,7 @@ glance-preview = { module = "androidx.glance:glance-preview", version.ref = "gla
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
 google-maps-utils = "com.google.maps.android:maps-ktx:5.2.0"
-google-maps-compose = "com.google.maps.android:maps-compose:6.9.0"
+google-maps-compose = "com.google.maps.android:maps-compose:6.10.0"
 
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
