@@ -16,9 +16,9 @@ androidxRoom = "2.8.1" # https://developer.android.com/jetpack/androidx/releases
 sqlite = "2.6.1" # https://developer.android.com/jetpack/androidx/releases/sqlite
 screenshot = "0.0.1-alpha11"
 
-decompose = "3.3.0"
+decompose = "3.4.0"
 essenty = "2.5.0"
-jetbrainsKotlinWrappers = "2025.9.9"
+jetbrainsKotlinWrappers = "2025.9.11"
 
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
