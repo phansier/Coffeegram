@@ -111,7 +111,7 @@ glance-preview = { module = "androidx.glance:glance-preview", version.ref = "gla
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
 google-maps-utils = "com.google.maps.android:maps-ktx:5.2.0"
-google-maps-compose = "com.google.maps.android:maps-compose:6.11.0"
+google-maps-compose = "com.google.maps.android:maps-compose:6.12.0"
 
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
