@@ -18,7 +18,7 @@ screenshot = "0.0.1-alpha11"
 
 decompose = "3.4.0"
 essenty = "2.5.0"
-jetbrainsKotlinWrappers = "2025.9.11"
+jetbrainsKotlinWrappers = "2025.10.1"
 
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
@@ -111,7 +111,7 @@ glance-preview = { module = "androidx.glance:glance-preview", version.ref = "gla
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
 google-maps-utils = "com.google.maps.android:maps-ktx:5.2.0"
-google-maps-compose = "com.google.maps.android:maps-compose:6.11.0"
+google-maps-compose = "com.google.maps.android:maps-compose:6.12.0"
 
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
@@ -121,7 +121,7 @@ kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immuta
 vico-multiplatform = { module = "com.patrykandpatrick.vico:multiplatform", version.ref = "vico" }
 vico-multiplatform-m3 = { module = "com.patrykandpatrick.vico:multiplatform-m3", version.ref = "vico" }
 
-lottie-compose = "com.airbnb.android:lottie-compose:6.6.9" # https://github.com/airbnb/lottie-android
+lottie-compose = "com.airbnb.android:lottie-compose:6.6.10" # https://github.com/airbnb/lottie-android
 
 ###
 
