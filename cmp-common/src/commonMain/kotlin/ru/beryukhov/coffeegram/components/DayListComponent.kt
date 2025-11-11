@@ -52,7 +52,6 @@ class DefaultDayListComponent(
     }
 
     override fun onBackClicked() {
-        println("DayListComponentonBackClicked")
         onBackNavigation()
     }
 }

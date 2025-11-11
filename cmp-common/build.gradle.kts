@@ -36,11 +36,8 @@ kotlin {
             commonWebpackConfig {
                 outputFileName = "composeApp.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(rootDirPath)
-                        add(projectDirPath)
-                    }
+                    static(rootDirPath)
+                    static(projectDirPath)
                 }
             }
         }
@@ -66,16 +63,16 @@ kotlin {
             implementation(projects.dateTimeUtils)
             // implementation(projects.repositorySqldelight) // fs and path issue in sql.js
 
-            implementation(compose.ui) // for explicit up to date version
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3) // for explicit up to date version
+            implementation(libs.cmp.ui) // for explicit up to date version
+            implementation(libs.cmp.runtime)
+            implementation(libs.cmp.foundation)
+            implementation(libs.cmp.material3) // for explicit up to date version
             implementation(libs.material.icons.core)
 
             implementation(libs.coroutines.core)
 
-            implementation(compose.components.uiToolingPreview)
-            implementation(compose.components.resources)
+            implementation(libs.cmp.ui.tooling.preview)
+            implementation(libs.cmp.components.resources)
 
             implementation(libs.kotlinx.immutableCollections)
 
@@ -106,7 +103,7 @@ kotlin {
             implementation(libs.coroutines.test)
         }
         androidMain.dependencies {
-            implementation(compose.uiTooling)
+            implementation(libs.cmp.ui.tooling)
             implementation(libs.ktor.android)
             // Wearable
             implementation(libs.playServices.wearable)
@@ -126,7 +123,7 @@ kotlin {
         }
         jsMain.dependencies {
             implementation(project.dependencies.enforcedPlatform(libs.jetbrains.kotlinWrappers.kotlinWrappersBom.get()))
-            implementation("org.jetbrains.kotlin-wrappers:kotlin-browser")
+            implementation(libs.kotlinBrowser)
         }
     }
 

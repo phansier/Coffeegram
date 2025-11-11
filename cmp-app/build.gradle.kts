@@ -39,8 +39,8 @@ dependencies {
 
     implementation(projects.cmpCommon)
 
-    implementation(compose.runtime)
-    implementation(compose.foundation)
+    implementation(libs.cmp.runtime)
+    implementation(libs.cmp.foundation)
 
     implementation(libs.material)
 
