@@ -96,6 +96,7 @@ dependencies {
 
     debugImplementation(libs.compose.uiTooling)
     screenshotTestImplementation(libs.compose.uiTooling)
+    screenshotTestImplementation(libs.screenshot.validation.api)
 
     implementation(libs.compose.preview)
     implementation(libs.compose.activity)

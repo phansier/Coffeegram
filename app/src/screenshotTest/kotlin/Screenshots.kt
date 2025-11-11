@@ -1,6 +1,7 @@
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.android.tools.screenshot.PreviewTest
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
@@ -15,6 +16,7 @@ import ru.beryukhov.date_time_utils.YearMonth
  * - [Compose Preview screenshot do not work with compose multiplatform resources](https://issuetracker.google.com/issues/402137754)
  * - [Screenshot Preview Testing: Unable to use resource assets from another module](https://issuetracker.google.com/issues/393685881)
  */
+@PreviewTest
 @Preview
 @Preview(name = "Large preview", widthDp = 200)
 @Composable
@@ -26,6 +28,7 @@ private fun Preview() {
     }, 5, {}, {})
 }
 
+@PreviewTest
 @Preview(showBackground = true)
 @Composable
 internal fun TablePreview() {
