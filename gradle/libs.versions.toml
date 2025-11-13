@@ -18,7 +18,7 @@ screenshot = "0.0.1-alpha11"
 
 decompose = "3.4.0"
 essenty = "2.5.0"
-jetbrainsKotlinWrappers = "2025.11.6"
+jetbrainsKotlinWrappers = "2025.11.7"
 
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
@@ -39,7 +39,7 @@ sqldelight = "2.1.0" # https://github.com/cashapp/sqldelight/releases
 sqljs = "1.8.0" # https://github.com/sqldelight/sqldelight/blob/master/gradle/libs.versions.toml
 
 material = "1.13.0" # https://github.com/material-components/material-components-android
-vico = "2.3.1"
+vico = "2.3.4"
 protobuf = "4.33.0"
 
 [libraries]
