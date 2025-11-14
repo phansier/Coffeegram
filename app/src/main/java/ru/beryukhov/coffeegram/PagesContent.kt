@@ -4,7 +4,9 @@ package ru.beryukhov.coffeegram
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -78,48 +80,29 @@ fun PagesContent(
     CoffeegramTheme(
         themeState = themeState()
     ) {
-        Scaffold(modifier, topBar = {
-            when (currentNavigationState) {
-                is NavigationState.TablePage -> TableAppBar(
-                    pagerState = pagerState
-                )
-
-                is NavigationState.CoffeeListPage -> CoffeeListAppBar(
-                    localDate = currentNavigationState.date
-                )
-                is NavigationState.StatsPage -> StatsAppBar()
-                is NavigationState.SettingsPage -> SettingsAppBar()
-
-                is NavigationState.MapPage -> MapAppBar()
-            }
-        }, snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }) {
-            Column(
-                modifier = Modifier
-                    .padding(it)
-                    .testTag(currentNavigationState.mapTestTag())
-            ) {
-                Spacer(
-                    Modifier
-                        .padding(top = topPadding)
-                        .align(Alignment.CenterHorizontally)
-                )
+        Scaffold(
+            modifier,
+            contentWindowInsets = WindowInsets.systemBars,
+            topBar = {
                 when (currentNavigationState) {
-                    is NavigationState.TablePage -> TablePage(
+                    is NavigationState.TablePage -> TableAppBar(
                         pagerState = pagerState
                     )
-                    is NavigationState.CoffeeListPage -> CoffeeListPage(
+
+                    is NavigationState.CoffeeListPage -> CoffeeListAppBar(
                         localDate = currentNavigationState.date
                     )
-                    is NavigationState.StatsPage -> StatsPage()
-                    is NavigationState.SettingsPage -> SettingsPage(
-                        themeStore = koinInject(),
-                        snackbarHostState = snackbarHostState,
-                        startWearableActivity = startWearableActivity,
-                    )
-                    is NavigationState.MapPage -> MapPage()
+
+                    is NavigationState.StatsPage -> StatsAppBar()
+                    is NavigationState.SettingsPage -> SettingsAppBar()
+
+                    is NavigationState.MapPage -> MapAppBar()
                 }
+            },
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },
+            bottomBar = {
                 NavigationBar {
                     navBarItems.forEach { item ->
                         NavigationBarItem(
@@ -134,6 +117,37 @@ fun PagesContent(
                             }
                         )
                     }
+                }
+            }
+
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(it)
+                    .testTag(currentNavigationState.mapTestTag())
+            ) {
+                Spacer(
+                    Modifier
+                        .padding(top = topPadding)
+                        .align(Alignment.CenterHorizontally)
+                )
+                when (currentNavigationState) {
+                    is NavigationState.TablePage -> TablePage(
+                        pagerState = pagerState
+                    )
+
+                    is NavigationState.CoffeeListPage -> CoffeeListPage(
+                        localDate = currentNavigationState.date
+                    )
+
+                    is NavigationState.StatsPage -> StatsPage()
+                    is NavigationState.SettingsPage -> SettingsPage(
+                        themeStore = koinInject(),
+                        snackbarHostState = snackbarHostState,
+                        startWearableActivity = startWearableActivity,
+                    )
+
+                    is NavigationState.MapPage -> MapPage()
                 }
             }
         }
