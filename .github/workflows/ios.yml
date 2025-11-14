@@ -35,4 +35,4 @@ jobs:
         cd cmp-iosApp
         pod install --verbose
     - name: Build iOS
-      run: xcodebuild build -workspace cmp-iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -verbose
+      run: xcodebuild build -workspace cmp-iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='Any iOS Simulator Device' -verbose
