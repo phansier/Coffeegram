@@ -11,14 +11,14 @@ jetbrainsCompose = "1.10.0-beta01" # https://github.com/JetBrains/compose-multip
 hotReload = "1.0.0-rc03" # https://github.com/JetBrains/compose-hot-reload/releases
 
 agp = "8.13.1" # https://developer.android.com/studio/releases/gradle-plugin
-ktor = "3.3.2" # https://github.com/ktorio/ktor
+ktor = "3.3.3" # https://github.com/ktorio/ktor
 androidxRoom = "2.8.4" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.6.2" # https://developer.android.com/jetpack/androidx/releases/sqlite
-screenshot = "0.0.1-alpha11"
+screenshot = "0.0.1-alpha12"
 
 decompose = "3.4.0"
 essenty = "2.5.0"
-jetbrainsKotlinWrappers = "2025.11.12"
+jetbrainsKotlinWrappers = "2025.12.0"
 
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
