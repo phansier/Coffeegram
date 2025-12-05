@@ -746,8 +746,6 @@ Compose:
         active: true
     ContentEmitterReturningValues:
         active: true
-    ModifierComposable:
-        active: true
     ModifierMissing:
         active: true
     ModifierReused:
