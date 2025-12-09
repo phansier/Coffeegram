@@ -8,7 +8,7 @@ ksp = "2.3.3" # https://github.com/google/ksp/releases
 
 compose = "1.10.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.10.0-beta01" # https://github.com/JetBrains/compose-multiplatform/releases
-hotReload = "1.0.0-rc03" # https://github.com/JetBrains/compose-hot-reload/releases
+hotReload = "1.1.0-rc03" # https://github.com/JetBrains/compose-hot-reload/releases
 
 agp = "8.13.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.3.3" # https://github.com/ktorio/ktor
@@ -18,11 +18,11 @@ screenshot = "0.0.1-alpha12"
 
 decompose = "3.4.0"
 essenty = "2.5.0"
-jetbrainsKotlinWrappers = "2025.12.1"
+jetbrainsKotlinWrappers = "2025.12.3"
 
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
-detektCompose = "0.5.0" # https://github.com/mrmans0n/compose-rules
+detektCompose = "0.5.1" # https://github.com/mrmans0n/compose-rules
 detektDecompose = "0.2.0" # https://github.com/AJIEKCX/decompose-detekt-rules
 wearCompose = "1.5.6" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
@@ -40,7 +40,7 @@ sqljs = "1.8.0" # https://github.com/sqldelight/sqldelight/blob/master/gradle/li
 
 material = "1.13.0" # https://github.com/material-components/material-components-android
 vico = "2.3.6"
-protobuf = "4.33.1"
+protobuf = "4.33.2"
 
 [libraries]
 cmp-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "jetbrainsCompose" }
@@ -86,7 +86,7 @@ material-icons-core = "org.jetbrains.compose.material:material-icons-core:1.7.3"
 compose-activity = "androidx.activity:activity-compose:1.12.1" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
 
 compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
-kakao-compose = { module = "io.github.kakaocup:compose", version = "1.0.0" }
+kakao-compose = { module = "io.github.kakaocup:compose", version = "1.1.0" }
 robolectric = { module = "org.robolectric:robolectric", version = "4.16" }
 
 composeWear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
