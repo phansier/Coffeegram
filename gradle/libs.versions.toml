@@ -3,26 +3,26 @@ targetSdk = "36"
 compileSdk = "36"
 minSdk = "26"
 
-kotlin = "2.2.21" # https://github.com/JetBrains/kotlin/releases
-ksp = "2.3.3" # https://github.com/google/ksp/releases
+kotlin = "2.3.0" # https://github.com/JetBrains/kotlin/releases
+ksp = "2.3.4" # https://github.com/google/ksp/releases
 
-compose = "1.10.0" # https://developer.android.com/jetpack/androidx/releases/compose-ui
+compose = "1.10.1" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.10.0-beta01" # https://github.com/JetBrains/compose-multiplatform/releases
-hotReload = "1.0.0-rc03" # https://github.com/JetBrains/compose-hot-reload/releases
+hotReload = "1.1.0-rc03" # https://github.com/JetBrains/compose-hot-reload/releases
 
-agp = "8.13.1" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "8.13.2" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.3.3" # https://github.com/ktorio/ktor
 androidxRoom = "2.8.4" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.6.2" # https://developer.android.com/jetpack/androidx/releases/sqlite
-screenshot = "0.0.1-alpha12"
+screenshot = "0.0.1-alpha13"
 
 decompose = "3.4.0"
 essenty = "2.5.0"
-jetbrainsKotlinWrappers = "2025.12.1"
+jetbrainsKotlinWrappers = "2026.1.5"
 
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
-detektCompose = "0.5.0" # https://github.com/mrmans0n/compose-rules
+detektCompose = "0.5.3" # https://github.com/mrmans0n/compose-rules
 detektDecompose = "0.2.0" # https://github.com/AJIEKCX/decompose-detekt-rules
 wearCompose = "1.5.6" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
@@ -30,7 +30,7 @@ cupertino = "2.3.1" # https://github.com/schott12521/compose-cupertino
 
 coil = "3.3.0" # https://github.com/coil-kt/coil/releases
 coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
-datastore = "1.3.0-alpha02" # https://developer.android.com/jetpack/androidx/releases/datastore
+datastore = "1.3.0-alpha04" # https://developer.android.com/jetpack/androidx/releases/datastore
 koin = "4.1.1" # https://github.com/InsertKoinIO/koin#setup--current-version
 core = "1.17.0" # https://developer.android.com/jetpack/androidx/releases/core
 glance = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/glance
@@ -39,8 +39,8 @@ sqldelight = "2.2.1" # https://github.com/cashapp/sqldelight/releases
 sqljs = "1.8.0" # https://github.com/sqldelight/sqldelight/blob/master/gradle/libs.versions.toml
 
 material = "1.13.0" # https://github.com/material-components/material-components-android
-vico = "2.3.6"
-protobuf = "4.33.1"
+vico = "2.4.1"
+protobuf = "4.33.4"
 
 [libraries]
 cmp-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "jetbrainsCompose" }
@@ -57,7 +57,7 @@ androidGradle = { module = "com.android.tools.build:gradle", version.ref = "agp"
 roomGradle = { module = "androidx.room:androidx.room.gradle.plugin", version.ref = "androidxRoom" }
 detektGradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 composeKotlinGradle = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
-protobufGradle = { module = "com.google.protobuf:protobuf-gradle-plugin", version = "0.9.5" }
+protobufGradle = { module = "com.google.protobuf:protobuf-gradle-plugin", version = "0.9.6" }
 secretsGradle = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
 kspGradle = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 screenshotGradle = { module = "com.android.compose.screenshot:screenshot-test-gradle-plugin", version.ref = "screenshot"}
@@ -83,10 +83,10 @@ compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.r
 compose-icons-core = "androidx.compose.material:material-icons-core:1.7.8"
 material-icons-core = "org.jetbrains.compose.material:material-icons-core:1.7.3"
 
-compose-activity = "androidx.activity:activity-compose:1.12.1" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
+compose-activity = "androidx.activity:activity-compose:1.12.2" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
 
 compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
-kakao-compose = { module = "io.github.kakaocup:compose", version = "1.0.0" }
+kakao-compose = { module = "io.github.kakaocup:compose", version = "1.1.0" }
 robolectric = { module = "org.robolectric:robolectric", version = "4.16" }
 
 composeWear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
@@ -119,8 +119,8 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
-google-maps-utils = "com.google.maps.android:maps-ktx:5.2.1"
-google-maps-compose = "com.google.maps.android:maps-compose:6.12.2"
+google-maps-utils = "com.google.maps.android:maps-ktx:5.2.2"
+google-maps-compose = "com.google.maps.android:maps-compose:7.0.0"
 
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
