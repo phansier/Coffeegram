@@ -1,13 +1,12 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package ru.beryukhov.coffeegram.pages
+package ru.beryukhov.coffeegram.screens
 
-import android.content.Context
 import android.os.Build
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.absolutePadding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -15,82 +14,54 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import ru.beryukhov.coffeegram.BuildConfig
 import ru.beryukhov.coffeegram.R
-import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
-import ru.beryukhov.coffeegram.changeIcon
+import ru.beryukhov.coffeegram.components.AndroidSettingsComponent
 import ru.beryukhov.coffeegram.model.DarkThemeState
-import ru.beryukhov.coffeegram.model.ThemeIntent
-import ru.beryukhov.coffeegram.model.ThemeState
-import ru.beryukhov.coffeegram.model.ThemeStore
-import ru.beryukhov.coffeegram.repository.ThemeInMemoryStorage
-
-@Preview
-@Composable
-internal fun SettingsPagePreview() {
-    val snackbarHostState = remember { SnackbarHostState() }
-    CoffeegramTheme {
-        Scaffold(
-            snackbarHost = {
-                SnackbarHost(hostState = snackbarHostState)
-            }
-        ) {
-            Column(modifier = Modifier.padding(it)) {
-                SettingsPage(
-                    themeStore = getThemeStoreStub(LocalContext.current),
-                    snackbarHostState = snackbarHostState
-                )
-            }
-        }
-    }
-}
 
 @Composable
-fun ColumnScope.SettingsPage(
-    themeStore: ThemeStore,
+fun AndroidSettingsScreen(
+    component: AndroidSettingsComponent,
     snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
-    startWearableActivity: () -> Unit = {}
 ) {
-    Column(modifier = modifier.weight(1f)) {
+    val themeState by component.models.collectAsState()
+
+    Column(modifier = modifier.fillMaxSize()) {
         Text(
             stringResource(R.string.app_theme),
             style = typography.titleMedium,
             modifier = Modifier.absolutePadding(left = 24.dp, top = 16.dp)
         )
-        val themeState: ThemeState by themeStore.state.collectAsState()
+
         ThemeRadioButtonWithText(
             selected = themeState.useDarkTheme == DarkThemeState.SYSTEM,
-            onClick = { themeStore.newIntent(ThemeIntent.SetSystemIntent) },
+            onClick = { component.onSetSystemTheme() },
             stringResource(R.string.app_theme_system)
         )
         ThemeRadioButtonWithText(
             selected = themeState.useDarkTheme == DarkThemeState.LIGHT,
-            onClick = { themeStore.newIntent(ThemeIntent.SetLightIntent) },
+            onClick = { component.onSetLightTheme() },
             stringResource(R.string.app_theme_light)
         )
         ThemeRadioButtonWithText(
             selected = themeState.useDarkTheme == DarkThemeState.DARK,
-            onClick = { themeStore.newIntent(ThemeIntent.SetDarkIntent) },
+            onClick = { component.onSetDarkTheme() },
             stringResource(R.string.app_theme_dark)
         )
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val scope = rememberCoroutineScope()
             ThemeCheckBoxWithText(
@@ -104,14 +75,13 @@ fun ColumnScope.SettingsPage(
                             )
                         }
                     }
-                    themeStore.newIntent(ThemeIntent.SetDynamicIntent(it))
+                    component.onSetDynamicTheme(it)
                 },
                 stringResource(R.string.app_theme_dynamic)
             )
         }
 
         val scope = rememberCoroutineScope()
-        val context = LocalContext.current
         ThemeCheckBoxWithText(
             checked = themeState.isSummer == true,
             onCheckedChange = {
@@ -123,14 +93,18 @@ fun ColumnScope.SettingsPage(
                         )
                     }
                 }
-                changeIcon(context, it)
-                themeStore.newIntent(ThemeIntent.SetSummerIntent(it))
+                component.onSetSummerTheme(it)
             },
             stringResource(R.string.app_theme_summer)
         )
+
         HorizontalDivider()
+
         if (BuildConfig.DEBUG) {
-            Button(onClick = { startWearableActivity() }, modifier = Modifier.padding(16.dp)) {
+            Button(
+                onClick = { component.onStartWearableActivity() },
+                modifier = Modifier.padding(16.dp)
+            ) {
                 Text("Start Wearable Activity")
             }
         }
@@ -138,7 +112,7 @@ fun ColumnScope.SettingsPage(
 }
 
 @Composable
-fun SettingsAppBar(modifier: Modifier = Modifier) {
+fun AndroidSettingsAppBar(modifier: Modifier = Modifier) {
     TopAppBar(
         title = { Text(stringResource(R.string.settings)) },
         modifier = modifier
@@ -146,7 +120,7 @@ fun SettingsAppBar(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ThemeRadioButtonWithText(
+private fun ThemeRadioButtonWithText(
     selected: Boolean,
     onClick: (() -> Unit)?,
     label: String,
@@ -159,7 +133,7 @@ fun ThemeRadioButtonWithText(
 }
 
 @Composable
-fun ThemeCheckBoxWithText(
+private fun ThemeCheckBoxWithText(
     checked: Boolean,
     onCheckedChange: ((Boolean) -> Unit)?,
     label: String,
@@ -170,5 +144,3 @@ fun ThemeCheckBoxWithText(
         Text(text = label, modifier = Modifier.align(CenterVertically))
     }
 }
-
-private fun getThemeStoreStub(context: Context) = ThemeStore(ThemeInMemoryStorage())

@@ -9,6 +9,7 @@ plugins {
     id("com.android.application")
     id("com.autonomousapps.dependency-analysis")
     kotlin("android")
+    kotlin("plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.protobuf")
     id("com.github.triplet.play") version "3.12.2"
@@ -122,6 +123,10 @@ dependencies {
 
     implementation(libs.koin.android)
     implementation(libs.koin.android.compose) // lifecycleScope
+
+    // Decompose for navigation
+    implementation(libs.decompose.core)
+    implementation(libs.decompose.compose)
 
     implementation(libs.vico.multiplatform)
     implementation(libs.vico.multiplatform.m3)

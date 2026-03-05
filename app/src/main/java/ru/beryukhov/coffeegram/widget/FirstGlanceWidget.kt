@@ -61,8 +61,8 @@ import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.data.printableText
-import ru.beryukhov.coffeegram.model.NavigationState.Companion.NAVIGATION_STATE_KEY
-import ru.beryukhov.coffeegram.model.NavigationState.Companion.TODAYS_COFFEE_LIST
+import ru.beryukhov.coffeegram.model.NavigationConstants.NAVIGATION_STATE_KEY
+import ru.beryukhov.coffeegram.model.NavigationConstants.TODAYS_COFFEE_LIST
 import ru.beryukhov.coffeegram.pages.AppWidgetViewModel
 import ru.beryukhov.coffeegram.pages.AppWidgetViewModelImpl
 import ru.beryukhov.coffeegram.pages.AppWidgetViewModelStub

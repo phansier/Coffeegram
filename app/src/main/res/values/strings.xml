@@ -17,4 +17,5 @@
     <string name="loading_widget">Loading widget</string>
     <string name="stats_tab_all">All</string>
     <string name="stats_tab_weekly">Weekly</string>
+    <string name="location_permission_required">You should give location permission</string>
 </resources>

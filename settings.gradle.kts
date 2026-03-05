@@ -7,7 +7,6 @@ include(":repository-room")
 includeBuild("build-logic")
 include(":wear")
 
-include("cmp-app")
 include("cmp-common")
 include("repository")
 include("repository-sqldelight")
