@@ -141,7 +141,9 @@ fun MapScreen(
 
 private fun panMapToFitAllMarkers(locations: List<LatLng>, density: Float): CameraUpdate? =
     when {
-        locations.isEmpty() -> null
+        locations.isEmpty() -> {
+            null
+        }
         locations.size == 1 -> {
             CameraUpdateFactory.newCameraPosition(cameraPosition {
                 target(locations.first())

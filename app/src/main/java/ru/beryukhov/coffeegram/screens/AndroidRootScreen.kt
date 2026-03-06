@@ -24,15 +24,10 @@ import androidx.compose.ui.res.stringResource
 import com.arkivanov.decompose.extensions.compose.pages.ChildPages
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import kotlinx.collections.immutable.PersistentList
-import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.components.AndroidRootComponent
-import ru.beryukhov.coffeegram.model.NavBarItem
-import ru.beryukhov.coffeegram.model.calendar
+import ru.beryukhov.coffeegram.model.AndroidNavBarItem
 import ru.beryukhov.coffeegram.model.getAndroidNavBarItems
-import ru.beryukhov.coffeegram.model.settings
-import ru.beryukhov.coffeegram.model.specialty
-import ru.beryukhov.coffeegram.model.stats
 import ru.beryukhov.coffeegram.screens.CoffeeEditAppBar as CmpCoffeeEditAppBar
 import ru.beryukhov.coffeegram.screens.CoffeeEditScreen as CmpCoffeeEditScreen
 
@@ -101,7 +96,7 @@ private fun AndroidCurrentScreen(
 @Composable
 private fun AndroidBottomBar(
     rootComponent: AndroidRootComponent,
-    navBarItems: PersistentList<NavBarItem>,
+    navBarItems: PersistentList<AndroidNavBarItem>,
 ) {
     NavigationBar {
         val currentIndex by rootComponent.pages.subscribeAsState()
@@ -120,4 +115,3 @@ private fun AndroidBottomBar(
         }
     }
 }
-

@@ -6,6 +6,8 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import io.github.kakaocup.compose.rule.KakaoComposeTestRule
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import org.junit.After
 import org.junit.Ignore
 import org.junit.Rule
@@ -15,16 +17,12 @@ import org.koin.core.context.stopKoin
 import org.robolectric.RobolectricTestRunner
 import ru.beryukhov.coffeegram.PreviewContextConfigurationEffectProvider
 import ru.beryukhov.coffeegram.components.DefaultAndroidRootComponent
+import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
-import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
-import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.repository.ThemeInMemoryStorage
 import ru.beryukhov.coffeegram.screens.AndroidRootScreen
-import ru.beryukhov.coffeegram.store_lib.StoreImpl
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 
 @RunWith(RobolectricTestRunner::class)
 @Ignore("todo fix koin tests initialization - needs Decompose test setup")
@@ -71,7 +69,7 @@ class ComposeScreenTest {
                 val themeStore = ThemeStore(ThemeInMemoryStorage())
                 val daysCoffeesStore = object : DaysCoffeesStore {
                     override val state: StateFlow<DaysCoffeesState> = MutableStateFlow(DaysCoffeesState())
-                    override fun newIntent(intent: DaysCoffeesIntent) {}
+                    override fun newIntent(intent: DaysCoffeesIntent) = Unit
                 }
 
                 val rootComponent = DefaultAndroidRootComponent(
