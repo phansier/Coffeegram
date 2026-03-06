@@ -59,6 +59,7 @@ import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import kotlinx.collections.immutable.PersistentList
+import org.jetbrains.compose.resources.PreviewContextConfigurationEffect
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import ru.beryukhov.coffeegram.MainActivity
@@ -68,9 +69,7 @@ import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.model.NavigationConstants.NAVIGATION_STATE_KEY
 import ru.beryukhov.coffeegram.model.NavigationConstants.TODAYS_COFFEE_LIST
-import ru.beryukhov.coffeegram.pages.AppWidgetViewModel
-import ru.beryukhov.coffeegram.pages.AppWidgetViewModelImpl
-import ru.beryukhov.coffeegram.pages.AppWidgetViewModelStub
+import ru.beryukhov.coffeegram.pages.WidgetDataBridgeStub
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.BIG_SQUARE
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.HORIZONTAL_RECTANGLE
 import kotlin.math.roundToInt
@@ -84,7 +83,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
         SizeMode.Responsive(setOf(SMALL_SQUARE, HORIZONTAL_RECTANGLE, BIG_SQUARE))
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val viewModel: AppWidgetViewModelImpl by inject()
+        val viewModel: WidgetDataBridge by inject()
         provideContent {
             // todo widgets are broken because of compose resources
             WidgetContent(viewModel)
@@ -105,8 +104,14 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
 @Preview(widthDp = 200, heightDp = 100)
 @Preview(widthDp = 300, heightDp = 300)
 @Composable
+private fun WidgetContentPreview() {
+    PreviewContextConfigurationEffect()
+    WidgetContent(WidgetDataBridgeStub)
+}
+
+@Composable
 internal fun WidgetContent(
-    viewModel: AppWidgetViewModel = AppWidgetViewModelStub(),
+    viewModel: WidgetDataBridge,
 ) {
     val size = LocalSize.current
     CompositionLocalProvider(
@@ -127,14 +132,14 @@ internal fun WidgetContent(
                     size.height < BIG_SQUARE.height ->
                         HorizontalWidget(
                             coffeeTypeWithCount = viewModel.getCurrentDayMostPopularWithCount(),
-                            increment = viewModel::currentDayIncrement,
-                            decrement = viewModel::currentDayDecrement
+                            increment = viewModel::incrementCoffee,
+                            decrement = viewModel::decrementCoffee
                         )
 
                     else -> BigWidget(
                         list = viewModel.getCurrentDayList(),
-                        increment = viewModel::currentDayIncrement,
-                        decrement = viewModel::currentDayDecrement
+                        increment = viewModel::incrementCoffee,
+                        decrement = viewModel::decrementCoffee
                     )
                 }
             }

@@ -9,8 +9,7 @@ import ru.beryukhov.coffeegram.store_lib.StoreImpl
 
 interface DaysCoffeesStore : Store<DaysCoffeesIntent, DaysCoffeesState>
 
-// todo make internal after apps merge will be finished
-class DaysCoffeesStoreImpl(coffeeStorage: CoffeeStorage) : DaysCoffeesStore,
+internal class DaysCoffeesStoreImpl(coffeeStorage: CoffeeStorage) : DaysCoffeesStore,
     StoreImpl<DaysCoffeesIntent, DaysCoffeesState>(
         initialState = DaysCoffeesState(),
         storage = coffeeStorage
