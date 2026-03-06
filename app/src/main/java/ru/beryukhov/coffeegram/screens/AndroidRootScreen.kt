@@ -23,10 +23,15 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.pages.ChildPages
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
+import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.components.AndroidRootComponent
 import ru.beryukhov.coffeegram.model.NavBarItem
-import ru.beryukhov.coffeegram.model.getAndroidNavBarItems
+import ru.beryukhov.coffeegram.model.calendar
+import ru.beryukhov.coffeegram.model.settings
+import ru.beryukhov.coffeegram.model.specialty
+import ru.beryukhov.coffeegram.model.stats
 import ru.beryukhov.coffeegram.screens.CoffeeEditAppBar as CmpCoffeeEditAppBar
 import ru.beryukhov.coffeegram.screens.CoffeeEditScreen as CmpCoffeeEditScreen
 
@@ -103,7 +108,7 @@ private fun AndroidBottomBar(
             NavigationBarItem(
                 selected = currentIndex.selectedIndex == index,
                 onClick = { rootComponent.selectPage(index) },
-                label = { Text(item.title) },
+                label = { Text(stringResource(item.title) )},
                 icon = {
                     Icon(
                         imageVector = item.icon,
@@ -114,3 +119,10 @@ private fun AndroidBottomBar(
         }
     }
 }
+
+internal fun getAndroidNavBarItems(showMap: Boolean): PersistentList<NavBarItem> =
+    if (showMap) {
+        persistentListOf(calendar, stats, specialty, settings)
+    } else {
+        persistentListOf(calendar, stats, settings)
+    }

@@ -5,13 +5,13 @@ import kotlinx.coroutines.flow.StateFlow
 import ru.beryukhov.coffeegram.model.ThemeIntent
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
-import ru.beryukhov.coffeegram.components.SettingsComponent as BaseSettingsComponent
+import ru.beryukhov.coffeegram.components.SettingsComponent
 
 /**
  * Extended settings component for Android-specific features.
  * Adds wearable activity start and dynamic icon change capabilities.
  */
-interface AndroidSettingsComponent : BaseSettingsComponent {
+interface AndroidSettingsComponent : SettingsComponent {
     fun onStartWearableActivity()
     fun onIconChange(isSummer: Boolean)
 }

@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -67,7 +68,7 @@ fun MonthTableAppBar(
         title = {
             Row(horizontalArrangement = Arrangement.Center) {
                 Text(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).testTag("Month"),
                     text = AnnotatedString(
                         text = getFullMonthName(screenState.yearMonth.month),
                         paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)

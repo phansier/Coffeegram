@@ -9,7 +9,6 @@ import io.github.kakaocup.compose.rule.KakaoComposeTestRule
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.junit.After
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,7 +24,6 @@ import ru.beryukhov.coffeegram.repository.ThemeInMemoryStorage
 import ru.beryukhov.coffeegram.screens.AndroidRootScreen
 
 @RunWith(RobolectricTestRunner::class)
-@Ignore("todo fix koin tests initialization - needs Decompose test setup")
 class ComposeScreenTest {
     @get:Rule
     val composeTestRule by lazy {
