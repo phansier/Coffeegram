@@ -1,5 +1,5 @@
-import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.protobuf
+//import com.google.protobuf.gradle.id
+//import com.google.protobuf.gradle.protobuf
 import java.io.File
 import java.io.FileInputStream
 import java.time.Instant
@@ -8,7 +8,6 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("com.autonomousapps.dependency-analysis")
-    kotlin("android")
     kotlin("plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.github.triplet.play") version "4.0.0"

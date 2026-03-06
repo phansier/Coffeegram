@@ -2,14 +2,18 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     id("com.autonomousapps.dependency-analysis")
 }
 
 version = "1.0"
 
 kotlin {
-    androidTarget()
+    android {
+        namespace = "ru.beryukhov.repository"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
+    }
 
     jvm()
 
@@ -32,19 +36,5 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.coroutines.core)
         }
-    }
-}
-
-android {
-    compileSdk = libs.versions.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-    }
-    namespace = "ru.beryukhov.repository"
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
     }
 }

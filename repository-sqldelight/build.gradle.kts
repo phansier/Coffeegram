@@ -1,6 +1,6 @@
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     id("com.autonomousapps.dependency-analysis")
     id("app.cash.sqldelight")
 }
@@ -18,7 +18,11 @@ sqldelight {
 version = "1.0"
 
 kotlin {
-    androidTarget()
+    android {
+        namespace = "ru.beryukhov.sqldelight"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
+    }
 
     jvm()
 
@@ -48,19 +52,5 @@ kotlin {
         jvmMain.dependencies {
             implementation(libs.sqldelight.sqliteDriver)
         }
-    }
-}
-
-android {
-    compileSdk = libs.versions.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-    }
-    namespace = "ru.beryukhov.sqldelight"
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
     }
 }

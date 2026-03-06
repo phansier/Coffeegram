@@ -20,7 +20,7 @@ buildscript {
         classpath(libs.serializationGradle)
         classpath(libs.sqldelightGradle)
         classpath(libs.composeKotlinGradle)
-        classpath(libs.protobufGradle)
+//        classpath(libs.protobufGradle)
         classpath(libs.secretsGradle)
         classpath(libs.screenshotGradle)
         classpath(libs.hotReloadGradle)
