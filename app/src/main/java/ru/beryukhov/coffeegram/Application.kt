@@ -15,7 +15,7 @@ import ru.beryukhov.coffeegram.widget.WidgetDataBridge
 import ru.beryukhov.coffeegram.widget.setWidgetPreview
 import ru.beryukhov.repository.databaseModule
 
-class Application : Application() {
+open class Application : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -32,9 +32,14 @@ class Application : Application() {
         MainScope().launch {
             withContext(Dispatchers.Default) {
                 FirstGlanceWidget().updateAll(this@Application)
-                setWidgetPreview(this@Application)
+                // if (not robolectric test)
+                setWidgetPreview()
             }
         }
+    }
+
+    open suspend fun setWidgetPreview() {
+        setWidgetPreview(this@Application)
     }
 }
 
