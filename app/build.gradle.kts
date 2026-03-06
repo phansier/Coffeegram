@@ -12,7 +12,7 @@ plugins {
     kotlin("plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.protobuf")
-    id("com.github.triplet.play") version "3.12.2"
+    id("com.github.triplet.play") version "4.0.0"
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.android.compose.screenshot")
 }

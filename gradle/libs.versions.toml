@@ -10,7 +10,7 @@ compose = "1.10.4" # https://developer.android.com/jetpack/androidx/releases/com
 jetbrainsCompose = "1.10.2" # https://github.com/JetBrains/compose-multiplatform/releases
 hotReload = "1.0.0" # https://github.com/JetBrains/compose-hot-reload/releases
 
-agp = "8.13.2" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "9.0.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.4.0" # https://github.com/ktorio/ktor
 androidxRoom = "2.8.4" # https://developer.android.com/jetpack/androidx/releases/room
 sqlite = "2.6.2" # https://developer.android.com/jetpack/androidx/releases/sqlite
@@ -76,8 +76,6 @@ ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-java = { module = "io.ktor:ktor-client-java", version.ref = "ktor" }
 
-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
-compose-material3 = "androidx.compose.material3:material3:1.4.0" # https://developer.android.com/jetpack/androidx/releases/compose-material3
 compose-uiTooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 compose-icons-core = "androidx.compose.material:material-icons-core:1.7.8"
