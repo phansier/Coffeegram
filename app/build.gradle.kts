@@ -91,8 +91,9 @@ dependencies {
     implementation(libs.core.coreKtx)
     implementation(libs.material)
 
-    implementation(libs.compose.ui)
-    implementation(libs.compose.material3)
+    implementation(libs.cmp.ui)
+    implementation(libs.cmp.material3)
+    implementation(libs.cmp.components.resources)
     implementation(libs.compose.icons.core)
 
     debugImplementation(libs.compose.uiTooling)

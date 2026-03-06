@@ -11,7 +11,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("org.jetbrains.compose.hot-reload")
-
     `maven-publish`
 }
 
