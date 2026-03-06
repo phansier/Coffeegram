@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas
@@ -59,6 +61,7 @@ import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
 import org.jetbrains.compose.resources.PreviewContextConfigurationEffect
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -66,6 +69,7 @@ import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
+import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.model.NavigationConstants.NAVIGATION_STATE_KEY
 import ru.beryukhov.coffeegram.model.NavigationConstants.TODAYS_COFFEE_LIST
@@ -111,7 +115,7 @@ private fun WidgetContentPreview() {
 
 @Composable
 internal fun WidgetContent(
-    viewModel: WidgetDataBridge,
+    dataBridge: WidgetDataBridge,
 ) {
     val size = LocalSize.current
     CompositionLocalProvider(
@@ -124,23 +128,34 @@ internal fun WidgetContent(
                 horizontalPadding = 0.dp,
             ) {
                 when {
-                    size.width < HORIZONTAL_RECTANGLE.width ->
+                    size.width < HORIZONTAL_RECTANGLE.width -> {
+                        val count by dataBridge.getCurrentDayCupsCount().collectAsState(0)
                         SmallWidget(
-                            count = viewModel.getCurrentDayCupsCount()
+                            count = count
                         )
+                    }
 
-                    size.height < BIG_SQUARE.height ->
+                    size.height < BIG_SQUARE.height -> {
+                        val data by dataBridge.getCurrentDayMostPopularWithCount().collectAsState(
+                            CoffeeTypeWithCount(CoffeeTypes.Espresso, 0)
+                        )
                         HorizontalWidget(
-                            coffeeTypeWithCount = viewModel.getCurrentDayMostPopularWithCount(),
-                            increment = viewModel::incrementCoffee,
-                            decrement = viewModel::decrementCoffee
+                            coffeeTypeWithCount = data,
+                            increment = dataBridge::incrementCoffee,
+                            decrement = dataBridge::decrementCoffee
                         )
+                    }
 
-                    else -> BigWidget(
-                        list = viewModel.getCurrentDayList(),
-                        increment = viewModel::incrementCoffee,
-                        decrement = viewModel::decrementCoffee
-                    )
+                    else -> {
+                        val data by dataBridge.getCurrentDayList().collectAsState(
+                            emptyList<CoffeeTypeWithCount>().toPersistentList()
+                        )
+                        BigWidget(
+                            list = data,
+                            increment = dataBridge::incrementCoffee,
+                            decrement = dataBridge::decrementCoffee
+                        )
+                    }
                 }
             }
         }

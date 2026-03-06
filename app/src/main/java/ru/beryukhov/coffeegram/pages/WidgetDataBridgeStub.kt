@@ -2,19 +2,21 @@ package ru.beryukhov.coffeegram.pages
 
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.widget.WidgetDataBridge
 
 object WidgetDataBridgeStub : WidgetDataBridge {
-    override fun getCurrentDayCupsCount(): Int = 0
+    override fun getCurrentDayCupsCount(): Flow<Int> = flowOf(0)
 
-    override fun getCurrentDayMostPopularWithCount(): CoffeeTypeWithCount =
-        mockList.first()
+    override fun getCurrentDayMostPopularWithCount(): Flow<CoffeeTypeWithCount> =
+        flowOf(mockList.first())
 
-    override fun getCurrentDayList(): PersistentList<CoffeeTypeWithCount> =
-        mockList
+    override fun getCurrentDayList(): Flow<PersistentList<CoffeeTypeWithCount>> =
+        flowOf(mockList)
 
     override fun incrementCoffee(coffeeType: CoffeeType) = Unit
 

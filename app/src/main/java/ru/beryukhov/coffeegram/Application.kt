@@ -4,15 +4,11 @@ import android.app.Application
 import androidx.glance.appwidget.updateAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
-import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.widget.DefaultWidgetDataBridge
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget
 import ru.beryukhov.coffeegram.widget.WidgetDataBridge
@@ -37,9 +33,6 @@ class Application : Application() {
             withContext(Dispatchers.Default) {
                 FirstGlanceWidget().updateAll(this@Application)
                 setWidgetPreview(this@Application)
-                get<DaysCoffeesStore>().state.onEach {
-                    FirstGlanceWidget().updateAll(this@Application)
-                }.launchIn(this)
             }
         }
     }
