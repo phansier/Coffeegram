@@ -1,7 +1,9 @@
 package ru.beryukhov.coffeegram.widget
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas
@@ -11,6 +13,8 @@ import androidx.compose.ui.graphics.ImageBitmapConfig
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.LayoutDirection
@@ -23,6 +27,7 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.action
@@ -82,7 +87,7 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
         val viewModel: AppWidgetViewModelImpl by inject()
         provideContent {
             // todo widgets are broken because of compose resources
-            // WidgetContent(viewModel)
+            WidgetContent(viewModel)
         }
     }
 
@@ -104,29 +109,34 @@ internal fun WidgetContent(
     viewModel: AppWidgetViewModel = AppWidgetViewModelStub(),
 ) {
     val size = LocalSize.current
-    GlanceTheme {
-        Scaffold(
-            backgroundColor = GlanceTheme.colors.widgetBackground,
-            horizontalPadding = 0.dp,
-        ) {
-            when {
-                size.width < HORIZONTAL_RECTANGLE.width ->
-                    SmallWidget(
-                        count = viewModel.getCurrentDayCupsCount()
-                    )
+    CompositionLocalProvider(
+        LocalConfiguration provides Configuration(),
+            LocalDensity provides Density(LocalContext.current)
+    ) {
+        GlanceTheme {
+            Scaffold(
+                backgroundColor = GlanceTheme.colors.widgetBackground,
+                horizontalPadding = 0.dp,
+            ) {
+                when {
+                    size.width < HORIZONTAL_RECTANGLE.width ->
+                        SmallWidget(
+                            count = viewModel.getCurrentDayCupsCount()
+                        )
 
-                size.height < BIG_SQUARE.height ->
-                    HorizontalWidget(
-                        coffeeTypeWithCount = viewModel.getCurrentDayMostPopularWithCount(),
+                    size.height < BIG_SQUARE.height ->
+                        HorizontalWidget(
+                            coffeeTypeWithCount = viewModel.getCurrentDayMostPopularWithCount(),
+                            increment = viewModel::currentDayIncrement,
+                            decrement = viewModel::currentDayDecrement
+                        )
+
+                    else -> BigWidget(
+                        list = viewModel.getCurrentDayList(),
                         increment = viewModel::currentDayIncrement,
                         decrement = viewModel::currentDayDecrement
                     )
-
-                else -> BigWidget(
-                    list = viewModel.getCurrentDayList(),
-                    increment = viewModel::currentDayIncrement,
-                    decrement = viewModel::currentDayDecrement
-                )
+                }
             }
         }
     }

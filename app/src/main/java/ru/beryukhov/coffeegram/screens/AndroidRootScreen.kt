@@ -108,7 +108,7 @@ private fun AndroidBottomBar(
             NavigationBarItem(
                 selected = currentIndex.selectedIndex == index,
                 onClick = { rootComponent.selectPage(index) },
-                label = { Text(stringResource(item.title) )},
+                label = { Text(stringResource(item.title)) },
                 icon = {
                     Icon(
                         imageVector = item.icon,

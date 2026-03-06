@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.StateFlow
 import ru.beryukhov.coffeegram.model.ThemeIntent
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
-import ru.beryukhov.coffeegram.components.SettingsComponent
 
 /**
  * Extended settings component for Android-specific features.
