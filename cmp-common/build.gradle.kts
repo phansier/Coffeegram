@@ -20,6 +20,7 @@ kotlin {
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
         androidResources.enable = true
+        withHostTestBuilder {}
     }
 
     jvm()
@@ -113,11 +114,9 @@ kotlin {
             // Wearable
             implementation(libs.playServices.wearable)
         }
-//        val androidUnitTest by getting {
-//            dependencies {
-//                implementation(libs.kotlin.test.junit)
-//            }
-//        }
+        getByName("androidHostTest").dependencies {
+            implementation(libs.kotlin.test.junit)
+        }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.ktor.java)

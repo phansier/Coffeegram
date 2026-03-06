@@ -1,5 +1,5 @@
-//import com.google.protobuf.gradle.id
-//import com.google.protobuf.gradle.protobuf
+// import com.google.protobuf.gradle.id
+// import com.google.protobuf.gradle.protobuf
 import java.io.File
 import java.io.FileInputStream
 import java.time.Instant
@@ -141,12 +141,11 @@ dependencies {
     testImplementation(libs.compose.uiTestJunit4)
     testImplementation(libs.kakao.compose)
 
-    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.kotlin.test.annotations)
-    testRuntimeOnly(libs.kotlin.test.junit)
 }
 
-//protobuf {
+// protobuf {
 //    protoc {
 //        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
 //    }
@@ -159,7 +158,7 @@ dependencies {
 //            }
 //        }
 //    }
-//}
+// }
 
 object KeyHelper {
 

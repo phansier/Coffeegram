@@ -13,6 +13,7 @@ kotlin {
         namespace = "ru.beryukhov.date_time_utils"
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
+        withHostTestBuilder {}
     }
 
     jvm()
