@@ -1,7 +1,11 @@
 package ru.beryukhov.coffeegram.widget
 
 import android.content.Context
+import android.content.res.Configuration
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas
@@ -11,6 +15,8 @@ import androidx.compose.ui.graphics.ImageBitmapConfig
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.LayoutDirection
@@ -23,6 +29,7 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
 import androidx.glance.LocalSize
 import androidx.glance.action.ActionParameters
 import androidx.glance.action.action
@@ -54,18 +61,19 @@ import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.toPersistentList
+import org.jetbrains.compose.resources.PreviewContextConfigurationEffect
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
+import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.printableText
-import ru.beryukhov.coffeegram.model.NavigationState.Companion.NAVIGATION_STATE_KEY
-import ru.beryukhov.coffeegram.model.NavigationState.Companion.TODAYS_COFFEE_LIST
-import ru.beryukhov.coffeegram.pages.AppWidgetViewModel
-import ru.beryukhov.coffeegram.pages.AppWidgetViewModelImpl
-import ru.beryukhov.coffeegram.pages.AppWidgetViewModelStub
+import ru.beryukhov.coffeegram.model.NavigationConstants.NAVIGATION_STATE_KEY
+import ru.beryukhov.coffeegram.model.NavigationConstants.TODAYS_COFFEE_LIST
+import ru.beryukhov.coffeegram.pages.WidgetDataBridgeStub
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.BIG_SQUARE
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.HORIZONTAL_RECTANGLE
 import kotlin.math.roundToInt
@@ -79,10 +87,10 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
         SizeMode.Responsive(setOf(SMALL_SQUARE, HORIZONTAL_RECTANGLE, BIG_SQUARE))
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val viewModel: AppWidgetViewModelImpl by inject()
+        val viewModel: WidgetDataBridge by inject()
         provideContent {
             // todo widgets are broken because of compose resources
-            // WidgetContent(viewModel)
+            WidgetContent(viewModel)
         }
     }
 
@@ -100,33 +108,55 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
 @Preview(widthDp = 200, heightDp = 100)
 @Preview(widthDp = 300, heightDp = 300)
 @Composable
+private fun WidgetContentPreview() {
+    PreviewContextConfigurationEffect()
+    WidgetContent(WidgetDataBridgeStub)
+}
+
+@Composable
 internal fun WidgetContent(
-    viewModel: AppWidgetViewModel = AppWidgetViewModelStub(),
+    dataBridge: WidgetDataBridge,
 ) {
     val size = LocalSize.current
-    GlanceTheme {
-        Scaffold(
-            backgroundColor = GlanceTheme.colors.widgetBackground,
-            horizontalPadding = 0.dp,
-        ) {
-            when {
-                size.width < HORIZONTAL_RECTANGLE.width ->
-                    SmallWidget(
-                        count = viewModel.getCurrentDayCupsCount()
-                    )
+    CompositionLocalProvider(
+        LocalConfiguration provides Configuration(),
+            LocalDensity provides Density(LocalContext.current)
+    ) {
+        GlanceTheme {
+            Scaffold(
+                backgroundColor = GlanceTheme.colors.widgetBackground,
+                horizontalPadding = 0.dp,
+            ) {
+                when {
+                    size.width < HORIZONTAL_RECTANGLE.width -> {
+                        val count by dataBridge.getCurrentDayCupsCount().collectAsState(0)
+                        SmallWidget(
+                            count = count
+                        )
+                    }
 
-                size.height < BIG_SQUARE.height ->
-                    HorizontalWidget(
-                        coffeeTypeWithCount = viewModel.getCurrentDayMostPopularWithCount(),
-                        increment = viewModel::currentDayIncrement,
-                        decrement = viewModel::currentDayDecrement
-                    )
+                    size.height < BIG_SQUARE.height -> {
+                        val data by dataBridge.getCurrentDayMostPopularWithCount().collectAsState(
+                            CoffeeTypeWithCount(CoffeeTypes.Espresso, 0)
+                        )
+                        HorizontalWidget(
+                            coffeeTypeWithCount = data,
+                            increment = dataBridge::incrementCoffee,
+                            decrement = dataBridge::decrementCoffee
+                        )
+                    }
 
-                else -> BigWidget(
-                    list = viewModel.getCurrentDayList(),
-                    increment = viewModel::currentDayIncrement,
-                    decrement = viewModel::currentDayDecrement
-                )
+                    else -> {
+                        val data by dataBridge.getCurrentDayList().collectAsState(
+                            emptyList<CoffeeTypeWithCount>().toPersistentList()
+                        )
+                        BigWidget(
+                            list = data,
+                            increment = dataBridge::incrementCoffee,
+                            decrement = dataBridge::decrementCoffee
+                        )
+                    }
+                }
             }
         }
     }
