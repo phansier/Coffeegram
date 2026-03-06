@@ -1,3 +1,4 @@
+/*
 package ru.beryukhov.coffeegram.repository
 
 import androidx.datastore.core.CorruptionException
@@ -22,3 +23,4 @@ object ThemePreferencesSerializer : Serializer<ThemePreferences> {
         t.writeTo(output)
     }
 }
+*/

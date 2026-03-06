@@ -11,7 +11,6 @@ plugins {
     kotlin("android")
     kotlin("plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
-    id("com.google.protobuf")
     id("com.github.triplet.play") version "4.0.0"
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.android.compose.screenshot")
@@ -148,20 +147,20 @@ dependencies {
     testRuntimeOnly(libs.kotlin.test.junit)
 }
 
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
-    }
-    generateProtoTasks {
-        all().forEach { task ->
-            task.builtins {
-                id("java") {
-                    option("lite")
-                }
-            }
-        }
-    }
-}
+//protobuf {
+//    protoc {
+//        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
+//    }
+//    generateProtoTasks {
+//        all().forEach { task ->
+//            task.builtins {
+//                id("java") {
+//                    option("lite")
+//                }
+//            }
+//        }
+//    }
+//}
 
 object KeyHelper {
 
