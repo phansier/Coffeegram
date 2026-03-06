@@ -1,5 +1,5 @@
-import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.protobuf
+// import com.google.protobuf.gradle.id
+// import com.google.protobuf.gradle.protobuf
 import java.io.File
 import java.io.FileInputStream
 import java.time.Instant
@@ -8,11 +8,9 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("com.autonomousapps.dependency-analysis")
-    kotlin("android")
     kotlin("plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
-    id("com.google.protobuf")
-    id("com.github.triplet.play") version "3.12.2"
+    id("com.github.triplet.play") version "4.0.0"
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.android.compose.screenshot")
 }
@@ -143,25 +141,24 @@ dependencies {
     testImplementation(libs.compose.uiTestJunit4)
     testImplementation(libs.kakao.compose)
 
-    testImplementation(libs.kotlin.test)
+    testImplementation(libs.kotlin.test.junit)
     testImplementation(libs.kotlin.test.annotations)
-    testRuntimeOnly(libs.kotlin.test.junit)
 }
 
-protobuf {
-    protoc {
-        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
-    }
-    generateProtoTasks {
-        all().forEach { task ->
-            task.builtins {
-                id("java") {
-                    option("lite")
-                }
-            }
-        }
-    }
-}
+// protobuf {
+//    protoc {
+//        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
+//    }
+//    generateProtoTasks {
+//        all().forEach { task ->
+//            task.builtins {
+//                id("java") {
+//                    option("lite")
+//                }
+//            }
+//        }
+//    }
+// }
 
 object KeyHelper {
 

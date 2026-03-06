@@ -1,6 +1,6 @@
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     id("com.autonomousapps.dependency-analysis")
     id("androidx.room")
     id("com.google.devtools.ksp")
@@ -9,7 +9,11 @@ plugins {
 version = "1.0"
 
 kotlin {
-    androidTarget()
+    android {
+        namespace = "repository"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
+    }
 
     jvm()
 
@@ -33,18 +37,6 @@ kotlin {
             implementation(kotlin("test-common"))
             implementation(kotlin("test-annotations-common"))
         }
-    }
-}
-
-android {
-    compileSdk = libs.versions.compileSdk.get().toInt()
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-    }
-    namespace = "repository"
-    compileOptions {
-        targetCompatibility = JavaVersion.VERSION_21
-        sourceCompatibility = JavaVersion.VERSION_21
     }
 }
 

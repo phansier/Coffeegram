@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
 //    id("com.autonomousapps.dependency-analysis")
     kotlin("native.cocoapods")
     id("org.jetbrains.compose")
@@ -15,7 +15,14 @@ plugins {
 }
 
 kotlin {
-    androidTarget()
+    android {
+        namespace = "ru.beryukhov.compose_common"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
+        androidResources.enable = true
+        withHostTestBuilder {}
+    }
+
     jvm()
 
     iosX64()
@@ -107,10 +114,8 @@ kotlin {
             // Wearable
             implementation(libs.playServices.wearable)
         }
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test.junit)
-            }
+        getByName("androidHostTest").dependencies {
+            implementation(libs.kotlin.test.junit)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -136,24 +141,6 @@ kotlin {
             baseName = "cmp_common"
             isStatic = true
         }
-    }
-}
-
-android {
-    namespace = "ru.beryukhov.compose_common"
-    compileSdk = libs.versions.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    kotlin {
-        jvmToolchain(21)
     }
 }
 

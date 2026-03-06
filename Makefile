@@ -26,7 +26,7 @@ buildDesktop:
 	./gradlew :cmp-common:jvmJar $(params)
 
 testCommon:
-	./gradlew :cmp-common:testDebugUnitTest $(params)
+	./gradlew :cmp-common:testAndroidHostTest $(params)
 
 localCheck: detekt testApp buildApp buildWear buildDesktop testCommon
 

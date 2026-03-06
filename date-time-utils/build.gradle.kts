@@ -2,14 +2,19 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
     kotlin("multiplatform")
-    id("com.android.library")
+    id("com.android.kotlin.multiplatform.library")
     id("com.autonomousapps.dependency-analysis")
 }
 
 version = "1.0"
 
 kotlin {
-    androidTarget()
+    android {
+        namespace = "ru.beryukhov.date_time_utils"
+        compileSdk = libs.versions.compileSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
+        withHostTestBuilder {}
+    }
 
     jvm()
 
@@ -36,24 +41,5 @@ kotlin {
             implementation(libs.kotlin.test)
             implementation(libs.kotlin.test.annotations)
         }
-        val androidUnitTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test.junit)
-            }
-        }
-    }
-}
-
-android {
-    compileSdk = libs.versions.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-    }
-    namespace = "ru.beryukhov.date_time_utils"
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
     }
 }
