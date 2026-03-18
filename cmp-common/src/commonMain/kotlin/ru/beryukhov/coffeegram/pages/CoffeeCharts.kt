@@ -42,7 +42,6 @@ import coffeegram.cmp_common.generated.resources.day_wed
 import coffeegram.cmp_common.generated.resources.no_data_available
 import coffeegram.cmp_common.generated.resources.tab_all_time
 import coffeegram.cmp_common.generated.resources.tab_weekly
-import org.jetbrains.compose.resources.stringResource
 import com.patrykandpatrick.vico.multiplatform.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.VerticalAxis
@@ -62,6 +61,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
