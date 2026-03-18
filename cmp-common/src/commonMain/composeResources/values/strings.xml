@@ -27,4 +27,19 @@
     <string name="map_short">Specialty</string>
     <string name="add_drink">Add drink</string>
 
+    <string name="tab_weekly">Weekly</string>
+    <string name="tab_all_time">All Time</string>
+    <string name="chart_title_weekly">Coffee Consumption This Week</string>
+    <string name="chart_title_over_time">Coffee Consumption Over Time</string>
+    <string name="chart_title_distribution">Coffee Type Distribution</string>
+    <string name="no_data_available">No data available</string>
+
+    <string name="day_mon">Mon</string>
+    <string name="day_tue">Tue</string>
+    <string name="day_wed">Wed</string>
+    <string name="day_thu">Thu</string>
+    <string name="day_fri">Fri</string>
+    <string name="day_sat">Sat</string>
+    <string name="day_sun">Sun</string>
+
 </resources>

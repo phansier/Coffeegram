@@ -28,6 +28,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coffeegram.cmp_common.generated.resources.Res
+import coffeegram.cmp_common.generated.resources.chart_title_distribution
+import coffeegram.cmp_common.generated.resources.chart_title_over_time
+import coffeegram.cmp_common.generated.resources.chart_title_weekly
+import coffeegram.cmp_common.generated.resources.day_fri
+import coffeegram.cmp_common.generated.resources.day_mon
+import coffeegram.cmp_common.generated.resources.day_sat
+import coffeegram.cmp_common.generated.resources.day_sun
+import coffeegram.cmp_common.generated.resources.day_thu
+import coffeegram.cmp_common.generated.resources.day_tue
+import coffeegram.cmp_common.generated.resources.day_wed
+import coffeegram.cmp_common.generated.resources.no_data_available
+import coffeegram.cmp_common.generated.resources.tab_all_time
+import coffeegram.cmp_common.generated.resources.tab_weekly
+import org.jetbrains.compose.resources.stringResource
 import com.patrykandpatrick.vico.multiplatform.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.VerticalAxis
@@ -42,7 +57,6 @@ import com.patrykandpatrick.vico.multiplatform.m3.common.rememberM3VicoTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.DatePeriod
-import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
@@ -60,7 +74,7 @@ import kotlin.time.ExperimentalTime
 @Composable
 fun CoffeeCharts(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
-    val tabs = listOf("Weekly", "All Time")
+    val tabs = listOf(stringResource(Res.string.tab_weekly), stringResource(Res.string.tab_all_time))
 
     Column(modifier = modifier.fillMaxWidth()) {
         SecondaryTabRow(selectedTabIndex = selectedTabIndex) {
@@ -105,7 +119,7 @@ fun WeeklyCoffeeChart(coffeeState: DaysCoffeesState) {
             }
         }
         Text(
-            text = "Coffee Consumption This Week",
+            text = stringResource(Res.string.chart_title_weekly),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
@@ -113,13 +127,23 @@ fun WeeklyCoffeeChart(coffeeState: DaysCoffeesState) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        val dayNames = listOf(
+            stringResource(Res.string.day_mon),
+            stringResource(Res.string.day_tue),
+            stringResource(Res.string.day_wed),
+            stringResource(Res.string.day_thu),
+            stringResource(Res.string.day_fri),
+            stringResource(Res.string.day_sat),
+            stringResource(Res.string.day_sun),
+        )
+
         CartesianChartHost(
             chart = rememberCartesianChart(
                 rememberColumnCartesianLayer(),
                 startAxis = VerticalAxis.rememberStart(),
                 bottomAxis = HorizontalAxis.rememberBottom(
                     valueFormatter = { _, value, _ ->
-                        weekData.getOrNull(value.toInt())?.dayName ?: ""
+                        dayNames.getOrNull(weekData.getOrNull(value.toInt())?.dayIndex ?: -1) ?: ""
                     }
                 ),
             ),
@@ -139,15 +163,7 @@ internal fun weeklyChartData(
 
     WeeklyChartData(
         date = date,
-        dayName = when (date.dayOfWeek) {
-            DayOfWeek.MONDAY -> "Mon"
-            DayOfWeek.TUESDAY -> "Tue"
-            DayOfWeek.WEDNESDAY -> "Wed"
-            DayOfWeek.THURSDAY -> "Thu"
-            DayOfWeek.FRIDAY -> "Fri"
-            DayOfWeek.SATURDAY -> "Sat"
-            DayOfWeek.SUNDAY -> "Sun"
-        },
+        dayIndex = date.dayOfWeek.ordinal,
         totalCoffees = totalForDay,
     )
 }
@@ -166,7 +182,7 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text("No data available")
+            Text(stringResource(Res.string.no_data_available))
         }
         return
     }
@@ -209,7 +225,7 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
                         .verticalScroll(rememberScrollState())
                 ) {
                     Text(
-                        text = "Coffee Consumption Over Time",
+                        text = stringResource(Res.string.chart_title_over_time),
                         style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center
@@ -227,7 +243,7 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
                         .verticalScroll(rememberScrollState())
                 ) {
                     Text(
-                        text = "Coffee Type Distribution",
+                        text = stringResource(Res.string.chart_title_distribution),
                         style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center
@@ -244,7 +260,7 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    text = "Coffee Consumption Over Time",
+                    text = stringResource(Res.string.chart_title_over_time),
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
@@ -256,7 +272,7 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Text(
-                    text = "Coffee Type Distribution",
+                    text = stringResource(Res.string.chart_title_distribution),
                     style = MaterialTheme.typography.headlineSmall,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center
@@ -372,7 +388,7 @@ internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedD
 
 data class WeeklyChartData(
     val date: LocalDate,
-    val dayName: String,
+    val dayIndex: Int,
     val totalCoffees: Int,
 )
 

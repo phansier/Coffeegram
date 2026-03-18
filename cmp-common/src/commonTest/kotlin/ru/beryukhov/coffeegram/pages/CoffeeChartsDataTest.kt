@@ -22,15 +22,14 @@ class CoffeeChartsDataTest {
         )
         assertEquals(
             expected = listOf(
-                WeeklyChartData(date = LocalDate(2023, 1, 2), dayName = "Mon", totalCoffees = 3),
-                WeeklyChartData(date = LocalDate(2023, 1, 3), dayName = "Tue", totalCoffees = 4),
-                WeeklyChartData(date = LocalDate(2023, 1, 4), dayName = "Wed", totalCoffees = 0),
-                WeeklyChartData(date = LocalDate(2023, 1, 5), dayName = "Thu", totalCoffees = 0),
-                WeeklyChartData(date = LocalDate(2023, 1, 6), dayName = "Fri", totalCoffees = 0),
-                WeeklyChartData(date = LocalDate(2023, 1, 7), dayName = "Sat", totalCoffees = 0),
-                WeeklyChartData(date = LocalDate(2023, 1, 8), dayName = "Sun", totalCoffees = 0),
-
-                ),
+                WeeklyChartData(date = LocalDate(2023, 1, 2), dayIndex = 0, totalCoffees = 3),
+                WeeklyChartData(date = LocalDate(2023, 1, 3), dayIndex = 1, totalCoffees = 4),
+                WeeklyChartData(date = LocalDate(2023, 1, 4), dayIndex = 2, totalCoffees = 0),
+                WeeklyChartData(date = LocalDate(2023, 1, 5), dayIndex = 3, totalCoffees = 0),
+                WeeklyChartData(date = LocalDate(2023, 1, 6), dayIndex = 4, totalCoffees = 0),
+                WeeklyChartData(date = LocalDate(2023, 1, 7), dayIndex = 5, totalCoffees = 0),
+                WeeklyChartData(date = LocalDate(2023, 1, 8), dayIndex = 6, totalCoffees = 0),
+            ),
             actual = actualData
         )
 
