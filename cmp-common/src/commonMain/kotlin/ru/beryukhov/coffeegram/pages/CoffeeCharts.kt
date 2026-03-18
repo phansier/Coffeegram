@@ -4,11 +4,17 @@
 package ru.beryukhov.coffeegram.pages
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
@@ -22,6 +28,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coffeegram.cmp_common.generated.resources.Res
+import coffeegram.cmp_common.generated.resources.chart_title_distribution
+import coffeegram.cmp_common.generated.resources.chart_title_over_time
+import coffeegram.cmp_common.generated.resources.chart_title_weekly
+import coffeegram.cmp_common.generated.resources.day_fri
+import coffeegram.cmp_common.generated.resources.day_mon
+import coffeegram.cmp_common.generated.resources.day_sat
+import coffeegram.cmp_common.generated.resources.day_sun
+import coffeegram.cmp_common.generated.resources.day_thu
+import coffeegram.cmp_common.generated.resources.day_tue
+import coffeegram.cmp_common.generated.resources.day_wed
+import coffeegram.cmp_common.generated.resources.no_data_available
+import coffeegram.cmp_common.generated.resources.tab_all_time
+import coffeegram.cmp_common.generated.resources.tab_weekly
 import com.patrykandpatrick.vico.multiplatform.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.VerticalAxis
@@ -36,12 +56,12 @@ import com.patrykandpatrick.vico.multiplatform.m3.common.rememberM3VicoTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.DatePeriod
-import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
@@ -54,7 +74,7 @@ import kotlin.time.ExperimentalTime
 @Composable
 fun CoffeeCharts(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
-    val tabs = listOf("Weekly", "All Time")
+    val tabs = listOf(stringResource(Res.string.tab_weekly), stringResource(Res.string.tab_all_time))
 
     Column(modifier = modifier.fillMaxWidth()) {
         SecondaryTabRow(selectedTabIndex = selectedTabIndex) {
@@ -99,7 +119,7 @@ fun WeeklyCoffeeChart(coffeeState: DaysCoffeesState) {
             }
         }
         Text(
-            text = "Coffee Consumption This Week",
+            text = stringResource(Res.string.chart_title_weekly),
             style = MaterialTheme.typography.headlineSmall,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
@@ -107,13 +127,23 @@ fun WeeklyCoffeeChart(coffeeState: DaysCoffeesState) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        val dayNames = listOf(
+            stringResource(Res.string.day_mon),
+            stringResource(Res.string.day_tue),
+            stringResource(Res.string.day_wed),
+            stringResource(Res.string.day_thu),
+            stringResource(Res.string.day_fri),
+            stringResource(Res.string.day_sat),
+            stringResource(Res.string.day_sun),
+        )
+
         CartesianChartHost(
             chart = rememberCartesianChart(
                 rememberColumnCartesianLayer(),
                 startAxis = VerticalAxis.rememberStart(),
                 bottomAxis = HorizontalAxis.rememberBottom(
                     valueFormatter = { _, value, _ ->
-                        weekData.getOrNull(value.toInt())?.dayName ?: ""
+                        dayNames.getOrNull(weekData.getOrNull(value.toInt())?.dayIndex ?: -1) ?: ""
                     }
                 ),
             ),
@@ -133,15 +163,7 @@ internal fun weeklyChartData(
 
     WeeklyChartData(
         date = date,
-        dayName = when (date.dayOfWeek) {
-            DayOfWeek.MONDAY -> "Mon"
-            DayOfWeek.TUESDAY -> "Tue"
-            DayOfWeek.WEDNESDAY -> "Wed"
-            DayOfWeek.THURSDAY -> "Thu"
-            DayOfWeek.FRIDAY -> "Fri"
-            DayOfWeek.SATURDAY -> "Sat"
-            DayOfWeek.SUNDAY -> "Sun"
-        },
+        dayIndex = date.dayOfWeek.ordinal,
         totalCoffees = totalForDay,
     )
 }
@@ -160,7 +182,7 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text("No data available")
+            Text(stringResource(Res.string.no_data_available))
         }
         return
     }
@@ -184,36 +206,85 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
         dailyAggregation(coffeeState)
     }
 
-    Column(
+    BoxWithConstraints(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(
-            text = "Coffee Consumption Over Time",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
+        val isLandscape = maxWidth > maxHeight
 
-        Spacer(modifier = Modifier.height(16.dp))
-        LineChart(aggregatedData.toImmutableList())
+        if (isLandscape) {
+            // Horizontal layout for landscape
+            Row(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                // Left chart - Coffee Consumption Over Time
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Text(
+                        text = stringResource(Res.string.chart_title_over_time),
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    LineChart(aggregatedData.toImmutableList())
+                }
 
-        Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
-        // Coffee type distribution
-        Text(
-            text = "Coffee Type Distribution",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
+                // Right chart - Coffee Type Distribution
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Text(
+                        text = stringResource(Res.string.chart_title_distribution),
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ColumnChart(coffeeState)
+                }
+            }
+        } else {
+            // Vertical layout for portrait
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Text(
+                    text = stringResource(Res.string.chart_title_over_time),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
 
-        Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
+                LineChart(aggregatedData.toImmutableList())
 
-        ColumnChart(coffeeState)
+                Spacer(modifier = Modifier.height(24.dp))
 
-        Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = stringResource(Res.string.chart_title_distribution),
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                ColumnChart(coffeeState)
+
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+        }
     }
 }
 
@@ -317,7 +388,7 @@ internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedD
 
 data class WeeklyChartData(
     val date: LocalDate,
-    val dayName: String,
+    val dayIndex: Int,
     val totalCoffees: Int,
 )
 

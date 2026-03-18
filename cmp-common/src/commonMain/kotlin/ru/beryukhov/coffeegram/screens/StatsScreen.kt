@@ -11,8 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import ru.beryukhov.coffeegram.R
+import coffeegram.cmp_common.generated.resources.Res
+import coffeegram.cmp_common.generated.resources.stats
+import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.StatsComponent
 import ru.beryukhov.coffeegram.pages.CoffeeCharts
 
@@ -31,7 +32,7 @@ fun StatsScreen(
 @Composable
 fun StatsAppBar(modifier: Modifier = Modifier) {
     TopAppBar(
-        title = { Text(stringResource(R.string.stats)) },
+        title = { Text(stringResource(Res.string.stats)) },
         modifier = modifier
     )
 }
