@@ -127,9 +127,6 @@ dependencies {
     implementation(libs.decompose.core)
     implementation(libs.decompose.compose)
 
-    implementation(libs.vico.multiplatform)
-    implementation(libs.vico.multiplatform.m3)
-
     // Wearable
     implementation(libs.playServices.wearable)
     // for connectedNodes.await()

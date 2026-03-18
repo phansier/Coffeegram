@@ -41,7 +41,7 @@ val settings = NavBarItem(
      Icons.Default.LocationOn
  )
 
-internal fun getNavBarItems() = persistentListOf(calendar, settings)
+internal fun getNavBarItems() = persistentListOf(calendar, stats, settings)
 
 @Composable
 @Suppress("ModifierMissing")

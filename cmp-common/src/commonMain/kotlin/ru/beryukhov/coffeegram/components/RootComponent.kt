@@ -24,6 +24,10 @@ interface RootComponent {
             val component: CoffeeEditComponent,
         ) : Child
 
+        class Stats(
+            val component: StatsComponent,
+        ) : Child
+
         class Settings(
             val component: SettingsComponent,
         ) : Child
@@ -41,7 +45,12 @@ class DefaultRootComponent(
         childPages(
             source = navigation,
             serializer = Config.serializer(),
-            initialPages = { Pages(items = listOf(Config.CoffeeEdit, Config.Settings), selectedIndex = 0) },
+            initialPages = {
+                Pages(
+                    items = listOf(Config.CoffeeEdit, Config.Stats, Config.Settings),
+                    selectedIndex = 0
+                )
+            },
             childFactory = ::child,
         )
 
@@ -63,6 +72,13 @@ class DefaultRootComponent(
                 )
             )
 
+            Config.Stats -> RootComponent.Child.Stats(
+                DefaultStatsComponent(
+                    context = context,
+                    daysCoffeesStore = daysCoffeesStore,
+                )
+            )
+
             Config.Settings -> RootComponent.Child.Settings(
                 DefaultSettingsComponent(
                     context = context,
@@ -75,6 +91,9 @@ class DefaultRootComponent(
     private sealed interface Config {
         @Serializable
         data object CoffeeEdit : Config
+
+        @Serializable
+        data object Stats : Config
 
         @Serializable
         data object Settings : Config

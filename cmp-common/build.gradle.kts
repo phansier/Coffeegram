@@ -93,6 +93,9 @@ kotlin {
             implementation(libs.koin.compose)
 
             implementation(libs.coil.compose)
+
+            implementation(libs.vico.multiplatform)
+            implementation(libs.vico.multiplatform.m3)
         }
         val notWasm by getting {
             dependencies {
