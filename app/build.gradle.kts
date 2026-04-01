@@ -27,6 +27,7 @@ android {
         versionName = "1.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["MAPS_API_KEY"] = ""
     }
 
     signingConfigs {
