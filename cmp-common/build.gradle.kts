@@ -6,7 +6,6 @@ plugins {
     kotlin("multiplatform")
     id("com.android.kotlin.multiplatform.library")
 //    id("com.autonomousapps.dependency-analysis")
-    kotlin("native.cocoapods")
     id("org.jetbrains.compose")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
@@ -25,9 +24,16 @@ kotlin {
 
     jvm()
 
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
+    ).forEach {
+        it.binaries.framework {
+            baseName = "cmp_common"
+            isStatic = true
+        }
+    }
 
     js {
         browser()
@@ -131,18 +137,6 @@ kotlin {
         jsMain.dependencies {
             implementation(project.dependencies.enforcedPlatform(libs.jetbrains.kotlinWrappers.kotlinWrappersBom.get()))
             implementation(libs.kotlinBrowser)
-        }
-    }
-
-    cocoapods {
-        version = "1.0.0"
-        summary = "Some description for the Shared Module"
-        homepage = "https://github.com/phansier/Coffeegram"
-        ios.deploymentTarget = "14.1"
-        podfile = project.file("../cmp-iosApp/Podfile")
-        framework {
-            baseName = "cmp_common"
-            isStatic = true
         }
     }
 }

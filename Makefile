@@ -63,8 +63,6 @@ buildWasm:
 buildWeb:
 	./gradlew :cmp-common:composeCompatibilityBrowserDistribution $(params)
 
-generateFramework:
-	./gradlew :cmp-common:generateDummyFramework $(params)
 
 buildHealth:
 	./gradlew buildHealth $(params)
