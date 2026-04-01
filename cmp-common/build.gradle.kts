@@ -1,5 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.swiftexport.ExperimentalSwiftExportDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.util.Properties
 
@@ -62,6 +63,12 @@ kotlin {
             baseName = "cmp_common"
             isStatic = true
         }
+    }
+
+    @OptIn(ExperimentalSwiftExportDsl::class)
+    swiftExport {
+        moduleName = "CmpCommon"
+        flattenPackage = "ru.beryukhov.coffeegram"
     }
 
     js {

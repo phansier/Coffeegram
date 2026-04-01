@@ -134,7 +134,6 @@ google-maps-utils = "com.google.maps.android:maps-ktx:6.4.1"
 google-maps-compose = "com.google.maps.android:maps-compose:8.6.0"
 
 
-material = { module = "com.google.android.material:material", version.ref = "material" }
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
 playServices-wearable = "com.google.android.gms:play-services-wearable:20.0.1" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.5.2" # https://github.com/Kotlin/kotlinx.collections.immutable
