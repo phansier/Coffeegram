@@ -1,10 +1,10 @@
 import UIKit
 import SwiftUI
-import cmp_common
+import CmpCommon
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {
-        Main_iosKt.MainViewController()
+        MainViewController()
     }
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
