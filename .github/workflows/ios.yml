@@ -20,19 +20,5 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
-    # Workaround for https://youtrack.jetbrains.com/issue/KT-62773/iOS-application-build-failing-if-generateDummyFramework-task-was-not-executed-before-pod-install
-    - shell: bash
-      run: make generateFramework
-    
-    - name: Set up cocoapods
-      uses: maxim-lobanov/setup-cocoapods@v1
-      with:
-        version: latest
-    
-    - shell: bash
-      name: Install Dependencies
-      run: |
-        cd cmp-iosApp
-        pod install --verbose
     - name: Build iOS
-      run: xcodebuild build -workspace cmp-iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -verbose
+      run: xcodebuild build -project cmp-iosApp/iosApp.xcodeproj -configuration Debug -scheme iosApp -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -verbose
