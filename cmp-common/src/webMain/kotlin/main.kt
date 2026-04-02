@@ -5,6 +5,7 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
+import org.koin.dsl.koinConfiguration
 import org.koin.dsl.module
 import repository.InMemoryCoffeeRepository
 import ru.beryukhov.coffeegram.components.DefaultRootComponent
@@ -26,7 +27,7 @@ private val appModule = module {
     }
     single<DaysCoffeesStore> { DaysCoffeesStoreImpl(coffeeStorage = get()) }
     single { CoffeeStorage(repository = InMemoryCoffeeRepository()) }
- }
+}
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
@@ -35,21 +36,22 @@ fun main() {
     lifecycle.attachToDocument()
 
     ComposeViewport {
-        KoinApplication(application = {
-            modules(appModule)
-        }) {
-            val themeStore = koinInject<ThemeStore>()
-            val daysCoffeesStore = koinInject<DaysCoffeesStore>()
-            val root = remember {
-                // withWebHistory { stateKeeper, deepLink ->
-                DefaultRootComponent(
-                    DefaultComponentContext(lifecycle = lifecycle),
-                    themeStore = themeStore,
-                    daysCoffeesStore = daysCoffeesStore,
-                )
-            }
-            RootScreen(root)
-        }
+        // withWebHistory { stateKeeper, deepLink ->
+        KoinApplication(
+            configuration = koinConfiguration(declaration = { modules(appModule) }),
+            content = {
+                val themeStore = koinInject<ThemeStore>()
+                val daysCoffeesStore = koinInject<DaysCoffeesStore>()
+                val root = remember {
+                    // withWebHistory { stateKeeper, deepLink ->
+                    DefaultRootComponent(
+                        DefaultComponentContext(lifecycle = lifecycle),
+                        themeStore = themeStore,
+                        daysCoffeesStore = daysCoffeesStore,
+                    )
+                }
+                RootScreen(root)
+            })
     }
 }
 
