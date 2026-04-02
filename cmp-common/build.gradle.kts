@@ -140,6 +140,10 @@ kotlin {
     }
 }
 
+tasks.named("syncComposeResourcesForIos") {
+    onlyIf { System.getenv("ARCHS") != null }
+}
+
 compose.desktop {
     application {
         mainClass = "Main_desktopKt"
