@@ -141,7 +141,7 @@ kotlin {
 }
 
 tasks.named("syncComposeResourcesForIos") {
-    onlyIf { System.getenv("ARCHS") != null }
+    onlyIf { System.getenv("ARCHS") != null && System.getenv("TARGET_BUILD_DIR") != null }
 }
 
 compose.desktop {
