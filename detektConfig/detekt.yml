@@ -707,7 +707,7 @@ style:
     UnusedPrivateMember:
         active: true
         allowedNames: '(_|ignored|expected|serialVersionUID)'
-        ignoreAnnotated: ['Preview', 'PreviewLightDark']
+        ignoreAnnotated: ['Preview', 'StorePreview', 'PreviewLightDark']
     # https://detekt.github.io/detekt/style.html#usearrayliteralsinannotations
     UseArrayLiteralsInAnnotations:
         active: true

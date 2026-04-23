@@ -100,7 +100,7 @@ private fun ScreenContentPlaceholder() {
 @Composable
 fun StoreMarketingScreen(
     headlineLines: List<String>,
-    subheadline: String,
+    subheadline: String? = null,
     backgroundColor: Color,
     content: @Composable () -> Unit
 ) {
@@ -126,10 +126,12 @@ fun StoreMarketingScreen(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-            Text(
-                text = subheadline.uppercase(),
-                color = Color.White.copy(alpha = 0.9f)
-            )
+            subheadline?.let {
+                Text(
+                    text = subheadline.uppercase(),
+                    color = Color.White.copy(alpha = 0.9f)
+                )
+            }
 
             PhoneFrame(
                 modifier = Modifier.padding(top = 32.dp, bottom = 16.dp, start = 64.dp, end = 64.dp)

@@ -100,7 +100,7 @@ private fun CurrentScreen(
 }
 
 @Composable
-private fun BottomBar(
+internal fun BottomBar(
     rootComponent: RootComponent,
     navBarItems: PersistentList<NavBarItem>,
 ) {
