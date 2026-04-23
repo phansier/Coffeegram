@@ -3,6 +3,7 @@ package ru.beryukhov.coffeegram.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -10,6 +11,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,6 +35,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.PreviewTheme
+import ru.beryukhov.coffeegram.app_ui.LocalPhoneFrameInsets
 import ru.beryukhov.coffeegram.components.SettingsComponent
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
@@ -176,5 +179,6 @@ fun SettingsAppBar(
     AdaptiveTopAppBar(
         title = { Text(stringResource(Res.string.settings)) },
         modifier = modifier,
+        windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
     )
 }

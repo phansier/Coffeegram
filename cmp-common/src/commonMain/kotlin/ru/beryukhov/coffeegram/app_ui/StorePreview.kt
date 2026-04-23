@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,6 +14,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,6 +31,12 @@ import androidx.compose.ui.unit.dp
 // 1290x2796 at 2.5x scale = 516dp x 1118dp
 private const val widthDp = 516
 private const val heightDp = 1118
+
+private val DynamicIslandTopInset = 14.dp
+private val DynamicIslandHeight = 32.dp
+private val SafeAreaTop = DynamicIslandTopInset + DynamicIslandHeight + 4.dp
+
+val LocalPhoneFrameInsets = compositionLocalOf { WindowInsets(0) }
 
 @Preview(name = "en-mobile", locale = "en", widthDp = widthDp, heightDp = heightDp)
 @Preview(name = "en-tablet", locale = "en", device = Devices.PIXEL_C)
@@ -50,7 +59,11 @@ fun PhoneFrame(
             .border(12.dp, Color(0xFF2C2C2E), RoundedCornerShape(44.dp))
             .padding(12.dp)
     ) {
-        ScreenContent(content)
+        CompositionLocalProvider(
+            LocalPhoneFrameInsets provides WindowInsets(top = SafeAreaTop)
+        ) {
+            ScreenContent(content)
+        }
         DynamicIsland()
     }
 }
@@ -71,8 +84,8 @@ private fun BoxScope.DynamicIsland() {
     Box(
         modifier = Modifier
             .align(Alignment.TopCenter)
-            .padding(top = 14.dp)
-            .size(width = 100.dp, height = 32.dp)
+            .padding(top = DynamicIslandTopInset)
+            .size(width = 100.dp, height = DynamicIslandHeight)
             .clip(RoundedCornerShape(16.dp))
             .background(Color.Black)
     )
