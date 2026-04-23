@@ -89,12 +89,8 @@ kotlin {
             implementation(libs.vico.multiplatform)
             implementation(libs.vico.multiplatform.m3)
 
-            implementation(libs.datastore.preferencesCore)
-            implementation(libs.datastore.coreOkio)
-
-            implementation(projects.repositoryRoom)
-
-            implementation(libs.ktor.core)
+            implementation(libs.ktor.client)
+            implementation(libs.ktor.logging)
         }
 
         commonTest.dependencies {

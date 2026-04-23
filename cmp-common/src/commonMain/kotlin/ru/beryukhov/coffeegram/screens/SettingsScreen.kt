@@ -1,12 +1,19 @@
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -23,6 +30,7 @@ import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.PreviewTheme
 import ru.beryukhov.coffeegram.components.SettingsComponent
@@ -32,15 +40,24 @@ import ru.beryukhov.coffeegram.view.ThemeRadioButtonWithText
 import ru.beryukhov.coffeegram.view.ThemeSwitchWithText
 
 @Composable
-fun SettingsScreen(component: SettingsComponent, modifier: Modifier = Modifier) {
+fun SettingsScreen(
+    component: SettingsComponent,
+    snackbarHostState: SnackbarHostState,
+    modifier: Modifier = Modifier
+) {
     val themeState by component.models.collectAsState()
-    Column(modifier = modifier) {
+    Column(
+        modifier = modifier.fillMaxSize().verticalScroll(
+            rememberScrollState()
+        )
+    ) {
         Text(
             stringResource(Res.string.app_theme),
             style = typography.titleMedium,
             modifier = Modifier.padding(start = 24.dp, top = 16.dp, bottom = 8.dp)
         )
         DarkThemeRadioGroup(themeState.useDarkTheme, component)
+        val scope = rememberCoroutineScope()
 
         if (themeState.isCupertino != null) {
             ThemeSwitchWithText(
@@ -52,16 +69,47 @@ fun SettingsScreen(component: SettingsComponent, modifier: Modifier = Modifier) 
         if (themeState.isDynamic != null) {
             ThemeSwitchWithText(
                 checked = themeState.isDynamic == true,
-                onCheckedChange = component::onSetDynamicTheme,
+                onCheckedChange = {
+                    if (it) {
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = "Now app theme will follow system theme",
+                                actionLabel = "OK",
+                            )
+                        }
+                    }
+                    component.onSetDynamicTheme(it)
+                },
                 stringResource(Res.string.app_theme_dynamic)
             )
         }
         if (themeState.isSummer != null) {
             ThemeSwitchWithText(
                 checked = themeState.isSummer == true,
-                onCheckedChange = component::onSetSummerTheme,
+                onCheckedChange = {
+                    if (it) {
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = "Summer starting",
+                                actionLabel = "OK",
+                            )
+                        }
+                    }
+                    component.onSetSummerTheme(it)
+                },
                 stringResource(Res.string.app_theme_summer)
             )
+        }
+
+        HorizontalDivider()
+
+        if (component.onAndroidStartWearableActivity != null) {
+            Button(
+                onClick = { component.onAndroidStartWearableActivity?.invoke() },
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text("Start Wearable Activity")
+            }
         }
     }
 }
@@ -100,6 +148,9 @@ private fun SettingsScreenPreview() = PreviewTheme {
                 isSummer = null
             )
         )
+        override val onAndroidStartWearableActivity: (() -> Unit)? = null
+        override val onAndroidIconChange: (isSummer: Boolean) -> Unit = { }
+
 
         override fun onSetSystemTheme() = Unit
 
@@ -112,7 +163,8 @@ private fun SettingsScreenPreview() = PreviewTheme {
         override fun onSetDynamicTheme(enabled: Boolean) = Unit
 
         override fun onSetSummerTheme(enabled: Boolean) = Unit
-    })
+    }
+    )
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)

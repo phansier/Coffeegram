@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package ru.beryukhov.coffeegram.screens
 
 import android.Manifest
@@ -7,13 +5,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +23,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.location_permission_required
@@ -42,6 +39,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.ktx.model.cameraPosition
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.MapComponent
+import ru.beryukhov.coffeegram.repository.latlng
 import ru.beryukhov.coffeegram.map.MapMarker
 import ru.beryukhov.coffeegram.repository.CoffeeShop
 
@@ -49,12 +47,12 @@ import ru.beryukhov.coffeegram.repository.CoffeeShop
 @Composable
 actual fun MapScreen(
     component: MapComponent,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val coarseLocationEnabled = remember {
         context.checkSelfPermission(
-            Manifest.permission.ACCESS_COARSE_LOCATION
+            ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     }
     val coarseLocation = remember {

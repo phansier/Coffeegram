@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.arkivanov.decompose.defaultComponentContext
 import org.koin.android.ext.android.get
 import ru.beryukhov.coffeegram.animations.TransitionSlot
-import ru.beryukhov.coffeegram.components.DefaultAndroidRootComponent
+import ru.beryukhov.coffeegram.components.DefaultRootComponent
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -21,7 +21,7 @@ import ru.beryukhov.coffeegram.model.NavigationConstants.NAVIGATION_STATE_KEY
 import ru.beryukhov.coffeegram.model.NavigationConstants.TODAYS_COFFEE_LIST
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.pages.LandingPage
-import ru.beryukhov.coffeegram.screens.AndroidRootScreen
+import ru.beryukhov.coffeegram.screens.RootScreen
 import ru.beryukhov.coffeegram.wearable.WearableSyncService
 import kotlin.time.ExperimentalTime
 
@@ -37,13 +37,13 @@ class MainActivity : ComponentActivity() {
         val daysCoffeesStore: DaysCoffeesStore = get()
         val showMap = checkCoarseLocationPermission()
 
-        val rootComponent = DefaultAndroidRootComponent(
+        val rootComponent = DefaultRootComponent(
             context = defaultComponentContext(),
             themeStore = themeStore,
             daysCoffeesStore = daysCoffeesStore,
             showMap = showMap,
-            onStartWearableActivity = ::startWearableActivity,
-            onIconChange = { isSummer -> changeIcon(this, isSummer) },
+            onAndroidStartWearableActivity = ::startWearableActivity,
+            onAndroidIconChange = { isSummer -> changeIcon(this, isSummer) },
         )
 
         setContent {
@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 doAnimation = doAnimationState,
                 StartPage = { modifier -> LandingPage(modifier = modifier) },
                 EndPage = { modifier, _ ->
-                    AndroidRootScreen(
+                    RootScreen(
                         rootComponent = rootComponent,
                         modifier = modifier,
                     )
@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun handleDeepLink(rootComponent: DefaultAndroidRootComponent) {
+    private fun handleDeepLink(rootComponent: DefaultRootComponent) {
         if (intent.getStringExtra(NAVIGATION_STATE_KEY) == TODAYS_COFFEE_LIST) {
             // Navigate to coffee list for today
             // The CoffeeEditComponent handles the navigation to DayList internally

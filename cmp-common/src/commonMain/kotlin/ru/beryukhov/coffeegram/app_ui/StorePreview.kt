@@ -46,7 +46,7 @@ fun PhoneFrame(
                 spotColor = Color.Black.copy(alpha = 0.6f)
             )
             .clip(RoundedCornerShape(44.dp))
-            .background(Color(0xFF1C1C1E))  // Device bezel
+            .background(Color(0xFF1C1C1E)) // Device bezel
             .border(12.dp, Color(0xFF2C2C2E), RoundedCornerShape(44.dp))
             .padding(12.dp)
     ) {
@@ -93,7 +93,7 @@ private fun ScreenContentPlaceholder() {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFE5E5EA))  // Light gray screen background
+            .background(Color(0xFFE5E5EA)) // Light gray screen background
     )
 }
 
