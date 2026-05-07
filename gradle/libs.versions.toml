@@ -12,8 +12,8 @@ hotReload = "1.1.0" # https://github.com/JetBrains/compose-hot-reload/releases
 
 agp = "9.2.0" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.4.3" # https://github.com/ktorio/ktor
-androidxRoom = "2.8.4" # https://developer.android.com/jetpack/androidx/releases/room
-sqlite = "2.6.2" # https://developer.android.com/jetpack/androidx/releases/sqlite
+androidxRoom3 = "3.0.0-alpha04" # https://developer.android.com/jetpack/androidx/releases/room3
+sqlite = "2.7.0-alpha04" # https://developer.android.com/jetpack/androidx/releases/sqlite
 screenshot = "0.0.1-alpha14"
 
 decompose = "3.5.0"
@@ -52,9 +52,10 @@ cmp-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview
 cmp-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
 
 kotlinBrowser = { module = "org.jetbrains.kotlin-wrappers:kotlin-browser" }
+kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version = "0.5.0" }
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 androidGradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-roomGradle = { module = "androidx.room:androidx.room.gradle.plugin", version.ref = "androidxRoom" }
+roomGradle = { module = "androidx.room3:androidx.room3.gradle.plugin", version.ref = "androidxRoom3" }
 detektGradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 composeKotlinGradle = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 protobufGradle = { module = "com.google.protobuf:protobuf-gradle-plugin", version = "0.10.0" }
@@ -66,9 +67,10 @@ detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", v
 detektCompose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
 detektDecompose = { module = "io.github.ajiekcx.detekt:decompose-detekt-rules", version.ref = "detektDecompose" }
 
-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoom" }
-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidxRoom" }
+room-compiler = { group = "androidx.room3", name = "room3-compiler", version.ref = "androidxRoom3" }
+room-runtime = { group = "androidx.room3", name = "room3-runtime", version.ref = "androidxRoom3" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+sqlite-web = { module = "androidx.sqlite:sqlite-web", version.ref = "sqlite" }
 sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }

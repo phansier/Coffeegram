@@ -55,19 +55,6 @@ kotlin {
         binaries.executable()
     }
 
-    // Apply the default hierarchy again. It'll create, for example, the iosMain source set:
-    applyDefaultHierarchyTemplate()
-
-    sourceSets {
-        val notWasm by creating {
-            dependsOn(commonMain.get())
-        }
-
-        iosMain.get().dependsOn(notWasm)
-        jvmMain.get().dependsOn(notWasm)
-        androidMain.get().dependsOn(notWasm)
-    }
-
     sourceSets {
         commonMain.dependencies {
             implementation(projects.repository)
@@ -101,15 +88,13 @@ kotlin {
 
             implementation(libs.vico.multiplatform)
             implementation(libs.vico.multiplatform.m3)
-        }
-        val notWasm by getting {
-            dependencies {
-                implementation(projects.repositorySqldelight)
 
-                implementation(libs.datastore.preferencesCore)
-                implementation(libs.datastore.coreOkio)
-            }
+            implementation(libs.datastore.preferencesCore)
+            implementation(libs.datastore.coreOkio)
+
+            implementation(projects.repositoryRoom)
         }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
             implementation(libs.kotlin.test.annotations)

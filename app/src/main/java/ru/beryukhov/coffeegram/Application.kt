@@ -27,7 +27,8 @@ open class Application : Application() {
         startKoin {
             androidContext(this@Application)
             modules(
-                appModule,
+                dataStoreModule,
+                coffeeStorageModule,
                 androidAppModule,
                 databaseModule
             )

@@ -5,28 +5,13 @@ import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
-import org.koin.dsl.module
-import repository.InMemoryCoffeeRepository
+import org.koin.dsl.koinConfiguration
+import ru.beryukhov.coffeegram.coffeeStorageModule
 import ru.beryukhov.coffeegram.components.DefaultRootComponent
+import ru.beryukhov.coffeegram.dataStoreModule
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
-import ru.beryukhov.coffeegram.model.DaysCoffeesStoreImpl
-import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStore
-import ru.beryukhov.coffeegram.repository.CoffeeStorage
-import ru.beryukhov.coffeegram.repository.ThemeInMemoryStorage
 import ru.beryukhov.coffeegram.screens.RootScreen
-import ru.beryukhov.coffeegram.store_lib.Storage
-
-private val appModule = module {
-    single<Storage<ThemeState>> {
-        ThemeInMemoryStorage()
-    }
-    single {
-        ThemeStore(get())
-    }
-    single<DaysCoffeesStore> { DaysCoffeesStoreImpl(coffeeStorage = get()) }
-    single { CoffeeStorage(repository = InMemoryCoffeeRepository()) }
- }
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
@@ -35,21 +20,28 @@ fun main() {
     lifecycle.attachToDocument()
 
     ComposeViewport {
-        KoinApplication(application = {
-            modules(appModule)
-        }) {
-            val themeStore = koinInject<ThemeStore>()
-            val daysCoffeesStore = koinInject<DaysCoffeesStore>()
-            val root = remember {
-                // withWebHistory { stateKeeper, deepLink ->
-                DefaultRootComponent(
-                    DefaultComponentContext(lifecycle = lifecycle),
-                    themeStore = themeStore,
-                    daysCoffeesStore = daysCoffeesStore,
-                )
+        // withWebHistory { stateKeeper, deepLink ->
+        KoinApplication(
+            configuration = koinConfiguration(
+                declaration = {
+                    modules(coffeeStorageModule)
+                    modules(dataStoreModule)
+                }
+            ),
+            content = {
+                val themeStore = koinInject<ThemeStore>()
+                val daysCoffeesStore = koinInject<DaysCoffeesStore>()
+                val root = remember {
+                    // withWebHistory { stateKeeper, deepLink ->
+                    DefaultRootComponent(
+                        DefaultComponentContext(lifecycle = lifecycle),
+                        themeStore = themeStore,
+                        daysCoffeesStore = daysCoffeesStore,
+                    )
+                }
+                RootScreen(root)
             }
-            RootScreen(root)
-        }
+        )
     }
 }
 

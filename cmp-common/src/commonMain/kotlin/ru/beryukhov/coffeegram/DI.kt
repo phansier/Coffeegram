@@ -11,8 +11,7 @@ import ru.beryukhov.coffeegram.repository.datastoreModule
 import ru.beryukhov.coffeegram.store_lib.Storage
 import ru.beryukhov.repository.databaseModule
 
-val appModule = module {
-    includes(databaseModule)
+val dataStoreModule = module {
     includes(datastoreModule())
 
     single<Storage<ThemeState>> {
@@ -21,6 +20,10 @@ val appModule = module {
     single {
         ThemeStore(get())
     }
+}
+
+val coffeeStorageModule = module {
+    includes(databaseModule)
     single<DaysCoffeesStore> { DaysCoffeesStoreImpl(coffeeStorage = get()) }
     single { CoffeeStorage(repository = get()) }
 }
