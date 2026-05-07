@@ -2,6 +2,7 @@ package ru.beryukhov.coffeegram.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.content.edit
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
@@ -21,6 +22,7 @@ class ThemeSharedPrefStorage(private val context: Context) : Storage<ThemeState>
     }
 
     override suspend fun getState(): ThemeState? {
+        Log.d("ThemeSharedPrefStorage", "Getting theme state from SharedPreferences")
         val darkThemeState = sharedPrefs.getString(THEME_STATE, ThemeStateDefault.useDarkTheme.name)
             ?.let { DarkThemeState.valueOf(it) }
         val isCupertino = sharedPrefs.getBooleanOrNull(THEME_CUPERTINO, ThemeStateDefault.isCupertino)

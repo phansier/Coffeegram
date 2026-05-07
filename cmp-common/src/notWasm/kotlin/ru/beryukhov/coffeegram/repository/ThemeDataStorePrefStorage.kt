@@ -6,6 +6,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
+import coil3.util.DebugLogger
+import coil3.util.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -33,6 +35,12 @@ private object PreferencesKeys {
 class ThemeDataStorePrefStorage(private val dataStore: DataStore<Preferences>) : Storage<ThemeState> {
 
     override suspend fun getState(): ThemeState? {
+        DebugLogger().log(
+            tag = "ThemeDataStorePrefStorage",
+            level = Logger.Level.Info,
+            message = "Getting theme state from Preferences DataStore",
+            throwable = null
+        )
         // do not confuse with `lastOrNull()`, it will be waiting for completion inside otherwise
         val prefs = dataStore.data.firstOrNull()
         val darkThemeState = prefs?.get(PreferencesKeys.THEME_STATE_KEY)
