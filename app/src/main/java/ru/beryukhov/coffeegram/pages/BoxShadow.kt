@@ -11,7 +11,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.ClipOp
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.NativePaint
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Path
@@ -21,12 +20,15 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.nativePaint
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isSpecified
+import androidx.core.graphics.withSave
+import android.graphics.Paint as NativePaint
 
 /**
  * Applies a shadow to the current box.
@@ -85,7 +87,7 @@ fun Modifier.boxShadow(
                 val hasBlurRadius = blurRadius.value.let { it.isFinite() && it != 0f }
                 val paint = Paint()
 
-                paint.asFrameworkPaint().let { frameworkPaint ->
+                paint.nativePaint.let { frameworkPaint ->
 
                     if (hasBlurRadius) {
                         frameworkPaint.maskFilter = BlurMaskFilter(
@@ -130,54 +132,53 @@ fun Modifier.boxShadow(
                 )
 
                 val nativeCanvas = canvas.nativeCanvas
-                val count = nativeCanvas.save()
+                nativeCanvas.withSave {
+                    if (inset) {
 
-                if (inset) {
+                        val boxOutline = when {
+                            hasSpreadRadius -> shape.createOutline(
+                                size = size,
+                                layoutDirection = layoutDirection,
+                                density = density
+                            )
 
-                    val boxOutline = when {
-                        hasSpreadRadius -> shape.createOutline(
-                            size = size,
-                            layoutDirection = layoutDirection,
-                            density = density
-                        )
-                        else -> shadowOutline
-                    }
+                            else -> shadowOutline
+                        }
 
-                    canvas.clipToOutline(boxOutline)
+                        canvas.clipToOutline(boxOutline)
 
-                    val bounds = boxOutline.bounds
+                        val bounds = boxOutline.bounds
 
-                    nativeCanvas.saveLayer(
-                        bounds.left,
-                        bounds.top,
-                        bounds.right,
-                        bounds.bottom,
-                        NativePaint().apply {
-                            colorFilter = ColorMatrixColorFilter(
-                                ColorMatrix(
-                                    floatArrayOf(
-                                        1f, 0f, 0f, 0f, 0f,
-                                        0f, 1f, 0f, 0f, 0f,
-                                        0f, 0f, 1f, 0f, 0f,
-                                        0f, 0f, 0f, -1f, 255f * color.alpha
+                        nativeCanvas.saveLayer(
+                            bounds.left,
+                            bounds.top,
+                            bounds.right,
+                            bounds.bottom,
+                            NativePaint().apply {
+                                colorFilter = ColorMatrixColorFilter(
+                                    ColorMatrix(
+                                        floatArrayOf(
+                                            1f, 0f, 0f, 0f, 0f,
+                                            0f, 1f, 0f, 0f, 0f,
+                                            0f, 0f, 1f, 0f, 0f,
+                                            0f, 0f, 0f, -1f, 255f * color.alpha
+                                        )
                                     )
                                 )
-                            )
-                        }
+                            }
+                        )
+                    }
+
+                    canvas.translate(
+                        dx = offset.x.toPx() - spreadRadiusPx,
+                        dy = offset.y.toPx() - spreadRadiusPx
+                    )
+
+                    canvas.drawOutline(
+                        outline = shadowOutline,
+                        paint = paint
                     )
                 }
-
-                canvas.translate(
-                    dx = offset.x.toPx() - spreadRadiusPx,
-                    dy = offset.y.toPx() - spreadRadiusPx
-                )
-
-                canvas.drawOutline(
-                    outline = shadowOutline,
-                    paint = paint
-                )
-
-                nativeCanvas.restoreToCount(count)
             }
 
             if (!inset) {

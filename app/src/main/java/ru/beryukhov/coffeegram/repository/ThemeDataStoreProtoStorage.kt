@@ -1,7 +1,7 @@
-/*
 package ru.beryukhov.coffeegram.repository
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 import androidx.datastore.migrations.SharedPreferencesMigration
@@ -50,6 +50,7 @@ class ThemeDataStoreProtoStorage(private val context: Context) : Storage<ThemeSt
 
     @Suppress("ReturnCount")
     override suspend fun getState(): ThemeState? {
+        Log.d("ThemeDataStoreProtoStorage", "Getting theme state from Proto DataStore")
         // do not confuse with `lastOrNull()`, it will be waiting for completion inside otherwise
         val proto = context.dataStore.data.firstOrNull()
         val darkThemeState = proto?.themeState.mapOrNull() ?: return null
@@ -84,4 +85,3 @@ private fun ProtoThemeState?.mapOrNull(): DarkThemeState? {
     if (this == null) return null
     return DarkThemeState.valueOf(this.name)
 }
-*/

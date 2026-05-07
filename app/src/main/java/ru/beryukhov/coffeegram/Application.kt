@@ -9,6 +9,11 @@ import kotlinx.coroutines.withContext
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
+import ru.beryukhov.coffeegram.model.ThemeState
+import ru.beryukhov.coffeegram.repository.ThemeDataStorePrefStorage
+import ru.beryukhov.coffeegram.repository.ThemeDataStoreProtoStorage
+import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
+import ru.beryukhov.coffeegram.store_lib.Storage
 import ru.beryukhov.coffeegram.widget.DefaultWidgetDataBridge
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget
 import ru.beryukhov.coffeegram.widget.WidgetDataBridge
@@ -47,4 +52,10 @@ internal val androidAppModule = module {
     // Theme storage and store
     // Widget data bridge
     single<WidgetDataBridge> { DefaultWidgetDataBridge(daysCoffeesStore = get()) }
+    single<Storage<ThemeState>> {
+        ThemeDataStoreProtoStorage(context = get())
+        ThemeSharedPrefStorage(context = get())
+        // the last used, other to demo their existence
+        ThemeDataStorePrefStorage(dataStore = get())
+    }
 }

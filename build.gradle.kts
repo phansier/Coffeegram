@@ -1,6 +1,6 @@
 plugins {
     id("convention.detekt")
-    id("com.autonomousapps.dependency-analysis") version "3.6.1"
+    id("com.autonomousapps.dependency-analysis") version "3.10.0"
 }
 
 buildscript {
@@ -20,7 +20,7 @@ buildscript {
         classpath(libs.serializationGradle)
         classpath(libs.sqldelightGradle)
         classpath(libs.composeKotlinGradle)
-//        classpath(libs.protobufGradle)
+        classpath(libs.protobufGradle)
         classpath(libs.secretsGradle)
         classpath(libs.screenshotGradle)
         classpath(libs.hotReloadGradle)

@@ -21,4 +21,4 @@ jobs:
           cache: 'gradle'
 
     - name: Build iOS
-      run: xcodebuild build -project cmp-iosApp/iosApp.xcodeproj -configuration Debug -scheme iosApp -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -verbose
+      run: make buildIos
