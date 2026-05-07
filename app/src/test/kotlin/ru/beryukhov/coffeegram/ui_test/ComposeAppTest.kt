@@ -2,7 +2,7 @@ package ru.beryukhov.coffeegram.ui_test
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
 import io.github.kakaocup.compose.KakaoCompose
 import io.github.kakaocup.compose.node.element.ComposeScreen.Companion.onComposeScreen
 import io.github.kakaocup.compose.rule.KakaoComposeTestRule
