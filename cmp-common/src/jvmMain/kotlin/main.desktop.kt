@@ -8,15 +8,17 @@ import androidx.compose.ui.window.singleWindowApplication
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.koin.core.context.GlobalContext.startKoin
-import ru.beryukhov.coffeegram.appModule
+import ru.beryukhov.coffeegram.coffeeStorageModule
 import ru.beryukhov.coffeegram.components.DefaultRootComponent
+import ru.beryukhov.coffeegram.dataStoreModule
 import ru.beryukhov.coffeegram.screens.RootScreen
 
 private val koinApp = initKoin().koin
 
 private fun initKoin() =
     startKoin {
-        modules(appModule)
+        modules(dataStoreModule)
+        modules(coffeeStorageModule)
     }
 
 fun main() {

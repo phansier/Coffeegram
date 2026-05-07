@@ -101,13 +101,13 @@ kotlin {
 
             implementation(libs.vico.multiplatform)
             implementation(libs.vico.multiplatform.m3)
+
+            implementation(libs.datastore.preferencesCore)
+            implementation(libs.datastore.coreOkio)
         }
         val notWasm by getting {
             dependencies {
                 implementation(projects.repositorySqldelight)
-
-                implementation(libs.datastore.preferencesCore)
-                implementation(libs.datastore.coreOkio)
             }
         }
         commonTest.dependencies {
