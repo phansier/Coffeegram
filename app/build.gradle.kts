@@ -15,6 +15,8 @@ plugins {
     id("com.android.compose.screenshot")
 }
 
+val mapsApiKey = project.findProperty("MAPS_API_KEY") as String?
+
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -27,6 +29,8 @@ android {
         versionName = "1.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey ?: ""
     }
 
     signingConfigs {
