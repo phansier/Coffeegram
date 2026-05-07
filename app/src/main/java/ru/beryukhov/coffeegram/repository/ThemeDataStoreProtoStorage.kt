@@ -85,4 +85,3 @@ private fun ProtoThemeState?.mapOrNull(): DarkThemeState? {
     if (this == null) return null
     return DarkThemeState.valueOf(this.name)
 }
-
