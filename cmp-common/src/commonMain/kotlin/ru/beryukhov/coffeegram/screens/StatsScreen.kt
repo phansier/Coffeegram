@@ -13,6 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.stats
+import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.StatsComponent
 import ru.beryukhov.coffeegram.pages.CoffeeCharts
@@ -29,9 +31,10 @@ fun StatsScreen(
     }
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun StatsAppBar(modifier: Modifier = Modifier) {
-    TopAppBar(
+    AdaptiveTopAppBar(
         title = { Text(stringResource(Res.string.stats)) },
         modifier = modifier
     )

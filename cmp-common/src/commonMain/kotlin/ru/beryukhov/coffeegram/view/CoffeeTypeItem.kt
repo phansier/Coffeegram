@@ -25,8 +25,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import ru.beryukhov.coffeegram.app_ui.PreviewTheme
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes.Cappuccino
 import ru.beryukhov.coffeegram.data.printableText
@@ -118,9 +119,9 @@ internal fun RowScope.AnimatedCounter(count: Int) {
         }
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-private fun Preview() {
+private fun Preview() = PreviewTheme {
     var count by remember { mutableIntStateOf(5) }
     CoffeeTypeItem(
         coffeeType = Cappuccino,

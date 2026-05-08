@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -87,7 +88,12 @@ private fun BottomBar(
                 onClick = {
                     rootComponent.selectPage(index)
                 },
-                label = { Text(stringResource(item.title)) },
+                label = {
+                    Text(
+                        text = stringResource(item.title),
+                        style = typography.bodySmall
+                    )
+                },
                 icon = {
                     Icon(
                         imageVector = item.icon,

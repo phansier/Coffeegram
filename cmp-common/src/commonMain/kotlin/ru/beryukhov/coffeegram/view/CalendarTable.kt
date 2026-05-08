@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,14 +23,13 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Devices.PIXEL_9_PRO_XL
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
-import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.app_ui.PreviewTheme
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.Picture
 import ru.beryukhov.date_time_utils.YearMonth
@@ -50,28 +51,33 @@ private fun DayCell(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
+            .padding(vertical = 2.dp)
             .clickable(
                 enabled = onClick != null,
                 onClick = onClick ?: {}
             )
-            .background(if (dayItem.isToday) MaterialTheme.colorScheme.primaryContainer else Color.Transparent)
+            .background(color =if (dayItem.isToday) MaterialTheme.colorScheme.primaryContainer else Color.Transparent,
+                shape = RoundedCornerShape(8.dp)
+            )
             .testTag("Day")
     ) {
         with(dayItem) {
             coffeePicture(
                 modifier = Modifier
+                    .padding(top = 4.dp)
                     .size(32.dp)
                     .fillMaxWidth()
                     .align(Alignment.CenterHorizontally)
             )
 
             Text(
-                AnnotatedString(
+                text = AnnotatedString(
                     text = day,
                     paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
-                )
+                ),
+                style = typography.bodyMedium,
             )
-            HorizontalDivider()
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 4.dp))
         }
     }
 }
@@ -95,6 +101,7 @@ fun MonthTable(
                     Text(
                         text = getWeekDaysNames()[index],
                         textAlign = TextAlign.Center,
+                        style = typography.bodySmall
                     )
                     HorizontalDivider()
                 }
@@ -123,12 +130,10 @@ fun MonthTable(
     }
 }
 
-@Preview(device = PIXEL_9_PRO_XL, showSystemUi = true)
+@PreviewLightDark
 @Composable
-private fun TablePreview() {
-    CoffeegramTheme {
-        SampleTable()
-    }
+private fun TablePreview() = PreviewTheme {
+    SampleTable()
 }
 
 @Composable
@@ -136,7 +141,7 @@ fun SampleTable(modifier: Modifier = Modifier) =
     MonthTable(
         yearMonth = YearMonth(2020, Month.JULY),
         today = LocalDate(2020, 7, 14), // tuesday
-        filledDayItemsMap = mapOf(2 to CoffeeTypes.Cappuccino.icon).toPersistentMap(),
+        filledDayItemsMap = mapOf(2 to CoffeeTypes.Cappuccino.icon, 14 to CoffeeTypes.Fredo.icon).toPersistentMap(),
         modifier = modifier,
         onClick = {},
     )
