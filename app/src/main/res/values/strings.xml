@@ -4,7 +4,6 @@
     <string name="stats">Stats</string>
     <string name="settings">Settings</string>
     <string name="map_short">Specialty</string>
-    <string name="map_long">Specialty Coffee Map</string>
     <string name="add_drink">Drinks</string>
     <string name="app_theme">App theme</string>
     <string name="app_theme_system">System</string>
@@ -17,5 +16,4 @@
     <string name="loading_widget">Loading widget</string>
     <string name="stats_tab_all">All</string>
     <string name="stats_tab_weekly">Weekly</string>
-    <string name="location_permission_required">You should give location permission</string>
 </resources>

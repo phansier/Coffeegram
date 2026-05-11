@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.pages
+package ru.beryukhov.coffeegram.map
 
 import android.graphics.BlurMaskFilter
 import android.graphics.ColorMatrix
@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.graphics.nativePaint
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
@@ -52,10 +51,10 @@ import android.graphics.Paint as NativePaint
  * a drop shadow.
  *
  * @exception IllegalArgumentException Any of the following conditions holds:
- * - [color] is [Color.Unspecified],
- * - [blurRadius] is [Dp.Unspecified] or negative,
- * - [spreadRadius] is [Dp.Unspecified],
- * - [offset] is [DpOffset.Unspecified].
+ * - [color] is [Color.Companion.Unspecified],
+ * - [blurRadius] is [Dp.Companion.Unspecified] or negative,
+ * - [spreadRadius] is [Dp.Companion.Unspecified],
+ * - [offset] is [DpOffset.Companion.Unspecified].
  */
 @Stable
 fun Modifier.boxShadow(
@@ -87,7 +86,7 @@ fun Modifier.boxShadow(
                 val hasBlurRadius = blurRadius.value.let { it.isFinite() && it != 0f }
                 val paint = Paint()
 
-                paint.nativePaint.let { frameworkPaint ->
+                paint.asFrameworkPaint().let { frameworkPaint ->
 
                     if (hasBlurRadius) {
                         frameworkPaint.maskFilter = BlurMaskFilter(

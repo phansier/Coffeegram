@@ -56,7 +56,8 @@ private fun DayCell(
                 enabled = onClick != null,
                 onClick = onClick ?: {}
             )
-            .background(color =if (dayItem.isToday) MaterialTheme.colorScheme.primaryContainer else Color.Transparent,
+            .background(
+                color = if (dayItem.isToday) MaterialTheme.colorScheme.primaryContainer else Color.Transparent,
                 shape = RoundedCornerShape(8.dp)
             )
             .testTag("Day")

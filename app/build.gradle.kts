@@ -109,12 +109,6 @@ dependencies {
     implementation(libs.glance.preview)
     implementation(libs.glance.appwidget.preview)
 
-    implementation(libs.google.maps.compose)
-    implementation(libs.google.maps.utils)
-
-    implementation(libs.ktor.client.okhttp)
-    implementation(libs.ktor.logging)
-
     implementation(libs.kotlinx.immutableCollections)
 
     implementation(libs.coroutines.core)

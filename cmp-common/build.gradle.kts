@@ -93,6 +93,8 @@ kotlin {
             implementation(libs.datastore.coreOkio)
 
             implementation(projects.repositoryRoom)
+
+            implementation(libs.ktor.core)
         }
 
         commonTest.dependencies {
@@ -103,9 +105,14 @@ kotlin {
         }
         androidMain.dependencies {
             implementation(libs.cmp.ui.tooling)
-            implementation(libs.ktor.android)
             // Wearable
             implementation(libs.playServices.wearable)
+
+            implementation(libs.google.maps.compose)
+            implementation(libs.google.maps.utils)
+
+            implementation(libs.ktor.client.okhttp)
+            implementation(libs.ktor.logging)
         }
         getByName("androidHostTest").dependencies {
             implementation(libs.kotlin.test.junit)
@@ -121,6 +128,9 @@ kotlin {
         jsMain.dependencies {
             implementation(project.dependencies.enforcedPlatform(libs.jetbrains.kotlinWrappers.kotlinWrappersBom.get()))
             implementation(libs.kotlinBrowser)
+        }
+        webMain.dependencies {
+            implementation(libs.ktor.cio)
         }
     }
 }

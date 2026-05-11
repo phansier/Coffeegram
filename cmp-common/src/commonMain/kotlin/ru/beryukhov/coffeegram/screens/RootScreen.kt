@@ -51,6 +51,7 @@ private fun TopBar(rootComponent: RootComponent) {
         when (val c = page) {
             is RootComponent.Child.CoffeeEdit -> CoffeeEditAppBar(c.component)
             is RootComponent.Child.Stats -> StatsAppBar()
+            is RootComponent.Child.Map -> MapAppBar()
             is RootComponent.Child.Settings -> SettingsAppBar(c.component)
         }
     }
@@ -69,6 +70,7 @@ private fun CurrentScreen(
         when (val c = page) {
             is RootComponent.Child.CoffeeEdit -> CoffeeEditScreen(c.component)
             is RootComponent.Child.Stats -> StatsScreen(c.component)
+            is RootComponent.Child.Map -> MapScreen(c.component)
             is RootComponent.Child.Settings -> SettingsScreen(c.component)
         }
     }
