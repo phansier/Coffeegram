@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.app_theme
@@ -24,7 +24,7 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.jetbrains.compose.resources.stringResource
-import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.app_ui.PreviewTheme
 import ru.beryukhov.coffeegram.components.SettingsComponent
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
@@ -38,7 +38,7 @@ fun SettingsScreen(component: SettingsComponent, modifier: Modifier = Modifier) 
         Text(
             stringResource(Res.string.app_theme),
             style = typography.titleMedium,
-            modifier = Modifier.padding(start = 24.dp, top = 16.dp)
+            modifier = Modifier.padding(start = 24.dp, top = 16.dp, bottom = 8.dp)
         )
         DarkThemeRadioGroup(themeState.useDarkTheme, component)
 
@@ -88,33 +88,31 @@ private fun DarkThemeRadioGroup(
     )
 }
 
-@Preview
+@PreviewLightDark
 @Composable
-private fun SettingsScreenPreview() {
-    CoffeegramTheme() {
-        SettingsScreen(component = object : SettingsComponent {
-            override val models: StateFlow<ThemeState> = MutableStateFlow(
-                ThemeState(
-                    useDarkTheme = DarkThemeState.SYSTEM,
-                    isCupertino = true,
-                    isDynamic = null,
-                    isSummer = null
-                )
+private fun SettingsScreenPreview() = PreviewTheme {
+    SettingsScreen(component = object : SettingsComponent {
+        override val models: StateFlow<ThemeState> = MutableStateFlow(
+            ThemeState(
+                useDarkTheme = DarkThemeState.SYSTEM,
+                isCupertino = true,
+                isDynamic = null,
+                isSummer = null
             )
+        )
 
-            override fun onSetSystemTheme() = Unit
+        override fun onSetSystemTheme() = Unit
 
-            override fun onSetLightTheme() = Unit
+        override fun onSetLightTheme() = Unit
 
-            override fun onSetDarkTheme() = Unit
+        override fun onSetDarkTheme() = Unit
 
-            override fun onSetCupertinoTheme(enabled: Boolean) = Unit
+        override fun onSetCupertinoTheme(enabled: Boolean) = Unit
 
-            override fun onSetDynamicTheme(enabled: Boolean) = Unit
+        override fun onSetDynamicTheme(enabled: Boolean) = Unit
 
-            override fun onSetSummerTheme(enabled: Boolean) = Unit
-        })
-    }
+        override fun onSetSummerTheme(enabled: Boolean) = Unit
+    })
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)

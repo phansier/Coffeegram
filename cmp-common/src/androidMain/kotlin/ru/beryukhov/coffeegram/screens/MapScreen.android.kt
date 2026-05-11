@@ -3,6 +3,7 @@
 package ru.beryukhov.coffeegram.screens
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
@@ -15,7 +16,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,6 +27,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import coffeegram.cmp_common.generated.resources.Res
+import coffeegram.cmp_common.generated.resources.location_permission_required
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
@@ -38,15 +40,16 @@ import com.google.maps.android.compose.MarkerComposable
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.ktx.model.cameraPosition
-import ru.beryukhov.coffeegram.R
+import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.MapComponent
-import ru.beryukhov.coffeegram.repository.latlng
-import ru.beryukhov.coffeegram.view.MapMarker
+import ru.beryukhov.coffeegram.map.MapMarker
+import ru.beryukhov.coffeegram.repository.CoffeeShop
 
+@SuppressLint("MissingPermission")
 @Composable
-fun MapScreen(
+actual fun MapScreen(
     component: MapComponent,
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
 ) {
     val context = LocalContext.current
     val coarseLocationEnabled = remember {
@@ -132,7 +135,7 @@ fun MapScreen(
             modifier = modifier.fillMaxSize(),
         ) {
             Text(
-                text = stringResource(R.string.location_permission_required),
+                text = stringResource(Res.string.location_permission_required),
                 modifier = Modifier.align(Alignment.Center)
             )
         }
@@ -160,10 +163,4 @@ private fun panMapToFitAllMarkers(locations: List<LatLng>, density: Float): Came
         }
     }
 
-@Composable
-fun MapAppBar(modifier: Modifier = Modifier) {
-    TopAppBar(
-        title = { Text(stringResource(R.string.map_long)) },
-        modifier = modifier
-    )
-}
+fun CoffeeShop.latlng() = LatLng(latitude, longitude)

@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.view
+package ru.beryukhov.coffeegram.map
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,25 +17,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.beryukhov.coffeegram.R
-import ru.beryukhov.coffeegram.pages.boxShadow
+import coffeegram.cmp_common.generated.resources.Res
+import coffeegram.cmp_common.generated.resources.frappe
+import org.jetbrains.compose.resources.painterResource
+import ru.beryukhov.coffeegram.app_ui.PreviewTheme
+import ru.beryukhov.coffeegram.app_ui.md_theme_light_onPrimaryContainer
 
 @Composable
-@Preview
-private fun SmallMarker() = MapMarker(expanded = false)
+@PreviewLightDark
+private fun SmallMarker() = PreviewTheme { MapMarker(expanded = false) }
 
 @Composable
-@Preview
-private fun ExpandedMarker() = MapMarker(expanded = true)
+@PreviewLightDark
+private fun ExpandedMarker() = PreviewTheme { MapMarker(expanded = true) }
 
 @Composable
 fun MapMarker(
@@ -67,11 +68,11 @@ fun MapMarker(
                 shape = RoundedCornerShape(size = 6.dp)
             )
             .padding(start = 4.dp, top = 3.dp, end = 8.dp, bottom = 3.dp)
-            .widthIn(min = 0.dp, max = (LocalConfiguration.current.screenWidthDp / if (highlighted) 1 else 2).dp)
+            .widthIn(min = 0.dp, max = (LocalWindowInfo.current.containerSize.width / if (highlighted) 1 else 2).dp)
 
     ) {
         Image(
-            painter = painterResource(id = R.drawable.logo_splash),
+            painter = painterResource(Res.drawable.frappe),
             contentDescription = "image description",
             contentScale = ContentScale.Fit,
             modifier = Modifier
@@ -85,10 +86,10 @@ fun MapMarker(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier.padding(start = 4.dp)
         ) {
-            val textColor = MaterialTheme.colorScheme.onPrimaryContainer
+            val textColor = md_theme_light_onPrimaryContainer
             Text(
                 text = name,
-                style = TextStyle(
+                style = MaterialTheme.typography.headlineSmall.copy(
                     fontSize = 17.sp,
                     lineHeight = 24.sp,
                     fontWeight = FontWeight(350),
@@ -100,7 +101,7 @@ fun MapMarker(
             if (expanded) {
                 Text(
                     text = descr,
-                    style = TextStyle(
+                    style = MaterialTheme.typography.bodySmall.copy(
                         fontSize = 13.sp,
                         lineHeight = 18.sp,
                         fontWeight = FontWeight(350),

@@ -1,11 +1,24 @@
 package ru.beryukhov.coffeegram.app_ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.shapes
-import androidx.compose.material3.MaterialTheme.typography
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.unit.sp
+import coffeegram.cmp_common.generated.resources.DMMono_Regular
+import coffeegram.cmp_common.generated.resources.Fraunces
+import coffeegram.cmp_common.generated.resources.Fraunces_Italic
+import coffeegram.cmp_common.generated.resources.PlusJakartaSans
+import coffeegram.cmp_common.generated.resources.Res
 import com.slapps.cupertino.adaptive.AdaptiveTheme
 import com.slapps.cupertino.adaptive.CupertinoThemeSpec
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
@@ -13,6 +26,7 @@ import com.slapps.cupertino.adaptive.MaterialThemeSpec
 import com.slapps.cupertino.adaptive.Theme
 import com.slapps.cupertino.theme.darkColorScheme
 import com.slapps.cupertino.theme.lightColorScheme
+import org.jetbrains.compose.resources.Font
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStateDefault
@@ -87,28 +101,66 @@ fun CoffeegramTheme(
         DarkThemeState.LIGHT -> false
         DarkThemeState.SYSTEM -> isSystemInDarkTheme()
     }
+    val dmMonoFontFamily = FontFamily(Font(Res.font.DMMono_Regular))
+    val frauncesFontFamily = FontFamily(
+        Font(Res.font.Fraunces, style = FontStyle.Normal),
+        Font(Res.font.Fraunces_Italic, style = FontStyle.Italic)
+    )
+    val plusJakarta = FontFamily(Font(Res.font.PlusJakartaSans))
+
     AdaptiveTheme(
         material =
-        MaterialThemeSpec(
-            colorScheme = if (darkTheme) {
-                DarkThemeColors
-            } else {
-                LightThemeColors
-            },
-            typography = typography,
-            shapes = shapes,
-        ),
+            MaterialThemeSpec(
+                colorScheme = if (darkTheme) {
+                    DarkThemeColors
+                } else {
+                    LightThemeColors
+                },
+                typography = Typography(
+                    headlineSmall = TextStyle(
+                        fontFamily = frauncesFontFamily,
+                        fontSize = 24.sp,
+                    ),
+                    titleMedium = TextStyle(
+                        fontFamily = frauncesFontFamily,
+                        fontSize = 16.sp,
+                    ),
+                    bodyMedium = TextStyle(
+                        fontFamily = plusJakarta,
+                        fontSize = 14.sp,
+                    ),
+                    bodySmall = TextStyle(
+                        fontFamily = dmMonoFontFamily,
+                        fontSize = 12.sp,
+                    )
+
+                ),
+                shapes = shapes,
+            ),
         cupertino =
-        CupertinoThemeSpec(
-            colorScheme = if (darkTheme) {
-                darkColorScheme()
-            } else {
-                lightColorScheme()
-            },
-        ),
+            CupertinoThemeSpec(
+                colorScheme = if (darkTheme) {
+                    darkColorScheme()
+                } else {
+                    lightColorScheme()
+                },
+            ),
         target = if (themeState.isCupertino == true) Theme.Cupertino else Theme.Material3,
         content = content
     )
+}
+
+@Composable
+fun PreviewTheme(
+    content: @Composable () -> Unit,
+) {
+    CoffeegramTheme(
+        themeState = ThemeStateDefault,
+    ) {
+        Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
+            content()
+        }
+    }
 }
 
 expect fun isCupertinoDefault(): Boolean

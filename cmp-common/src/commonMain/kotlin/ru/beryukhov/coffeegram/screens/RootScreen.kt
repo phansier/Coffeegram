@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -50,6 +51,7 @@ private fun TopBar(rootComponent: RootComponent) {
         when (val c = page) {
             is RootComponent.Child.CoffeeEdit -> CoffeeEditAppBar(c.component)
             is RootComponent.Child.Stats -> StatsAppBar()
+            is RootComponent.Child.Map -> MapAppBar()
             is RootComponent.Child.Settings -> SettingsAppBar(c.component)
         }
     }
@@ -68,6 +70,7 @@ private fun CurrentScreen(
         when (val c = page) {
             is RootComponent.Child.CoffeeEdit -> CoffeeEditScreen(c.component)
             is RootComponent.Child.Stats -> StatsScreen(c.component)
+            is RootComponent.Child.Map -> MapScreen(c.component)
             is RootComponent.Child.Settings -> SettingsScreen(c.component)
         }
     }
@@ -87,7 +90,12 @@ private fun BottomBar(
                 onClick = {
                     rootComponent.selectPage(index)
                 },
-                label = { Text(stringResource(item.title)) },
+                label = {
+                    Text(
+                        text = stringResource(item.title),
+                        style = typography.bodySmall
+                    )
+                },
                 icon = {
                     Icon(
                         imageVector = item.icon,

@@ -32,8 +32,6 @@ import ru.beryukhov.coffeegram.model.calendar
 import ru.beryukhov.coffeegram.model.settings
 import ru.beryukhov.coffeegram.model.specialty
 import ru.beryukhov.coffeegram.model.stats
-import ru.beryukhov.coffeegram.screens.CoffeeEditAppBar as CmpCoffeeEditAppBar
-import ru.beryukhov.coffeegram.screens.CoffeeEditScreen as CmpCoffeeEditScreen
 
 @Composable
 fun AndroidRootScreen(
@@ -66,7 +64,7 @@ private fun AndroidTopBar(rootComponent: AndroidRootComponent) {
         modifier = Modifier.fillMaxWidth(),
     ) { _, page ->
         when (val c = page) {
-            is AndroidRootComponent.Child.CoffeeEdit -> CmpCoffeeEditAppBar(c.component)
+            is AndroidRootComponent.Child.CoffeeEdit -> CoffeeEditAppBar(c.component)
             is AndroidRootComponent.Child.Stats -> StatsAppBar()
             is AndroidRootComponent.Child.Map -> MapAppBar()
             is AndroidRootComponent.Child.Settings -> AndroidSettingsAppBar()
@@ -86,7 +84,7 @@ private fun AndroidCurrentScreen(
         modifier = Modifier.padding(paddingValues),
     ) { _, page ->
         when (val c = page) {
-            is AndroidRootComponent.Child.CoffeeEdit -> CmpCoffeeEditScreen(c.component)
+            is AndroidRootComponent.Child.CoffeeEdit -> CoffeeEditScreen(c.component)
             is AndroidRootComponent.Child.Stats -> StatsScreen(c.component)
             is AndroidRootComponent.Child.Map -> MapScreen(c.component)
             is AndroidRootComponent.Child.Settings -> AndroidSettingsScreen(

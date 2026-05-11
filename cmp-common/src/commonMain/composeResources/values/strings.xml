@@ -42,4 +42,6 @@
     <string name="day_sat">Sat</string>
     <string name="day_sun">Sun</string>
 
+    <string name="map_long">Specialty Coffee Map</string>
+    <string name="location_permission_required">You should give location permission</string>
 </resources>

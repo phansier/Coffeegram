@@ -28,6 +28,10 @@ interface RootComponent {
             val component: StatsComponent,
         ) : Child
 
+        class Map(
+            val component: MapComponent,
+        ) : Child
+
         class Settings(
             val component: SettingsComponent,
         ) : Child
@@ -79,6 +83,12 @@ class DefaultRootComponent(
                 )
             )
 
+            Config.Map -> RootComponent.Child.Map(
+                DefaultMapComponent(
+                    context = context,
+                )
+            )
+
             Config.Settings -> RootComponent.Child.Settings(
                 DefaultSettingsComponent(
                     context = context,
@@ -94,6 +104,9 @@ class DefaultRootComponent(
 
         @Serializable
         data object Stats : Config
+
+        @Serializable
+        data object Map : Config
 
         @Serializable
         data object Settings : Config
