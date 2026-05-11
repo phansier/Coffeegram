@@ -17,6 +17,7 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import repository.InMemoryCoffeeRepository
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
+import ru.beryukhov.coffeegram.app_ui.PreviewTheme
 import ru.beryukhov.coffeegram.app_ui.StoreMarketingScreen
 import ru.beryukhov.coffeegram.app_ui.StorePreview
 import ru.beryukhov.coffeegram.components.CoffeeEditComponent
@@ -34,7 +35,7 @@ import kotlin.time.Clock
 @Composable
 private fun MonthTableScreenPreview() = ScreenPreview(
     headlineLines = listOf("Track your coffee habits and discover new flavors"),
-    backgroundColor = Color(0xFFE0C097),
+    backgroundColor = Color(0xFFDCA865),
     pageNum = 0,
 )
 
@@ -66,17 +67,19 @@ private val coffeeEditComponent
 
 @StorePreview
 @Composable
-private fun ListScreenPreview() = StoreMarketingScreen(
-    headlineLines = listOf("Track your coffee habits and discover new flavors"),
-    backgroundColor = Color(0xFFE0C097),
-) {
-    RootScreen(
-        pageNum = 0,
-        TopBar = {
-            CoffeeEditAppBar(coffeeEditComponent = coffeeEditComponent)
-        },
-        CurrentScreen = { CoffeeEditScreen(coffeeEditComponent) },
-    )
+private fun ListScreenPreview() = PreviewTheme {
+    StoreMarketingScreen(
+        headlineLines = listOf("Track your coffee habits and discover new flavors"),
+        backgroundColor = Color(0xFFDEB784),
+    ) {
+        RootScreen(
+            pageNum = 0,
+            TopBar = {
+                CoffeeEditAppBar(coffeeEditComponent = coffeeEditComponent)
+            },
+            CurrentScreen = { CoffeeEditScreen(coffeeEditComponent) },
+        )
+    }
 }
 
 @StorePreview
@@ -101,7 +104,7 @@ private fun ScreenPreview(
     subheadline: String? = null,
     backgroundColor: Color,
     pageNum: Int,
-) {
+) = PreviewTheme {
     StoreMarketingScreen(
         headlineLines = headlineLines,
         subheadline = subheadline,

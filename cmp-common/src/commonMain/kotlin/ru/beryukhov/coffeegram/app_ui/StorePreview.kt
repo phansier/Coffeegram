@@ -133,7 +133,9 @@ fun StoreMarketingScreen(
             headlineLines.forEach { line ->
                 Text(
                     text = line,
-                    style = MaterialTheme.typography.displayLarge,
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontSize = MaterialTheme.typography.displayLarge.fontSize
+                    ),
                     color = Color.White,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
@@ -141,8 +143,12 @@ fun StoreMarketingScreen(
             }
             subheadline?.let {
                 Text(
-                    text = subheadline.uppercase(),
-                    color = Color.White.copy(alpha = 0.9f)
+                    text = subheadline,
+                    style = MaterialTheme.typography.bodyMedium.copy(
+                        fontSize = MaterialTheme.typography.headlineMedium.fontSize
+                    ),
+                    color = Color.White.copy(alpha = 0.9f),
+                    textAlign = TextAlign.Center,
                 )
             }
 
@@ -155,10 +161,12 @@ fun StoreMarketingScreen(
 
 @Composable
 @StorePreview
-fun StoreMarketingScreenPreview() = StoreMarketingScreen(
-    headlineLines = listOf("Your App", "in the Store"),
-    subheadline = "Experience the best of Jetpack Compose",
-    backgroundColor = Color(0xFF6200EE),
-) {
-    ScreenContentPlaceholder()
+fun StoreMarketingScreenPreview() = PreviewTheme {
+    StoreMarketingScreen(
+        headlineLines = listOf("Your App", "in the Store"),
+        subheadline = "Experience the best of Jetpack Compose",
+        backgroundColor = Color(0xFF6200EE),
+    ) {
+        ScreenContentPlaceholder()
+    }
 }
