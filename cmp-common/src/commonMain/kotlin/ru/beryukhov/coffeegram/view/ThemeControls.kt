@@ -37,7 +37,7 @@ fun ThemeSwitchWithText(
     label: String,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier.padding(24.dp)) {
+    Row(modifier = modifier.padding(8.dp)) {
         Text(
             text = label,
             style = typography.bodyMedium,

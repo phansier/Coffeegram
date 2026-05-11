@@ -17,13 +17,13 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import ru.beryukhov.coffeegram.PreviewContextConfigurationEffectProvider
 import ru.beryukhov.coffeegram.TestApplication
-import ru.beryukhov.coffeegram.components.DefaultAndroidRootComponent
+import ru.beryukhov.coffeegram.components.DefaultRootComponent
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.repository.ThemeInMemoryStorage
-import ru.beryukhov.coffeegram.screens.AndroidRootScreen
+import ru.beryukhov.coffeegram.screens.RootScreen
 
 @RunWith(RobolectricTestRunner::class)
 @Config(application = TestApplication::class)
@@ -73,16 +73,16 @@ class ComposeScreenTest {
                     override fun newIntent(intent: DaysCoffeesIntent) = Unit
                 }
 
-                val rootComponent = DefaultAndroidRootComponent(
+                val rootComponent = DefaultRootComponent(
                     context = componentContext,
                     themeStore = themeStore,
                     daysCoffeesStore = daysCoffeesStore,
                     showMap = false,
-                    onStartWearableActivity = {},
-                    onIconChange = {},
+                    onAndroidStartWearableActivity = {},
+                    onAndroidIconChange = {},
                 )
 
-                AndroidRootScreen(rootComponent = rootComponent)
+                RootScreen(rootComponent = rootComponent)
             }
             block()
         }

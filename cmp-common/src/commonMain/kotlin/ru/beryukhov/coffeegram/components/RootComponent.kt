@@ -17,6 +17,8 @@ interface RootComponent {
     val pages: Value<ChildPages<*, Child>>
     val themeState: StateFlow<ThemeState>
 
+    val showMap: Boolean
+
     fun selectPage(childIndex: Int)
 
     sealed interface Child {
@@ -42,7 +44,10 @@ class DefaultRootComponent(
     context: ComponentContext,
     val themeStore: ThemeStore,
     val daysCoffeesStore: DaysCoffeesStore,
-) : RootComponent, ComponentContext by context {
+    override val showMap: Boolean = false,
+    private val onAndroidStartWearableActivity: (() -> Unit)? = null,
+    private val onAndroidIconChange: (isSummer: Boolean) -> Unit = {},
+    ) : RootComponent, ComponentContext by context {
     private val navigation = PagesNavigation<Config>()
 
     override val pages: Value<ChildPages<*, RootComponent.Child>> =
@@ -50,10 +55,13 @@ class DefaultRootComponent(
             source = navigation,
             serializer = Config.serializer(),
             initialPages = {
-                Pages(
-                    items = listOf(Config.CoffeeEdit, Config.Stats, Config.Settings),
-                    selectedIndex = 0
-                )
+                val items = buildList {
+                    add(Config.CoffeeEdit)
+                    add(Config.Stats)
+                    if (showMap) add(Config.Map)
+                    add(Config.Settings)
+                }
+                Pages(items = items, selectedIndex = 0)
             },
             childFactory = ::child,
         )
@@ -93,6 +101,8 @@ class DefaultRootComponent(
                 DefaultSettingsComponent(
                     context = context,
                     themeStore = themeStore,
+                    onAndroidStartWearableActivity = onAndroidStartWearableActivity,
+                    onAndroidIconChange = onAndroidIconChange,
                 )
             )
         }

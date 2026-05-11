@@ -66,7 +66,7 @@ class DefaultCoffeeEditComponent(
         }
 
     @Serializable
-    private sealed interface Config {
+    internal sealed interface Config {
         @Serializable
         data object MonthTable : Config
 
