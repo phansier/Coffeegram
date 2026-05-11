@@ -1,14 +1,13 @@
-<<<<<<<< HEAD:cmp-common/src/androidMain/kotlin/ru/beryukhov/coffeegram/map/MapMarker.kt
 package ru.beryukhov.coffeegram.map
-========
-package ru.beryukhov.coffeegram.screens
->>>>>>>> 3ea8797 (Reuse Root & Settings Screen/Component):cmp-common/src/androidMain/kotlin/ru/beryukhov/coffeegram/screens/MapMarker.kt
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -17,28 +16,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-<<<<<<<< HEAD:cmp-common/src/androidMain/kotlin/ru/beryukhov/coffeegram/map/MapMarker.kt
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalWindowInfo
-========
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.TextStyle
->>>>>>>> 3ea8797 (Reuse Root & Settings Screen/Component):cmp-common/src/androidMain/kotlin/ru/beryukhov/coffeegram/screens/MapMarker.kt
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-<<<<<<<< HEAD:cmp-common/src/androidMain/kotlin/ru/beryukhov/coffeegram/map/MapMarker.kt
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.frappe
 import org.jetbrains.compose.resources.painterResource
 import ru.beryukhov.coffeegram.app_ui.PreviewTheme
 import ru.beryukhov.coffeegram.app_ui.md_theme_light_onPrimaryContainer
-========
-import ru.beryukhov.coffeegram.pages.boxShadow
->>>>>>>> 3ea8797 (Reuse Root & Settings Screen/Component):cmp-common/src/androidMain/kotlin/ru/beryukhov/coffeegram/screens/MapMarker.kt
 
 @Composable
 @PreviewLightDark
@@ -81,7 +71,6 @@ fun MapMarker(
             .widthIn(min = 0.dp, max = (LocalWindowInfo.current.containerSize.width / if (highlighted) 1 else 2).dp)
 
     ) {
-<<<<<<<< HEAD:cmp-common/src/androidMain/kotlin/ru/beryukhov/coffeegram/map/MapMarker.kt
         Image(
             painter = painterResource(Res.drawable.frappe),
             contentDescription = "image description",
@@ -92,18 +81,6 @@ fun MapMarker(
                 .height(18.dp)
 
         )
-========
-//        Image(
-//            painter = painterResource(id = R.drawable.logo_splash),
-//            contentDescription = "image description",
-//            contentScale = ContentScale.Fit,
-//            modifier = Modifier
-//                .padding(start = 0.dp, top = 1.dp, end = 2.dp, bottom = 1.dp)
-//                .width(18.dp)
-//                .height(18.dp)
-//
-//        )
->>>>>>>> 3ea8797 (Reuse Root & Settings Screen/Component):cmp-common/src/androidMain/kotlin/ru/beryukhov/coffeegram/screens/MapMarker.kt
         Column(
             verticalArrangement = Arrangement.spacedBy(if (highlighted) 4.dp else -4.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.Start,

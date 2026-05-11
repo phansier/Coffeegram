@@ -1,11 +1,10 @@
 package ru.beryukhov.coffeegram.screens
 
-import android.Manifest
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.LocationManager
-import androidx.annotation.RequiresPermission
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -39,15 +38,15 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.ktx.model.cameraPosition
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.MapComponent
-import ru.beryukhov.coffeegram.repository.latlng
 import ru.beryukhov.coffeegram.map.MapMarker
 import ru.beryukhov.coffeegram.repository.CoffeeShop
+import ru.beryukhov.coffeegram.repository.latlng
 
 @SuppressLint("MissingPermission")
 @Composable
 actual fun MapScreen(
     component: MapComponent,
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
 ) {
     val context = LocalContext.current
     val coarseLocationEnabled = remember {

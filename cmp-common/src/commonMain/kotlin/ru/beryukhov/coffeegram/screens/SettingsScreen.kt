@@ -15,6 +15,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -34,8 +35,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-import ru.beryukhov.coffeegram.app_ui.PreviewTheme
 import ru.beryukhov.coffeegram.app_ui.LocalPhoneFrameInsets
+import ru.beryukhov.coffeegram.app_ui.PreviewTheme
 import ru.beryukhov.coffeegram.components.SettingsComponent
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
@@ -142,31 +143,32 @@ private fun DarkThemeRadioGroup(
 @PreviewLightDark
 @Composable
 private fun SettingsScreenPreview() = PreviewTheme {
-    SettingsScreen(component = object : SettingsComponent {
-        override val models: StateFlow<ThemeState> = MutableStateFlow(
-            ThemeState(
-                useDarkTheme = DarkThemeState.SYSTEM,
-                isCupertino = true,
-                isDynamic = null,
-                isSummer = null
+    SettingsScreen(
+        component = object : SettingsComponent {
+            override val models: StateFlow<ThemeState> = MutableStateFlow(
+                ThemeState(
+                    useDarkTheme = DarkThemeState.SYSTEM,
+                    isCupertino = true,
+                    isDynamic = null,
+                    isSummer = null
+                )
             )
-        )
-        override val onAndroidStartWearableActivity: (() -> Unit)? = null
-        override val onAndroidIconChange: (isSummer: Boolean) -> Unit = { }
+            override val onAndroidStartWearableActivity: (() -> Unit)? = null
+            override val onAndroidIconChange: (isSummer: Boolean) -> Unit = { }
 
+            override fun onSetSystemTheme() = Unit
 
-        override fun onSetSystemTheme() = Unit
+            override fun onSetLightTheme() = Unit
 
-        override fun onSetLightTheme() = Unit
+            override fun onSetDarkTheme() = Unit
 
-        override fun onSetDarkTheme() = Unit
+            override fun onSetCupertinoTheme(enabled: Boolean) = Unit
 
-        override fun onSetCupertinoTheme(enabled: Boolean) = Unit
+            override fun onSetDynamicTheme(enabled: Boolean) = Unit
 
-        override fun onSetDynamicTheme(enabled: Boolean) = Unit
-
-        override fun onSetSummerTheme(enabled: Boolean) = Unit
-    }
+            override fun onSetSummerTheme(enabled: Boolean) = Unit
+        },
+        snackbarHostState = remember { SnackbarHostState() }
     )
 }
 

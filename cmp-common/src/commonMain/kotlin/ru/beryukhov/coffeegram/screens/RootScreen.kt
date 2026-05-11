@@ -9,12 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,7 +30,6 @@ import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.components.RootComponent
 import ru.beryukhov.coffeegram.model.NavBarItem
 import ru.beryukhov.coffeegram.model.calendar
-import ru.beryukhov.coffeegram.model.getNavBarItems
 import ru.beryukhov.coffeegram.model.settings
 import ru.beryukhov.coffeegram.model.specialty
 import ru.beryukhov.coffeegram.model.stats

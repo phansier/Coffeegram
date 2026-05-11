@@ -59,6 +59,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.repository)
             implementation(projects.dateTimeUtils)
+            implementation(projects.repositoryRoom)
             // implementation(projects.repositorySqldelight) // fs and path issue in sql.js
 
             implementation(libs.cmp.ui) // for explicit up to date version
@@ -89,7 +90,10 @@ kotlin {
             implementation(libs.vico.multiplatform)
             implementation(libs.vico.multiplatform.m3)
 
-            implementation(libs.ktor.client)
+            implementation(libs.datastore.preferencesCore)
+            implementation(libs.datastore.coreOkio)
+
+            implementation(libs.ktor.client.core)
             implementation(libs.ktor.logging)
         }
 
