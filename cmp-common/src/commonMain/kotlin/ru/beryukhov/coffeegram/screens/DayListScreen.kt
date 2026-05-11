@@ -1,6 +1,8 @@
 package ru.beryukhov.coffeegram.screens
 
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -17,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.add_drink
 import com.arkivanov.essenty.backhandler.BackCallback
@@ -34,10 +37,16 @@ import ru.beryukhov.date_time_utils.getFullMonthName
 @Composable
 fun DayListScreen(
     component: DayListComponent,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     val screenState by component.models.collectAsState()
-    LazyColumn(modifier = modifier.fillMaxHeight()) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .consumeWindowInsets(contentPadding),
+        contentPadding = contentPadding,
+    ) {
         itemsIndexed(
             items = screenState.dayItems,
             itemContent = { _, (coffee, count): CoffeeTypeWithCount ->

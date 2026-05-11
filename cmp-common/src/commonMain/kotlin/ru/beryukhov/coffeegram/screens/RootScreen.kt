@@ -4,6 +4,7 @@ package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
@@ -84,15 +85,22 @@ private fun CurrentScreen(
     ChildPages(
         pages = rootComponent.pages,
         onPageSelected = rootComponent::selectPage,
-        modifier = Modifier.padding(paddingValues),
+        modifier = Modifier.fillMaxSize(),
     ) { _, page ->
         when (val c = page) {
-            is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditScreen(c.component)
-            is RootComponent.Child.Stats -> StatsScreen(c.component)
-            is RootComponent.Child.Map -> MapScreen(c.component)
+            is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditScreen(c.component, paddingValues)
+            is RootComponent.Child.Stats -> StatsScreen(
+                component = c.component,
+                modifier = Modifier.padding(paddingValues),
+            )
+            is RootComponent.Child.Map -> MapScreen(
+                component = c.component,
+                modifier = Modifier.padding(paddingValues),
+            )
             is RootComponent.Child.Settings -> SettingsScreen(
                 component = c.component,
-                snackbarHostState = snackbarHostState
+                snackbarHostState = snackbarHostState,
+                contentPadding = paddingValues,
             )
         }
     }
