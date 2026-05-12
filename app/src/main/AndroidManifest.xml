@@ -13,6 +13,7 @@
         android:theme="@style/Theme.Coffeegram"
         android:name="Application"
         android:localeConfig="@xml/locale_config"
+        android:enableOnBackInvokedCallback="true"
         tools:targetApi="33">
         <activity
             android:name=".MainActivity"
