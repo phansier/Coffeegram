@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.typography
@@ -24,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.pages.ChildPages
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.arkivanov.decompose.router.pages.ChildPages
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
@@ -62,10 +64,21 @@ fun RootScreen(
 
 @Composable
 private fun TopBar(rootComponent: RootComponent) {
+    val pagesState by rootComponent.pages.subscribeAsState()
+    val swipeEnabled = !pagesState.isMapSelected()
     ChildPages(
         pages = rootComponent.pages,
         onPageSelected = rootComponent::selectPage,
         modifier = Modifier.fillMaxWidth(),
+        pager = { modifier, state, key, pageContent ->
+            HorizontalPager(
+                modifier = modifier,
+                state = state,
+                key = key,
+                userScrollEnabled = swipeEnabled,
+                pageContent = pageContent,
+            )
+        },
     ) { _, page ->
         when (val c = page) {
             is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditAppBar(c.component)
@@ -82,10 +95,21 @@ private fun CurrentScreen(
     paddingValues: PaddingValues,
     snackbarHostState: SnackbarHostState,
 ) {
+    val pagesState by rootComponent.pages.subscribeAsState()
+    val swipeEnabled = !pagesState.isMapSelected()
     ChildPages(
         pages = rootComponent.pages,
         onPageSelected = rootComponent::selectPage,
         modifier = Modifier.fillMaxSize(),
+        pager = { modifier, state, key, pageContent ->
+            HorizontalPager(
+                modifier = modifier,
+                state = state,
+                key = key,
+                userScrollEnabled = swipeEnabled,
+                pageContent = pageContent,
+            )
+        },
     ) { _, page ->
         when (val c = page) {
             is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditScreen(c.component, paddingValues)
@@ -105,6 +129,9 @@ private fun CurrentScreen(
         }
     }
 }
+
+private fun ChildPages<*, RootComponent.Child>.isMapSelected(): Boolean =
+    items.getOrNull(selectedIndex)?.instance is RootComponent.Child.Map
 
 @Composable
 internal fun BottomBar(
