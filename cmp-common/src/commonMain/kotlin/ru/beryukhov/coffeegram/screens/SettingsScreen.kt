@@ -1,6 +1,8 @@
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.union
@@ -47,13 +49,16 @@ import ru.beryukhov.coffeegram.view.ThemeSwitchWithText
 fun SettingsScreen(
     component: SettingsComponent,
     snackbarHostState: SnackbarHostState,
+    contentPadding: PaddingValues = PaddingValues(0.dp),
     modifier: Modifier = Modifier
 ) {
     val themeState by component.models.collectAsState()
     Column(
-        modifier = modifier.fillMaxSize().verticalScroll(
-            rememberScrollState()
-        )
+        modifier = modifier
+            .fillMaxSize()
+            .padding(contentPadding)
+            .consumeWindowInsets(contentPadding)
+            .verticalScroll(rememberScrollState())
     ) {
         Text(
             stringResource(Res.string.app_theme),

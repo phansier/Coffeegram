@@ -7,12 +7,16 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.value.Value
+import com.arkivanov.essenty.backhandler.BackHandler
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 
 interface CoffeeEditComponent {
     val childStack: Value<ChildStack<*, Child>>
+    val backHandler: BackHandler
+
+    fun onBack()
 
     sealed interface Child {
         class MonthTable(
@@ -37,6 +41,10 @@ class DefaultCoffeeEditComponent(
             initialConfiguration = Config.MonthTable,
             childFactory = ::child,
         )
+
+    override fun onBack() {
+        navigation.pop()
+    }
 
     private fun child(
         config: Config,
