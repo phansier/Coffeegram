@@ -26,7 +26,7 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.LocalPhoneFrameInsets
 import ru.beryukhov.coffeegram.components.DayListComponent
-import ru.beryukhov.coffeegram.components.getFullMonthName
+import ru.beryukhov.coffeegram.components.getShortMonthName
 import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
 
@@ -69,7 +69,7 @@ fun DayListAppBar(
     AdaptiveTopAppBar(
         title = {
             Text(
-                "${localDate.day} ${getFullMonthName(localDate.month)} "
+                "${localDate.day} ${getShortMonthName(localDate.month)} "
                     + stringResource(Res.string.add_drink)
             )
         },

@@ -24,15 +24,16 @@ import coffeegram.cmp_common.generated.resources.month_sep
 import kotlinx.datetime.Month
 import org.jetbrains.compose.resources.stringResource
 
-val dayNames@Composable get() = listOf(
-    stringResource(Res.string.day_mon),
-    stringResource(Res.string.day_tue),
-    stringResource(Res.string.day_wed),
-    stringResource(Res.string.day_thu),
-    stringResource(Res.string.day_fri),
-    stringResource(Res.string.day_sat),
-    stringResource(Res.string.day_sun),
-)
+val dayNames
+    @Composable get() = listOf(
+        stringResource(Res.string.day_mon),
+        stringResource(Res.string.day_tue),
+        stringResource(Res.string.day_wed),
+        stringResource(Res.string.day_thu),
+        stringResource(Res.string.day_fri),
+        stringResource(Res.string.day_sat),
+        stringResource(Res.string.day_sun),
+    )
 
 @Composable
 fun getFullMonthName(month: Month): String {
@@ -51,3 +52,7 @@ fun getFullMonthName(month: Month): String {
         Month.DECEMBER -> stringResource(Res.string.month_dec)
     }
 }
+
+// todo separate localisation
+@Composable
+fun getShortMonthName(month: Month): String = getFullMonthName(month).take(3)

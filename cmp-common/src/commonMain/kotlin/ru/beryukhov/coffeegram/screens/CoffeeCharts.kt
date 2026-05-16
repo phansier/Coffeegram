@@ -1,5 +1,4 @@
 @file:Suppress("ModifierMissing")
-@file:OptIn(ExperimentalTime::class)
 
 package ru.beryukhov.coffeegram.screens
 
@@ -56,6 +55,7 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.dayNames
+import ru.beryukhov.coffeegram.components.getShortMonthName
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
@@ -63,7 +63,6 @@ import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.date_time_utils.YearMonth
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 @Composable
 fun CoffeeCharts(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
@@ -347,14 +346,16 @@ private fun LineChart(aggregatedData: ImmutableList<AggregatedData>) {
     )
 }
 
+@Composable
 internal fun dailyAggregation(coffeeState: DaysCoffeesState): List<AggregatedData> =
     coffeeState.coffees.map { (date, dayCoffee) ->
         AggregatedData(
-            label = "${date.month.name.take(3)} ${date.day}",
+            label = "${getShortMonthName(date.month)} ${date.day}",
             totalCount = dayCoffee.coffeeCountMap.values.sum(),
         ) to date
     }.sortedBy { it.second }.map { it.first }
 
+@Composable
 internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedData> =
     coffeeState.coffees.entries.groupBy { entry ->
         YearMonth(entry.key.year, entry.key.month)
@@ -367,7 +368,7 @@ internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedD
         }
 
         AggregatedData(
-            label = yearMonth.toString(),
+            label = "${getShortMonthName(yearMonth.month)} ${yearMonth.year}",
             totalCount = typeCounts.values.sum(),
         ) to yearMonth
     }.sortedBy { it.second }.map { it.first }

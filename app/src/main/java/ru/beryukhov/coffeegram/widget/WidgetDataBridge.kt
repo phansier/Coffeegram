@@ -14,7 +14,6 @@ import ru.beryukhov.coffeegram.data.withEmpty
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 /**
  * Bridge between Glance widget and Store pattern.
@@ -32,7 +31,6 @@ class DefaultWidgetDataBridge(
     private val daysCoffeesStore: DaysCoffeesStore,
 ) : WidgetDataBridge {
 
-    @OptIn(ExperimentalTime::class)
     private fun getCurrentDay() = Clock.System.todayIn(TimeZone.currentSystemDefault())
 
     override fun getCurrentDayCupsCount(): Flow<Int> =

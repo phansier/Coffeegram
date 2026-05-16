@@ -34,9 +34,8 @@ import ru.beryukhov.coffeegram.components.MonthTableComponent
 import ru.beryukhov.coffeegram.components.getFullMonthName
 import ru.beryukhov.coffeegram.view.MonthTable
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalAdaptiveApi::class, ExperimentalTime::class)
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun MonthTableScreen(
     component: MonthTableComponent,

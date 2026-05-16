@@ -25,9 +25,7 @@ import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.pages.LandingPage
 import ru.beryukhov.coffeegram.screens.RootScreen
 import ru.beryukhov.coffeegram.wearable.WearableSyncService
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 class MainActivity : ComponentActivity() {
 
     private val wearableSyncService by lazy { WearableSyncService(this) }

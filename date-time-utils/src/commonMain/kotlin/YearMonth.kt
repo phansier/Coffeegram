@@ -35,10 +35,6 @@ data class YearMonth(val year: Int, val month: Month) : Comparable<YearMonth> {
     override fun compareTo(other: YearMonth): Int {
         return toTotalMonths().compareTo(other.toTotalMonths())
     }
-
-    override fun toString(): String {
-        return "${month.name.take(3)} $year"
-    }
 }
 
 fun nowYM(): YearMonth {
