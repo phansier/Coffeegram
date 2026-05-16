@@ -45,6 +45,19 @@
     <string name="day_sat">Sa</string>
     <string name="day_sun">So</string>
 
+    <string name="month_jan">Januar</string>
+    <string name="month_feb">Februar</string>
+    <string name="month_mar">März</string>
+    <string name="month_apr">April</string>
+    <string name="month_may">Mai</string>
+    <string name="month_jun">Juni</string>
+    <string name="month_jul">Juli</string>
+    <string name="month_aug">August</string>
+    <string name="month_sep">September</string>
+    <string name="month_oct">Oktober</string>
+    <string name="month_nov">November</string>
+    <string name="month_dec">Dezember</string>
+
     <string name="map_long">Specialty-Coffee-Karte</string>
     <string name="location_permission_required">Standortberechtigung erforderlich</string>
 </resources>

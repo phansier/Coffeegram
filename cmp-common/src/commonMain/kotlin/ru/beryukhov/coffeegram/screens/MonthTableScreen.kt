@@ -31,8 +31,8 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import ru.beryukhov.coffeegram.app_ui.LocalPhoneFrameInsets
 import ru.beryukhov.coffeegram.components.MonthTableComponent
+import ru.beryukhov.coffeegram.components.getFullMonthName
 import ru.beryukhov.coffeegram.view.MonthTable
-import ru.beryukhov.date_time_utils.getFullMonthName
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 

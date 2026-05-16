@@ -19,7 +19,6 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.LocalPhoneFrameInsets
 import ru.beryukhov.coffeegram.components.StatsComponent
-import ru.beryukhov.coffeegram.pages.CoffeeCharts
 
 @Composable
 fun StatsScreen(

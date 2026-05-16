@@ -1,7 +1,7 @@
 @file:Suppress("ModifierMissing")
 @file:OptIn(ExperimentalTime::class)
 
-package ru.beryukhov.coffeegram.pages
+package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -32,13 +32,6 @@ import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.chart_title_distribution
 import coffeegram.cmp_common.generated.resources.chart_title_over_time
 import coffeegram.cmp_common.generated.resources.chart_title_weekly
-import coffeegram.cmp_common.generated.resources.day_fri
-import coffeegram.cmp_common.generated.resources.day_mon
-import coffeegram.cmp_common.generated.resources.day_sat
-import coffeegram.cmp_common.generated.resources.day_sun
-import coffeegram.cmp_common.generated.resources.day_thu
-import coffeegram.cmp_common.generated.resources.day_tue
-import coffeegram.cmp_common.generated.resources.day_wed
 import coffeegram.cmp_common.generated.resources.no_data_available
 import coffeegram.cmp_common.generated.resources.tab_all_time
 import coffeegram.cmp_common.generated.resources.tab_weekly
@@ -62,6 +55,7 @@ import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
+import ru.beryukhov.coffeegram.components.dayNames
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
@@ -127,15 +121,7 @@ fun WeeklyCoffeeChart(coffeeState: DaysCoffeesState) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        val dayNames = listOf(
-            stringResource(Res.string.day_mon),
-            stringResource(Res.string.day_tue),
-            stringResource(Res.string.day_wed),
-            stringResource(Res.string.day_thu),
-            stringResource(Res.string.day_fri),
-            stringResource(Res.string.day_sat),
-            stringResource(Res.string.day_sun),
-        )
+        val dayNames = dayNames
 
         CartesianChartHost(
             chart = rememberCartesianChart(

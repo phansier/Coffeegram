@@ -45,6 +45,19 @@
     <string name="day_sat">Σαβ</string>
     <string name="day_sun">Κυρ</string>
 
+    <string name="month_jan">Ιανουάριος</string>
+    <string name="month_feb">Φεβρουάριος</string>
+    <string name="month_mar">Μάρτιος</string>
+    <string name="month_apr">Απρίλιος</string>
+    <string name="month_may">Μάιος</string>
+    <string name="month_jun">Ιούνιος</string>
+    <string name="month_jul">Ιούλιος</string>
+    <string name="month_aug">Αύγουστος</string>
+    <string name="month_sep">Σεπτέμβριος</string>
+    <string name="month_oct">Οκτώβριος</string>
+    <string name="month_nov">Νοέμβριος</string>
+    <string name="month_dec">Δεκέμβριος</string>
+
     <string name="map_long">Χάρτης Καφέ Σπέσιαλτι</string>
     <string name="location_permission_required">Πρέπει να δώσετε άδεια τοποθεσίας</string>
 </resources>

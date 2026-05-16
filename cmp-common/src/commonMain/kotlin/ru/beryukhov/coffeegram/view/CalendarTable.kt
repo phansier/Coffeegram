@@ -30,10 +30,10 @@ import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 import ru.beryukhov.coffeegram.app_ui.PreviewTheme
+import ru.beryukhov.coffeegram.components.dayNames
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.Picture
 import ru.beryukhov.date_time_utils.YearMonth
-import ru.beryukhov.date_time_utils.dateFormatSymbolsShortWeekdays
 
 private data class DayItem(
     val day: String,
@@ -100,7 +100,7 @@ fun MonthTable(
             items(7) { index ->
                 Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(top = 8.dp)) {
                     Text(
-                        text = getWeekDaysNames()[index],
+                        text = dayNames[index],
                         textAlign = TextAlign.Center,
                         style = typography.bodySmall
                     )
@@ -146,6 +146,3 @@ fun SampleTable(modifier: Modifier = Modifier) =
         modifier = modifier,
         onClick = {},
     )
-
-fun getWeekDaysNames(): List<String> =
-    dateFormatSymbolsShortWeekdays()

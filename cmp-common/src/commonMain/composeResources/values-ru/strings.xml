@@ -45,6 +45,19 @@
     <string name="day_sat">Сб</string>
     <string name="day_sun">Вс</string>
 
+    <string name="month_jan">Январь</string>
+    <string name="month_feb">Февраль</string>
+    <string name="month_mar">Март</string>
+    <string name="month_apr">Апрель</string>
+    <string name="month_may">Май</string>
+    <string name="month_jun">Июнь</string>
+    <string name="month_jul">Июль</string>
+    <string name="month_aug">Август</string>
+    <string name="month_sep">Сентябрь</string>
+    <string name="month_oct">Октябрь</string>
+    <string name="month_nov">Ноябрь</string>
+    <string name="month_dec">Декабрь</string>
+
     <string name="map_long">Карта спешелти кофе</string>
     <string name="location_permission_required">Необходимо разрешение на геолокацию</string>
 </resources>
