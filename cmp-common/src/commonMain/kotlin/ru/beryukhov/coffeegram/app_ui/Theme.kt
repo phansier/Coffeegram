@@ -3,6 +3,7 @@ package ru.beryukhov.coffeegram.app_ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.material3.Typography
@@ -108,14 +109,17 @@ fun CoffeegramTheme(
     )
     val plusJakarta = FontFamily(Font(Res.font.PlusJakartaSans))
 
+    val brandScheme = if (darkTheme) DarkThemeColors else LightThemeColors
+    val materialScheme = if (themeState.isDynamic == true) {
+        dynamicColorSchemeOrNull(darkTheme) ?: brandScheme
+    } else {
+        brandScheme
+    }
+
     AdaptiveTheme(
         material =
             MaterialThemeSpec(
-                colorScheme = if (darkTheme) {
-                    DarkThemeColors
-                } else {
-                    LightThemeColors
-                },
+                colorScheme = materialScheme,
                 typography = Typography(
                     headlineSmall = TextStyle(
                         fontFamily = frauncesFontFamily,
@@ -164,3 +168,6 @@ fun PreviewTheme(
 }
 
 expect fun isCupertinoDefault(): Boolean
+
+@Composable
+expect fun dynamicColorSchemeOrNull(darkTheme: Boolean): ColorScheme?
