@@ -39,6 +39,10 @@ private val SafeAreaTop = DynamicIslandTopInset + DynamicIslandHeight + 4.dp
 val LocalPhoneFrameInsets = compositionLocalOf { WindowInsets(0) }
 
 @Preview(name = "en-mobile", locale = "en", widthDp = widthDp, heightDp = heightDp)
+@Preview(name = "ru-mobile", locale = "ru", widthDp = widthDp, heightDp = heightDp)
+@Preview(name = "es-mobile", locale = "es", widthDp = widthDp, heightDp = heightDp)
+@Preview(name = "de-mobile", locale = "de", widthDp = widthDp, heightDp = heightDp)
+@Preview(name = "el-mobile", locale = "el", widthDp = widthDp, heightDp = heightDp)
 @Preview(name = "en-tablet", locale = "en", device = Devices.PIXEL_C)
 annotation class StorePreview
 
