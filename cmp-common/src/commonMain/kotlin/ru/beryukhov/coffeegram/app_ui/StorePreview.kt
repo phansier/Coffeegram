@@ -23,14 +23,13 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 // kudos to https://medium.com/@benlue/generate-app-store-screenshots-directly-from-jetpack-compose-previews-b2e30e4569a7
 // 1290x2796 at 2.5x scale = 516dp x 1118dp
-private const val widthDp = 516
-private const val heightDp = 1118
+private const val widthDp = 500 // 516
+private const val heightDp = 1000 // 1118
 
 private val DynamicIslandTopInset = 14.dp
 private val DynamicIslandHeight = 32.dp
@@ -39,11 +38,12 @@ private val SafeAreaTop = DynamicIslandTopInset + DynamicIslandHeight + 4.dp
 val LocalPhoneFrameInsets = compositionLocalOf { WindowInsets(0) }
 
 @Preview(name = "en-mobile", locale = "en", widthDp = widthDp, heightDp = heightDp)
-@Preview(name = "ru-mobile", locale = "ru", widthDp = widthDp, heightDp = heightDp)
-@Preview(name = "es-mobile", locale = "es", widthDp = widthDp, heightDp = heightDp)
-@Preview(name = "de-mobile", locale = "de", widthDp = widthDp, heightDp = heightDp)
-@Preview(name = "el-mobile", locale = "el", widthDp = widthDp, heightDp = heightDp)
-@Preview(name = "en-tablet", locale = "en", device = Devices.PIXEL_C)
+// @Preview(name = "ru-mobile", locale = "ru", widthDp = widthDp, heightDp = heightDp)
+// @Preview(name = "es-mobile", locale = "es", widthDp = widthDp, heightDp = heightDp)
+// @Preview(name = "de-mobile", locale = "de", widthDp = widthDp, heightDp = heightDp)
+// @Preview(name = "el-mobile", locale = "el", widthDp = widthDp, heightDp = heightDp)
+@Preview(name = "en-tablet07", locale = "en", widthDp = 1200, heightDp = 900)
+@Preview(name = "en-tablet10", locale = "en", widthDp = 1500, heightDp = 1200)
 annotation class StorePreview
 
 @Composable
@@ -142,7 +142,7 @@ fun StoreMarketingScreen(
                     ),
                     color = Color.White,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 32.dp, vertical = 4.dp)
                 )
             }
             subheadline?.let {
