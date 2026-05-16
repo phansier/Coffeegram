@@ -68,6 +68,11 @@ android {
     }
     namespace = "ru.beryukhov.coffeegram"
 
+    configurations.configureEach {
+        exclude(group = "androidx.appcompat", module = "appcompat")
+        exclude(group = "androidx.appcompat", module = "appcompat-resources")
+    }
+
     experimentalProperties["android.experimental.enableScreenshotTest"] = true
 
     testOptions {
@@ -92,7 +97,6 @@ dependencies {
     implementation(projects.dateTimeUtils)
 
     implementation(libs.core.coreKtx)
-    implementation(libs.material)
 
     implementation(libs.cmp.ui)
     implementation(libs.cmp.material3)
