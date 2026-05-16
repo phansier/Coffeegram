@@ -4,4 +4,5 @@
     <string name="app_widget_title">Consumo de café de hoy</string>
     <string name="app_widget_description">Acceso rápido al seguimiento del café</string>
     <string name="loading_widget">Widget de carga</string>
+    <string name="widget_preview_latte">Latte</string>
 </resources>

@@ -4,4 +4,5 @@
     <string name="app_widget_title">Σημερινή κατανάλωση καφέ</string>
     <string name="app_widget_description">Γρήγορη πρόσβαση στην παρακολούθηση καφέ</string>
     <string name="loading_widget">Φόρτωση widget</string>
+    <string name="widget_preview_latte">Λάτε</string>
 </resources>
