@@ -20,6 +20,9 @@
     <string name="app_theme_cupertino">Cupertino</string>
     <string name="app_theme_dynamic">Dynamisch</string>
     <string name="app_theme_summer">Sommer</string>
+    <string name="app_theme_system_snackbar">Das App-Design folgt jetzt dem Systemdesign</string>
+    <string name="app_theme_summer_snackbar">Sommermodus aktiviert</string>
+    <string name="ok">Alles klar</string>
 
     <string name="settings">Einstellungen</string>
     <string name="calendar">Kalender</string>

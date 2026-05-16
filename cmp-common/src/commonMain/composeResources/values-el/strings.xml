@@ -17,9 +17,12 @@
     <string name="app_theme_system">Σύστημα</string>
     <string name="app_theme_light">Φωτεινό</string>
     <string name="app_theme_dark">Σκοτεινό</string>
-    <string name="app_theme_cupertino">Cupertino</string>
+    <string name="app_theme_cupertino">Κουπερτίνο</string>
     <string name="app_theme_dynamic">Δυναμικό</string>
     <string name="app_theme_summer">Καλοκαίρι</string>
+    <string name="app_theme_system_snackbar">Το θέμα της εφαρμογής θα ακολουθεί πλέον το θέμα του συστήματος</string>
+    <string name="app_theme_summer_snackbar">Ξεκινάει το καλοκαιρινό θέμα</string>
+    <string name="ok">Εντάξει</string>
 
     <string name="settings">Ρυθμίσεις</string>
     <string name="calendar">Ημερολόγιο</string>
