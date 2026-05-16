@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kaffegram</string>
+    <string name="app_widget_title">Heutiger Kaffeekonsum</string>
+    <string name="app_widget_description">Schneller Zugriff auf die Kaffee-Nachverfolgung</string>
+    <string name="loading_widget">Widget wird geladen</string>
+</resources>

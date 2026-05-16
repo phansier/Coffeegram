@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Καφεγράμ</string>
+    <string name="app_widget_title">Σημερινή κατανάλωση καφέ</string>
+    <string name="app_widget_description">Γρήγορη πρόσβαση στην παρακολούθηση καφέ</string>
+    <string name="loading_widget">Φόρτωση widget</string>
+</resources>

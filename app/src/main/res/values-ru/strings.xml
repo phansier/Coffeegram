@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Кофеграм</string>
+    <string name="app_widget_title">Потребление кофе сегодня</string>
+    <string name="app_widget_description">Быстрый доступ к отслеживанию кофе</string>
+    <string name="loading_widget">Загрузка виджета</string>
+</resources>
