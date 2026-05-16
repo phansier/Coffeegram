@@ -1,0 +1,47 @@
+<resources>
+    <string name="cappuccino">Cappuccino</string>
+    <string name="latte">Latte Macchiato</string>
+    <string name="americano">Americano</string>
+    <string name="common">Klassischer Kaffee</string>
+    <string name="macchiato">Espresso Macchiato</string>
+    <string name="glace">Eiskaffee</string>
+    <string name="frappe">Frappé</string>
+    <string name="espresso">Espresso</string>
+    <string name="mocha">Mokka</string>
+    <string name="fredo">Freddo</string>
+    <string name="irish">Irish Coffee</string>
+    <string name="cocoa">Kakao</string>
+    <string name="chocolate">Schokolade</string>
+
+    <string name="app_theme">App-Design</string>
+    <string name="app_theme_system">System</string>
+    <string name="app_theme_light">Hell</string>
+    <string name="app_theme_dark">Dunkel</string>
+    <string name="app_theme_cupertino">Cupertino</string>
+    <string name="app_theme_dynamic">Dynamisch</string>
+    <string name="app_theme_summer">Sommer</string>
+
+    <string name="settings">Einstellungen</string>
+    <string name="calendar">Kalender</string>
+    <string name="stats">Statistiken</string>
+    <string name="map_short">Specialty</string>
+    <string name="add_drink">Getränk hinzufügen</string>
+
+    <string name="tab_weekly">Wöchentlich</string>
+    <string name="tab_all_time">Gesamt</string>
+    <string name="chart_title_weekly">Kaffeekonsum diese Woche</string>
+    <string name="chart_title_over_time">Kaffeekonsum im Zeitverlauf</string>
+    <string name="chart_title_distribution">Verteilung der Kaffeesorten</string>
+    <string name="no_data_available">Keine Daten verfügbar</string>
+
+    <string name="day_mon">Mo</string>
+    <string name="day_tue">Di</string>
+    <string name="day_wed">Mi</string>
+    <string name="day_thu">Do</string>
+    <string name="day_fri">Fr</string>
+    <string name="day_sat">Sa</string>
+    <string name="day_sun">So</string>
+
+    <string name="map_long">Specialty-Coffee-Karte</string>
+    <string name="location_permission_required">Standortberechtigung erforderlich</string>
+</resources>
