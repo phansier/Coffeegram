@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
             themeStore = themeStore,
             daysCoffeesStore = daysCoffeesStore,
             showMap = showMap,
-            onAndroidStartWearableActivity = ::startWearableActivity,
+            onAndroidStartWearableActivity = if (BuildConfig.DEBUG) ::startWearableActivity else null,
             onAndroidIconChange = { isSummer -> changeIcon(this, isSummer) },
         )
 
