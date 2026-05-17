@@ -49,6 +49,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
@@ -185,10 +186,12 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
     val useMonthlyAggregation = daysBetween > 31
 
     // Aggregate data
-    val aggregatedData = if (useMonthlyAggregation) {
-        monthlyAggregation(coffeeState)
-    } else {
-        dailyAggregation(coffeeState)
+    val aggregatedData = remember(coffeeState) {
+        if (useMonthlyAggregation) {
+            monthlyAggregation(coffeeState)
+        } else {
+            dailyAggregation(coffeeState)
+        }
     }
 
     BoxWithConstraints(
@@ -216,7 +219,7 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
                         textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    LineChart(aggregatedData.toImmutableList())
+                    LineChart(aggregatedData.display())
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -252,7 +255,7 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
-                LineChart(aggregatedData.toImmutableList())
+                LineChart(aggregatedData.display())
 
                 Spacer(modifier = Modifier.height(24.dp))
 
@@ -272,6 +275,22 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
         }
     }
 }
+
+@Composable
+private fun List<AggregatedRawData>.display(): ImmutableList<AggregatedData> =
+    this.map {
+        when (it) {
+            is AggregatedDailyData -> AggregatedData(
+                "${getShortMonthName(it.month)} ${it.day}",
+                totalCount = it.totalCount,
+            )
+
+            is AggregatedMonthlyData -> AggregatedData(
+                label = "${getShortMonthName(it.month)} ${it.year}",
+                totalCount = it.totalCount,
+            )
+        }
+    }.toImmutableList()
 
 @Composable
 private fun ColumnChart(coffeeState: DaysCoffeesState) {
@@ -346,17 +365,16 @@ private fun LineChart(aggregatedData: ImmutableList<AggregatedData>) {
     )
 }
 
-@Composable
-internal fun dailyAggregation(coffeeState: DaysCoffeesState): List<AggregatedData> =
+internal fun dailyAggregation(coffeeState: DaysCoffeesState): List<AggregatedDailyData> =
     coffeeState.coffees.map { (date, dayCoffee) ->
-        AggregatedData(
-            label = "${getShortMonthName(date.month)} ${date.day}",
+        AggregatedDailyData(
+            month = date.month,
+            day = date.day,
             totalCount = dayCoffee.coffeeCountMap.values.sum(),
         ) to date
     }.sortedBy { it.second }.map { it.first }
 
-@Composable
-internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedData> =
+internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedMonthlyData> =
     coffeeState.coffees.entries.groupBy { entry ->
         YearMonth(entry.key.year, entry.key.month)
     }.map { (yearMonth, entries) ->
@@ -367,8 +385,10 @@ internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedD
             }
         }
 
-        AggregatedData(
-            label = "${getShortMonthName(yearMonth.month)} ${yearMonth.year}",
+        AggregatedMonthlyData(
+            year = yearMonth.year,
+            month = yearMonth.month,
+            // label = "${getShortMonthName(yearMonth.month)} ${yearMonth.year}",
             totalCount = typeCounts.values.sum(),
         ) to yearMonth
     }.sortedBy { it.second }.map { it.first }
@@ -383,5 +403,21 @@ data class AggregatedData(
     val label: String,
     val totalCount: Int,
 )
+
+sealed interface AggregatedRawData {
+    val totalCount: Int
+}
+
+data class AggregatedDailyData(
+    val month: Month,
+    val day: Int,
+    override val totalCount: Int,
+) : AggregatedRawData
+
+data class AggregatedMonthlyData(
+    val year: Int,
+    val month: Month,
+    override val totalCount: Int,
+) : AggregatedRawData
 
 data class CoffeeTypeCount(val type: CoffeeType, val count: Int)
