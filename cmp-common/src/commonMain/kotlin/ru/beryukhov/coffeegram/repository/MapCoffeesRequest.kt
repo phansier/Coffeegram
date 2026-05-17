@@ -34,20 +34,20 @@ suspend fun coffeeShops(): List<CoffeeShop> {
 }
 
 fun parseResponse(response: String): List<CoffeeShop> {
-    val regex = Regex("""(?!\[)((\n.*'.*){4,}(\n.*))(?=\])""")
-    return regex.findAll(response).mapNotNull {
-        val block = it.groupValues[0].lines().map { it.trim() }
+    // Split the PHP seeder into per-cafe chunks delimited by "],". The previous regex-based
+    // implementation caused catastrophic backtracking on Kotlin/Native (iOS).
+    return response.split("],").mapNotNull { chunk ->
+        val block = chunk.lines().map { it.trim() }
         val name = param(block, "name")
         val description = param(block, "description")
         val latitude = param(block, "latitude")?.toDoubleOrNull()
         val longitude = param(block, "longitude")?.toDoubleOrNull()
-
         if (name != null && description != null && latitude != null && longitude != null) {
             CoffeeShop(name, description, latitude, longitude)
         } else {
             null
         }
-    }.toList()
+    }
 }
 
 private fun param(block: List<String>, paramName: String) =

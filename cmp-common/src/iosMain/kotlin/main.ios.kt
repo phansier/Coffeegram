@@ -15,13 +15,18 @@ private fun initKoin() =
         modules(coffeeStorageModule)
     }
 
-fun MainViewController() = ComposeUIViewController {
-    val lifecycle = ApplicationLifecycle()
+// Built once for the lifetime of the iOS app process. Reusing the same root across
+// `ComposeUIViewController` re-evaluations (e.g. light/dark toggle) preserves the
+// Decompose navigation stack.
+private val rootComponent: DefaultRootComponent by lazy {
+    DefaultRootComponent(
+        DefaultComponentContext(lifecycle = ApplicationLifecycle()),
+        themeStore = koinApp.get(),
+        daysCoffeesStore = koinApp.get(),
+        showMap = true,
+    )
+}
 
-    val root = DefaultRootComponent(
-            DefaultComponentContext(lifecycle = lifecycle),
-            themeStore = koinApp.get(),
-            daysCoffeesStore = koinApp.get(),
-        )
-    RootScreen(root)
+fun MainViewController() = ComposeUIViewController {
+    RootScreen(rootComponent)
 }
