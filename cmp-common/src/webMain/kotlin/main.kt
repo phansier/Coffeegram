@@ -37,6 +37,7 @@ fun main() {
                         DefaultComponentContext(lifecycle = lifecycle),
                         themeStore = themeStore,
                         daysCoffeesStore = daysCoffeesStore,
+                        showMap = true
                     )
                 }
                 RootScreen(root)

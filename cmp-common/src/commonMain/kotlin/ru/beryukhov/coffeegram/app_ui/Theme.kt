@@ -10,6 +10,8 @@ import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -116,6 +118,7 @@ fun CoffeegramTheme(
         brandScheme
     }
 
+    CompositionLocalProvider(LocalDarkTheme provides darkTheme) {
     AdaptiveTheme(
         material =
             MaterialThemeSpec(
@@ -152,7 +155,15 @@ fun CoffeegramTheme(
         target = if (themeState.isCupertino == true) Theme.Cupertino else Theme.Material3,
         content = content
     )
+    }
 }
+
+/**
+ * Whether the current theme is dark. Driven by [ThemeStore]'s [DarkThemeState] (resolving
+ * SYSTEM via [isSystemInDarkTheme]). Provided by [CoffeegramTheme] so screens can adapt
+ * non-Material content (e.g. the web MapLibre style) to the user's chosen theme.
+ */
+val LocalDarkTheme = staticCompositionLocalOf { false }
 
 @Composable
 fun PreviewTheme(
