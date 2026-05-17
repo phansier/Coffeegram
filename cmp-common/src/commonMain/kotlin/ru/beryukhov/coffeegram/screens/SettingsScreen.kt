@@ -29,7 +29,10 @@ import coffeegram.cmp_common.generated.resources.app_theme_dark
 import coffeegram.cmp_common.generated.resources.app_theme_dynamic
 import coffeegram.cmp_common.generated.resources.app_theme_light
 import coffeegram.cmp_common.generated.resources.app_theme_summer
+import coffeegram.cmp_common.generated.resources.app_theme_summer_snackbar
 import coffeegram.cmp_common.generated.resources.app_theme_system
+import coffeegram.cmp_common.generated.resources.app_theme_system_snackbar
+import coffeegram.cmp_common.generated.resources.ok
 import coffeegram.cmp_common.generated.resources.settings
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
@@ -76,14 +79,16 @@ fun SettingsScreen(
             )
         }
         if (themeState.isDynamic != null) {
+            val message = stringResource(Res.string.app_theme_system_snackbar)
+            val actionLabel = stringResource(Res.string.ok)
             ThemeSwitchWithText(
                 checked = themeState.isDynamic == true,
                 onCheckedChange = {
                     if (it) {
                         scope.launch {
                             snackbarHostState.showSnackbar(
-                                message = "Now app theme will follow system theme",
-                                actionLabel = "OK",
+                                message = message,
+                                actionLabel = actionLabel,
                             )
                         }
                     }
@@ -93,14 +98,16 @@ fun SettingsScreen(
             )
         }
         if (themeState.isSummer != null) {
+            val message = stringResource(Res.string.app_theme_summer_snackbar)
+            val actionLabel = stringResource(Res.string.ok)
             ThemeSwitchWithText(
                 checked = themeState.isSummer == true,
                 onCheckedChange = {
                     if (it) {
                         scope.launch {
                             snackbarHostState.showSnackbar(
-                                message = "Summer starting",
-                                actionLabel = "OK",
+                                message = message,
+                                actionLabel = actionLabel,
                             )
                         }
                     }

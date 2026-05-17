@@ -26,9 +26,9 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.LocalPhoneFrameInsets
 import ru.beryukhov.coffeegram.components.DayListComponent
+import ru.beryukhov.coffeegram.components.getShortMonthName
 import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.view.CoffeeTypeItem
-import ru.beryukhov.date_time_utils.getFullMonthName
 
 @Composable
 fun DayListScreen(
@@ -69,7 +69,7 @@ fun DayListAppBar(
     AdaptiveTopAppBar(
         title = {
             Text(
-                "${localDate.day} ${getFullMonthName(localDate.month).take(3)} "
+                "${localDate.day} ${getShortMonthName(localDate.month)} "
                     + stringResource(Res.string.add_drink)
             )
         },

@@ -1,9 +1,6 @@
-@file:OptIn(ExperimentalTime::class)
-
 package ru.beryukhov.date_time_utils
 
 import kotlinx.datetime.DateTimeUnit.Companion.MONTH
-import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
@@ -11,7 +8,6 @@ import kotlinx.datetime.number
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 data class YearMonth(val year: Int, val month: Month) : Comparable<YearMonth> {
 
@@ -32,10 +28,6 @@ data class YearMonth(val year: Int, val month: Month) : Comparable<YearMonth> {
         return LocalDate(year, month, day)
     }
 
-    fun isValidDay(dayOfMonth: Int): Boolean {
-        return dayOfMonth >= 1 && dayOfMonth <= lengthOfMonth()
-    }
-
     fun lengthOfMonth(): Int {
         return month.days(isLeapYear(year))
     }
@@ -43,14 +35,7 @@ data class YearMonth(val year: Int, val month: Month) : Comparable<YearMonth> {
     override fun compareTo(other: YearMonth): Int {
         return toTotalMonths().compareTo(other.toTotalMonths())
     }
-
-    override fun toString(): String {
-        return "${month.name.take(3)} $year"
-    }
 }
-
-fun getFullMonthName(month: Month): String =
-    month.name.lowercase().replaceFirstChar { it.titlecase() }
 
 fun nowYM(): YearMonth {
     val ld = nowLD()
@@ -60,17 +45,6 @@ fun nowYM(): YearMonth {
 fun nowLD(): LocalDate {
     return Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
 }
-
-fun DayOfWeek.getShortDisplayName(): String =
-    when (this) {
-        DayOfWeek.MONDAY -> "MON"
-        DayOfWeek.TUESDAY -> "TUE"
-        DayOfWeek.WEDNESDAY -> "WED"
-        DayOfWeek.THURSDAY -> "THU"
-        DayOfWeek.FRIDAY -> "FRI"
-        DayOfWeek.SATURDAY -> "SAT"
-        DayOfWeek.SUNDAY -> "SUN"
-    }.lowercase().replaceFirstChar { it.titlecase() }
 
 private fun Month.days(leapYear: Boolean): Int =
     when (this) {
@@ -85,9 +59,6 @@ private fun Month.days(leapYear: Boolean): Int =
 
 private fun isLeapYear(prolepticYear: Int): Boolean =
     prolepticYear and 3 == 0 && (prolepticYear % 100 != 0 || prolepticYear % 400 == 0)
-
-fun dateFormatSymbolsShortWeekdays(): List<String> =
-    DayOfWeek.entries.map { it.getShortDisplayName() }
 
 fun YearMonth.toTotalMonths(): Int {
     val yearsInMonths = this.year * 12

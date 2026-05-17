@@ -27,7 +27,7 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = (100000000 + Instant.now().toEpochMilli() / 1000).toInt()
-        versionName = "1.9"
+        versionName = "1.9.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -68,6 +68,11 @@ android {
     }
     namespace = "ru.beryukhov.coffeegram"
 
+    configurations.configureEach {
+        exclude(group = "androidx.appcompat", module = "appcompat")
+        exclude(group = "androidx.appcompat", module = "appcompat-resources")
+    }
+
     experimentalProperties["android.experimental.enableScreenshotTest"] = true
 
     testOptions {
@@ -92,7 +97,6 @@ dependencies {
     implementation(projects.dateTimeUtils)
 
     implementation(libs.core.coreKtx)
-    implementation(libs.material)
 
     implementation(libs.cmp.ui)
     implementation(libs.cmp.material3)

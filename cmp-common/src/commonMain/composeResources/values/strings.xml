@@ -20,6 +20,9 @@
     <string name="app_theme_cupertino">Cupertino</string>
     <string name="app_theme_dynamic">Dynamic</string>
     <string name="app_theme_summer">Summer</string>
+    <string name="app_theme_system_snackbar">Now app theme will follow system theme</string>
+    <string name="app_theme_summer_snackbar">Summer starting</string>
+    <string name="ok">Now app theme will follow system theme</string>
 
     <string name="settings">Settings</string>
     <string name="calendar">Calendar</string>
@@ -41,6 +44,19 @@
     <string name="day_fri">Fri</string>
     <string name="day_sat">Sat</string>
     <string name="day_sun">Sun</string>
+
+    <string name="month_jan">January</string>
+    <string name="month_feb">February</string>
+    <string name="month_mar">March</string>
+    <string name="month_apr">April</string>
+    <string name="month_may">May</string>
+    <string name="month_jun">June</string>
+    <string name="month_jul">July</string>
+    <string name="month_aug">August</string>
+    <string name="month_sep">September</string>
+    <string name="month_oct">October</string>
+    <string name="month_nov">November</string>
+    <string name="month_dec">December</string>
 
     <string name="map_long">Specialty Coffee Map</string>
     <string name="location_permission_required">You should give location permission</string>

@@ -1,0 +1,63 @@
+<resources>
+    <string name="cappuccino">Капучино</string>
+    <string name="latte">Латте</string>
+    <string name="americano">Американо</string>
+    <string name="common">Обычный кофе</string>
+    <string name="macchiato">Эспрессо Макиато</string>
+    <string name="glace">Глясе</string>
+    <string name="frappe">Фраппе</string>
+    <string name="espresso">Эспрессо</string>
+    <string name="mocha">Мокко</string>
+    <string name="fredo">Фредо</string>
+    <string name="irish">Айриш</string>
+    <string name="cocoa">Какао</string>
+    <string name="chocolate">Шоколад</string>
+
+    <string name="app_theme">Тема приложения</string>
+    <string name="app_theme_system">Системная</string>
+    <string name="app_theme_light">Светлая</string>
+    <string name="app_theme_dark">Тёмная</string>
+    <string name="app_theme_cupertino">Cupertino</string>
+    <string name="app_theme_dynamic">Динамическая</string>
+    <string name="app_theme_summer">Летняя</string>
+    <string name="app_theme_system_snackbar">Тема приложения теперь следует системной теме</string>
+    <string name="app_theme_summer_snackbar">Включена летняя тема</string>
+    <string name="ok">Ладно</string>
+
+    <string name="settings">Настройки</string>
+    <string name="calendar">Календарь</string>
+    <string name="stats">Статистика</string>
+    <string name="map_short">Спешелти</string>
+    <string name="add_drink">Добавить напиток</string>
+
+    <string name="tab_weekly">Неделя</string>
+    <string name="tab_all_time">Всё время</string>
+    <string name="chart_title_weekly">Потребление кофе за неделю</string>
+    <string name="chart_title_over_time">Потребление кофе со временем</string>
+    <string name="chart_title_distribution">Распределение видов кофе</string>
+    <string name="no_data_available">Нет данных</string>
+
+    <string name="day_mon">Пн</string>
+    <string name="day_tue">Вт</string>
+    <string name="day_wed">Ср</string>
+    <string name="day_thu">Чт</string>
+    <string name="day_fri">Пт</string>
+    <string name="day_sat">Сб</string>
+    <string name="day_sun">Вс</string>
+
+    <string name="month_jan">Январь</string>
+    <string name="month_feb">Февраль</string>
+    <string name="month_mar">Март</string>
+    <string name="month_apr">Апрель</string>
+    <string name="month_may">Май</string>
+    <string name="month_jun">Июнь</string>
+    <string name="month_jul">Июль</string>
+    <string name="month_aug">Август</string>
+    <string name="month_sep">Сентябрь</string>
+    <string name="month_oct">Октябрь</string>
+    <string name="month_nov">Ноябрь</string>
+    <string name="month_dec">Декабрь</string>
+
+    <string name="map_long">Карта спешелти кофе</string>
+    <string name="location_permission_required">Необходимо разрешение на геолокацию</string>
+</resources>

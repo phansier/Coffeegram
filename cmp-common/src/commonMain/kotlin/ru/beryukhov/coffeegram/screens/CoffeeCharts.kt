@@ -1,7 +1,6 @@
 @file:Suppress("ModifierMissing")
-@file:OptIn(ExperimentalTime::class)
 
-package ru.beryukhov.coffeegram.pages
+package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -32,13 +31,6 @@ import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.chart_title_distribution
 import coffeegram.cmp_common.generated.resources.chart_title_over_time
 import coffeegram.cmp_common.generated.resources.chart_title_weekly
-import coffeegram.cmp_common.generated.resources.day_fri
-import coffeegram.cmp_common.generated.resources.day_mon
-import coffeegram.cmp_common.generated.resources.day_sat
-import coffeegram.cmp_common.generated.resources.day_sun
-import coffeegram.cmp_common.generated.resources.day_thu
-import coffeegram.cmp_common.generated.resources.day_tue
-import coffeegram.cmp_common.generated.resources.day_wed
 import coffeegram.cmp_common.generated.resources.no_data_available
 import coffeegram.cmp_common.generated.resources.tab_all_time
 import coffeegram.cmp_common.generated.resources.tab_weekly
@@ -57,11 +49,14 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.compose.resources.stringResource
+import ru.beryukhov.coffeegram.components.dayNames
+import ru.beryukhov.coffeegram.components.getShortMonthName
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
@@ -69,7 +64,6 @@ import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.date_time_utils.YearMonth
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 @Composable
 fun CoffeeCharts(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
@@ -127,15 +121,7 @@ fun WeeklyCoffeeChart(coffeeState: DaysCoffeesState) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        val dayNames = listOf(
-            stringResource(Res.string.day_mon),
-            stringResource(Res.string.day_tue),
-            stringResource(Res.string.day_wed),
-            stringResource(Res.string.day_thu),
-            stringResource(Res.string.day_fri),
-            stringResource(Res.string.day_sat),
-            stringResource(Res.string.day_sun),
-        )
+        val dayNames = dayNames
 
         CartesianChartHost(
             chart = rememberCartesianChart(
@@ -200,10 +186,12 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
     val useMonthlyAggregation = daysBetween > 31
 
     // Aggregate data
-    val aggregatedData = if (useMonthlyAggregation) {
-        monthlyAggregation(coffeeState)
-    } else {
-        dailyAggregation(coffeeState)
+    val aggregatedData = remember(coffeeState) {
+        if (useMonthlyAggregation) {
+            monthlyAggregation(coffeeState)
+        } else {
+            dailyAggregation(coffeeState)
+        }
     }
 
     BoxWithConstraints(
@@ -231,7 +219,7 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
                         textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    LineChart(aggregatedData.toImmutableList())
+                    LineChart(aggregatedData.display())
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -267,7 +255,7 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
-                LineChart(aggregatedData.toImmutableList())
+                LineChart(aggregatedData.display())
 
                 Spacer(modifier = Modifier.height(24.dp))
 
@@ -287,6 +275,22 @@ fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
         }
     }
 }
+
+@Composable
+private fun List<AggregatedRawData>.display(): ImmutableList<AggregatedData> =
+    this.map {
+        when (it) {
+            is AggregatedDailyData -> AggregatedData(
+                "${getShortMonthName(it.month)} ${it.day}",
+                totalCount = it.totalCount,
+            )
+
+            is AggregatedMonthlyData -> AggregatedData(
+                label = "${getShortMonthName(it.month)} ${it.year}",
+                totalCount = it.totalCount,
+            )
+        }
+    }.toImmutableList()
 
 @Composable
 private fun ColumnChart(coffeeState: DaysCoffeesState) {
@@ -361,15 +365,16 @@ private fun LineChart(aggregatedData: ImmutableList<AggregatedData>) {
     )
 }
 
-internal fun dailyAggregation(coffeeState: DaysCoffeesState): List<AggregatedData> =
+internal fun dailyAggregation(coffeeState: DaysCoffeesState): List<AggregatedDailyData> =
     coffeeState.coffees.map { (date, dayCoffee) ->
-        AggregatedData(
-            label = "${date.month.name.take(3)} ${date.day}",
+        AggregatedDailyData(
+            month = date.month,
+            day = date.day,
             totalCount = dayCoffee.coffeeCountMap.values.sum(),
         ) to date
     }.sortedBy { it.second }.map { it.first }
 
-internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedData> =
+internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedMonthlyData> =
     coffeeState.coffees.entries.groupBy { entry ->
         YearMonth(entry.key.year, entry.key.month)
     }.map { (yearMonth, entries) ->
@@ -380,8 +385,10 @@ internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedD
             }
         }
 
-        AggregatedData(
-            label = yearMonth.toString(),
+        AggregatedMonthlyData(
+            year = yearMonth.year,
+            month = yearMonth.month,
+            // label = "${getShortMonthName(yearMonth.month)} ${yearMonth.year}",
             totalCount = typeCounts.values.sum(),
         ) to yearMonth
     }.sortedBy { it.second }.map { it.first }
@@ -396,5 +403,21 @@ data class AggregatedData(
     val label: String,
     val totalCount: Int,
 )
+
+sealed interface AggregatedRawData {
+    val totalCount: Int
+}
+
+data class AggregatedDailyData(
+    val month: Month,
+    val day: Int,
+    override val totalCount: Int,
+) : AggregatedRawData
+
+data class AggregatedMonthlyData(
+    val year: Int,
+    val month: Month,
+    override val totalCount: Int,
+) : AggregatedRawData
 
 data class CoffeeTypeCount(val type: CoffeeType, val count: Int)

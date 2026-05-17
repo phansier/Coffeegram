@@ -1,0 +1,63 @@
+<resources>
+    <string name="cappuccino">Capuchino</string>
+    <string name="latte">Latte</string>
+    <string name="americano">Americano</string>
+    <string name="common">Café Común</string>
+    <string name="macchiato">Espresso Macchiato</string>
+    <string name="glace">Café Glacé</string>
+    <string name="frappe">Frappé</string>
+    <string name="espresso">Espresso</string>
+    <string name="mocha">Moca</string>
+    <string name="fredo">Freddo</string>
+    <string name="irish">Café Irlandés</string>
+    <string name="cocoa">Cacao</string>
+    <string name="chocolate">Chocolate</string>
+
+    <string name="app_theme">Tema de la app</string>
+    <string name="app_theme_system">Sistema</string>
+    <string name="app_theme_light">Claro</string>
+    <string name="app_theme_dark">Oscuro</string>
+    <string name="app_theme_cupertino">Cupertino</string>
+    <string name="app_theme_dynamic">Dinámico</string>
+    <string name="app_theme_summer">Verano</string>
+    <string name="app_theme_system_snackbar">El tema de la app ahora seguirá el del sistema</string>
+    <string name="app_theme_summer_snackbar">Empieza el modo verano</string>
+    <string name="ok">Vale</string>
+
+    <string name="settings">Configuración</string>
+    <string name="calendar">Calendario</string>
+    <string name="stats">Estadísticas</string>
+    <string name="map_short">Specialty</string>
+    <string name="add_drink">Añadir bebida</string>
+
+    <string name="tab_weekly">Semanal</string>
+    <string name="tab_all_time">Todo el tiempo</string>
+    <string name="chart_title_weekly">Consumo de café esta semana</string>
+    <string name="chart_title_over_time">Consumo de café a lo largo del tiempo</string>
+    <string name="chart_title_distribution">Distribución de tipos de café</string>
+    <string name="no_data_available">No hay datos disponibles</string>
+
+    <string name="day_mon">Lun</string>
+    <string name="day_tue">Mar</string>
+    <string name="day_wed">Mié</string>
+    <string name="day_thu">Jue</string>
+    <string name="day_fri">Vie</string>
+    <string name="day_sat">Sáb</string>
+    <string name="day_sun">Dom</string>
+
+    <string name="month_jan">Enero</string>
+    <string name="month_feb">Febrero</string>
+    <string name="month_mar">Marzo</string>
+    <string name="month_apr">Abril</string>
+    <string name="month_may">Mayo</string>
+    <string name="month_jun">Junio</string>
+    <string name="month_jul">Julio</string>
+    <string name="month_aug">Agosto</string>
+    <string name="month_sep">Septiembre</string>
+    <string name="month_oct">Octubre</string>
+    <string name="month_nov">Noviembre</string>
+    <string name="month_dec">Diciembre</string>
+
+    <string name="map_long">Mapa de Café Specialty</string>
+    <string name="location_permission_required">Debes otorgar permiso de ubicación</string>
+</resources>

@@ -1,0 +1,63 @@
+<resources>
+    <string name="cappuccino">Καπουτσίνο</string>
+    <string name="latte">Λάτε</string>
+    <string name="americano">Αμερικάνο</string>
+    <string name="common">Κοινός Καφές</string>
+    <string name="macchiato">Εσπρέσο Μακιάτο</string>
+    <string name="glace">Γκλασέ</string>
+    <string name="frappe">Φραπέ</string>
+    <string name="espresso">Εσπρέσο</string>
+    <string name="mocha">Μόκα</string>
+    <string name="fredo">Φρέντο</string>
+    <string name="irish">Ιρλανδικός</string>
+    <string name="cocoa">Κακάο</string>
+    <string name="chocolate">Σοκολάτα</string>
+
+    <string name="app_theme">Θέμα εφαρμογής</string>
+    <string name="app_theme_system">Σύστημα</string>
+    <string name="app_theme_light">Φωτεινό</string>
+    <string name="app_theme_dark">Σκοτεινό</string>
+    <string name="app_theme_cupertino">Κουπερτίνο</string>
+    <string name="app_theme_dynamic">Δυναμικό</string>
+    <string name="app_theme_summer">Καλοκαίρι</string>
+    <string name="app_theme_system_snackbar">Το θέμα της εφαρμογής θα ακολουθεί πλέον το θέμα του συστήματος</string>
+    <string name="app_theme_summer_snackbar">Ξεκινάει το καλοκαιρινό θέμα</string>
+    <string name="ok">Εντάξει</string>
+
+    <string name="settings">Ρυθμίσεις</string>
+    <string name="calendar">Ημερολόγιο</string>
+    <string name="stats">Στατιστικά</string>
+    <string name="map_short">Σπέσιαλτι</string>
+    <string name="add_drink">Προσθήκη ροφήματος</string>
+
+    <string name="tab_weekly">Εβδομαδιαία</string>
+    <string name="tab_all_time">Συνολικά</string>
+    <string name="chart_title_weekly">Κατανάλωση καφέ αυτή την εβδομάδα</string>
+    <string name="chart_title_over_time">Κατανάλωση καφέ με την πάροδο του χρόνου</string>
+    <string name="chart_title_distribution">Κατανομή τύπων καφέ</string>
+    <string name="no_data_available">Δεν υπάρχουν διαθέσιμα δεδομένα</string>
+
+    <string name="day_mon">Δευ</string>
+    <string name="day_tue">Τρι</string>
+    <string name="day_wed">Τετ</string>
+    <string name="day_thu">Πεμ</string>
+    <string name="day_fri">Παρ</string>
+    <string name="day_sat">Σαβ</string>
+    <string name="day_sun">Κυρ</string>
+
+    <string name="month_jan">Ιανουάριος</string>
+    <string name="month_feb">Φεβρουάριος</string>
+    <string name="month_mar">Μάρτιος</string>
+    <string name="month_apr">Απρίλιος</string>
+    <string name="month_may">Μάιος</string>
+    <string name="month_jun">Ιούνιος</string>
+    <string name="month_jul">Ιούλιος</string>
+    <string name="month_aug">Αύγουστος</string>
+    <string name="month_sep">Σεπτέμβριος</string>
+    <string name="month_oct">Οκτώβριος</string>
+    <string name="month_nov">Νοέμβριος</string>
+    <string name="month_dec">Δεκέμβριος</string>
+
+    <string name="map_long">Χάρτης Καφέ Σπέσιαλτι</string>
+    <string name="location_permission_required">Πρέπει να δώσετε άδεια τοποθεσίας</string>
+</resources>

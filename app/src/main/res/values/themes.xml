@@ -1,18 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.Coffeegram" parent="Theme.Material3.DayNight">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/brown_500</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
-    </style>
+    <style name="Theme.Coffeegram" parent="android:Theme.Material.Light.NoActionBar" />
 
     <style name="Theme.Coffeegram.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

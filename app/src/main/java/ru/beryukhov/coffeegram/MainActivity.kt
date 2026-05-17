@@ -25,9 +25,7 @@ import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.pages.LandingPage
 import ru.beryukhov.coffeegram.screens.RootScreen
 import ru.beryukhov.coffeegram.wearable.WearableSyncService
-import kotlin.time.ExperimentalTime
 
-@OptIn(ExperimentalTime::class)
 class MainActivity : ComponentActivity() {
 
     private val wearableSyncService by lazy { WearableSyncService(this) }
@@ -48,7 +46,7 @@ class MainActivity : ComponentActivity() {
             themeStore = themeStore,
             daysCoffeesStore = daysCoffeesStore,
             showMap = showMap,
-            onAndroidStartWearableActivity = ::startWearableActivity,
+            onAndroidStartWearableActivity = if (BuildConfig.DEBUG) ::startWearableActivity else null,
             onAndroidIconChange = { isSummer -> changeIcon(this, isSummer) },
         )
 
