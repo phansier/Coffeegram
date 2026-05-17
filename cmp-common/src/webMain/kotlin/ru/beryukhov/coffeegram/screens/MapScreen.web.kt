@@ -91,6 +91,7 @@ private class WebMapState(
     private var ready: Boolean = false
     private var pendingShops: List<ExtendedCoffeeShop> = emptyList()
     private var pendingExpanded: Boolean = false
+    private var didInitialFit: Boolean = false
     private var lastX = Double.NaN
     private var lastY = Double.NaN
     private var lastW = Double.NaN
@@ -175,9 +176,12 @@ private class WebMapState(
                 onClick = { onMarkerClicked(shop) },
             )
         }
-        if (pendingShops.isNotEmpty()) {
+        // Only fit-to-bounds once, on the first non-empty load. Subsequent marker rebuilds
+        // (from expand/highlight state changes) must not stomp on the user's pan/zoom.
+        if (!didInitialFit && pendingShops.isNotEmpty()) {
             val b = paddedBounds(pendingShops.map { it.coffeeShop })
             jsFitBounds(m, b.west, b.south, b.east, b.north)
+            didInitialFit = true
         }
     }
 }
