@@ -48,15 +48,20 @@ internal const val JS_CLEAR_MARKERS =
 internal const val JS_ADD_MARKER =
     "(function(){" +
         "var el = document.createElement('div');" +
-        "el.style.cssText = 'display:flex;flex-direction:column;align-items:flex-start;background:' + (highlighted ? '#E8E5E3' : '#FFFFFF') + ';border-radius:6px;padding:3px 8px;box-shadow:0 2px 3px rgba(0,0,0,0.15),0 6px 9px rgba(0,0,0,0.04);font-family:sans-serif;cursor:pointer;max-width:240px;';" +
+        "el.style.cssText = 'display:flex;flex-direction:column;align-items:flex-start;background:' + (highlighted ? " +
+        "'#E8E5E3' : '#FFFFFF') + ';border-radius:6px;padding:3px 8px;" +
+        "box-shadow:0 2px 3px rgba(0,0,0,0.15),0 6px 9px rgba(0,0,0,0.04);font-family:sans-serif;cursor:pointer;" +
+        "max-width:240px;';" +
         "var name = document.createElement('div');" +
         "name.textContent = title;" +
-        "name.style.cssText = 'font-size:14px;font-weight:500;color:#1F1B16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;';" +
+        "name.style.cssText = 'font-size:14px;font-weight:500;color:#1F1B16;white-space:nowrap;overflow:hidden;" +
+        "text-overflow:ellipsis;max-width:220px;';" +
         "el.appendChild(name);" +
         "if (description && description.length > 0) {" +
             "var desc = document.createElement('div');" +
             "desc.textContent = description;" +
-            "desc.style.cssText = 'font-size:11px;color:#1F1B16;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;';" +
+            "desc.style.cssText = 'font-size:11px;color:#1F1B16;margin-top:2px;white-space:nowrap;overflow:hidden;" +
+        "text-overflow:ellipsis;max-width:220px;';" +
             "el.appendChild(desc);" +
         "}" +
         "el.onclick = function(){ onClick(); };" +
@@ -74,6 +79,8 @@ internal const val JS_OBSERVE_RESIZE =
     "(function(){ m.__cgObs = new ResizeObserver(function(){ m.resize(); }); m.__cgObs.observe(div); })()"
 
 internal const val JS_REMOVE_MAP = "m.remove()"
+
+internal const val JS_SET_STYLE = "m.setStyle(styleUrl)"
 
 internal expect fun jsMaplibreReady(): Boolean
 internal expect fun jsSetOnLoad(el: HTMLScriptElement, cb: () -> Unit)
@@ -107,3 +114,4 @@ internal expect fun jsFitBounds(
 internal expect fun jsResizeMap(map: MapHandle)
 internal expect fun jsObserveResize(div: HTMLDivElement, map: MapHandle)
 internal expect fun jsRemoveMap(map: MapHandle)
+internal expect fun jsSetStyle(map: MapHandle, styleUrl: String)

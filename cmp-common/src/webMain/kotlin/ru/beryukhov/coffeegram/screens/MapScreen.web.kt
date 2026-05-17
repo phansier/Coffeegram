@@ -19,6 +19,7 @@ import kotlinx.browser.window
 import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.HTMLLinkElement
 import org.w3c.dom.HTMLScriptElement
+import ru.beryukhov.coffeegram.app_ui.LocalDarkTheme
 import ru.beryukhov.coffeegram.components.ExtendedCoffeeShop
 import ru.beryukhov.coffeegram.components.MapComponent
 import ru.beryukhov.coffeegram.map.MapDefaults
@@ -30,7 +31,8 @@ import ru.beryukhov.coffeegram.repository.CoffeeShop
 // wasmJs and legacy JS targets share this file.
 
 private const val MAPLIBRE_VERSION = "4.7.1"
-private const val DEFAULT_STYLE_URL = "https://tiles.openfreemap.org/styles/liberty"
+private const val LIGHT_STYLE_URL = "https://tiles.openfreemap.org/styles/positron"
+private const val DARK_STYLE_URL = "https://tiles.openfreemap.org/styles/fiord"
 
 private var nextMapId: Int = 0
 private var maplibreLoadStarted: Boolean = false
@@ -43,6 +45,7 @@ actual fun MapScreen(
 ) {
     val coffeeShopsState by component.coffeeShops.collectAsState()
     val containerId = remember { "coffee-map-${nextMapId++}" }
+    val darkTheme = LocalDarkTheme.current
 
     val onMarkerClicked by rememberUpdatedState { shop: CoffeeShop -> component.onMarkerClicked(shop) }
     val onZoomChanged by rememberUpdatedState { zoom: Float -> component.onZoomChanged(zoom) }
@@ -50,6 +53,7 @@ actual fun MapScreen(
     val state = remember {
         WebMapState(
             containerId = containerId,
+            initialDarkTheme = darkTheme,
             onMarkerClicked = { shop -> onMarkerClicked(shop) },
             onZoomChanged = { zoom -> onZoomChanged(zoom) },
         )
@@ -62,6 +66,10 @@ actual fun MapScreen(
 
     LaunchedEffect(coffeeShopsState.list, coffeeShopsState.expanded) {
         state.updateMarkers(coffeeShopsState.list, coffeeShopsState.expanded)
+    }
+
+    LaunchedEffect(darkTheme) {
+        state.updateDarkTheme(darkTheme)
     }
 
     Box(
@@ -83,6 +91,7 @@ actual fun MapScreen(
 
 private class WebMapState(
     private val containerId: String,
+    initialDarkTheme: Boolean,
     private val onMarkerClicked: (CoffeeShop) -> Unit,
     private val onZoomChanged: (Float) -> Unit,
 ) {
@@ -92,6 +101,7 @@ private class WebMapState(
     private var pendingShops: List<ExtendedCoffeeShop> = emptyList()
     private var pendingExpanded: Boolean = false
     private var didInitialFit: Boolean = false
+    private var darkTheme: Boolean = initialDarkTheme
     private var lastX = Double.NaN
     private var lastY = Double.NaN
     private var lastW = Double.NaN
@@ -126,6 +136,14 @@ private class WebMapState(
         if (ready) applyPending()
     }
 
+    fun updateDarkTheme(dark: Boolean) {
+        if (dark == darkTheme) return
+        darkTheme = dark
+        map?.let { jsSetStyle(it, styleUrl()) }
+    }
+
+    private fun styleUrl(): String = if (darkTheme) DARK_STYLE_URL else LIGHT_STYLE_URL
+
     fun updateGeometry(x: Double, y: Double, w: Double, h: Double) {
         if (x == lastX && y == lastY && w == lastW && h == lastH) return
         lastX = x; lastY = y; lastW = w; lastH = h
@@ -142,7 +160,7 @@ private class WebMapState(
                 if (map != null) return@ensureMaplibreLoaded
                 val m = jsCreateMap(
                     containerId,
-                    DEFAULT_STYLE_URL,
+                    styleUrl(),
                     MapDefaults.LONGITUDE,
                     MapDefaults.LATITUDE,
                     MapDefaults.ZOOM.toDouble(),

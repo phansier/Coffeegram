@@ -1,4 +1,5 @@
 @file:OptIn(kotlin.js.ExperimentalWasmJsInterop::class)
+@file:Suppress("MatchingDeclarationName")
 
 package ru.beryukhov.coffeegram.screens
 
@@ -86,3 +87,7 @@ private fun jsObserveResizeImpl(div: HTMLDivElement, m: JsAny): Unit = js(JS_OBS
 internal actual fun jsRemoveMap(map: MapHandle) = jsRemoveMapImpl(map.js)
 
 private fun jsRemoveMapImpl(m: JsAny): Unit = js(JS_REMOVE_MAP)
+
+internal actual fun jsSetStyle(map: MapHandle, styleUrl: String) = jsSetStyleImpl(map.js, styleUrl)
+
+private fun jsSetStyleImpl(m: JsAny, styleUrl: String): Unit = js(JS_SET_STYLE)

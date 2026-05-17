@@ -73,3 +73,8 @@ internal actual fun jsRemoveMap(map: MapHandle) {
     val m = map.js
     js(JS_REMOVE_MAP)
 }
+
+internal actual fun jsSetStyle(map: MapHandle, styleUrl: String) {
+    val m = map.js
+    js(JS_SET_STYLE)
+}
