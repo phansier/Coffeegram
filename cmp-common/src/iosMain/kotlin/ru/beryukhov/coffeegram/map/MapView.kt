@@ -29,12 +29,16 @@ internal fun rememberMkMapView(): MKMapView {
     return mapView
 }
 
-/** Approximates Google Maps zoom level from the current visible region. */
+/**
+ * Approximates Google Maps zoom level from the current visible region. Returns null if the
+ * map view hasn't been laid out yet (zero frame or longitude delta), so callers can ignore
+ * spurious values during the initial layout pass.
+ */
 @OptIn(ExperimentalForeignApi::class)
-internal fun MKMapView.getZoomLevel(): Float {
+internal fun MKMapView.getZoomLevelOrNull(): Float? {
     val width = frame.useContents { size.width }
     val longitudeDelta = region.useContents { span.longitudeDelta }
-    if (longitudeDelta == 0.0 || width == 0.0) return 0f
+    if (longitudeDelta <= 0.0 || width <= 0.0) return null
     return round(log2(FULL_ROTATION_DEGREES * (width / TILE_SIZE) / longitudeDelta)).toFloat()
 }
 

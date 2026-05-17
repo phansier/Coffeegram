@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -21,8 +22,6 @@ import androidx.compose.ui.viewinterop.UIKitInteropProperties
 import androidx.compose.ui.viewinterop.UIKitView
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.useContents
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import platform.CoreGraphics.CGPointMake
 import platform.CoreLocation.CLLocationCoordinate2DMake
 import platform.MapKit.MKAnnotationView
@@ -37,7 +36,7 @@ import ru.beryukhov.coffeegram.map.CoffeeShopAnnotation
 import ru.beryukhov.coffeegram.map.FitAllMarkersButton
 import ru.beryukhov.coffeegram.map.MapDefaults
 import ru.beryukhov.coffeegram.map.MapMarker
-import ru.beryukhov.coffeegram.map.getZoomLevel
+import ru.beryukhov.coffeegram.map.getZoomLevelOrNull
 import ru.beryukhov.coffeegram.map.rememberMapViewDelegate
 import ru.beryukhov.coffeegram.map.rememberMkMapView
 import ru.beryukhov.coffeegram.map.setCenterAtZoom
@@ -58,7 +57,7 @@ actual fun MapScreen(
 
     val delegate = rememberMapViewDelegate(
         onVisibleRegionChanged = { mapView ->
-            onZoomChanged(mapView.getZoomLevel())
+            mapView.getZoomLevelOrNull()?.let(onZoomChanged)
         },
         onAnnotationSelected = { annotation ->
             (annotation as? CoffeeShopAnnotation)?.let { onMarkerClicked(it.coffeeShop) }
@@ -133,9 +132,10 @@ private fun CoffeeShopMarker(
     var annotation by remember { mutableStateOf<CoffeeShopAnnotation?>(null) }
 
     LaunchedEffect(coffeeShop, extended.highlighted, expanded) {
-        val uiImage = withContext(Dispatchers.Main) {
-            graphicsLayer.toImageBitmap().toUIImage(density.density)
-        }
+        // Wait one frame so Compose's draw phase has populated the graphics layer.
+        withFrameNanos { }
+
+        val uiImage = graphicsLayer.toImageBitmap().toUIImage(density.density)
 
         annotation?.let { mapView.removeAnnotation(it) }
 
@@ -149,7 +149,6 @@ private fun CoffeeShopMarker(
             viewCreator = { ann -> MKAnnotationView(annotation = ann, reuseIdentifier = reuseIdentifier) },
             viewBinder = { view ->
                 view.image = uiImage
-                // anchor: bottom-center of the marker image (matches typical pin behaviour).
                 val size = uiImage.size.useContents { width to height }
                 view.centerOffset = CGPointMake(0.0, -size.second / 2.0)
             }
@@ -166,7 +165,7 @@ private fun CoffeeShopMarker(
 @OptIn(ExperimentalForeignApi::class)
 private fun panMapToFitAllMarkers(mapView: MKMapView, shops: List<CoffeeShop>) {
     when {
-        shops.isEmpty() -> Unit
+        shops.isEmpty() -> {}
         shops.size == 1 -> {
             val only = shops.first()
             mapView.setCenterCoordinate(
@@ -189,4 +188,3 @@ private fun panMapToFitAllMarkers(mapView: MKMapView, shops: List<CoffeeShop>) {
         }
     }
 }
-
