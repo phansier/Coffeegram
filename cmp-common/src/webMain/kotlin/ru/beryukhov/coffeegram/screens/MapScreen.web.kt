@@ -1,5 +1,3 @@
-@file:OptIn(kotlin.js.ExperimentalWasmJsInterop::class)
-
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.background
@@ -27,8 +25,9 @@ import ru.beryukhov.coffeegram.map.MapDefaults
 import ru.beryukhov.coffeegram.repository.CoffeeShop
 
 // Adapted from https://github.com/Beriukhov/h3-kmp commonSample/H3MapView.wasmJs.kt.
-// Overlays a fixed-position MapLibre <div> at the location of the Compose Box and re-syncs
-// its geometry whenever the layout changes.
+// Overlays a fixed-position MapLibre <div> over the Compose Box's layout slot. All JS interop
+// (creating the map, adding markers, etc.) is hidden behind `expect`/`actual` so both the
+// wasmJs and legacy JS targets share this file.
 
 private const val MAPLIBRE_VERSION = "4.7.1"
 private const val DEFAULT_STYLE_URL = "https://tiles.openfreemap.org/styles/liberty"
@@ -49,7 +48,7 @@ actual fun MapScreen(
     val onZoomChanged by rememberUpdatedState { zoom: Float -> component.onZoomChanged(zoom) }
 
     val state = remember {
-        WasmMapState(
+        WebMapState(
             containerId = containerId,
             onMarkerClicked = { shop -> onMarkerClicked(shop) },
             onZoomChanged = { zoom -> onZoomChanged(zoom) },
@@ -82,13 +81,13 @@ actual fun MapScreen(
     )
 }
 
-private class WasmMapState(
+private class WebMapState(
     private val containerId: String,
     private val onMarkerClicked: (CoffeeShop) -> Unit,
     private val onZoomChanged: (Float) -> Unit,
 ) {
     private var div: HTMLDivElement? = null
-    private var map: JsAny? = null
+    private var map: MapHandle? = null
     private var ready: Boolean = false
     private var pendingShops: List<ExtendedCoffeeShop> = emptyList()
     private var pendingExpanded: Boolean = false
@@ -225,100 +224,4 @@ private fun ensureMaplibreLoaded(callback: () -> Unit) {
         cbs.forEach { it() }
     }
     document.head?.appendChild(script)
-}
-
-private fun jsInjectCriticalCss() {
-    js(
-        "(function(){" +
-            "var s = document.createElement('style');" +
-            "s.textContent = " +
-                "'.maplibregl-map{position:relative;overflow:hidden;}' +" +
-                "'.maplibregl-canvas-container{position:absolute;left:0;top:0;width:100%;height:100%;}' +" +
-                "'.maplibregl-canvas-container canvas{position:absolute;left:0;top:0;}' +" +
-                "'.maplibregl-canvas{position:absolute;left:0;top:0;width:100%;height:100%;}';" +
-            "document.head.appendChild(s);" +
-        "})()"
-    )
-}
-
-private fun jsMaplibreReady(): Boolean =
-    js("(typeof maplibregl !== 'undefined')")
-
-private fun jsSetOnLoad(el: HTMLScriptElement, cb: () -> Unit) {
-    js("(el.onload = function() { cb(); })")
-}
-
-private fun jsCreateMap(
-    containerId: String,
-    styleUrl: String,
-    lng: Double,
-    lat: Double,
-    zoom: Double,
-): JsAny =
-    js(
-        "(new maplibregl.Map({" +
-            "container: containerId," +
-            "style: styleUrl," +
-            "center: [lng, lat]," +
-            "zoom: zoom" +
-        "}))"
-    )
-
-private fun jsAttachLoadHandler(map: JsAny, cb: () -> Unit) {
-    js("(function(){ if (map.loaded()) { cb(); } else { map.on('load', function(){ cb(); }); } })()")
-}
-
-private fun jsAttachZoomHandler(map: JsAny, cb: (Double) -> Unit) {
-    js("map.on('zoom', function(){ cb(map.getZoom()); })")
-}
-
-private fun jsClearMarkers(map: JsAny) {
-    js("(function(){ if (map.__cgMarkers) { map.__cgMarkers.forEach(function(m){ m.remove(); }); } map.__cgMarkers = []; })()")
-}
-
-private fun jsAddMarker(
-    map: JsAny,
-    lng: Double,
-    lat: Double,
-    title: String,
-    description: String,
-    highlighted: Boolean,
-    onClick: () -> Unit,
-) {
-    js(
-        "(function(){" +
-            "var el = document.createElement('div');" +
-            "el.style.cssText = 'display:flex;flex-direction:column;align-items:flex-start;background:' + (highlighted ? '#E8E5E3' : '#FFFFFF') + ';border-radius:6px;padding:3px 8px;box-shadow:0 2px 3px rgba(0,0,0,0.15),0 6px 9px rgba(0,0,0,0.04);font-family:sans-serif;cursor:pointer;max-width:240px;';" +
-            "var name = document.createElement('div');" +
-            "name.textContent = title;" +
-            "name.style.cssText = 'font-size:14px;font-weight:500;color:#1F1B16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;';" +
-            "el.appendChild(name);" +
-            "if (description && description.length > 0) {" +
-                "var desc = document.createElement('div');" +
-                "desc.textContent = description;" +
-                "desc.style.cssText = 'font-size:11px;color:#1F1B16;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;';" +
-                "el.appendChild(desc);" +
-            "}" +
-            "el.onclick = function(){ onClick(); };" +
-            "var marker = new maplibregl.Marker({ element: el, anchor: 'bottom' }).setLngLat([lng, lat]).addTo(map);" +
-            "map.__cgMarkers = map.__cgMarkers || [];" +
-            "map.__cgMarkers.push(marker);" +
-        "})()"
-    )
-}
-
-private fun jsFitBounds(map: JsAny, west: Double, south: Double, east: Double, north: Double) {
-    js("map.fitBounds([[west, south], [east, north]], { padding: 48, animate: true, duration: 300 })")
-}
-
-private fun jsResizeMap(map: JsAny) {
-    js("map.resize()")
-}
-
-private fun jsObserveResize(div: HTMLDivElement, map: JsAny) {
-    js("(function(){ map.__cgObs = new ResizeObserver(function(){ map.resize(); }); map.__cgObs.observe(div); })()")
-}
-
-private fun jsRemoveMap(map: JsAny) {
-    js("map.remove()")
 }
