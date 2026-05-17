@@ -19,9 +19,10 @@ fun MainViewController() = ComposeUIViewController {
     val lifecycle = ApplicationLifecycle()
 
     val root = DefaultRootComponent(
-            DefaultComponentContext(lifecycle = lifecycle),
-            themeStore = koinApp.get(),
-            daysCoffeesStore = koinApp.get(),
-        )
+        DefaultComponentContext(lifecycle = lifecycle),
+        themeStore = koinApp.get(),
+        daysCoffeesStore = koinApp.get(),
+        showMap = true,
+    )
     RootScreen(root)
 }

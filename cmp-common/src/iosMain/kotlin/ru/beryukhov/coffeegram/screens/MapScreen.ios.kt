@@ -2,11 +2,6 @@ package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -21,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.UIKitInteropInteractionMode
 import androidx.compose.ui.viewinterop.UIKitInteropProperties
 import androidx.compose.ui.viewinterop.UIKitView
@@ -40,6 +34,8 @@ import platform.UIKit.UIEdgeInsetsMake
 import ru.beryukhov.coffeegram.components.ExtendedCoffeeShop
 import ru.beryukhov.coffeegram.components.MapComponent
 import ru.beryukhov.coffeegram.map.CoffeeShopAnnotation
+import ru.beryukhov.coffeegram.map.FitAllMarkersButton
+import ru.beryukhov.coffeegram.map.MapDefaults
 import ru.beryukhov.coffeegram.map.MapMarker
 import ru.beryukhov.coffeegram.map.getZoomLevel
 import ru.beryukhov.coffeegram.map.rememberMapViewDelegate
@@ -47,11 +43,6 @@ import ru.beryukhov.coffeegram.map.rememberMkMapView
 import ru.beryukhov.coffeegram.map.setCenterAtZoom
 import ru.beryukhov.coffeegram.map.toUIImage
 import ru.beryukhov.coffeegram.repository.CoffeeShop
-
-private const val DEFAULT_LATITUDE = 35.1272
-private const val DEFAULT_LONGITUDE = 33.3371
-private const val DEFAULT_ZOOM_LEVEL = 10f
-private const val FIT_PADDING_DP = 72.0
 
 @OptIn(ExperimentalForeignApi::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -75,7 +66,7 @@ actual fun MapScreen(
     )
 
     LaunchedEffect(mkMapView) {
-        mkMapView.setCenterAtZoom(DEFAULT_LATITUDE, DEFAULT_LONGITUDE, DEFAULT_ZOOM_LEVEL)
+        mkMapView.setCenterAtZoom(MapDefaults.LATITUDE, MapDefaults.LONGITUDE, MapDefaults.ZOOM)
     }
 
     Box(modifier = modifier.fillMaxSize()) {
@@ -107,17 +98,11 @@ actual fun MapScreen(
             )
         }
 
-        Button(
+        FitAllMarkersButton(
             onClick = {
                 panMapToFitAllMarkers(mkMapView, coffeeShopsState.list.map { it.coffeeShop })
-            },
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Rounded.Place,
-                contentDescription = ""
-            )
-        }
+            }
+        )
     }
 }
 
@@ -195,9 +180,10 @@ private fun panMapToFitAllMarkers(mapView: MKMapView, shops: List<CoffeeShop>) {
                 .map { point -> point.useContents { MKMapRectMake(this.x, this.y, 0.0, 0.0) } }
                 .reduce { acc, rect -> MKMapRectUnion(acc, rect) }
 
+            val padding = MapDefaults.FIT_PADDING.value.toDouble()
             mapView.setVisibleMapRect(
                 boundingRect,
-                edgePadding = UIEdgeInsetsMake(FIT_PADDING_DP, FIT_PADDING_DP, FIT_PADDING_DP, FIT_PADDING_DP),
+                edgePadding = UIEdgeInsetsMake(padding, padding, padding, padding),
                 animated = true,
             )
         }

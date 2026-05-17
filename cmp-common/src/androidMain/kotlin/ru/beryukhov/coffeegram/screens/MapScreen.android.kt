@@ -7,11 +7,6 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.location_permission_required
 import com.google.android.gms.maps.CameraUpdate
@@ -38,9 +32,10 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.ktx.model.cameraPosition
 import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.MapComponent
+import ru.beryukhov.coffeegram.map.FitAllMarkersButton
+import ru.beryukhov.coffeegram.map.MapDefaults
 import ru.beryukhov.coffeegram.map.MapMarker
 import ru.beryukhov.coffeegram.repository.CoffeeShop
-import ru.beryukhov.coffeegram.repository.latlng
 
 @SuppressLint("MissingPermission")
 @Composable
@@ -55,7 +50,7 @@ actual fun MapScreen(
         ) == PackageManager.PERMISSION_GRANTED
     }
     val coarseLocation = remember {
-        val locationDefault = LatLng(35.1272, 33.3371)
+        val locationDefault = LatLng(MapDefaults.LATITUDE, MapDefaults.LONGITUDE)
         val coarseLocationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         try {
             coarseLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
@@ -71,7 +66,7 @@ actual fun MapScreen(
         val cameraPositionState = rememberCameraPositionState {
             position = cameraPosition {
                 target(coarseLocation)
-                zoom(10f)
+                zoom(MapDefaults.ZOOM)
             }
         }
         LaunchedEffect(cameraPositionState.position.zoom) {
@@ -113,19 +108,13 @@ actual fun MapScreen(
             }
 
             val density = LocalDensity.current.density
-            Button(
+            FitAllMarkersButton(
                 onClick = {
                     panMapToFitAllMarkers(coffeeShopsState.list.map { it.coffeeShop.latlng() }, density)?.let {
                         cameraPositionState.move(it)
                     }
-                },
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Place,
-                    contentDescription = ""
-                )
-            }
+                }
+            )
         }
     } else {
         Box(
@@ -155,7 +144,7 @@ private fun panMapToFitAllMarkers(locations: List<LatLng>, density: Float): Came
             }.build()
             CameraUpdateFactory.newLatLngBounds(
                 latLng,
-                (72 * density).toInt()
+                (MapDefaults.FIT_PADDING.value * density).toInt()
             )
         }
     }

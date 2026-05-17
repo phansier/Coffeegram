@@ -1,7 +1,5 @@
 package ru.beryukhov.coffeegram
 
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -39,13 +37,12 @@ class MainActivity : ComponentActivity() {
 
         val themeStore: ThemeStore = get()
         val daysCoffeesStore: DaysCoffeesStore = get()
-        val showMap = checkCoarseLocationPermission()
 
         val rootComponent = DefaultRootComponent(
             context = defaultComponentContext(),
             themeStore = themeStore,
             daysCoffeesStore = daysCoffeesStore,
-            showMap = showMap,
+            showMap = true,
             onAndroidStartWearableActivity = if (BuildConfig.DEBUG) ::startWearableActivity else null,
             onAndroidIconChange = { isSummer -> changeIcon(this, isSummer) },
         )
@@ -89,8 +86,4 @@ class MainActivity : ComponentActivity() {
         )
         wearableSyncService.startWearableActivity(lifecycleScope, mockDayCoffee)
     }
-
-    private fun checkCoarseLocationPermission(): Boolean = checkSelfPermission(
-        ACCESS_COARSE_LOCATION
-    ) == PackageManager.PERMISSION_GRANTED
 }
