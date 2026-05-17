@@ -57,14 +57,14 @@ import android.graphics.Paint as NativePaint
  * - [offset] is [DpOffset.Companion.Unspecified].
  */
 @Stable
-fun Modifier.boxShadow(
+actual fun Modifier.boxShadow(
     color: Color,
     blurRadius: Dp,
-    spreadRadius: Dp = 0.dp,
-    offset: DpOffset = DpOffset.Zero,
-    shape: Shape = RectangleShape,
-    clip: Boolean = true,
-    inset: Boolean = false
+    spreadRadius: Dp,
+    offset: DpOffset,
+    shape: Shape,
+    clip: Boolean,
+    inset: Boolean
 ): Modifier {
 
     require(color.isSpecified) { "color must be specified." }
