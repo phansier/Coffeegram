@@ -127,7 +127,6 @@ private val dayListCoffeeEditComponent: CoffeeEditComponent
         }
     }
 
-
 @StorePreview
 @Composable
 private fun StatsScreenPreview() = PreviewTheme {

@@ -64,18 +64,25 @@ fun MonthTableScreen(
 @Composable
 fun MonthTableAppBar(
     component: MonthTableComponent,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selectedDay: LocalDate? = null,
 ) {
     val screenState by component.models.collectAsState()
 
     AdaptiveTopAppBar(
         modifier = modifier,
         title = {
+            val monthLabel = getFullMonthName(screenState.yearMonth.month)
+            val titleText = if (selectedDay != null && selectedDay.month == screenState.yearMonth.month) {
+                "$monthLabel ${selectedDay.day}"
+            } else {
+                monthLabel
+            }
             Row(horizontalArrangement = Arrangement.Center) {
                 Text(
                     modifier = Modifier.weight(1f).testTag("Month"),
                     text = AnnotatedString(
-                        text = getFullMonthName(screenState.yearMonth.month),
+                        text = titleText,
                         paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
                     )
                 )

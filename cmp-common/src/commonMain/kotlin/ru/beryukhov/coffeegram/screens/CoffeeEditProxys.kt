@@ -24,7 +24,8 @@ fun CoffeeEditAppBar(coffeeEditComponent: CoffeeEditComponent) {
     if (state.mode == ChildPanelsMode.SINGLE && details != null) {
         DayListAppBar(details.instance)
     } else {
-        MonthTableAppBar(state.main.instance)
+        val selectedDay = (details?.configuration as? DetailsConfig.DayList)?.date
+        MonthTableAppBar(state.main.instance, selectedDay = selectedDay)
     }
 }
 
