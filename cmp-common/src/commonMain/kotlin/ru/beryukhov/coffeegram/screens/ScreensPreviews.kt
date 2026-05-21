@@ -8,11 +8,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.arkivanov.decompose.DefaultComponentContext
-import com.arkivanov.decompose.router.stack.ChildStack
-import com.arkivanov.decompose.value.MutableValue
-import com.arkivanov.decompose.value.Value
-import com.arkivanov.essenty.backhandler.BackDispatcher
-import com.arkivanov.essenty.backhandler.BackHandler
 import com.arkivanov.essenty.lifecycle.Lifecycle
 import com.arkivanov.essenty.lifecycle.Lifecycle.State
 import com.slapps.cupertino.adaptive.AdaptiveScaffold
@@ -29,8 +24,6 @@ import ru.beryukhov.coffeegram.app_ui.StoreMarketingScreen
 import ru.beryukhov.coffeegram.app_ui.StorePreview
 import ru.beryukhov.coffeegram.components.CoffeeEditComponent
 import ru.beryukhov.coffeegram.components.DefaultCoffeeEditComponent
-import ru.beryukhov.coffeegram.components.DefaultDayListComponent
-import ru.beryukhov.coffeegram.components.DefaultMonthTableComponent
 import ru.beryukhov.coffeegram.components.DefaultRootComponent
 import ru.beryukhov.coffeegram.components.DefaultStatsComponent
 import ru.beryukhov.coffeegram.components.StatsComponent
@@ -116,53 +109,23 @@ private fun sampleDaysCoffeesState(): DaysCoffeesState {
 }
 
 private val monthTableCoffeeEditComponent: CoffeeEditComponent
-    get() = previewCoffeeEditComponent(
-        configuration = DefaultCoffeeEditComponent.Config.MonthTable,
-        instance = { store ->
-            CoffeeEditComponent.Child.MonthTable(
-                DefaultMonthTableComponent(
-                    context = DefaultComponentContext(previewLifecycle),
-                    daysCoffeesStore = store,
-                    onNavigate = {},
-                )
-            )
-        },
+    get() = DefaultCoffeeEditComponent(
+        context = DefaultComponentContext(previewLifecycle),
+        daysCoffeesStore = previewDaysCoffeesStore,
     )
 
+@OptIn(com.arkivanov.decompose.ExperimentalDecomposeApi::class)
 private val dayListCoffeeEditComponent: CoffeeEditComponent
     get() {
         val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
-        return previewCoffeeEditComponent(
-            configuration = DefaultCoffeeEditComponent.Config.DayList(today),
-            instance = { store ->
-                CoffeeEditComponent.Child.DayList(
-                    DefaultDayListComponent(
-                        context = DefaultComponentContext(previewLifecycle),
-                        daysCoffeesStore = store,
-                        date = today,
-                        onBackNavigation = {},
-                    )
-                )
-            },
-        )
+        return DefaultCoffeeEditComponent(
+            context = DefaultComponentContext(previewLifecycle),
+            daysCoffeesStore = previewDaysCoffeesStore,
+        ).apply {
+            // Trigger the Month → Day navigation to surface DayList in the details panel.
+            panels.value.main.instance.onDayClick(today.day)
+        }
     }
-
-private fun previewCoffeeEditComponent(
-    configuration: DefaultCoffeeEditComponent.Config,
-    instance: (DaysCoffeesStore) -> CoffeeEditComponent.Child,
-): CoffeeEditComponent = object : CoffeeEditComponent {
-    override val childStack: Value<ChildStack<DefaultCoffeeEditComponent.Config, CoffeeEditComponent.Child>> =
-        MutableValue(
-            ChildStack(
-                configuration = configuration,
-                instance = instance(previewDaysCoffeesStore),
-            )
-        )
-
-    override val backHandler: BackHandler = BackDispatcher()
-
-    override fun onBack() = Unit
-}
 
 @StorePreview
 @Composable

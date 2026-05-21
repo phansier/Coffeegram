@@ -2,6 +2,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeViewport
 import com.arkivanov.decompose.DefaultComponentContext
+import com.arkivanov.decompose.ExperimentalDecomposeApi
+import com.arkivanov.decompose.router.webhistory.withWebHistory
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
@@ -13,14 +15,13 @@ import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.screens.RootScreen
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalDecomposeApi::class)
 fun main() {
     val lifecycle = LifecycleRegistry()
 
     lifecycle.attachToDocument()
 
     ComposeViewport {
-        // withWebHistory { stateKeeper, deepLink ->
         KoinApplication(
             configuration = koinConfiguration(
                 declaration = {
@@ -32,13 +33,17 @@ fun main() {
                 val themeStore = koinInject<ThemeStore>()
                 val daysCoffeesStore = koinInject<DaysCoffeesStore>()
                 val root = remember {
-                    // withWebHistory { stateKeeper, deepLink ->
-                    DefaultRootComponent(
-                        DefaultComponentContext(lifecycle = lifecycle),
-                        themeStore = themeStore,
-                        daysCoffeesStore = daysCoffeesStore,
-                        showMap = true
-                    )
+                    withWebHistory { stateKeeper, _ ->
+                        DefaultRootComponent(
+                            context = DefaultComponentContext(
+                                lifecycle = lifecycle,
+                                stateKeeper = stateKeeper,
+                            ),
+                            themeStore = themeStore,
+                            daysCoffeesStore = daysCoffeesStore,
+                            showMap = true,
+                        )
+                    }
                 }
                 RootScreen(root)
             }

@@ -27,6 +27,7 @@ import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import com.slapps.cupertino.adaptive.icons.AdaptiveIcons
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowLeft
 import com.slapps.cupertino.adaptive.icons.KeyboardArrowRight
+import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import ru.beryukhov.coffeegram.app_ui.LocalPhoneFrameInsets
@@ -39,7 +40,8 @@ import kotlin.time.Clock
 @Composable
 fun MonthTableScreen(
     component: MonthTableComponent,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selectedDay: LocalDate? = null,
 ) {
     val monthTableScreenState by component.models.collectAsState()
 
@@ -51,7 +53,8 @@ fun MonthTableScreen(
             onClick = { dayOfMonth: Int ->
                 component.onDayClick(dayOfMonth)
             },
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
+            selectedDay = selectedDay,
         )
         Text("${monthTableScreenState.yearMonth.year}", modifier = Modifier.padding(16.dp))
     }
@@ -61,18 +64,25 @@ fun MonthTableScreen(
 @Composable
 fun MonthTableAppBar(
     component: MonthTableComponent,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selectedDay: LocalDate? = null,
 ) {
     val screenState by component.models.collectAsState()
 
     AdaptiveTopAppBar(
         modifier = modifier,
         title = {
+            val monthLabel = getFullMonthName(screenState.yearMonth.month)
+            val titleText = if (selectedDay != null && selectedDay.month == screenState.yearMonth.month) {
+                "$monthLabel ${selectedDay.day}"
+            } else {
+                monthLabel
+            }
             Row(horizontalArrangement = Arrangement.Center) {
                 Text(
                     modifier = Modifier.weight(1f).testTag("Month"),
                     text = AnnotatedString(
-                        text = getFullMonthName(screenState.yearMonth.month),
+                        text = titleText,
                         paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
                     )
                 )
