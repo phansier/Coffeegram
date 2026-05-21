@@ -38,6 +38,7 @@ import ru.beryukhov.date_time_utils.YearMonth
 private data class DayItem(
     val day: String,
     val isToday: Boolean = false,
+    val isSelected: Boolean = false,
     val coffeePicture: Picture = Picture.EMPTY,
     val dayOfMonth: Int? = null
 )
@@ -48,6 +49,11 @@ private fun DayCell(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null
 ) {
+    val backgroundColor = when {
+        dayItem.isSelected -> MaterialTheme.colorScheme.secondaryContainer
+        dayItem.isToday -> MaterialTheme.colorScheme.primaryContainer
+        else -> Color.Transparent
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
@@ -57,7 +63,7 @@ private fun DayCell(
                 onClick = onClick ?: {}
             )
             .background(
-                color = if (dayItem.isToday) MaterialTheme.colorScheme.primaryContainer else Color.Transparent,
+                color = backgroundColor,
                 shape = RoundedCornerShape(8.dp)
             )
             .testTag("Day")
@@ -89,7 +95,8 @@ fun MonthTable(
     today: LocalDate,
     filledDayItemsMap: PersistentMap<Int, Picture>,
     onClick: (dayOfMonth: Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selectedDay: LocalDate? = null,
 ) {
     Column(modifier = modifier) {
         LazyVerticalGrid(
@@ -118,9 +125,11 @@ fun MonthTable(
             items(itemsOffset + daysInMonth) { index ->
                 val day = index - itemsOffset
                 if (day >= 0) {
+                    val cellDate = yearMonth.atDay(day + 1)
                     val dayItem = DayItem(
                         day = (day + 1).toString(),
-                        isToday = yearMonth.atDay(day + 1) == today,
+                        isToday = cellDate == today,
+                        isSelected = cellDate == selectedDay,
                         coffeePicture = filledDayItemsMap[day + 1] ?: Picture.EMPTY,
                         dayOfMonth = day + 1
                     )

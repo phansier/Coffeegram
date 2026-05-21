@@ -14,6 +14,7 @@ import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.router.panels.ChildPanelsMode
 import ru.beryukhov.coffeegram.components.CoffeeEditComponent
+import ru.beryukhov.coffeegram.components.CoffeeEditComponent.DetailsConfig
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
@@ -34,16 +35,19 @@ fun CoffeeEditScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val mode = if (maxWidth >= WIDE_SCREEN_THRESHOLD) ChildPanelsMode.DUAL else ChildPanelsMode.SINGLE
-        LaunchedEffect(mode) { coffeeEditComponent.setMode(mode) }
+        val isWide = maxWidth >= WIDE_SCREEN_THRESHOLD
+        val targetMode = if (isWide) ChildPanelsMode.DUAL else ChildPanelsMode.SINGLE
+        LaunchedEffect(targetMode) { coffeeEditComponent.setMode(targetMode) }
 
         val state by coffeeEditComponent.panels.subscribeAsState()
         val details = state.details
+        val selectedDay = (details?.configuration as? DetailsConfig.DayList)?.date
 
-        when (state.mode) {
-            ChildPanelsMode.DUAL -> Row(modifier = Modifier.fillMaxSize()) {
+        if (isWide) {
+            Row(modifier = Modifier.fillMaxSize()) {
                 MonthTableScreen(
                     component = state.main.instance,
+                    selectedDay = selectedDay,
                     modifier = Modifier.weight(1f).padding(contentPadding),
                 )
                 if (details != null) {
@@ -54,7 +58,8 @@ fun CoffeeEditScreen(
                     )
                 }
             }
-            else -> if (details != null) {
+        } else {
+            if (details != null) {
                 DayListScreen(
                     component = details.instance,
                     contentPadding = contentPadding,
