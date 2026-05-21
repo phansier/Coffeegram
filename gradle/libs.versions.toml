@@ -38,7 +38,6 @@ glance = "1.1.1" # https://developer.android.com/jetpack/androidx/releases/glanc
 sqldelight = "2.3.2" # https://github.com/cashapp/sqldelight/releases
 sqljs = "1.8.0" # https://github.com/sqldelight/sqldelight/blob/master/gradle/libs.versions.toml
 
-material = "1.13.0" # https://github.com/material-components/material-components-android
 vico = "2.4.3"
 protobuf = "4.34.1"
 
@@ -124,7 +123,6 @@ google-maps-utils = "com.google.maps.android:maps-ktx:6.0.1"
 google-maps-compose = "com.google.maps.android:maps-compose:8.3.0"
 
 
-material = { module = "com.google.android.material:material", version.ref = "material" }
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
 playServices-wearable = "com.google.android.gms:play-services-wearable:20.0.1" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0" # https://github.com/Kotlin/kotlinx.collections.immutable
@@ -141,7 +139,7 @@ serializationGradle = { module = "org.jetbrains.kotlin:kotlin-serialization", ve
 hotReloadGradle = { module = "org.jetbrains.compose.hot-reload:hot-reload-gradle-plugin", version.ref = "hotReload" }
 
 
-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.7.1" # https://github.com/Kotlin/kotlinx-datetime
+kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.8.0" # https://github.com/Kotlin/kotlinx-datetime
 
 sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
 sqldelight-coroutinesExt = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqldelight" }

@@ -25,7 +25,7 @@ internal fun rememberMapViewDelegate(
             override fun mapViewDidChangeVisibleRegion(mapView: MKMapView) =
                 currentOnVisibleRegionChanged(mapView)
 
-            @Suppress("CONFLICTING_OVERLOADS", "PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+            @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
             @ObjCSignatureOverride
             override fun mapView(
                 mapView: MKMapView,
@@ -43,7 +43,7 @@ internal fun rememberMapViewDelegate(
                 return annotationView
             }
 
-            @Suppress("CONFLICTING_OVERLOADS", "PARAMETER_NAME_CHANGED_ON_OVERRIDE")
+            @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
             @ObjCSignatureOverride
             override fun mapView(mapView: MKMapView, didSelectAnnotation: MKAnnotationProtocol) {
                 currentOnAnnotationSelected(didSelectAnnotation)
