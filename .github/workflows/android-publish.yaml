@@ -2,7 +2,7 @@ name: Android to GPlay Publish Release
 on:
     push:
         branches:
-            - master
+            - develop
     workflow_dispatch:
 
 permissions:
