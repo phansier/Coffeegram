@@ -30,7 +30,7 @@ class WearableSyncService(
     /**
      * Start the wearable activity on connected devices.
      */
-    fun startWearableActivity(scope: CoroutineScope, dayCoffee: DayCoffee? = null) {
+    fun startWearableActivity(scope: CoroutineScope) {
         scope.launch {
             try {
                 val nodes = nodeClient.connectedNodes.await()
@@ -49,9 +49,6 @@ class WearableSyncService(
                 Log.d(TAG, "Starting activity failed: $exception")
             }
         }
-
-        // Also send current day coffee data if provided
-        dayCoffee?.let { sendDayCoffee(scope, it) }
     }
 
     /**

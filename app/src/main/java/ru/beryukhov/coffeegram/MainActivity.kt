@@ -25,9 +25,9 @@ import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import ru.beryukhov.coffeegram.animations.TransitionSlot
 import ru.beryukhov.coffeegram.components.DefaultRootComponent
-import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.WEAR_CAPABILITY
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -41,6 +41,7 @@ import ru.beryukhov.coffeegram.wearable.WearableSyncService
 class MainActivity : ComponentActivity() {
 
     private val wearableSyncService by lazy { WearableSyncService(this) }
+    private val daysCoffeesStore: DaysCoffeesStore by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -50,7 +51,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val themeStore: ThemeStore = get()
-        val daysCoffeesStore: DaysCoffeesStore = get()
 
         observeTodaysCoffeeForWear(daysCoffeesStore)
 
@@ -123,13 +123,6 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun startWearableActivity() {
-        // Send mock data for now - in production this would use real data from store
-        val mockDayCoffee = DayCoffee(
-            mapOf(
-                CoffeeTypes.Cappuccino to 1,
-                CoffeeTypes.Americano to 2
-            )
-        )
-        wearableSyncService.startWearableActivity(lifecycleScope, mockDayCoffee)
+        wearableSyncService.startWearableActivity(lifecycleScope)
     }
 }
