@@ -1,9 +1,16 @@
 name: Android to GPlay Publish Release
 on:
     push:
-        tags:
-            - '*-android'
+        branches:
+            - master
     workflow_dispatch:
+
+permissions:
+    contents: write
+
+concurrency:
+    group: android-publish
+    cancel-in-progress: false
 
 jobs:
     deploy:
@@ -13,6 +20,7 @@ jobs:
             -   uses: actions/checkout@v6
                 with:
                     fetch-depth: 0
+                    fetch-tags: true
 
             -   name: set up JDK
                 uses: actions/setup-java@v5
@@ -56,6 +64,18 @@ jobs:
                     echo "MAPS_API_KEY=$MAP_KEY" >> secrets.properties
                 env:
                     MAP_KEY: ${{ secrets.MAP_KEY }}
+
+            -   name: Bump patch version and tag
+                run: |
+                    set -euo pipefail
+                    latest=$(git tag --list 'v*-android' --sort=-v:refname | head -n1)
+                    core="${latest#v}"; core="${core%-android}"
+                    IFS=. read -r MA MI PA <<< "$core"
+                    next="v${MA}.${MI}.$((PA + 1))-android"
+                    git config user.name  "github-actions[bot]"
+                    git config user.email "github-actions[bot]@users.noreply.github.com"
+                    git tag -a "$next" -m "Release $next"
+                    git push origin "$next"
 
             -   name: Distribute app to Alpha track
                 run: ./gradlew :app:bundleRelease :app:publishBundle

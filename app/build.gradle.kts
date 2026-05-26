@@ -18,6 +18,21 @@ plugins {
 
 val mapsApiKey = project.findProperty("MAPS_API_KEY") as String?
 
+val resolvedVersionName: String = run {
+    val fallback = "1.9.1"
+    val execResult = providers.exec {
+        commandLine("git", "describe", "--tags", "--abbrev=0", "--match", "v*-android")
+        isIgnoreExitValue = true
+    }
+    if (execResult.result.get().exitValue != 0) {
+        fallback
+    } else {
+        execResult.standardOutput.asText.get().trim()
+            .removePrefix("v").removeSuffix("-android")
+            .takeIf { it.matches(Regex("""\d+\.\d+\.\d+""")) } ?: fallback
+    }
+}
+
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -27,7 +42,7 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = (100000000 + Instant.now().toEpochMilli() / 1000).toInt()
-        versionName = "1.9.1"
+        versionName = resolvedVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
