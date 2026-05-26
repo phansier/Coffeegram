@@ -3,6 +3,10 @@ package ru.beryukhov.coffeegram.data
 const val START_ACTIVITY_PATH = "/start-activity"
 const val DAY_COFFEE_PATH = "/coffee"
 
+// Capability advertised by the wear app; the phone uses this to detect paired
+// watches via CapabilityClient. Must match wear/src/main/res/values/wear.xml.
+const val WEAR_CAPABILITY = "coffeegram_wear"
+
 /**
  * Map contains only non-zero values
  * This function creates a list with all CoffeeTypes and their counts according to data from the map
