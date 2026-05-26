@@ -21,11 +21,13 @@
         -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
-            android:value="true" />
+            android:value="false" />
 
         <activity
             android:name=".WearActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity="ru.beryukhov.coffeegram.wear">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
