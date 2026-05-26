@@ -7,7 +7,6 @@ import com.google.android.gms.wearable.DataEventBuffer
 import com.google.android.gms.wearable.DataMapItem
 import com.google.android.gms.wearable.Wearable
 import com.google.android.gms.wearable.WearableListenerService
-import kotlin.time.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.todayIn
 import org.koin.core.component.KoinComponent
@@ -18,6 +17,7 @@ import ru.beryukhov.coffeegram.data.COFFEE_EVENT_PATH_PREFIX
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
+import kotlin.time.Clock
 
 private const val TAG = "PhoneDataLayerSvc"
 
