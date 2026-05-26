@@ -7,6 +7,8 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import ru.beryukhov.coffeegram.model.ThemeState
@@ -14,13 +16,16 @@ import ru.beryukhov.coffeegram.repository.ThemeDataStorePrefStorage
 import ru.beryukhov.coffeegram.repository.ThemeDataStoreProtoStorage
 import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
 import ru.beryukhov.coffeegram.store_lib.Storage
+import ru.beryukhov.coffeegram.wearable.WearableSyncCoordinator
 import ru.beryukhov.coffeegram.widget.DefaultWidgetDataBridge
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget
 import ru.beryukhov.coffeegram.widget.WidgetDataBridge
 import ru.beryukhov.coffeegram.widget.setWidgetPreview
 import ru.beryukhov.repository.databaseModule
 
-open class Application : Application() {
+open class Application : Application(), KoinComponent {
+
+    private val wearableSyncCoordinator: WearableSyncCoordinator by inject()
 
     override fun onCreate() {
         super.onCreate()
@@ -33,6 +38,7 @@ open class Application : Application() {
                 databaseModule
             )
         }
+        wearableSyncCoordinator.start()
         // causes java.lang.IllegalStateException: Reading a state that was created after the snapshot was taken
         // or in a snapshot that has not yet been applied
         MainScope().launch {
@@ -53,6 +59,7 @@ internal val androidAppModule = module {
     // Theme storage and store
     // Widget data bridge
     single<WidgetDataBridge> { DefaultWidgetDataBridge(daysCoffeesStore = get()) }
+    single { WearableSyncCoordinator(context = get(), daysCoffeesStoreProvider = { get() }) }
     single<Storage<ThemeState>> {
         ThemeDataStoreProtoStorage(context = get())
         ThemeSharedPrefStorage(context = get())

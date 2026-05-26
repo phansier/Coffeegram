@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Keep in sync with WEAR_CAPABILITY in cmp-common Const.kt -->
+    <string-array name="android_wear_capabilities">
+        <item>coffeegram_wear</item>
+    </string-array>
+</resources>

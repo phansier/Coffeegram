@@ -60,4 +60,6 @@
 
     <string name="map_long">Χάρτης Καφέ Σπέσιαλτι</string>
     <string name="location_permission_required">Πρέπει να δώσετε άδεια τοποθεσίας</string>
+
+    <string name="open_on_watch">Άνοιγμα στο ρολόι</string>
 </resources>

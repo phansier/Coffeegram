@@ -4,6 +4,7 @@ import kotlinx.datetime.LocalDate
 import repository.model.DbDayCoffee
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
+import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.CoffeeTypes.Americano
 import ru.beryukhov.coffeegram.data.CoffeeTypes.Cappuccino
 import ru.beryukhov.coffeegram.data.CoffeeTypes.Chocolate
@@ -17,6 +18,8 @@ import ru.beryukhov.coffeegram.data.CoffeeTypes.Latte
 import ru.beryukhov.coffeegram.data.CoffeeTypes.Macchiato
 import ru.beryukhov.coffeegram.data.CoffeeTypes.Mocha
 import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.toCountsList
+import ru.beryukhov.coffeegram.data.toDayCoffee
 import ru.beryukhov.coffeegram.data.withEmpty
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
 import ru.beryukhov.coffeegram.model.changeCoffeeCount
@@ -140,6 +143,45 @@ class DataMappingTest {
             ),
         )
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun wearableEncodingRoundTrip() {
+        val original = DayCoffee(
+            mapOf(
+                Cappuccino to 1,
+                Americano to 2,
+                Chocolate to 7,
+            )
+        )
+        val roundTripped = original.toCountsList().toDayCoffee()
+        for (type in CoffeeTypes.entries) {
+            assertEquals(
+                original.coffeeCountMap[type] ?: 0,
+                roundTripped.coffeeCountMap[type] ?: 0,
+                "Mismatch for $type",
+            )
+        }
+    }
+
+    @Test
+    fun wearableEncodingIsDeclarationOrdered() {
+        val day = DayCoffee(mapOf(Cappuccino to 1, Latte to 2, Americano to 3))
+        val counts = day.toCountsList()
+        assertEquals(CoffeeTypes.entries.size, counts.size)
+        assertEquals(1, counts[CoffeeTypes.entries.indexOf(Cappuccino)])
+        assertEquals(2, counts[CoffeeTypes.entries.indexOf(Latte)])
+        assertEquals(3, counts[CoffeeTypes.entries.indexOf(Americano)])
+    }
+
+    @Test
+    fun wearableDecodeToleratesShorterInput() {
+        // Older sender, fewer entries — newer receiver shouldn't crash.
+        val shortened = ArrayList(listOf(5, 6))
+        val decoded = shortened.toDayCoffee()
+        assertEquals(5, decoded.coffeeCountMap[CoffeeTypes.entries[0]])
+        assertEquals(6, decoded.coffeeCountMap[CoffeeTypes.entries[1]])
+        assertEquals(2, decoded.coffeeCountMap.size)
     }
 
     @Test

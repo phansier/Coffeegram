@@ -9,24 +9,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.lifecycleScope
 import com.arkivanov.decompose.defaultComponentContext
 import org.koin.android.ext.android.get
+import org.koin.android.ext.android.inject
 import ru.beryukhov.coffeegram.animations.TransitionSlot
 import ru.beryukhov.coffeegram.components.DefaultRootComponent
-import ru.beryukhov.coffeegram.data.CoffeeTypes
-import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.NavigationConstants.NAVIGATION_STATE_KEY
 import ru.beryukhov.coffeegram.model.NavigationConstants.TODAYS_COFFEE_LIST
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.pages.LandingPage
 import ru.beryukhov.coffeegram.screens.RootScreen
-import ru.beryukhov.coffeegram.wearable.WearableSyncService
+import ru.beryukhov.coffeegram.wearable.WearableSyncCoordinator
 
 class MainActivity : ComponentActivity() {
 
-    private val wearableSyncService by lazy { WearableSyncService(this) }
+    private val daysCoffeesStore: DaysCoffeesStore by inject()
+    private val wearableSyncCoordinator: WearableSyncCoordinator by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -36,14 +35,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         val themeStore: ThemeStore = get()
-        val daysCoffeesStore: DaysCoffeesStore = get()
 
         val rootComponent = DefaultRootComponent(
             context = defaultComponentContext(),
             themeStore = themeStore,
             daysCoffeesStore = daysCoffeesStore,
             showMap = true,
-            onAndroidStartWearableActivity = if (BuildConfig.DEBUG) ::startWearableActivity else null,
+            onAndroidStartWearableActivity = wearableSyncCoordinator.wearableActivityStarter,
             onAndroidIconChange = { isSummer -> changeIcon(this, isSummer) },
         )
 
@@ -74,16 +72,5 @@ class MainActivity : ComponentActivity() {
             // We just need to ensure we're on the CoffeeEdit tab (index 0)
             rootComponent.selectPage(0)
         }
-    }
-
-    private fun startWearableActivity() {
-        // Send mock data for now - in production this would use real data from store
-        val mockDayCoffee = DayCoffee(
-            mapOf(
-                CoffeeTypes.Cappuccino to 1,
-                CoffeeTypes.Americano to 2
-            )
-        )
-        wearableSyncService.startWearableActivity(lifecycleScope, mockDayCoffee)
     }
 }

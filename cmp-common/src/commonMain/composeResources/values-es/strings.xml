@@ -60,4 +60,6 @@
 
     <string name="map_long">Mapa de Café Specialty</string>
     <string name="location_permission_required">Debes otorgar permiso de ubicación</string>
+
+    <string name="open_on_watch">Abrir en el reloj</string>
 </resources>

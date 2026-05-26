@@ -9,7 +9,7 @@ import ru.beryukhov.coffeegram.model.ThemeStore
 interface SettingsComponent {
     val models: StateFlow<ThemeState>
 
-    val onAndroidStartWearableActivity: (() -> Unit)?
+    val onAndroidStartWearableActivity: StateFlow<(() -> Unit)?>
     val onAndroidIconChange: (isSummer: Boolean) -> Unit
 
     fun onSetSystemTheme()
@@ -24,7 +24,7 @@ interface SettingsComponent {
 class DefaultSettingsComponent(
     context: ComponentContext,
     val themeStore: ThemeStore,
-    override val onAndroidStartWearableActivity: (() -> Unit)?,
+    override val onAndroidStartWearableActivity: StateFlow<(() -> Unit)?>,
     override val onAndroidIconChange: (isSummer: Boolean) -> Unit,
 ) : SettingsComponent, ComponentContext by context {
     override val models: StateFlow<ThemeState> = themeStore.state

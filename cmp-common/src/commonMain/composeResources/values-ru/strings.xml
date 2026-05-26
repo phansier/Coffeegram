@@ -60,4 +60,6 @@
 
     <string name="map_long">Карта спешелти кофе</string>
     <string name="location_permission_required">Необходимо разрешение на геолокацию</string>
+
+    <string name="open_on_watch">Открыть на часах</string>
 </resources>

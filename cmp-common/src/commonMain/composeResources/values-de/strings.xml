@@ -60,4 +60,6 @@
 
     <string name="map_long">Specialty-Coffee-Karte</string>
     <string name="location_permission_required">Standortberechtigung erforderlich</string>
+
+    <string name="open_on_watch">Auf der Uhr öffnen</string>
 </resources>
