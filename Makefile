@@ -20,7 +20,7 @@ buildApp:
 	./gradlew :app:assembleDebug $(params)
 
 buildWear:
-	./gradlew :wear:assemble $(params)
+	./gradlew :wear:assembleDebug $(params)
 
 buildDesktop:
 	./gradlew :cmp-common:jvmJar $(params)
