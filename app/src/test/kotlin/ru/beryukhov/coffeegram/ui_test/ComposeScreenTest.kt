@@ -78,7 +78,7 @@ class ComposeScreenTest {
                     themeStore = themeStore,
                     daysCoffeesStore = daysCoffeesStore,
                     showMap = false,
-                    onAndroidStartWearableActivity = {},
+                    onAndroidStartWearableActivity = MutableStateFlow(null),
                     onAndroidIconChange = {},
                 )
 

@@ -11,6 +11,7 @@ import com.arkivanov.decompose.router.pages.select
 import com.arkivanov.decompose.router.webhistory.WebNavigation
 import com.arkivanov.decompose.router.webhistory.WebNavigationOwner
 import com.arkivanov.decompose.value.Value
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.serialization.Serializable
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
@@ -51,7 +52,7 @@ class DefaultRootComponent(
     val themeStore: ThemeStore,
     val daysCoffeesStore: DaysCoffeesStore,
     override val showMap: Boolean = false,
-    private val onAndroidStartWearableActivity: (() -> Unit)? = null,
+    private val onAndroidStartWearableActivity: StateFlow<(() -> Unit)?> = MutableStateFlow(null),
     private val onAndroidIconChange: (isSummer: Boolean) -> Unit = {},
     ) : RootComponent, ComponentContext by context {
     private val navigation = PagesNavigation<Config>()

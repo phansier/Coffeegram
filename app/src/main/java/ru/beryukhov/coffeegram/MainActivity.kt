@@ -17,6 +17,7 @@ import com.arkivanov.decompose.defaultComponentContext
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.Wearable
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -42,6 +43,7 @@ class MainActivity : ComponentActivity() {
 
     private val wearableSyncService by lazy { WearableSyncService(this) }
     private val daysCoffeesStore: DaysCoffeesStore by inject()
+    private val wearableActivityStarter = MutableStateFlow<(() -> Unit)?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -59,7 +61,7 @@ class MainActivity : ComponentActivity() {
             themeStore = themeStore,
             daysCoffeesStore = daysCoffeesStore,
             showMap = true,
-            onAndroidStartWearableActivity = if (BuildConfig.DEBUG) ::startWearableActivity else null,
+            onAndroidStartWearableActivity = wearableActivityStarter,
             onAndroidIconChange = { isSummer -> changeIcon(this, isSummer) },
         )
 
@@ -95,7 +97,9 @@ class MainActivity : ComponentActivity() {
     private fun observeTodaysCoffeeForWear(daysCoffeesStore: DaysCoffeesStore) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                if (!hasPairedWearable()) return@repeatOnLifecycle
+                val paired = hasPairedWearable()
+                wearableActivityStarter.value = if (paired) ::startWearableActivity else null
+                if (!paired) return@repeatOnLifecycle
 
                 daysCoffeesStore.state
                     .map { state ->

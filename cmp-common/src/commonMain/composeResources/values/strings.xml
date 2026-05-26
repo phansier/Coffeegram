@@ -60,4 +60,6 @@
 
     <string name="map_long">Specialty Coffee Map</string>
     <string name="location_permission_required">You should give location permission</string>
+
+    <string name="open_on_watch">Open on watch</string>
 </resources>

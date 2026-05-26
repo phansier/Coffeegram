@@ -33,6 +33,7 @@ import coffeegram.cmp_common.generated.resources.app_theme_summer_snackbar
 import coffeegram.cmp_common.generated.resources.app_theme_system
 import coffeegram.cmp_common.generated.resources.app_theme_system_snackbar
 import coffeegram.cmp_common.generated.resources.ok
+import coffeegram.cmp_common.generated.resources.open_on_watch
 import coffeegram.cmp_common.generated.resources.settings
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
@@ -119,12 +120,13 @@ fun SettingsScreen(
 
         HorizontalDivider()
 
-        if (component.onAndroidStartWearableActivity != null) {
+        val wearableStarter by component.onAndroidStartWearableActivity.collectAsState()
+        if (wearableStarter != null) {
             Button(
-                onClick = { component.onAndroidStartWearableActivity?.invoke() },
+                onClick = { wearableStarter?.invoke() },
                 modifier = Modifier.padding(16.dp)
             ) {
-                Text("Start Wearable Activity")
+                Text(stringResource(Res.string.open_on_watch))
             }
         }
     }
@@ -165,7 +167,7 @@ private fun SettingsScreenPreview() = PreviewTheme {
                     isSummer = null
                 )
             )
-            override val onAndroidStartWearableActivity: (() -> Unit)? = null
+            override val onAndroidStartWearableActivity: StateFlow<(() -> Unit)?> = MutableStateFlow(null)
             override val onAndroidIconChange: (isSummer: Boolean) -> Unit = { }
 
             override fun onSetSystemTheme() = Unit
