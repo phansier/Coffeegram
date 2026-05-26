@@ -77,12 +77,24 @@ jobs:
                     git tag -a "$next" -m "Release $next"
                     git push origin "$next"
 
+            -   name: Build signed release bundles
+                run: ./gradlew :app:bundleRelease :wear:bundleRelease
+
+            -   name: Upload signed bundles
+                uses: actions/upload-artifact@v4
+                with:
+                    name: release-bundles
+                    path: |
+                        app/build/outputs/bundle/release/app-release.aab
+                        wear/build/outputs/bundle/release/wear-release.aab
+                    if-no-files-found: error
+
             -   name: Distribute phone + wear to Alpha track (single release)
                 # Both bundles publish into one shared Play edit (commit.set(false) in the
                 # build files), committed once via the shared commit task. They must run in a
-                # single Gradle invocation, otherwise each would open its own edit.
+                # single Gradle invocation, otherwise each would open its own edit. The bundle
+                # tasks above already produced the artifacts, so these reuse them (up-to-date).
                 run: >-
                     ./gradlew
-                    :app:bundleRelease :wear:bundleRelease
                     :app:publishBundle :wear:publishBundle
                     :commitEditForRuDotBeryukhovDotCoffeegram
