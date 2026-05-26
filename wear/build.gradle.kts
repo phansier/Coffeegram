@@ -50,4 +50,5 @@ dependencies {
     implementation(libs.compose.activity)
     implementation(libs.compose.uiTooling)
     implementation(libs.playServices.wearable)
+    implementation(libs.coroutines.play)
 }
