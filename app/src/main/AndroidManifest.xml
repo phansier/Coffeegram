@@ -15,6 +15,13 @@
         android:localeConfig="@xml/locale_config"
         android:enableOnBackInvokedCallback="true"
         tools:targetApi="33">
+
+        <!-- Google Maps SDK loads the legacy Apache HTTP library reflectively;
+             it is not on the bootclasspath since API 28 (and on Android XR). -->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.Coffeegram.NoActionBar"
