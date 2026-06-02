@@ -25,9 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.itemsIndexed
+import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.material.Chip
 import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.LocalContentAlpha
+import androidx.wear.compose.material.PositionIndicator
+import androidx.wear.compose.material.Scaffold
 import androidx.wear.compose.material.Text
 import com.google.android.gms.wearable.DataMapItem
 import com.google.android.gms.wearable.PutDataMapRequest
@@ -97,34 +100,40 @@ internal fun PagesContent() {
     val dayCoffee by coffeeState.collectAsState()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    ScalingLazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(
-            top = 28.dp,
-            start = 10.dp,
-            end = 10.dp,
-            bottom = 40.dp
-        ),
+    val listState = rememberScalingLazyListState()
+    Scaffold(
+        positionIndicator = { PositionIndicator(scalingLazyListState = listState) }
     ) {
-        itemsIndexed(
-            items = dayCoffee.coffeeCountMap.withEmpty(),
-            itemContent = { _, pair: CoffeeTypeWithCount ->
-                CoffeeItem(
-                    c = pair.coffee,
-                    count = pair.count,
-                    onIncrement = {
-                        if (applyDelta(pair.coffee, +1)) {
-                            scope.launch { sendCoffeeChange(context, pair.coffee, +1) }
-                        }
-                    },
-                    onDecrement = {
-                        if (applyDelta(pair.coffee, -1)) {
-                            scope.launch { sendCoffeeChange(context, pair.coffee, -1) }
-                        }
-                    },
-                )
-            }
-        )
+        ScalingLazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = listState,
+            contentPadding = PaddingValues(
+                top = 28.dp,
+                start = 10.dp,
+                end = 10.dp,
+                bottom = 40.dp
+            ),
+        ) {
+            itemsIndexed(
+                items = dayCoffee.coffeeCountMap.withEmpty(),
+                itemContent = { _, pair: CoffeeTypeWithCount ->
+                    CoffeeItem(
+                        c = pair.coffee,
+                        count = pair.count,
+                        onIncrement = {
+                            if (applyDelta(pair.coffee, +1)) {
+                                scope.launch { sendCoffeeChange(context, pair.coffee, +1) }
+                            }
+                        },
+                        onDecrement = {
+                            if (applyDelta(pair.coffee, -1)) {
+                                scope.launch { sendCoffeeChange(context, pair.coffee, -1) }
+                            }
+                        },
+                    )
+                }
+            )
+        }
     }
 }
 
