@@ -25,6 +25,8 @@
     <string name="ok">Alles klar</string>
 
     <string name="settings">Einstellungen</string>
+    <string name="settings_style">Stil</string>
+    <string name="settings_device">Gerät</string>
     <string name="calendar">Kalender</string>
     <string name="stats">Statistiken</string>
     <string name="map_short">Specialty</string>

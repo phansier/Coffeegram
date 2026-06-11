@@ -25,6 +25,8 @@
     <string name="ok">Ладно</string>
 
     <string name="settings">Настройки</string>
+    <string name="settings_style">Стиль</string>
+    <string name="settings_device">Устройство</string>
     <string name="calendar">Календарь</string>
     <string name="stats">Статистика</string>
     <string name="map_short">Спешелти</string>

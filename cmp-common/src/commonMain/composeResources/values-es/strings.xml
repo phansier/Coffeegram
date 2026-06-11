@@ -25,6 +25,8 @@
     <string name="ok">Vale</string>
 
     <string name="settings">Configuración</string>
+    <string name="settings_style">Estilo</string>
+    <string name="settings_device">Dispositivo</string>
     <string name="calendar">Calendario</string>
     <string name="stats">Estadísticas</string>
     <string name="map_short">Specialty</string>
