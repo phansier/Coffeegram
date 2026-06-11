@@ -16,6 +16,7 @@ import okio.Path.Companion.toPath
 import org.koin.core.module.Module
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
+import ru.beryukhov.coffeegram.model.ThemeStateDefault
 import ru.beryukhov.coffeegram.store_lib.Storage
 
 internal const val DATA_STORE_FILE_NAME = "theme.preferences_pb"
@@ -45,20 +46,34 @@ class ThemeDataStorePrefStorage(private val dataStore: DataStore<Preferences>) :
         val prefs = dataStore.data.firstOrNull()
         val darkThemeState = prefs?.get(PreferencesKeys.THEME_STATE_KEY)
             ?.let { DarkThemeState.valueOf(it) }
-        val isCupertino = prefs?.get(PreferencesKeys.THEME_CUPERTINO_KEY)
-        val isDynamic = prefs?.get(PreferencesKeys.THEME_DYNAMIC_KEY)
-        val isSummer = prefs?.get(PreferencesKeys.THEME_SUMMER_KEY)
-        return if (darkThemeState != null) {
-            ThemeState(
-                useDarkTheme = darkThemeState,
-                isCupertino = isCupertino,
-                isDynamic = isDynamic,
-                isSummer = isSummer,
-            )
-        } else {
-            null
-        }
+            ?: return null
+        // Feature availability per platform comes from ThemeStateDefault (null = unavailable);
+        // the persisted file only carries values. Merge: keep unavailable features null even if a
+        // stale key exists, otherwise prefer the stored value and fall back to the platform default.
+        return ThemeState(
+            useDarkTheme = darkThemeState,
+            isCupertino = availableValue(
+                ThemeStateDefault.isCupertino,
+                prefs[PreferencesKeys.THEME_CUPERTINO_KEY],
+            ),
+            isDynamic = availableValue(
+                ThemeStateDefault.isDynamic,
+                prefs[PreferencesKeys.THEME_DYNAMIC_KEY],
+            ),
+            isSummer = availableValue(
+                ThemeStateDefault.isSummer,
+                prefs[PreferencesKeys.THEME_SUMMER_KEY],
+            ),
+        )
     }
+
+    /**
+     * Resolves a toggle's value honoring platform availability: returns `null` (hidden) when the
+     * feature is unavailable on this platform ([default] is null), otherwise the [persisted] value
+     * if present, falling back to the platform [default].
+     */
+    private fun availableValue(default: Boolean?, persisted: Boolean?): Boolean? =
+        if (default == null) null else (persisted ?: default)
 
     override suspend fun saveState(state: ThemeState) {
         dataStore.edit { preferences ->
