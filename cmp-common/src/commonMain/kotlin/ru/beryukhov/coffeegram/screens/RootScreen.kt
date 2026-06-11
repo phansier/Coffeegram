@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalAdaptiveApi::class)
 
 package ru.beryukhov.coffeegram.screens
 
@@ -14,8 +14,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
@@ -30,6 +28,9 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.pages.ChildPages
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.router.pages.ChildPages
+import com.slapps.cupertino.adaptive.AdaptiveNavigationBar
+import com.slapps.cupertino.adaptive.AdaptiveNavigationBarItem
+import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import org.jetbrains.compose.resources.stringResource
@@ -158,10 +159,10 @@ internal fun BottomBar(
     rootComponent: RootComponent,
     navBarItems: PersistentList<NavBarItem>,
 ) {
-    NavigationBar {
+    AdaptiveNavigationBar {
         val currentIndex by rootComponent.pages.subscribeAsState()
         navBarItems.forEachIndexed { index, item ->
-            NavigationBarItem(
+            AdaptiveNavigationBarItem(
                 selected = currentIndex.selectedIndex == index,
                 onClick = { rootComponent.selectPage(index) },
                 label = {
