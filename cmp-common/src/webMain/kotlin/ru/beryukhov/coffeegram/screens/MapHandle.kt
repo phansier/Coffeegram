@@ -52,6 +52,9 @@ internal const val JS_ADD_MARKER =
         "'#E8E5E3' : '#FFFFFF') + ';border-radius:6px;padding:3px 8px;" +
         "box-shadow:0 2px 3px rgba(0,0,0,0.15),0 6px 9px rgba(0,0,0,0.04);font-family:sans-serif;cursor:pointer;" +
         "max-width:240px;';" +
+        // Bring the highlighted (selected) marker above its neighbors: MapLibre markers share a
+        // stacking context, so a higher z-index keeps the chosen one on top of overlapping ones.
+        "el.style.zIndex = highlighted ? '2' : '1';" +
         "var name = document.createElement('div');" +
         "name.textContent = title;" +
         "name.style.cssText = 'font-size:14px;font-weight:500;color:#1F1B16;white-space:nowrap;overflow:hidden;" +

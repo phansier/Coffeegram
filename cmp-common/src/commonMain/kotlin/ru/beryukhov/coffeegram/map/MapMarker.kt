@@ -45,6 +45,7 @@ fun MapMarker(
     descr: String = "Subtitle",
     highlighted: Boolean = false,
     expanded: Boolean = false,
+    showDescription: Boolean = true,
 ) {
     val borderRadius = if (expanded) 12.dp else 6.dp
     Row(
@@ -98,7 +99,7 @@ fun MapMarker(
                 maxLines = if (highlighted) 2 else 1,
                 overflow = TextOverflow.Ellipsis
             )
-            if (expanded) {
+            if (expanded && showDescription) {
                 Text(
                     text = descr,
                     style = MaterialTheme.typography.bodySmall.copy(

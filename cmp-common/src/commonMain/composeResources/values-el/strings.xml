@@ -25,6 +25,8 @@
     <string name="ok">Εντάξει</string>
 
     <string name="settings">Ρυθμίσεις</string>
+    <string name="settings_style">Στυλ</string>
+    <string name="settings_device">Συσκευή</string>
     <string name="calendar">Ημερολόγιο</string>
     <string name="stats">Στατιστικά</string>
     <string name="map_short">Σπέσιαλτι</string>
@@ -59,7 +61,6 @@
     <string name="month_dec">Δεκέμβριος</string>
 
     <string name="map_long">Χάρτης Καφέ Σπέσιαλτι</string>
-    <string name="location_permission_required">Πρέπει να δώσετε άδεια τοποθεσίας</string>
 
     <string name="open_on_watch">Άνοιγμα στο ρολόι</string>
 </resources>

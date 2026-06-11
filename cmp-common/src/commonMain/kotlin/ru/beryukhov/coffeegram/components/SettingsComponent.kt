@@ -1,6 +1,8 @@
 package ru.beryukhov.coffeegram.components
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.decompose.value.MutableValue
+import com.arkivanov.decompose.value.Value
 import kotlinx.coroutines.flow.StateFlow
 import ru.beryukhov.coffeegram.model.ThemeIntent
 import ru.beryukhov.coffeegram.model.ThemeState
@@ -11,6 +13,9 @@ interface SettingsComponent {
 
     val onAndroidStartWearableActivity: StateFlow<(() -> Unit)?>
     val onAndroidIconChange: (isSummer: Boolean) -> Unit
+
+    val selectedCategory: Value<String>
+    fun selectCategory(id: String)
 
     fun onSetSystemTheme()
     fun onSetLightTheme()
@@ -28,6 +33,13 @@ class DefaultSettingsComponent(
     override val onAndroidIconChange: (isSummer: Boolean) -> Unit,
 ) : SettingsComponent, ComponentContext by context {
     override val models: StateFlow<ThemeState> = themeStore.state
+
+    private val _selectedCategory = MutableValue("")
+    override val selectedCategory: Value<String> = _selectedCategory
+
+    override fun selectCategory(id: String) {
+        _selectedCategory.value = id
+    }
 
     override fun onSetSystemTheme() {
         themeStore.newIntent(ThemeIntent.SetSystemIntent)

@@ -42,6 +42,7 @@ private val maplibreLoadCallbacks: MutableList<() -> Unit> = mutableListOf()
 actual fun MapScreen(
     component: MapComponent,
     modifier: Modifier,
+    showMarkerDescription: Boolean,
 ) {
     val coffeeShopsState by component.coffeeShops.collectAsState()
     val containerId = remember { "coffee-map-${nextMapId++}" }
@@ -64,8 +65,8 @@ actual fun MapScreen(
         onDispose { state.detach() }
     }
 
-    LaunchedEffect(coffeeShopsState.list, coffeeShopsState.expanded) {
-        state.updateMarkers(coffeeShopsState.list, coffeeShopsState.expanded)
+    LaunchedEffect(coffeeShopsState.list, coffeeShopsState.expanded, showMarkerDescription) {
+        state.updateMarkers(coffeeShopsState.list, coffeeShopsState.expanded, showMarkerDescription)
     }
 
     LaunchedEffect(darkTheme) {
@@ -100,6 +101,7 @@ private class WebMapState(
     private var ready: Boolean = false
     private var pendingShops: List<ExtendedCoffeeShop> = emptyList()
     private var pendingExpanded: Boolean = false
+    private var pendingShowDescription: Boolean = true
     private var didInitialFit: Boolean = false
     private var darkTheme: Boolean = initialDarkTheme
     private var lastX = Double.NaN
@@ -130,9 +132,10 @@ private class WebMapState(
         ready = false
     }
 
-    fun updateMarkers(shops: List<ExtendedCoffeeShop>, expanded: Boolean) {
+    fun updateMarkers(shops: List<ExtendedCoffeeShop>, expanded: Boolean, showDescription: Boolean) {
         pendingShops = shops
         pendingExpanded = expanded
+        pendingShowDescription = showDescription
         if (ready) applyPending()
     }
 
@@ -189,7 +192,7 @@ private class WebMapState(
                 lng = shop.longitude,
                 lat = shop.latitude,
                 title = shop.name,
-                description = if (pendingExpanded) shop.description else "",
+                description = if (pendingExpanded && pendingShowDescription) shop.description else "",
                 highlighted = extended.highlighted,
                 onClick = { onMarkerClicked(shop) },
             )
