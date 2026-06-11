@@ -42,6 +42,7 @@ import ru.beryukhov.coffeegram.repository.CoffeeShop
 actual fun MapScreen(
     component: MapComponent,
     modifier: Modifier,
+    showMarkerDescription: Boolean,
 ) {
     val context = LocalContext.current
     val coarseLocationEnabled = remember {
@@ -89,7 +90,7 @@ actual fun MapScreen(
             ) {
                 coffeeShopsState.list.forEach {
                     MarkerComposable(
-                        keys = arrayOf(it.highlighted, coffeeShopsState.expanded),
+                        keys = arrayOf(it.highlighted, coffeeShopsState.expanded, showMarkerDescription),
                         state = MarkerState(it.coffeeShop.latlng()),
                         onClick = { _ ->
                             component.onMarkerClicked(it.coffeeShop)
@@ -102,6 +103,7 @@ actual fun MapScreen(
                             descr = it.coffeeShop.description,
                             highlighted = it.highlighted,
                             expanded = coffeeShopsState.expanded,
+                            showDescription = showMarkerDescription,
                         )
                     }
                 }

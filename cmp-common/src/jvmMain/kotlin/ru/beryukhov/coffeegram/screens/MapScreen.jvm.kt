@@ -7,5 +7,6 @@ import ru.beryukhov.coffeegram.components.MapComponent
 @Composable
 actual fun MapScreen(
     component: MapComponent,
-    modifier: Modifier
+    modifier: Modifier,
+    showMarkerDescription: Boolean,
 ) = Unit

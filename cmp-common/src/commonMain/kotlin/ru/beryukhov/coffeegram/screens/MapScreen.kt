@@ -17,6 +17,7 @@ import ru.beryukhov.coffeegram.components.MapComponent
 expect fun MapScreen(
     component: MapComponent,
     modifier: Modifier = Modifier,
+    showMarkerDescription: Boolean = true,
 )
 
 @OptIn(ExperimentalMaterial3Api::class)

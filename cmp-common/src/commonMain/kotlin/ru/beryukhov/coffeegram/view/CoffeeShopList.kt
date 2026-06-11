@@ -10,10 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -40,7 +42,20 @@ fun CoffeeShopList(
     modifier: Modifier = Modifier,
 ) {
     val state by component.coffeeShops.collectAsState()
-    LazyColumn(modifier = modifier) {
+    val listState = rememberLazyListState()
+
+    // When a shop is selected from a map marker, bring it into view. Only scroll when it's
+    // off-screen, so selecting an already-visible row (or a list tap) doesn't jump the list.
+    val highlightedIndex = state.list.indexOfFirst { it.highlighted }
+    LaunchedEffect(highlightedIndex) {
+        if (highlightedIndex >= 0 &&
+            listState.layoutInfo.visibleItemsInfo.none { it.index == highlightedIndex }
+        ) {
+            listState.animateScrollToItem(highlightedIndex)
+        }
+    }
+
+    LazyColumn(state = listState, modifier = modifier) {
         // Key on index: the remote data can contain duplicate name/coordinates, and the list
         // order is stable (only `highlighted` flags toggle, preserving order).
         itemsIndexed(state.list) { _, shop ->

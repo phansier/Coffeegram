@@ -48,6 +48,7 @@ import ru.beryukhov.coffeegram.repository.CoffeeShop
 actual fun MapScreen(
     component: MapComponent,
     modifier: Modifier,
+    showMarkerDescription: Boolean,
 ) {
     val coffeeShopsState by component.coffeeShops.collectAsState()
     val mkMapView = rememberMkMapView()
@@ -94,6 +95,7 @@ actual fun MapScreen(
                 mapView = mkMapView,
                 extended = extended,
                 expanded = coffeeShopsState.expanded,
+                showDescription = showMarkerDescription,
             )
         }
 
@@ -111,6 +113,7 @@ private fun CoffeeShopMarker(
     mapView: MKMapView,
     extended: ExtendedCoffeeShop,
     expanded: Boolean,
+    showDescription: Boolean,
 ) {
     val density = LocalDensity.current
     val graphicsLayer = rememberGraphicsLayer()
@@ -126,12 +129,13 @@ private fun CoffeeShopMarker(
             descr = coffeeShop.description,
             highlighted = extended.highlighted,
             expanded = expanded,
+            showDescription = showDescription,
         )
     }
 
     var annotation by remember { mutableStateOf<CoffeeShopAnnotation?>(null) }
 
-    LaunchedEffect(coffeeShop, extended.highlighted, expanded) {
+    LaunchedEffect(coffeeShop, extended.highlighted, expanded, showDescription) {
         // Wait one frame so Compose's draw phase has populated the graphics layer.
         withFrameNanos { }
 

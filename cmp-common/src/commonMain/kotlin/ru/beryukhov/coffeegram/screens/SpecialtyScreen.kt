@@ -26,6 +26,7 @@ fun SpecialtyScreen(
                 MapScreen(
                     component = component,
                     modifier = Modifier.weight(1f).fillMaxHeight(),
+                    showMarkerDescription = false,
                 )
                 CoffeeShopList(
                     component = component,
