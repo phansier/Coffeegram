@@ -32,9 +32,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import com.arkivanov.decompose.value.MutableValue
-import com.arkivanov.decompose.value.Value
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.app_theme
 import coffeegram.cmp_common.generated.resources.app_theme_cupertino
@@ -50,6 +47,9 @@ import coffeegram.cmp_common.generated.resources.open_on_watch
 import coffeegram.cmp_common.generated.resources.settings
 import coffeegram.cmp_common.generated.resources.settings_device
 import coffeegram.cmp_common.generated.resources.settings_style
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import com.arkivanov.decompose.value.MutableValue
+import com.arkivanov.decompose.value.Value
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.coroutines.flow.MutableStateFlow

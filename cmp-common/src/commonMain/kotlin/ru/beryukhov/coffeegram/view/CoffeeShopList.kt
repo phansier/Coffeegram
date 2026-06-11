@@ -113,9 +113,16 @@ private fun CoffeeShopListPreview() = PreviewTheme {
             override val coffeeShops: StateFlow<CoffeeShopsState> = MutableStateFlow(
                 CoffeeShopsState(
                     list = listOf(
-                        ExtendedCoffeeShop(CoffeeShop("Coltivare", LoremIpsum(40).values.joinToString(), 0.0, 0.0), highlighted = true),
-                        ExtendedCoffeeShop(CoffeeShop("Stooker Roastery", "Pour over · 420 m", 0.0, 0.0)),
-                        ExtendedCoffeeShop(CoffeeShop("Black Sheep", "Filter · 900 m", 0.0, 0.0)),
+                        ExtendedCoffeeShop(
+                            CoffeeShop("Coltivare", LoremIpsum(40).values.joinToString(), 0.0, 0.0),
+                            highlighted = true
+                        ),
+                        ExtendedCoffeeShop(
+                            CoffeeShop("Stooker Roastery", "Pour over · 420 m", 0.0, 0.0)
+                        ),
+                        ExtendedCoffeeShop(
+                            CoffeeShop("Black Sheep", "Filter · 900 m", 0.0, 0.0)
+                        ),
                     ),
                     isLoading = false,
                 )

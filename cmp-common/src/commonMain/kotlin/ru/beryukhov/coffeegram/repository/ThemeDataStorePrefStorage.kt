@@ -73,7 +73,7 @@ class ThemeDataStorePrefStorage(private val dataStore: DataStore<Preferences>) :
      * if present, falling back to the platform [default].
      */
     private fun availableValue(default: Boolean?, persisted: Boolean?): Boolean? =
-        if (default == null) null else (persisted ?: default)
+        if (default == null) null else persisted ?: default
 
     override suspend fun saveState(state: ThemeState) {
         dataStore.edit { preferences ->
