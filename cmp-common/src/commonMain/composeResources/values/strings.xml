@@ -25,6 +25,8 @@
     <string name="ok">Now app theme will follow system theme</string>
 
     <string name="settings">Settings</string>
+    <string name="settings_style">Style</string>
+    <string name="settings_device">Device</string>
     <string name="calendar">Calendar</string>
     <string name="stats">Stats</string>
     <string name="map_short">Specialty</string>
