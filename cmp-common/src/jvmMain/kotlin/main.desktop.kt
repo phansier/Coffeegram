@@ -12,6 +12,7 @@ import ru.beryukhov.coffeegram.coffeeStorageModule
 import ru.beryukhov.coffeegram.components.DefaultRootComponent
 import ru.beryukhov.coffeegram.dataStoreModule
 import ru.beryukhov.coffeegram.screens.RootScreen
+import javax.swing.SwingUtilities
 
 private val koinApp = initKoin().koin
 
@@ -24,12 +25,16 @@ private fun initKoin() =
 fun main() {
     val lifecycle = LifecycleRegistry()
 
-    val root =
+    // Decompose requires its component tree to be created on the UI (Swing EDT) thread,
+    // which is Compose Desktop's main thread. Creating it on the raw `main` thread throws
+    // NotOnMainThreadException, so hop onto the EDT for construction.
+    val root = runOnUiThread {
         DefaultRootComponent(
             DefaultComponentContext(lifecycle = lifecycle),
             themeStore = koinApp.get(),
             daysCoffeesStore = koinApp.get(),
         )
+    }
 
     singleWindowApplication(
         title = "Coffeegram",
@@ -38,6 +43,16 @@ fun main() {
     ) {
         RootScreen(root)
     }
+}
+
+private fun <T> runOnUiThread(block: () -> T): T {
+    if (SwingUtilities.isEventDispatchThread()) return block()
+
+    var result: T? = null
+    SwingUtilities.invokeAndWait { result = block() }
+
+    @Suppress("UNCHECKED_CAST")
+    return result as T
 }
 
 object TrayIcon : Painter() {
