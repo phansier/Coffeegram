@@ -138,7 +138,7 @@ private fun CurrentScreen(
                 component = c.component,
                 modifier = Modifier.padding(paddingValues),
             )
-            is RootComponent.Child.Map -> MapScreen(
+            is RootComponent.Child.Map -> SpecialtyScreen(
                 component = c.component,
                 modifier = Modifier.padding(paddingValues),
             )
