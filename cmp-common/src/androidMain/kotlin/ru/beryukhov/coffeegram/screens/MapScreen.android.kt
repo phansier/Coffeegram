@@ -7,18 +7,14 @@ import android.content.pm.PackageManager
 import android.location.LocationManager
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import coffeegram.cmp_common.generated.resources.Res
-import coffeegram.cmp_common.generated.resources.location_permission_required
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
@@ -30,7 +26,6 @@ import com.google.maps.android.compose.MarkerComposable
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.ktx.model.cameraPosition
-import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.components.MapComponent
 import ru.beryukhov.coffeegram.map.FitAllMarkersButton
 import ru.beryukhov.coffeegram.map.MapDefaults
@@ -61,72 +56,62 @@ actual fun MapScreen(
         }
     }
 
-    if (coarseLocationEnabled) {
-        val coffeeShopsState by component.coffeeShops.collectAsState()
+    val coffeeShopsState by component.coffeeShops.collectAsState()
 
-        val cameraPositionState = rememberCameraPositionState {
-            position = cameraPosition {
-                target(coarseLocation)
-                zoom(MapDefaults.ZOOM)
-            }
+    val cameraPositionState = rememberCameraPositionState {
+        position = cameraPosition {
+            // Center on the user's coarse location when granted, otherwise the default location.
+            target(if (coarseLocationEnabled) coarseLocation else LatLng(MapDefaults.LATITUDE, MapDefaults.LONGITUDE))
+            zoom(MapDefaults.ZOOM)
         }
-        LaunchedEffect(cameraPositionState.position.zoom) {
-            component.onZoomChanged(cameraPositionState.position.zoom)
-        }
-        Box(
-            modifier = modifier.fillMaxSize(),
+    }
+    LaunchedEffect(cameraPositionState.position.zoom) {
+        component.onZoomChanged(cameraPositionState.position.zoom)
+    }
+    Box(
+        modifier = modifier.fillMaxSize(),
+    ) {
+        GoogleMap(
+            modifier = Modifier.fillMaxSize(),
+            properties = MapProperties().copy(
+                isMyLocationEnabled = coarseLocationEnabled
+            ),
+            uiSettings = MapUiSettings(
+                compassEnabled = false,
+                zoomControlsEnabled = false,
+                myLocationButtonEnabled = false
+            ),
+            cameraPositionState = cameraPositionState
         ) {
-            GoogleMap(
-                modifier = Modifier.fillMaxSize(),
-                properties = MapProperties().copy(
-                    isMyLocationEnabled = true
-                ),
-                uiSettings = MapUiSettings(
-                    compassEnabled = false,
-                    zoomControlsEnabled = false,
-                    myLocationButtonEnabled = false
-                ),
-                cameraPositionState = cameraPositionState
-            ) {
-                coffeeShopsState.list.forEach {
-                    MarkerComposable(
-                        keys = arrayOf(it.highlighted, coffeeShopsState.expanded, showMarkerDescription),
-                        state = MarkerState(it.coffeeShop.latlng()),
-                        onClick = { _ ->
-                            component.onMarkerClicked(it.coffeeShop)
-                            true
-                        },
-                        zIndex = if (it.highlighted) 1f else 0f
-                    ) {
-                        MapMarker(
-                            name = it.coffeeShop.name,
-                            descr = it.coffeeShop.description,
-                            highlighted = it.highlighted,
-                            expanded = coffeeShopsState.expanded,
-                            showDescription = showMarkerDescription,
-                        )
-                    }
+            coffeeShopsState.list.forEach {
+                MarkerComposable(
+                    keys = arrayOf(it.highlighted, coffeeShopsState.expanded, showMarkerDescription),
+                    state = MarkerState(it.coffeeShop.latlng()),
+                    onClick = { _ ->
+                        component.onMarkerClicked(it.coffeeShop)
+                        true
+                    },
+                    zIndex = if (it.highlighted) 1f else 0f
+                ) {
+                    MapMarker(
+                        name = it.coffeeShop.name,
+                        descr = it.coffeeShop.description,
+                        highlighted = it.highlighted,
+                        expanded = coffeeShopsState.expanded,
+                        showDescription = showMarkerDescription,
+                    )
                 }
             }
+        }
 
-            val density = LocalDensity.current.density
-            FitAllMarkersButton(
-                onClick = {
-                    panMapToFitAllMarkers(coffeeShopsState.list.map { it.coffeeShop.latlng() }, density)?.let {
-                        cameraPositionState.move(it)
-                    }
+        val density = LocalDensity.current.density
+        FitAllMarkersButton(
+            onClick = {
+                panMapToFitAllMarkers(coffeeShopsState.list.map { it.coffeeShop.latlng() }, density)?.let {
+                    cameraPositionState.move(it)
                 }
-            )
-        }
-    } else {
-        Box(
-            modifier = modifier.fillMaxSize(),
-        ) {
-            Text(
-                text = stringResource(Res.string.location_permission_required),
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
+            }
+        )
     }
 }
 
