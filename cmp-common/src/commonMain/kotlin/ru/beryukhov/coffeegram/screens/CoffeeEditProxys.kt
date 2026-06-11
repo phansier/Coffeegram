@@ -74,5 +74,3 @@ fun CoffeeEditScreen(
         }
     }
 }
-
-private val WIDE_SCREEN_THRESHOLD = 600.dp
