@@ -113,7 +113,7 @@ object KeyHelper {
 
 play {
     serviceAccountCredentials.set(file("../play_config.json"))
-    track.set("alpha")
+    track.set("Alpha")
     defaultToAppBundles.set(true)
     // Phone and wear publish into a single Play edit; commit once after both upload.
     commit.set(false)
