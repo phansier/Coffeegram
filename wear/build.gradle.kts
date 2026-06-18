@@ -115,11 +115,4 @@ play {
     serviceAccountCredentials.set(file("../play_config.json"))
     track.set("wear:alpha")
     defaultToAppBundles.set(true)
-    // Phone and wear publish into a single Play edit; commit once after both upload.
-    commit.set(false)
-    retain.artifacts.set(emptyList<Long>())
-    // Symmetric with the phone module — stage to inProgress to avoid completed-release
-    // collisions with any leftover state on wear:alpha.
-    releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS)
-    userFraction.set(0.999)
 }

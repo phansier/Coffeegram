@@ -203,14 +203,6 @@ play {
     serviceAccountCredentials.set(file("../play_config.json"))
     track.set("alpha")
     defaultToAppBundles.set(true)
-    // Phone and wear publish into a single Play edit; commit once after both upload.
-    commit.set(false)
-    retain.artifacts.set(emptyList<Long>())
-    // Stage the new release at 99.9% so it counts as "inProgress" in the Play API
-    // instead of "completed". Sidesteps the "Too many completed releases" rejection
-    // caused by lingering archived releases on the track.
-    releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS)
-    userFraction.set(0.999)
 }
 secrets {
     propertiesFileName = "secrets.properties"
