@@ -205,11 +205,12 @@ play {
     defaultToAppBundles.set(true)
     // Phone and wear publish into a single Play edit; commit once after both upload.
     commit.set(false)
-    // Don't carry over artifacts from a prior release on the track. Otherwise GPP
-    // appends the new bundle to the existing release, producing an unreachable
-    // multi-AAB release that Play rejects ("version X cannot be downloaded by any
-    // devices as they will all receive APKs with higher version codes").
     retain.artifacts.set(emptyList<Long>())
+    // Stage the new release at 99.9% so it counts as "inProgress" in the Play API
+    // instead of "completed". Sidesteps the "Too many completed releases" rejection
+    // caused by lingering archived releases on the track.
+    releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.IN_PROGRESS)
+    userFraction.set(0.999)
 }
 secrets {
     propertiesFileName = "secrets.properties"
