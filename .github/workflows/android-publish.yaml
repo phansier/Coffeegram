@@ -89,12 +89,8 @@ jobs:
                         wear/build/outputs/bundle/release/wear-release.aab
                     if-no-files-found: error
 
-            -   name: Distribute phone + wear to Alpha track (single release)
-                # Both bundles publish into one shared Play edit (commit.set(false) in the
-                # build files), committed once via the shared commit task. They must run in a
-                # single Gradle invocation, otherwise each would open its own edit. The bundle
-                # tasks above already produced the artifacts, so these reuse them (up-to-date).
-                run: >-
-                    ./gradlew
-                    :app:publishBundle :wear:publishBundle
-                    :commitEditForRuDotBeryukhovDotCoffeegram
+            -   name: Distribute phone + wear to Alpha tracks
+                # Each module publishes and commits its own Play edit (phone -> alpha,
+                # wear -> wear:alpha). Two separate releases by design — they're on
+                # different form-factor tracks anyway.
+                run: ./gradlew :app:publishBundle :wear:publishBundle

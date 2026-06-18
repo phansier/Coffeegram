@@ -203,13 +203,6 @@ play {
     serviceAccountCredentials.set(file("../play_config.json"))
     track.set("alpha")
     defaultToAppBundles.set(true)
-    // Phone and wear publish into a single Play edit; commit once after both upload.
-    commit.set(false)
-    // Don't carry over artifacts from a prior release on the track. Otherwise GPP
-    // appends the new bundle to the existing release, producing an unreachable
-    // multi-AAB release that Play rejects ("version X cannot be downloaded by any
-    // devices as they will all receive APKs with higher version codes").
-    retain.artifacts.set(emptyList<Long>())
 }
 secrets {
     propertiesFileName = "secrets.properties"
