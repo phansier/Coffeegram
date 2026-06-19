@@ -14,9 +14,6 @@ plugins {
     `maven-publish`
 }
 
-// Reads SUPABASE_URL / SUPABASE_ANON_KEY (secrets.properties overrides local.defaults.properties)
-// and generates a commonMain SupabaseConfig object so every platform can reach the values.
-// The anon key is public-safe (protected by row-level security); secrets.properties keeps it out of git.
 val supabaseProps = Properties().apply {
     rootProject.file("local.defaults.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
     rootProject.file("secrets.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
