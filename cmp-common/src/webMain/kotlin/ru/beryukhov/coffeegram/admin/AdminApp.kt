@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,17 +28,19 @@ fun AdminApp() {
     val auth = remember { SupabaseAuth() }
     var session by remember { mutableStateOf(auth.captureSessionFromUrl() ?: auth.loadSession()) }
 
-    Surface(modifier = Modifier.fillMaxSize()) {
-        if (session == null) {
+    if (session == null) {
+        Surface(modifier = Modifier.fillMaxSize()) {
             LoginScreen(onSendLink = { email -> auth.sendMagicLink(email) })
-        } else {
-            SignedInPlaceholder(
-                onSignOut = {
-                    auth.signOut()
-                    session = null
-                },
-            )
         }
+    } else {
+        val repository = remember { AdminRepository(accessToken = { session?.accessToken.orEmpty() }) }
+        AdminConsole(
+            repository = repository,
+            onSignOut = {
+                auth.signOut()
+                session = null
+            },
+        )
     }
 }
 
@@ -96,17 +97,5 @@ private fun LoginScreen(onSendLink: suspend (String) -> Result<Unit>) {
             )
             else -> Unit
         }
-    }
-}
-
-@Composable
-private fun SignedInPlaceholder(onSignOut: () -> Unit) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
-    ) {
-        Text("Signed in — editor coming next", style = MaterialTheme.typography.titleLarge)
-        OutlinedButton(onClick = onSignOut) { Text("Sign out") }
     }
 }
