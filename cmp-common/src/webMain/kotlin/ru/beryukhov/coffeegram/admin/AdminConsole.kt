@@ -53,98 +53,38 @@ import ru.beryukhov.coffeegram.repository.CoffeeShop
 private val DEFAULT_TAGS = listOf("espresso", "batch", "v60", "roaster")
 private val WIDE_THRESHOLD = 600.dp
 
-internal data class EditorForm(
-    val isNew: Boolean,
-    val name: String,
-    val description: String,
-    val coordinates: String,
-    val coordinatesValid: Boolean,
-    val tags: List<String>,
-    val updatedAt: String?,
-    val saving: Boolean,
-    val message: String?,
-)
-
 @Composable
 internal fun AdminConsole(repository: AdminRepository, onSignOut: () -> Unit) {
     val scope = rememberCoroutineScope()
-    val state = remember(repository) { AdminConsoleState(repository, scope, onSignOut) }
-    LaunchedEffect(repository) { state.load() }
+    val store = remember(repository) { AdminConsoleStore(repository, scope, onSignOut) }
+    LaunchedEffect(repository) { store.load() }
+    AdminConsoleContent(state = store, callbacks = store, onSignOut = onSignOut)
+}
 
-    val form = EditorForm(
-        isNew = state.selectedId == null,
-        name = state.name,
-        description = state.description,
-        coordinates = state.coordinates,
-        coordinatesValid = state.coordinatesValid,
-        tags = state.tags.toList(),
-        updatedAt = state.updatedAt,
-        saving = state.saving,
-        message = state.message,
-    )
-
+@Composable
+private fun AdminConsoleContent(
+    state: AdminConsoleState,
+    callbacks: AdminConsoleCallbacks,
+    onSignOut: () -> Unit,
+) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             TopBar(onSignOut)
             HorizontalDivider()
             BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
                 if (maxWidth >= WIDE_THRESHOLD) {
-                    TwoPanes(state = state, form = form)
+                    Row(modifier = Modifier.fillMaxSize()) {
+                        CollectionPane(state, callbacks, modifier = Modifier.width(320.dp).fillMaxHeight())
+                        VerticalDivider()
+                        EditorPane(state, callbacks, showBack = false, modifier = Modifier.weight(1f).fillMaxHeight())
+                    }
                 } else if (state.editing) {
-                    EditorPane(
-                        form = form,
-                        onName = { state.name = it },
-                        onDescription = { state.description = it },
-                        onCoordinates = { state.coordinates = it },
-                        onAddTag = state::addTag,
-                        onRemoveTag = state::removeTag,
-                        onSave = state::save,
-                        onDelete = state::delete,
-                        onBack = state::closeEditor,
-                        modifier = Modifier.fillMaxSize(),
-                    )
+                    EditorPane(state, callbacks, showBack = true, modifier = Modifier.fillMaxSize())
                 } else {
-                    CollectionPane(
-                        shops = state.shops,
-                        selectedId = state.selectedId,
-                        loading = state.loading,
-                        onNew = state::newShop,
-                        onSelect = state::select,
-                        modifier = Modifier.fillMaxSize(),
-                    )
+                    CollectionPane(state, callbacks, modifier = Modifier.fillMaxSize())
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun TwoPanes(
-    state: AdminConsoleState,
-    form: EditorForm
-) {
-    Row(modifier = Modifier.fillMaxSize()) {
-        CollectionPane(
-            shops = state.shops,
-            selectedId = state.selectedId,
-            loading = state.loading,
-            onNew = state::newShop,
-            onSelect = state::select,
-            modifier = Modifier.width(320.dp).fillMaxHeight(),
-        )
-        VerticalDivider()
-        EditorPane(
-            form = form,
-            onName = { state.name = it },
-            onDescription = { state.description = it },
-            onCoordinates = { state.coordinates = it },
-            onAddTag = state::addTag,
-            onRemoveTag = state::removeTag,
-            onSave = state::save,
-            onDelete = state::delete,
-            onBack = null,
-            modifier = Modifier.weight(1f).fillMaxHeight(),
-        )
     }
 }
 
@@ -162,11 +102,8 @@ private fun TopBar(onSignOut: () -> Unit) {
 
 @Composable
 private fun CollectionPane(
-    shops: List<CoffeeShop>,
-    selectedId: String?,
-    loading: Boolean,
-    onNew: () -> Unit,
-    onSelect: (CoffeeShop) -> Unit,
+    state: AdminConsoleState,
+    callbacks: AdminConsoleCallbacks,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier.padding(16.dp)) {
@@ -175,18 +112,18 @@ private fun CollectionPane(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text("My collection · ${shops.size}", style = MaterialTheme.typography.titleMedium)
-            TextButton(onClick = onNew) { Text("+ New") }
+            Text("My collection · ${state.shops.size}", style = MaterialTheme.typography.titleMedium)
+            TextButton(onClick = callbacks::newShop) { Text("+ New") }
         }
-        if (loading) {
+        if (state.loading) {
             CircularProgressIndicator(modifier = Modifier.padding(16.dp))
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(shops, key = { it.id }) { shop ->
+                items(state.shops, key = { it.id }) { shop ->
                     ShopRow(
                         shop = shop,
-                        selected = shop.id == selectedId,
-                        onClick = { onSelect(shop) },
+                        selected = shop.id == state.selectedId,
+                        onClick = { callbacks.select(shop) },
                     )
                     HorizontalDivider()
                 }
@@ -226,15 +163,9 @@ private fun ShopRow(shop: CoffeeShop, selected: Boolean, onClick: () -> Unit) {
 
 @Composable
 private fun EditorPane(
-    form: EditorForm,
-    onName: (String) -> Unit,
-    onDescription: (String) -> Unit,
-    onCoordinates: (String) -> Unit,
-    onAddTag: (String) -> Unit,
-    onRemoveTag: (String) -> Unit,
-    onSave: () -> Unit,
-    onDelete: () -> Unit,
-    onBack: (() -> Unit)?,
+    state: AdminConsoleState,
+    callbacks: AdminConsoleCallbacks,
+    showBack: Boolean,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -242,81 +173,81 @@ private fun EditorPane(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            if (onBack != null) {
-                IconButton(onClick = onBack) {
+            if (showBack) {
+                IconButton(onClick = callbacks::closeEditor) {
                     Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back to collection")
                 }
             }
             Text(
-                if (form.isNew) "New shop" else "Edit shop",
+                if (state.selectedId == null) "New shop" else "Edit shop",
                 style = MaterialTheme.typography.headlineSmall,
             )
         }
         OutlinedTextField(
-            value = form.name,
-            onValueChange = onName,
+            value = state.name,
+            onValueChange = callbacks::onNameChange,
             label = { Text("Name") },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
         )
         OutlinedTextField(
-            value = form.description,
-            onValueChange = onDescription,
+            value = state.description,
+            onValueChange = callbacks::onDescriptionChange,
             label = { Text("Notes") },
             modifier = Modifier.fillMaxWidth(),
         )
         OutlinedTextField(
-            value = form.coordinates,
-            onValueChange = onCoordinates,
+            value = state.coordinates,
+            onValueChange = callbacks::onCoordinatesChange,
             label = { Text("Coordinates") },
             singleLine = true,
-            isError = !form.coordinatesValid,
+            isError = !state.coordinatesValid,
             supportingText = {
-                val parsed = parseCoordinates(form.coordinates)
+                val parsed = parseCoordinates(state.coordinates)
                 when {
-                    form.coordinates.isBlank() -> Text("Paste \"latitude, longitude\" from Google Maps.")
+                    state.coordinates.isBlank() -> Text("Paste \"latitude, longitude\" from Google Maps.")
                     parsed != null -> Text("→ ${parsed.first}, ${parsed.second}")
                     else -> Text("Expected two numbers: latitude, longitude.")
                 }
             },
             modifier = Modifier.fillMaxWidth(),
         )
-        TagEditor(tags = form.tags, onAddTag = onAddTag, onRemoveTag = onRemoveTag)
-        if (form.updatedAt != null) {
+        TagEditor(state, callbacks)
+        if (state.updatedAt != null) {
             Text(
-                "Updated ${form.updatedAt}",
+                "Updated ${state.updatedAt}",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.CenterVertically) {
-            Button(onClick = onSave, enabled = !form.saving) { Text("Save changes") }
-            if (!form.isNew) {
-                OutlinedButton(onClick = onDelete, enabled = !form.saving) { Text("Delete") }
+            Button(onClick = callbacks::save, enabled = !state.saving) { Text("Save changes") }
+            if (state.selectedId != null) {
+                OutlinedButton(onClick = callbacks::delete, enabled = !state.saving) { Text("Delete") }
             }
-            form.message?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
+            state.message?.let { Text(it, style = MaterialTheme.typography.bodyMedium) }
         }
     }
 }
 
 @Composable
-private fun TagEditor(tags: List<String>, onAddTag: (String) -> Unit, onRemoveTag: (String) -> Unit) {
+private fun TagEditor(state: AdminConsoleState, callbacks: AdminConsoleCallbacks) {
     var custom by remember { mutableStateOf("") }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text("Tags", style = MaterialTheme.typography.titleSmall)
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            tags.forEach { tag ->
+            state.tags.forEach { tag ->
                 InputChip(
                     selected = true,
-                    onClick = { onRemoveTag(tag) },
+                    onClick = { callbacks.removeTag(tag) },
                     label = { Text(tag) },
                     trailingIcon = { Icon(Icons.Filled.Close, contentDescription = "Remove $tag") },
                 )
             }
         }
         FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            DEFAULT_TAGS.filter { it !in tags }.forEach { tag ->
-                TextButton(onClick = { onAddTag(tag) }) { Text("+ $tag") }
+            DEFAULT_TAGS.filter { it !in state.tags }.forEach { tag ->
+                TextButton(onClick = { callbacks.addTag(tag) }) { Text("+ $tag") }
             }
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -329,7 +260,7 @@ private fun TagEditor(tags: List<String>, onAddTag: (String) -> Unit, onRemoveTa
             )
             TextButton(
                 onClick = {
-                    onAddTag(custom)
+                    callbacks.addTag(custom)
                     custom = ""
                 },
                 enabled = custom.isNotBlank(),
@@ -357,31 +288,40 @@ private val sampleShops = listOf(
     ),
 )
 
-private val sampleForm = EditorForm(
-    isNew = false,
-    name = "Coltivare",
-    description = "Tiny roastery counter, rotating single-origin filter.",
-    coordinates = "35.1739, 33.3618",
-    coordinatesValid = true,
-    tags = listOf("v60", "roaster"),
-    updatedAt = "2026-06-18T14:22:00Z",
-    saving = false,
-    message = null,
-)
+private val previewState = object : AdminConsoleState {
+    override val shops = sampleShops
+    override val loading = false
+    override val saving = false
+    override val message: String? = null
+    override val selectedId = sampleShops.first().id
+    override val editing = true
+    override val name = "Coltivare"
+    override val description = "Tiny roastery counter, rotating single-origin filter."
+    override val coordinates = "35.1739, 33.3618"
+    override val tags = listOf("v60", "roaster")
+    override val updatedAt = "2026-06-18T14:22:00Z"
+    override val coordinatesValid = true
+}
+
+private val emptyCallbacks = object : AdminConsoleCallbacks {
+    override fun load() {}
+    override fun select(shop: CoffeeShop) {}
+    override fun newShop() {}
+    override fun closeEditor() {}
+    override fun onNameChange(value: String) {}
+    override fun onDescriptionChange(value: String) {}
+    override fun onCoordinatesChange(value: String) {}
+    override fun addTag(raw: String) {}
+    override fun removeTag(tag: String) {}
+    override fun save() {}
+    override fun delete() {}
+}
 
 @Preview
 @Composable
 private fun CollectionPanePreview() {
     MaterialTheme {
-        Surface {
-            CollectionPane(
-                shops = sampleShops,
-                selectedId = sampleShops.first().id,
-                loading = false,
-                onNew = {},
-                onSelect = {},
-            )
-        }
+        Surface { CollectionPane(previewState, emptyCallbacks) }
     }
 }
 
@@ -389,19 +329,7 @@ private fun CollectionPanePreview() {
 @Composable
 private fun EditorPanePreview() {
     MaterialTheme {
-        Surface {
-            EditorPane(
-                form = sampleForm,
-                onName = {},
-                onDescription = {},
-                onCoordinates = {},
-                onAddTag = {},
-                onRemoveTag = {},
-                onSave = {},
-                onDelete = {},
-                onBack = {},
-            )
-        }
+        Surface { EditorPane(previewState, emptyCallbacks, showBack = false) }
     }
 }
 
@@ -409,9 +337,7 @@ private fun EditorPanePreview() {
 @Composable
 private fun ShopRowPreview() {
     MaterialTheme {
-        Surface {
-            ShopRow(shop = sampleShops.first(), selected = true, onClick = {})
-        }
+        Surface { ShopRow(shop = sampleShops.first(), selected = true, onClick = {}) }
     }
 }
 
@@ -419,8 +345,14 @@ private fun ShopRowPreview() {
 @Composable
 private fun TagEditorPreview() {
     MaterialTheme {
-        Surface {
-            TagEditor(tags = listOf("espresso", "v60"), onAddTag = {}, onRemoveTag = {})
-        }
+        Surface { TagEditor(previewState, emptyCallbacks) }
+    }
+}
+
+@Preview
+@Composable
+private fun AdminConsoleContentPreview() {
+    MaterialTheme {
+        AdminConsoleContent(state = previewState, callbacks = emptyCallbacks, onSignOut = {})
     }
 }

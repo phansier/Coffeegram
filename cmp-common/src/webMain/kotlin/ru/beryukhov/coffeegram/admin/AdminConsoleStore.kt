@@ -8,41 +8,76 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.beryukhov.coffeegram.repository.CoffeeShop
 
-internal class AdminConsoleState(
+interface AdminConsoleState {
+    val shops: List<CoffeeShop>
+    val loading: Boolean
+    val saving: Boolean
+    val message: String?
+    val selectedId: String?
+    val editing: Boolean
+
+    val name: String
+    val description: String
+    val coordinates: String
+    val tags: List<String>
+    val updatedAt: String?
+
+    val coordinatesValid: Boolean
+}
+
+interface AdminConsoleCallbacks {
+    fun load()
+    fun select(shop: CoffeeShop)
+    fun newShop()
+    fun closeEditor()
+    fun onNameChange(value: String)
+    fun onDescriptionChange(value: String)
+    fun onCoordinatesChange(value: String)
+    fun addTag(raw: String)
+    fun removeTag(tag: String)
+    fun save()
+    fun delete()
+}
+
+internal class AdminConsoleStore(
     private val repository: AdminRepository,
     private val scope: CoroutineScope,
     private val onAuthExpired: () -> Unit,
-) {
-    var shops by mutableStateOf<List<CoffeeShop>>(emptyList())
+) : AdminConsoleCallbacks, AdminConsoleState {
+    override var shops by mutableStateOf<List<CoffeeShop>>(emptyList())
         private set
-    var loading by mutableStateOf(true)
+    override var loading by mutableStateOf(true)
         private set
-    var saving by mutableStateOf(false)
+    override var saving by mutableStateOf(false)
         private set
-    var message by mutableStateOf<String?>(null)
-    var selectedId by mutableStateOf<String?>(null)
+    override var message by mutableStateOf<String?>(null)
         private set
-    var editing by mutableStateOf(false)
+    override var selectedId by mutableStateOf<String?>(null)
         private set
-
-    var name by mutableStateOf("")
-    var description by mutableStateOf("")
-    var coordinates by mutableStateOf("")
-    val tags = mutableStateListOf<String>()
-    var updatedAt by mutableStateOf<String?>(null)
+    override var editing by mutableStateOf(false)
         private set
 
-    val coordinatesValid: Boolean
+    override var name by mutableStateOf("")
+        private set
+    override var description by mutableStateOf("")
+        private set
+    override var coordinates by mutableStateOf("")
+        private set
+    override val tags = mutableStateListOf<String>()
+    override var updatedAt by mutableStateOf<String?>(null)
+        private set
+
+    override val coordinatesValid: Boolean
         get() = coordinates.isBlank() || parseCoordinates(coordinates) != null
 
-    fun load() {
+    override fun load() {
         scope.launch {
             repository.list().handle { shops = it }
             loading = false
         }
     }
 
-    fun select(shop: CoffeeShop) {
+    override fun select(shop: CoffeeShop) {
         selectedId = shop.id
         name = shop.name
         description = shop.description
@@ -54,31 +89,38 @@ internal class AdminConsoleState(
         editing = true
     }
 
-    fun newShop() {
-        selectedId = null
-        name = ""
-        description = ""
-        coordinates = ""
-        tags.clear()
-        updatedAt = null
+    override fun newShop() {
+        clearForm()
         message = null
         editing = true
     }
 
-    fun closeEditor() {
+    override fun closeEditor() {
         editing = false
     }
 
-    fun addTag(raw: String) {
+    override fun onNameChange(value: String) {
+        name = value
+    }
+
+    override fun onDescriptionChange(value: String) {
+        description = value
+    }
+
+    override fun onCoordinatesChange(value: String) {
+        coordinates = value
+    }
+
+    override fun addTag(raw: String) {
         val tag = raw.trim().lowercase()
         if (tag.isNotEmpty() && tag !in tags) tags.add(tag)
     }
 
-    fun removeTag(tag: String) {
+    override fun removeTag(tag: String) {
         tags.remove(tag)
     }
 
-    fun save() {
+    override fun save() {
         val parsed = parseCoordinates(coordinates)
         if (parsed == null) {
             message = "Enter coordinates as \"latitude, longitude\"."
@@ -108,7 +150,7 @@ internal class AdminConsoleState(
         }
     }
 
-    fun delete() {
+    override fun delete() {
         val id = selectedId ?: return
         saving = true
         scope.launch {
