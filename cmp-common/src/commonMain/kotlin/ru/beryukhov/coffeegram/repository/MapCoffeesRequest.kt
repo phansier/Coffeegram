@@ -35,10 +35,6 @@ private val client = HttpClient {
     }
 }
 
-expect object Log {
-    fun d(tag: String, message: String)
-}
-
 suspend fun coffeeShops(): List<CoffeeShop> = try {
     client.get("${SupabaseConfig.URL}/rest/v1/coffee_shops") {
         header("apikey", SupabaseConfig.PUBLISHABLE_KEY)

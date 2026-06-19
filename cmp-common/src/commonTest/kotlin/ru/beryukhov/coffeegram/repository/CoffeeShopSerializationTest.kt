@@ -50,13 +50,18 @@ class CoffeeShopSerializationTest {
 
     @Test
     fun parsesTimestampWithOffsetAndMicroseconds() {
-        val shop = decodeShop("""{"name":"x","description":"","latitude":0.0,"longitude":0.0,"updated_at":"2026-06-18T14:22:33.123456+00:00"}""")
+        val shop = decodeShop(
+            """{"name":"x","description":"","latitude":0.0,"longitude":0.0,
+                |"updated_at":"2026-06-18T14:22:33.123456+00:00"}""".trimMargin()
+        )
         assertNotNull(shop.updatedAt)
     }
 
     @Test
     fun malformedTimestampDegradesToNull() {
-        val shop = decodeShop("""{"name":"x","description":"","latitude":0.0,"longitude":0.0,"updated_at":"not-a-timestamp"}""")
+        val shop = decodeShop(
+            """{"name":"x","description":"","latitude":0.0,"longitude":0.0,"updated_at":"not-a-timestamp"}"""
+        )
         assertNull(shop.updatedAt)
     }
 

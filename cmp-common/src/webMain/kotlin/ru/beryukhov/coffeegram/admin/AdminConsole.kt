@@ -304,17 +304,17 @@ private val previewState = object : AdminConsoleState {
 }
 
 private val emptyCallbacks = object : AdminConsoleCallbacks {
-    override fun load() {}
-    override fun select(shop: CoffeeShop) {}
-    override fun newShop() {}
-    override fun closeEditor() {}
-    override fun onNameChange(value: String) {}
-    override fun onDescriptionChange(value: String) {}
-    override fun onCoordinatesChange(value: String) {}
-    override fun addTag(raw: String) {}
-    override fun removeTag(tag: String) {}
-    override fun save() {}
-    override fun delete() {}
+    override fun load() = Unit
+    override fun select(shop: CoffeeShop) = Unit
+    override fun newShop() = Unit
+    override fun closeEditor() = Unit
+    override fun onNameChange(value: String) = Unit
+    override fun onDescriptionChange(value: String) = Unit
+    override fun onCoordinatesChange(value: String) = Unit
+    override fun addTag(raw: String) = Unit
+    override fun removeTag(tag: String) = Unit
+    override fun save() = Unit
+    override fun delete() = Unit
 }
 
 @Preview

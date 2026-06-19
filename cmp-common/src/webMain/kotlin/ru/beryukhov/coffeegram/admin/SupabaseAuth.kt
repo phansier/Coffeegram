@@ -42,9 +42,7 @@ internal class SupabaseAuth(
     }
 
     fun captureSessionFromUrl(): AdminSession? {
-        val fragment = locationHash().removePrefix("#")
-        if (fragment.isEmpty()) return null
-        val params = fragment.split("&").mapNotNull { pair ->
+        val params = locationHash().removePrefix("#").split("&").mapNotNull { pair ->
             val parts = pair.split("=", limit = 2)
             if (parts.size == 2) parts[0] to parts[1] else null
         }.toMap()
