@@ -1,6 +1,7 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import java.util.Properties
 
 plugins {
     kotlin("multiplatform")
@@ -11,6 +12,35 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
     id("org.jetbrains.compose.hot-reload")
     `maven-publish`
+}
+
+val supabaseProps = Properties().apply {
+    rootProject.file("local.defaults.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+    rootProject.file("secrets.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
+}
+
+val generateSupabaseConfig by tasks.registering {
+    val outputDir = layout.buildDirectory.dir("generated/supabase/kotlin")
+    val url = supabaseProps.getProperty("SUPABASE_URL").orEmpty()
+    val publishableKey = supabaseProps.getProperty("SUPABASE_PUBLISHABLE_KEY").orEmpty()
+    inputs.property("url", url)
+    inputs.property("publishableKey", publishableKey)
+    outputs.dir(outputDir)
+    doLast {
+        fun esc(s: String) = s.replace("\\", "\\\\").replace("\"", "\\\"")
+        val pkgDir = outputDir.get().asFile.resolve("ru/beryukhov/coffeegram/repository")
+        pkgDir.mkdirs()
+        pkgDir.resolve("SupabaseConfig.kt").writeText(
+            """
+            package ru.beryukhov.coffeegram.repository
+
+            internal object SupabaseConfig {
+                const val URL: String = "${esc(url)}"
+                const val PUBLISHABLE_KEY: String = "${esc(publishableKey)}"
+            }
+            """.trimIndent() + "\n"
+        )
+    }
 }
 
 kotlin {
@@ -56,6 +86,9 @@ kotlin {
     }
 
     sourceSets {
+        commonMain {
+            kotlin.srcDir(generateSupabaseConfig)
+        }
         commonMain.dependencies {
             implementation(projects.repository)
             implementation(projects.dateTimeUtils)
@@ -95,6 +128,9 @@ kotlin {
 
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.logging)
+            implementation(libs.ktor.client.contentNegotiation)
+            implementation(libs.ktor.serialization.kotlinxJson)
+            implementation(libs.kotlinx.serialization.json)
         }
 
         commonTest.dependencies {
