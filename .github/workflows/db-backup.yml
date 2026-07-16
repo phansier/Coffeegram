@@ -1,4 +1,4 @@
-name: Daily Supabase Backup
+name: Weekly Supabase Backup
 
 on:
   schedule:
@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install PostgreSQL client
+      - name: Install PostgreSQL 17 client
         run: |
           sudo apt-get update
-          sudo apt-get install -y postgresql-client
+          sudo apt-get install -y postgresql-client-17
 
       - name: Create backup
         env:
