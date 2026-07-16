@@ -32,7 +32,7 @@ jobs:
         run: |
           mkdir backups
 
-          pg_dump \
+          /usr/lib/postgresql/17/bin/pg_dump \
             --dbname="$DATABASE_URL" \
             --format=custom \
             --compress=9 \
