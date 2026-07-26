@@ -29,6 +29,9 @@
     <string name="settings_device">Устройство</string>
     <string name="calendar">Календарь</string>
     <string name="stats">Статистика</string>
+    <string name="stats_title">Ваши привычки</string>
+    <string name="stats_eyebrow">СТАТИСТИКА</string>
+    <string name="specialty_eyebrow">РЯДОМ С ВАМИ</string>
     <string name="map_short">Спешелти</string>
     <string name="add_drink">Добавить напиток</string>
 
