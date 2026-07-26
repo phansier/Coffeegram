@@ -28,6 +28,8 @@ wearCompose = "1.6.2" # https://developer.android.com/jetpack/androidx/releases/
 
 cupertino = "2.3.1" # https://github.com/schott12521/compose-cupertino
 
+composablesBottomSheet = "2.9.0" # https://composables.com/compose-unstyled/docs/bottom-sheet
+
 coil = "3.5.0" # https://github.com/coil-kt/coil/releases
 coroutines = "1.11.0" # https://github.com/Kotlin/kotlinx.coroutines
 serialization = "1.11.0" # https://github.com/Kotlin/kotlinx.serialization/releases
@@ -158,6 +160,8 @@ sqldelight-webWorkerDriverWasmJs = { module = "app.cash.sqldelight:web-worker-dr
 
 cupertino-adaptive = { module = "io.github.schott12521:cupertino-adaptive", version.ref = "cupertino" }
 cupertino-iconsExtended = { module = "io.github.schott12521:cupertino-icons-extended", version.ref = "cupertino" }
+
+composables-bottomSheet = { module = "com.composables:composeunstyled-bottom-sheet", version.ref = "composablesBottomSheet" }
 
 decompose-core = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
 decompose-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }

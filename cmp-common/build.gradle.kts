@@ -111,6 +111,8 @@ kotlin {
             implementation(libs.cupertino.adaptive)
             implementation(libs.cupertino.iconsExtended)
 
+            implementation(libs.composables.bottomSheet)
+
             api(libs.decompose.core)
             api(libs.essenty)
             implementation(libs.decompose.compose)

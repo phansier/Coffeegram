@@ -4,16 +4,17 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.components.MapComponent
 import ru.beryukhov.coffeegram.view.CoffeeShopList
+import ru.beryukhov.coffeegram.view.CoffeeShopListStyle
 
 /**
- * Specialty tab: on wide screens the map and the coffee-shop list sit side by side, on narrow
- * screens only the map is shown (the list collapses, matching the phone layout).
+ * Specialty tab: on wide screens the map and the coffee-shop list sit side by side; on narrow
+ * screens the list lives in a draggable bottom sheet over the map instead.
  */
 @Composable
 fun SpecialtyScreen(
@@ -28,16 +29,31 @@ fun SpecialtyScreen(
                     modifier = Modifier.weight(1f).fillMaxHeight(),
                     showMarkerDescription = false,
                 )
-                CoffeeShopList(
-                    component = component,
-                    modifier = Modifier.width(320.dp).fillMaxHeight(),
-                )
+                VerticalDivider()
+                SidePane(modifier = Modifier.fillMaxHeight()) {
+                    CoffeeShopList(
+                        component = component,
+                        modifier = Modifier.fillMaxSize(),
+                        style = CoffeeShopListStyle.Card,
+                    )
+                }
             }
         } else {
-            MapScreen(
-                component = component,
+            BottomSheetPane(
                 modifier = Modifier.fillMaxSize(),
-            )
+                sheetContent = {
+                    CoffeeShopList(
+                        component = component,
+                        modifier = Modifier.fillMaxWidth(),
+                        style = CoffeeShopListStyle.Flat,
+                    )
+                },
+            ) {
+                MapScreen(
+                    component = component,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
         }
     }
 }
