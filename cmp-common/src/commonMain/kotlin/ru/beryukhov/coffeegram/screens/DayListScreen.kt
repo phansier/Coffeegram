@@ -11,7 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -68,8 +67,8 @@ fun DayListAppBar(
     val localDate = screenState.date
     AdaptiveTopAppBar(
         title = {
-            Text(
-                "${localDate.day} ${getShortMonthName(localDate.month)} "
+            TopBarTitle(
+                title = "${localDate.day} ${getShortMonthName(localDate.month)} "
                     + stringResource(Res.string.add_drink)
             )
         },
@@ -81,6 +80,7 @@ fun DayListAppBar(
                 )
             }
         },
+        adaptation = { material { isCenterAligned = true } },
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
     )
 }

@@ -30,9 +30,11 @@ data class ExtendedCoffeeShop(
  */
 interface MapComponent {
     val coffeeShops: StateFlow<CoffeeShopsState>
+    val hasUserLocation: StateFlow<Boolean>
 
     fun onZoomChanged(zoom: Float)
     fun onMarkerClicked(coffeeShop: CoffeeShop)
+    fun onUserLocationObtained()
 }
 
 class DefaultMapComponent(
@@ -43,6 +45,9 @@ class DefaultMapComponent(
 
     private val _coffeeShops = MutableStateFlow(CoffeeShopsState())
     override val coffeeShops: StateFlow<CoffeeShopsState> = _coffeeShops.asStateFlow()
+
+    private val _hasUserLocation = MutableStateFlow(false)
+    override val hasUserLocation: StateFlow<Boolean> = _hasUserLocation.asStateFlow()
 
     init {
         loadCoffeeShops()
@@ -86,5 +91,9 @@ class DefaultMapComponent(
                 }
             }
         )
+    }
+
+    override fun onUserLocationObtained() {
+        _hasUserLocation.value = true
     }
 }

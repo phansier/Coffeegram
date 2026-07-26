@@ -68,6 +68,9 @@ actual fun MapScreen(
     LaunchedEffect(cameraPositionState.position.zoom) {
         component.onZoomChanged(cameraPositionState.position.zoom)
     }
+    LaunchedEffect(coarseLocationEnabled) {
+        if (coarseLocationEnabled) component.onUserLocationObtained()
+    }
     Box(
         modifier = modifier.fillMaxSize(),
     ) {

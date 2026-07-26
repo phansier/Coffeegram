@@ -16,6 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import coffeegram.cmp_common.generated.resources.DMMono_Regular
 import coffeegram.cmp_common.generated.resources.Fraunces
@@ -124,6 +126,12 @@ fun CoffeegramTheme(
             MaterialThemeSpec(
                 colorScheme = materialScheme,
                 typography = Typography(
+                    titleLarge = TextStyle(
+                        fontFamily = frauncesFontFamily,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 24.sp,
+                        letterSpacing = (-0.02).em,
+                    ),
                     headlineSmall = TextStyle(
                         fontFamily = frauncesFontFamily,
                         fontSize = 24.sp,
@@ -139,8 +147,13 @@ fun CoffeegramTheme(
                     bodySmall = TextStyle(
                         fontFamily = dmMonoFontFamily,
                         fontSize = 12.sp,
-                    )
-
+                    ),
+                    labelSmall = TextStyle(
+                        fontFamily = plusJakarta,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 11.sp,
+                        letterSpacing = 0.1.em,
+                    ),
                 ),
                 shapes = shapes,
             ),

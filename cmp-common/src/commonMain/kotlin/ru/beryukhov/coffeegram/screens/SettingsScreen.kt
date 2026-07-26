@@ -307,7 +307,7 @@ fun SettingsAppBar(
     modifier: Modifier = Modifier,
 ) {
     AdaptiveTopAppBar(
-        title = { Text(stringResource(Res.string.settings)) },
+        title = { TopBarTitle(title = stringResource(Res.string.settings)) },
         modifier = modifier,
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
     )

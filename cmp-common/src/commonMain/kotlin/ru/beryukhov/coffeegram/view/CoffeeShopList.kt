@@ -128,8 +128,11 @@ private fun CoffeeShopListPreview() = PreviewTheme {
                 )
             )
 
+            override val hasUserLocation: StateFlow<Boolean> = MutableStateFlow(false)
+
             override fun onZoomChanged(zoom: Float) = Unit
             override fun onMarkerClicked(coffeeShop: CoffeeShop) = Unit
+            override fun onUserLocationObtained() = Unit
         },
     )
 }

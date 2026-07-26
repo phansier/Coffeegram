@@ -103,7 +103,7 @@ private fun TopBar(rootComponent: RootComponent, swipeEnabled: Boolean) {
         when (val c = page) {
             is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditAppBar(c.component)
             is RootComponent.Child.Stats -> StatsAppBar()
-            is RootComponent.Child.Map -> MapAppBar()
+            is RootComponent.Child.Map -> MapAppBar(c.component)
             is RootComponent.Child.Settings -> SettingsAppBar(c.component)
         }
     }

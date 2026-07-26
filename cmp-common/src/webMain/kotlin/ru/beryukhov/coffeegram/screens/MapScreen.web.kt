@@ -50,6 +50,7 @@ actual fun MapScreen(
 
     val onMarkerClicked by rememberUpdatedState { shop: CoffeeShop -> component.onMarkerClicked(shop) }
     val onZoomChanged by rememberUpdatedState { zoom: Float -> component.onZoomChanged(zoom) }
+    val onUserLocationObtained by rememberUpdatedState { component.onUserLocationObtained() }
 
     val state = remember {
         WebMapState(
@@ -57,6 +58,7 @@ actual fun MapScreen(
             initialDarkTheme = darkTheme,
             onMarkerClicked = { shop -> onMarkerClicked(shop) },
             onZoomChanged = { zoom -> onZoomChanged(zoom) },
+            onUserLocationObtained = { onUserLocationObtained() },
         )
     }
 
@@ -95,6 +97,7 @@ private class WebMapState(
     initialDarkTheme: Boolean,
     private val onMarkerClicked: (CoffeeShop) -> Unit,
     private val onZoomChanged: (Float) -> Unit,
+    private val onUserLocationObtained: () -> Unit,
 ) {
     private var div: HTMLDivElement? = null
     private var map: MapHandle? = null
@@ -132,6 +135,7 @@ private class WebMapState(
 
     private fun onUserLocationResolved(lng: Double, lat: Double) {
         userLocation = lng to lat
+        onUserLocationObtained()
         if (didFocusUserLocation) return
         val m = map ?: return
         jsSetCenter(m, lng, lat, MapDefaults.ZOOM_WITH_LOCATION.toDouble())
