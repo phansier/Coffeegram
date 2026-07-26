@@ -1,6 +1,6 @@
 [versions]
 targetSdk = "36"
-compileSdk = "36"
+compileSdk = "37"
 minSdk = "26"
 
 kotlin = "2.4.0" # https://github.com/JetBrains/kotlin/releases
