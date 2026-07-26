@@ -75,6 +75,13 @@ actual fun MapScreen(
         state.updateDarkTheme(darkTheme)
     }
 
+    val highlightedShop = coffeeShopsState.list.firstOrNull { it.highlighted }?.coffeeShop
+    LaunchedEffect(highlightedShop) {
+        // Selecting a shop from the list can be off-screen, so pan the map to it. A marker click
+        // already implies the shop is visible, but re-centering on it too is harmless.
+        highlightedShop?.let { shop -> state.focusOnShop(shop.longitude, shop.latitude) }
+    }
+
     Box(
         modifier = modifier
             .background(Color(0xFFE6E6E6))
@@ -113,6 +120,7 @@ private class WebMapState(
     private var lastH = Double.NaN
     private var userLocation: Pair<Double, Double>? = null
     private var didFocusUserLocation: Boolean = false
+    private var currentZoom: Double = MapDefaults.ZOOM.toDouble()
 
     fun attach() {
         val d = (document.createElement("div") as HTMLDivElement).apply {
@@ -140,6 +148,11 @@ private class WebMapState(
         val m = map ?: return
         jsSetCenter(m, lng, lat, MapDefaults.ZOOM_WITH_LOCATION.toDouble())
         didFocusUserLocation = true
+    }
+
+    fun focusOnShop(lng: Double, lat: Double) {
+        val m = map ?: return
+        jsSetCenter(m, lng, lat, currentZoom)
     }
 
     fun detach() {
@@ -180,17 +193,21 @@ private class WebMapState(
                 val d = div ?: return@ensureMaplibreLoaded
                 if (map != null) return@ensureMaplibreLoaded
                 val location = userLocation
+                currentZoom = (location?.let { MapDefaults.ZOOM_WITH_LOCATION } ?: MapDefaults.ZOOM).toDouble()
                 val m = jsCreateMap(
                     containerId = containerId,
                     styleUrl = styleUrl(),
                     lng = location?.first ?: MapDefaults.LONGITUDE,
                     lat = location?.second ?: MapDefaults.LATITUDE,
-                    zoom = (location?.let { MapDefaults.ZOOM_WITH_LOCATION } ?: MapDefaults.ZOOM).toDouble(),
+                    zoom = currentZoom,
                 )
                 map = m
                 if (location != null) didFocusUserLocation = true
                 jsObserveResize(d, m)
-                jsAttachZoomHandler(m) { zoom -> onZoomChanged(zoom.toFloat()) }
+                jsAttachZoomHandler(m) { zoom ->
+                    currentZoom = zoom
+                    onZoomChanged(zoom.toFloat())
+                }
                 jsAttachLoadHandler(m) {
                     ready = true
                     jsResizeMap(m)

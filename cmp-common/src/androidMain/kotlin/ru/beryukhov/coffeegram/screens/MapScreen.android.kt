@@ -71,6 +71,14 @@ actual fun MapScreen(
     LaunchedEffect(coarseLocationEnabled) {
         if (coarseLocationEnabled) component.onUserLocationObtained()
     }
+    val highlightedShop = coffeeShopsState.list.firstOrNull { it.highlighted }?.coffeeShop
+    LaunchedEffect(highlightedShop) {
+        // Selecting a shop from the list can be off-screen, so pan the map to it. A marker tap
+        // already implies the shop is visible, but re-centering on it too is harmless.
+        highlightedShop?.let { shop ->
+            cameraPositionState.animate(CameraUpdateFactory.newLatLng(shop.latlng()))
+        }
+    }
     Box(
         modifier = modifier.fillMaxSize(),
     ) {

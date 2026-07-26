@@ -69,6 +69,18 @@ actual fun MapScreen(
         mkMapView.setCenterAtZoom(MapDefaults.LATITUDE, MapDefaults.LONGITUDE, MapDefaults.ZOOM)
     }
 
+    val highlightedShop = coffeeShopsState.list.firstOrNull { it.highlighted }?.coffeeShop
+    LaunchedEffect(highlightedShop) {
+        // Selecting a shop from the list can be off-screen, so pan the map to it. A marker tap
+        // already implies the shop is visible, but re-centering on it too is harmless.
+        highlightedShop?.let { shop ->
+            mkMapView.setCenterCoordinate(
+                coordinate = CLLocationCoordinate2DMake(shop.latitude, shop.longitude),
+                animated = true,
+            )
+        }
+    }
+
     Box(modifier = modifier.fillMaxSize()) {
         UIKitView(
             modifier = Modifier.fillMaxSize(),

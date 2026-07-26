@@ -78,7 +78,7 @@ fun BottomSheetPane(
     Box(modifier = modifier) {
         content()
 
-        UnstyledBottomSheet(state = sheetState, modifier = Modifier.fillMaxWidth()) {
+        UnstyledBottomSheet(state = sheetState, modifier = Modifier.matchParentSize()) {
             Sheet(
                 modifier = Modifier
                     .fillMaxWidth()
