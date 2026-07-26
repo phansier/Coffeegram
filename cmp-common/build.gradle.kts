@@ -19,7 +19,7 @@ val supabaseProps = Properties().apply {
     rootProject.file("secrets.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
 }
 
-val generateSupabaseConfig by tasks.registering {
+val generateSupabaseConfig = tasks.register("generateSupabaseConfig") {
     val outputDir = layout.buildDirectory.dir("generated/supabase/kotlin")
     val url = supabaseProps.getProperty("SUPABASE_URL").orEmpty()
     val publishableKey = supabaseProps.getProperty("SUPABASE_PUBLISHABLE_KEY").orEmpty()
@@ -87,7 +87,7 @@ kotlin {
 
     sourceSets {
         commonMain {
-            kotlin.srcDir(generateSupabaseConfig)
+            kotlin.srcDir(generateSupabaseConfig.get())
         }
         commonMain.dependencies {
             implementation(projects.repository)
@@ -166,7 +166,7 @@ kotlin {
             implementation(libs.kotlinBrowser)
         }
         webMain.dependencies {
-            implementation(libs.ktor.cio)
+            implementation(libs.ktor.client.js)
         }
     }
 }

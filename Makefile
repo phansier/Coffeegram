@@ -76,3 +76,6 @@ screenshotTest:
 # ARCHS=arm64 is required for Compose Multiplatform's syncComposeResourcesForIos task
 buildIos:
 	xcodebuild build -project cmp-iosApp/iosApp.xcodeproj -scheme iosApp -destination 'generic/platform=iOS Simulator' ARCHS=arm64
+
+updateWebDepsLocks:
+	./gradlew :kotlinUpgradeYarnLock $(params)
