@@ -19,7 +19,7 @@ val supabaseProps = Properties().apply {
     rootProject.file("secrets.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
 }
 
-val generateSupabaseConfig= tasks.register("generateSupabaseConfig") {
+val generateSupabaseConfig = tasks.register("generateSupabaseConfig") {
     val outputDir = layout.buildDirectory.dir("generated/supabase/kotlin")
     val url = supabaseProps.getProperty("SUPABASE_URL").orEmpty()
     val publishableKey = supabaseProps.getProperty("SUPABASE_PUBLISHABLE_KEY").orEmpty()
