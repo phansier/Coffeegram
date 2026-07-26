@@ -169,6 +169,13 @@ kotlin {
             implementation(libs.ktor.client.js)
         }
     }
+
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-Xexpect-actual-classes",
+            "-Xexplicit-backing-fields"
+        )
+    }
 }
 
 compose.desktop {

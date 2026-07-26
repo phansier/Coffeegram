@@ -100,6 +100,9 @@ android {
 kotlin {
     compilerOptions {
         optIn.add("kotlin.RequiresOptIn")
+        freeCompilerArgs.addAll(
+            "-Xexplicit-backing-fields",
+        )
     }
     jvmToolchain(21)
 }

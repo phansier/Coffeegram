@@ -34,11 +34,11 @@ class DefaultSettingsComponent(
 ) : SettingsComponent, ComponentContext by context {
     override val models: StateFlow<ThemeState> = themeStore.state
 
-    private val _selectedCategory = MutableValue("")
-    override val selectedCategory: Value<String> = _selectedCategory
+    override val selectedCategory: Value<String>
+        field = MutableValue("")
 
     override fun selectCategory(id: String) {
-        _selectedCategory.value = id
+        selectedCategory.value = id
     }
 
     override fun onSetSystemTheme() {
