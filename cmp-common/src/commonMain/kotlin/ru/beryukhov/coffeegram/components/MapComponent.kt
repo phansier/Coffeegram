@@ -6,7 +6,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.beryukhov.coffeegram.repository.CoffeeShop
 import ru.beryukhov.coffeegram.repository.coffeeShops
@@ -30,9 +29,11 @@ data class ExtendedCoffeeShop(
  */
 interface MapComponent {
     val coffeeShops: StateFlow<CoffeeShopsState>
+    val hasUserLocation: StateFlow<Boolean>
 
     fun onZoomChanged(zoom: Float)
     fun onMarkerClicked(coffeeShop: CoffeeShop)
+    fun onUserLocationObtained()
 }
 
 class DefaultMapComponent(
@@ -41,8 +42,11 @@ class DefaultMapComponent(
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
-    private val _coffeeShops = MutableStateFlow(CoffeeShopsState())
-    override val coffeeShops: StateFlow<CoffeeShopsState> = _coffeeShops.asStateFlow()
+    override val coffeeShops: StateFlow<CoffeeShopsState>
+        field = MutableStateFlow(CoffeeShopsState())
+
+    override val hasUserLocation: StateFlow<Boolean>
+        field = MutableStateFlow(false)
 
     init {
         loadCoffeeShops()
@@ -52,13 +56,13 @@ class DefaultMapComponent(
         scope.launch {
             try {
                 val shops = coffeeShops()
-                _coffeeShops.value = CoffeeShopsState(
+                coffeeShops.value = CoffeeShopsState(
                     list = shops.map { ExtendedCoffeeShop(it, false) },
                     expanded = false,
                     isLoading = false,
                 )
             } catch (e: Exception) {
-                _coffeeShops.value = CoffeeShopsState(
+                coffeeShops.value = CoffeeShopsState(
                     list = emptyList(),
                     expanded = false,
                     isLoading = false,
@@ -69,15 +73,15 @@ class DefaultMapComponent(
 
     override fun onZoomChanged(zoom: Float) {
         val newExpanded = zoom >= 11
-        val current = _coffeeShops.value
+        val current = coffeeShops.value
         if (current.expanded != newExpanded) {
-            _coffeeShops.value = current.copy(expanded = newExpanded)
+            coffeeShops.value = current.copy(expanded = newExpanded)
         }
     }
 
     override fun onMarkerClicked(coffeeShop: CoffeeShop) {
-        val current = _coffeeShops.value
-        _coffeeShops.value = current.copy(
+        val current = coffeeShops.value
+        coffeeShops.value = current.copy(
             list = current.list.map {
                 if (it.coffeeShop == coffeeShop) {
                     it.copy(highlighted = true)
@@ -86,5 +90,9 @@ class DefaultMapComponent(
                 }
             }
         )
+    }
+
+    override fun onUserLocationObtained() {
+        hasUserLocation.value = true
     }
 }

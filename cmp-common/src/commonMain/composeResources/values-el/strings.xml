@@ -29,6 +29,9 @@
     <string name="settings_device">Συσκευή</string>
     <string name="calendar">Ημερολόγιο</string>
     <string name="stats">Στατιστικά</string>
+    <string name="stats_title">Οι συνήθειές σου</string>
+    <string name="stats_eyebrow">ΣΤΑΤΙΣΤΙΚΑ</string>
+    <string name="specialty_eyebrow">ΚΟΝΤΑ ΣΟΥ</string>
     <string name="map_short">Σπέσιαλτι</string>
     <string name="add_drink">Προσθήκη ροφήματος</string>
 

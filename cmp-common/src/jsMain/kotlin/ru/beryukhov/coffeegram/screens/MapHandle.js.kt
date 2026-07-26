@@ -78,3 +78,12 @@ internal actual fun jsSetStyle(map: MapHandle, styleUrl: String) {
     val m = map.js
     js(JS_SET_STYLE)
 }
+
+internal actual fun jsSetCenter(map: MapHandle, lng: Double, lat: Double, zoom: Double) {
+    val m = map.js
+    js(JS_SET_CENTER)
+}
+
+internal actual fun jsGetCurrentPosition(onSuccess: (lng: Double, lat: Double) -> Unit, onError: () -> Unit) {
+    js(JS_GET_CURRENT_POSITION)
+}

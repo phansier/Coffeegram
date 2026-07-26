@@ -6,14 +6,14 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.union
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import coffeegram.cmp_common.generated.resources.Res
-import coffeegram.cmp_common.generated.resources.stats
+import coffeegram.cmp_common.generated.resources.stats_eyebrow
+import coffeegram.cmp_common.generated.resources.stats_title
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import org.jetbrains.compose.resources.stringResource
@@ -36,7 +36,12 @@ fun StatsScreen(
 @Composable
 fun StatsAppBar(modifier: Modifier = Modifier) {
     AdaptiveTopAppBar(
-        title = { Text(stringResource(Res.string.stats)) },
+        title = {
+            TopBarTitle(
+                title = stringResource(Res.string.stats_title),
+                eyebrow = stringResource(Res.string.stats_eyebrow),
+            )
+        },
         modifier = modifier,
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
     )

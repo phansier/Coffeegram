@@ -29,6 +29,9 @@
     <string name="settings_device">Dispositivo</string>
     <string name="calendar">Calendario</string>
     <string name="stats">Estadísticas</string>
+    <string name="stats_title">Tus hábitos</string>
+    <string name="stats_eyebrow">ESTADÍSTICAS</string>
+    <string name="specialty_eyebrow">CERCA DE TI</string>
     <string name="map_short">Specialty</string>
     <string name="add_drink">Añadir bebida</string>
 

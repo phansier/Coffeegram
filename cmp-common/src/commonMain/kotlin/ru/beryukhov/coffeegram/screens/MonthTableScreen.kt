@@ -17,11 +17,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.ParagraphStyle
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.slapps.cupertino.adaptive.AdaptiveIconButton
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import com.slapps.cupertino.adaptive.icons.AdaptiveIcons
@@ -78,31 +74,27 @@ fun MonthTableAppBar(
             } else {
                 monthLabel
             }
-            Row(horizontalArrangement = Arrangement.Center) {
-                Text(
-                    modifier = Modifier.weight(1f).testTag("Month"),
-                    text = AnnotatedString(
-                        text = titleText,
-                        paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
-                    )
-                )
-            }
-        },
-        navigationIcon = {
-            AdaptiveIconButton(
-                onClick = component::onDecrementMonth,
-                modifier = Modifier.semantics {
-                    contentDescription = "ArrowLeft"
-                }
-            ) { Icon(imageVector = AdaptiveIcons.Outlined.KeyboardArrowLeft, contentDescription = "") }
+            TopBarTitle(
+                title = titleText,
+                eyebrow = "${screenState.yearMonth.year}",
+                modifier = Modifier.testTag("Month"),
+            )
         },
         actions = {
-            AdaptiveIconButton(
-                onClick = component::onIncrementMonth,
-                modifier = Modifier.semantics {
-                    testTag = "ArrowRight"
-                }
-            ) { Icon(imageVector = AdaptiveIcons.Outlined.KeyboardArrowRight, contentDescription = "") }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                TopBarIconButton(
+                    onClick = component::onDecrementMonth,
+                    modifier = Modifier.semantics {
+                        contentDescription = "ArrowLeft"
+                    }
+                ) { Icon(imageVector = AdaptiveIcons.Outlined.KeyboardArrowLeft, contentDescription = "") }
+                TopBarIconButton(
+                    onClick = component::onIncrementMonth,
+                    modifier = Modifier.semantics {
+                        testTag = "ArrowRight"
+                    }
+                ) { Icon(imageVector = AdaptiveIcons.Outlined.KeyboardArrowRight, contentDescription = "") }
+            }
         },
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
     )

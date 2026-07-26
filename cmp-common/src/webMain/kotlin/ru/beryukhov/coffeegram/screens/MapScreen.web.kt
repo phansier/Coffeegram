@@ -50,6 +50,7 @@ actual fun MapScreen(
 
     val onMarkerClicked by rememberUpdatedState { shop: CoffeeShop -> component.onMarkerClicked(shop) }
     val onZoomChanged by rememberUpdatedState { zoom: Float -> component.onZoomChanged(zoom) }
+    val onUserLocationObtained by rememberUpdatedState { component.onUserLocationObtained() }
 
     val state = remember {
         WebMapState(
@@ -57,6 +58,7 @@ actual fun MapScreen(
             initialDarkTheme = darkTheme,
             onMarkerClicked = { shop -> onMarkerClicked(shop) },
             onZoomChanged = { zoom -> onZoomChanged(zoom) },
+            onUserLocationObtained = { onUserLocationObtained() },
         )
     }
 
@@ -71,6 +73,13 @@ actual fun MapScreen(
 
     LaunchedEffect(darkTheme) {
         state.updateDarkTheme(darkTheme)
+    }
+
+    val highlightedShop = coffeeShopsState.list.firstOrNull { it.highlighted }?.coffeeShop
+    LaunchedEffect(highlightedShop) {
+        // Selecting a shop from the list can be off-screen, so pan the map to it. A marker click
+        // already implies the shop is visible, but re-centering on it too is harmless.
+        highlightedShop?.let { shop -> state.focusOnShop(shop.longitude, shop.latitude) }
     }
 
     Box(
@@ -95,6 +104,7 @@ private class WebMapState(
     initialDarkTheme: Boolean,
     private val onMarkerClicked: (CoffeeShop) -> Unit,
     private val onZoomChanged: (Float) -> Unit,
+    private val onUserLocationObtained: () -> Unit,
 ) {
     private var div: HTMLDivElement? = null
     private var map: MapHandle? = null
@@ -108,6 +118,9 @@ private class WebMapState(
     private var lastY = Double.NaN
     private var lastW = Double.NaN
     private var lastH = Double.NaN
+    private var userLocation: Pair<Double, Double>? = null
+    private var didFocusUserLocation: Boolean = false
+    private var currentZoom: Double = MapDefaults.ZOOM.toDouble()
 
     fun attach() {
         val d = (document.createElement("div") as HTMLDivElement).apply {
@@ -122,6 +135,24 @@ private class WebMapState(
         }
         document.documentElement?.appendChild(d)
         div = d
+        jsGetCurrentPosition(
+            onSuccess = { lng, lat -> onUserLocationResolved(lng, lat) },
+            onError = {},
+        )
+    }
+
+    private fun onUserLocationResolved(lng: Double, lat: Double) {
+        userLocation = lng to lat
+        onUserLocationObtained()
+        if (didFocusUserLocation) return
+        val m = map ?: return
+        jsSetCenter(m, lng, lat, MapDefaults.ZOOM_WITH_LOCATION.toDouble())
+        didFocusUserLocation = true
+    }
+
+    fun focusOnShop(lng: Double, lat: Double) {
+        val m = map ?: return
+        jsSetCenter(m, lng, lat, currentZoom)
     }
 
     fun detach() {
@@ -161,16 +192,22 @@ private class WebMapState(
             ensureMaplibreLoaded {
                 val d = div ?: return@ensureMaplibreLoaded
                 if (map != null) return@ensureMaplibreLoaded
+                val location = userLocation
+                currentZoom = (location?.let { MapDefaults.ZOOM_WITH_LOCATION } ?: MapDefaults.ZOOM).toDouble()
                 val m = jsCreateMap(
-                    containerId,
-                    styleUrl(),
-                    MapDefaults.LONGITUDE,
-                    MapDefaults.LATITUDE,
-                    MapDefaults.ZOOM.toDouble(),
+                    containerId = containerId,
+                    styleUrl = styleUrl(),
+                    lng = location?.first ?: MapDefaults.LONGITUDE,
+                    lat = location?.second ?: MapDefaults.LATITUDE,
+                    zoom = currentZoom,
                 )
                 map = m
+                if (location != null) didFocusUserLocation = true
                 jsObserveResize(d, m)
-                jsAttachZoomHandler(m) { zoom -> onZoomChanged(zoom.toFloat()) }
+                jsAttachZoomHandler(m) { zoom ->
+                    currentZoom = zoom
+                    onZoomChanged(zoom.toFloat())
+                }
                 jsAttachLoadHandler(m) {
                     ready = true
                     jsResizeMap(m)
@@ -198,8 +235,9 @@ private class WebMapState(
             )
         }
         // Only fit-to-bounds once, on the first non-empty load. Subsequent marker rebuilds
-        // (from expand/highlight state changes) must not stomp on the user's pan/zoom.
-        if (!didInitialFit && pendingShops.isNotEmpty()) {
+        // (from expand/highlight state changes) must not stomp on the user's pan/zoom, and a
+        // resolved user location takes priority over fitting to all markers.
+        if (!didInitialFit && !didFocusUserLocation && pendingShops.isNotEmpty()) {
             val b = paddedBounds(pendingShops.map { it.coffeeShop })
             jsFitBounds(m, b.west, b.south, b.east, b.north)
             didInitialFit = true

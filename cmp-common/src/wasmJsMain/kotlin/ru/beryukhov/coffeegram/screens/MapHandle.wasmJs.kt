@@ -91,3 +91,11 @@ private fun jsRemoveMapImpl(m: JsAny): Unit = js(JS_REMOVE_MAP)
 internal actual fun jsSetStyle(map: MapHandle, styleUrl: String) = jsSetStyleImpl(map.js, styleUrl)
 
 private fun jsSetStyleImpl(m: JsAny, styleUrl: String): Unit = js(JS_SET_STYLE)
+
+internal actual fun jsSetCenter(map: MapHandle, lng: Double, lat: Double, zoom: Double) =
+    jsSetCenterImpl(map.js, lng, lat, zoom)
+
+private fun jsSetCenterImpl(m: JsAny, lng: Double, lat: Double, zoom: Double): Unit = js(JS_SET_CENTER)
+
+internal actual fun jsGetCurrentPosition(onSuccess: (lng: Double, lat: Double) -> Unit, onError: () -> Unit): Unit =
+    js(JS_GET_CURRENT_POSITION)

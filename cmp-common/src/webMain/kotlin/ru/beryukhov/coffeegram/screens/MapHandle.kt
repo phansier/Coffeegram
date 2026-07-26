@@ -85,6 +85,17 @@ internal const val JS_REMOVE_MAP = "m.remove()"
 
 internal const val JS_SET_STYLE = "m.setStyle(styleUrl)"
 
+internal const val JS_SET_CENTER = "m.jumpTo({ center: [lng, lat], zoom: zoom })"
+
+internal const val JS_GET_CURRENT_POSITION =
+    "(function(){" +
+        "if (!navigator.geolocation) { onError(); return; }" +
+        "navigator.geolocation.getCurrentPosition(" +
+            "function(pos){ onSuccess(pos.coords.longitude, pos.coords.latitude); }," +
+            "function(err){ onError(); }" +
+        ");" +
+    "})()"
+
 internal expect fun jsMaplibreReady(): Boolean
 internal expect fun jsSetOnLoad(el: HTMLScriptElement, cb: () -> Unit)
 internal expect fun jsInjectCriticalCss()
@@ -118,3 +129,5 @@ internal expect fun jsResizeMap(map: MapHandle)
 internal expect fun jsObserveResize(div: HTMLDivElement, map: MapHandle)
 internal expect fun jsRemoveMap(map: MapHandle)
 internal expect fun jsSetStyle(map: MapHandle, styleUrl: String)
+internal expect fun jsSetCenter(map: MapHandle, lng: Double, lat: Double, zoom: Double)
+internal expect fun jsGetCurrentPosition(onSuccess: (lng: Double, lat: Double) -> Unit, onError: () -> Unit)

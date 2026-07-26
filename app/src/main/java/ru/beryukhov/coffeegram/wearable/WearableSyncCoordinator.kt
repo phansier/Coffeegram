@@ -30,13 +30,13 @@ class WearableSyncCoordinator(
     private val wearableSyncService by lazy(wearableSyncServiceProvider)
     private val scope = MainScope()
 
-    private val _wearableActivityStarter = MutableStateFlow<(() -> Unit)?>(null)
-    val wearableActivityStarter: StateFlow<(() -> Unit)?> = _wearableActivityStarter
+    val wearableActivityStarter: StateFlow<(() -> Unit)?>
+        field = MutableStateFlow(null)
 
     fun start() {
         scope.launch {
             if (!hasPairedWearable()) return@launch
-            _wearableActivityStarter.value = ::triggerWearableActivity
+            wearableActivityStarter.value = ::triggerWearableActivity
 
             daysCoffeesStore.state
                 .map { state ->

@@ -17,6 +17,7 @@ object MapDefaults {
 
     /** Initial Google-Maps-style zoom level used for the very first camera position. */
     const val ZOOM: Float = 10f
+    const val ZOOM_WITH_LOCATION: Float = 13f
 
     /** Screen-space padding added around the bounding box when fitting all markers. */
     val FIT_PADDING: Dp = 72.dp
