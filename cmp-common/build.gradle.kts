@@ -166,7 +166,7 @@ kotlin {
             implementation(libs.kotlinBrowser)
         }
         webMain.dependencies {
-            implementation(libs.ktor.cio)
+            implementation(libs.ktor.client.js)
         }
     }
 }
