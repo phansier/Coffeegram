@@ -42,12 +42,6 @@ import ru.beryukhov.coffeegram.components.ExtendedCoffeeShop
 import ru.beryukhov.coffeegram.components.MapComponent
 import ru.beryukhov.coffeegram.repository.CoffeeShop
 
-/**
- * `Flat` matches the compact, divider-separated rows used in the narrow-screen bottom sheet.
- * `Card` matches the rounded, bordered rows used in the wide-screen side pane.
- */
-enum class CoffeeShopListStyle { Flat, Card }
-
 @Composable
 fun CoffeeShopList(
     component: MapComponent,
@@ -147,6 +141,12 @@ private fun CoffeeShopListItem(
         }
     }
 }
+
+/**
+ * `Flat` matches the compact, divider-separated rows used in the narrow-screen bottom sheet.
+ * `Card` matches the rounded, bordered rows used in the wide-screen side pane.
+ */
+enum class CoffeeShopListStyle { Flat, Card }
 
 @PreviewLightDark
 @Composable
