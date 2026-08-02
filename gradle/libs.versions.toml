@@ -55,7 +55,7 @@ cmp-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview
 cmp-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
 
 kotlinBrowser = { module = "org.jetbrains.kotlin-wrappers:kotlin-browser" }
-kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version = "0.5.1" }
+kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version = "0.5.0" }
 kotlinGradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 androidGradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 roomGradle = { module = "androidx.room3:androidx.room3.gradle.plugin", version.ref = "androidxRoom3" }
