@@ -3,26 +3,26 @@ targetSdk = "36"
 compileSdk = "37"
 minSdk = "26"
 
-kotlin = "2.4.0" # https://github.com/JetBrains/kotlin/releases
-ksp = "2.3.9" # https://github.com/google/ksp/releases
+kotlin = "2.4.10" # https://github.com/JetBrains/kotlin/releases
+ksp = "2.3.10" # https://github.com/google/ksp/releases
 
 compose = "1.11.3" # https://developer.android.com/jetpack/androidx/releases/compose-ui
 jetbrainsCompose = "1.11.1" # https://github.com/JetBrains/compose-multiplatform/releases
-hotReload = "1.1.0" # https://github.com/JetBrains/compose-hot-reload/releases
+hotReload = "1.2.0" # https://github.com/JetBrains/compose-hot-reload/releases
 
 agp = "9.2.1" # https://developer.android.com/studio/releases/gradle-plugin
-ktor = "3.5.0" # https://github.com/ktorio/ktor
+ktor = "3.5.1" # https://github.com/ktorio/ktor
 androidxRoom3 = "3.0.0-rc01" # https://developer.android.com/jetpack/androidx/releases/room3
-sqlite = "2.7.0-rc01" # https://developer.android.com/jetpack/androidx/releases/sqlite
-screenshot = "0.0.1-alpha15"
+sqlite = "2.7.0" # https://developer.android.com/jetpack/androidx/releases/sqlite
+screenshot = "0.0.1-alpha16"
 
 decompose = "3.5.0"
 essenty = "2.5.0"
-jetbrainsKotlinWrappers = "2026.6.5"
+jetbrainsKotlinWrappers = "2026.7.7"
 
 
 detekt = "1.23.8" # https://github.com/detekt/detekt
-detektCompose = "0.6.2" # https://github.com/mrmans0n/compose-rules
+detektCompose = "0.6.3" # https://github.com/mrmans0n/compose-rules
 detektDecompose = "0.2.0" # https://github.com/AJIEKCX/decompose-detekt-rules
 wearCompose = "1.6.2" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
@@ -42,7 +42,7 @@ sqldelight = "2.3.2" # https://github.com/cashapp/sqldelight/releases
 sqljs = "1.8.0" # https://github.com/sqldelight/sqldelight/blob/master/gradle/libs.versions.toml
 
 material = "1.14.0" # https://github.com/material-components/material-components-android
-vico = "2.5.1"
+vico = "2.5.2"
 protobuf = "4.35.1"
 
 [libraries]
@@ -126,14 +126,14 @@ glance-appwidget = { module = "androidx.glance:glance-appwidget", version.ref = 
 glance-preview = { module = "androidx.glance:glance-preview", version.ref = "glance" }
 glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview", version.ref = "glance" }
 
-google-maps-utils = "com.google.maps.android:maps-ktx:6.0.1"
-google-maps-compose = "com.google.maps.android:maps-compose:8.3.0"
+google-maps-utils = "com.google.maps.android:maps-ktx:6.2.0"
+google-maps-compose = "com.google.maps.android:maps-compose:8.4.0"
 
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
 playServices-wearable = "com.google.android.gms:play-services-wearable:20.0.1" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
-kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.5.0" # https://github.com/Kotlin/kotlinx.collections.immutable
+kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.5.1" # https://github.com/Kotlin/kotlinx.collections.immutable
 vico-multiplatform = { module = "com.patrykandpatrick.vico:multiplatform", version.ref = "vico" }
 vico-multiplatform-m3 = { module = "com.patrykandpatrick.vico:multiplatform-m3", version.ref = "vico" }
 
