@@ -78,4 +78,4 @@ buildIos:
 	xcodebuild build -project cmp-iosApp/iosApp.xcodeproj -scheme iosApp -destination 'generic/platform=iOS Simulator' ARCHS=arm64
 
 updateWebDepsLocks:
-	./gradlew :kotlinUpgradeYarnLock $(params)
+	./gradlew :kotlinUpgradeYarnLock :kotlinWasmUpgradeYarnLock $(params)
