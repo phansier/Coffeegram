@@ -52,10 +52,13 @@ class DefaultRootComponent(
     val themeStore: ThemeStore,
     val daysCoffeesStore: DaysCoffeesStore,
     override val showMap: Boolean = false,
+    deepLink: String? = null,
     private val onAndroidStartWearableActivity: StateFlow<(() -> Unit)?> = MutableStateFlow(null),
     private val onAndroidIconChange: (isSummer: Boolean) -> Unit = {},
     ) : RootComponent, ComponentContext by context {
     private val navigation = PagesNavigation<Config>()
+
+    private val deepLinkSegments: List<String> = deepLink?.pathSegments().orEmpty()
 
     private val typedPages: Value<ChildPages<Config, RootComponent.Child>> =
         childPages(
@@ -68,7 +71,11 @@ class DefaultRootComponent(
                     if (showMap) add(Config.Map)
                     add(Config.Settings)
                 }
-                Pages(items = items, selectedIndex = 0)
+                Pages(
+                    items = items,
+                    selectedIndex = items.indexOfFirst { it.path == deepLinkSegments.firstOrNull() }
+                        .coerceAtLeast(0),
+                )
             },
             childFactory = ::child,
         )
@@ -80,15 +87,7 @@ class DefaultRootComponent(
             navigator = navigation,
             pages = typedPages,
             serializer = Config.serializer(),
-            pathMapper = { state ->
-                when (state.items.getOrNull(state.selectedIndex)?.configuration) {
-                    Config.CoffeeEdit -> "calendar"
-                    Config.Stats -> "stats"
-                    Config.Map -> "map"
-                    Config.Settings -> "settings"
-                    null -> null
-                }
-            },
+            pathMapper = { state -> state.items.getOrNull(state.selectedIndex)?.configuration?.path },
             childSelector = { child ->
                 when (val instance = child.instance) {
                     is RootComponent.Child.CoffeeEdit -> instance.component
@@ -103,6 +102,9 @@ class DefaultRootComponent(
         navigation.select(childIndex)
     }
 
+    private fun nestedDeepLinkSegments(config: Config): List<String> =
+        if (deepLinkSegments.firstOrNull() == config.path) deepLinkSegments.drop(1) else emptyList()
+
     private fun child(
         config: Config,
         context: ComponentContext,
@@ -112,6 +114,7 @@ class DefaultRootComponent(
                 DefaultCoffeeEditComponent(
                     context = context,
                     daysCoffeesStore = daysCoffeesStore,
+                    deepLinkSegments = nestedDeepLinkSegments(config),
                 )
             )
 
@@ -140,16 +143,34 @@ class DefaultRootComponent(
 
     @Serializable
     private sealed interface Config {
-        @Serializable
-        data object CoffeeEdit : Config
+        val path: String
 
         @Serializable
-        data object Stats : Config
+        data object CoffeeEdit : Config {
+            override val path: String get() = "calendar"
+        }
 
         @Serializable
-        data object Map : Config
+        data object Stats : Config {
+            override val path: String get() = "stats"
+        }
 
         @Serializable
-        data object Settings : Config
+        data object Map : Config {
+            override val path: String get() = "map"
+        }
+
+        @Serializable
+        data object Settings : Config {
+            override val path: String get() = "settings"
+        }
     }
 }
+
+internal fun String.pathSegments(): List<String> =
+    substringAfter("://")
+        .substringAfter('/', missingDelimiterValue = "")
+        .substringBefore('?')
+        .substringBefore('#')
+        .split('/')
+        .filter(String::isNotEmpty)

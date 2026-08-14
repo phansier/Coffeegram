@@ -62,7 +62,7 @@ fun RootScreen(
                     NavRail(rootComponent, navBarItems)
                     Scaffold(
                         contentWindowInsets = WindowInsets.systemBars,
-                        topBar = { TopBar(rootComponent, swipeEnabled = false) },
+                        topBar = { TopBar(rootComponent, isWide = true) },
                         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                     ) { paddingValues ->
                         CurrentScreen(rootComponent, paddingValues, snackbarHostState, swipeEnabled = false)
@@ -71,7 +71,7 @@ fun RootScreen(
             } else {
                 Scaffold(
                     contentWindowInsets = WindowInsets.systemBars,
-                    topBar = { TopBar(rootComponent, swipeEnabled = true) },
+                    topBar = { TopBar(rootComponent, isWide = false) },
                     snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                     bottomBar = { BottomBar(rootComponent, navBarItems) }
                 ) { paddingValues ->
@@ -83,9 +83,9 @@ fun RootScreen(
 }
 
 @Composable
-private fun TopBar(rootComponent: RootComponent, swipeEnabled: Boolean) {
+private fun TopBar(rootComponent: RootComponent, isWide: Boolean) {
     val pagesState by rootComponent.pages.subscribeAsState()
-    val pagerSwipeEnabled = swipeEnabled && !pagesState.isMapSelected()
+    val pagerSwipeEnabled = !isWide && !pagesState.isMapSelected()
     ChildPages(
         pages = rootComponent.pages,
         onPageSelected = rootComponent::selectPage,
@@ -101,7 +101,7 @@ private fun TopBar(rootComponent: RootComponent, swipeEnabled: Boolean) {
         },
     ) { _, page ->
         when (val c = page) {
-            is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditAppBar(c.component)
+            is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditAppBar(c.component, isWide)
             is RootComponent.Child.Stats -> StatsAppBar()
             is RootComponent.Child.Map -> MapAppBar(c.component)
             is RootComponent.Child.Settings -> SettingsAppBar(c.component)

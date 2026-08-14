@@ -49,7 +49,7 @@ private fun MonthTableScreenPreview() = PreviewTheme {
     ) {
         RootScreen(
             pageNum = 0,
-            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component) },
+            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component, isWide = false) },
             CurrentScreen = { padding -> CoffeeEditScreen(component, contentPadding = padding) },
         )
     }
@@ -65,7 +65,7 @@ private fun ListScreenPreview() = PreviewTheme {
     ) {
         RootScreen(
             pageNum = 0,
-            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component) },
+            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component, isWide = false) },
             CurrentScreen = { padding -> CoffeeEditScreen(component, contentPadding = padding) },
         )
     }
