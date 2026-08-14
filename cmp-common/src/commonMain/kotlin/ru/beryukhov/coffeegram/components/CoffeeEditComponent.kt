@@ -18,6 +18,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -29,6 +30,7 @@ import ru.beryukhov.coffeegram.components.CoffeeEditComponent.MainConfig
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.MonthTableScreenStore
 import ru.beryukhov.date_time_utils.YearMonth
+import ru.beryukhov.date_time_utils.nowYM
 
 @OptIn(ExperimentalDecomposeApi::class)
 interface CoffeeEditComponent : WebNavigationOwner {
@@ -51,10 +53,14 @@ interface CoffeeEditComponent : WebNavigationOwner {
 class DefaultCoffeeEditComponent(
     context: ComponentContext,
     val daysCoffeesStore: DaysCoffeesStore,
+    deepLinkSegments: List<String> = emptyList(),
 ) : CoffeeEditComponent, ComponentContext by context {
     private val navigation = PanelsNavigation<MainConfig, DetailsConfig, Nothing>()
 
+    private val initialDetails: DetailsConfig.DayList? = deepLinkSegments.toDayListConfig()
+
     private val monthTableScreenStore = MonthTableScreenStore(
+        yearMonth = initialDetails?.date?.let { YearMonth(it.year, it.month) } ?: nowYM(),
         initialStoreState = daysCoffeesStore.state.value,
     )
 
@@ -64,7 +70,7 @@ class DefaultCoffeeEditComponent(
         childPanels(
             source = navigation,
             serializers = MainConfig.serializer() to DetailsConfig.serializer(),
-            initialPanels = { Panels(main = MainConfig) },
+            initialPanels = { Panels(main = MainConfig, details = initialDetails) },
             handleBackButton = true,
             mainFactory = { _, ctx ->
                 DefaultMonthTableComponent(
@@ -97,7 +103,7 @@ class DefaultCoffeeEditComponent(
             serializers = MainConfig.serializer() to DetailsConfig.serializer(),
             pathMapper = { state ->
                 when (val details = state.details?.configuration) {
-                    is DetailsConfig.DayList -> "day/${details.date}"
+                    is DetailsConfig.DayList -> "$DAY_PATH/${details.date}"
                     null -> ""
                 }
             },
@@ -110,6 +116,7 @@ class DefaultCoffeeEditComponent(
         monthTableScreenStore.state
             .map { it.yearMonth }
             .distinctUntilChanged()
+            .drop(1)
             .onEach { yearMonth ->
                 val currentDate = (panels.value.details?.configuration as? DetailsConfig.DayList)?.date
                     ?: return@onEach
@@ -132,3 +139,10 @@ class DefaultCoffeeEditComponent(
 
 private fun YearMonth.clampedDate(day: Int): LocalDate =
     atDay(day.coerceIn(1, lengthOfMonth()))
+
+private const val DAY_PATH = "day"
+
+internal fun List<String>.toDayListConfig(): DetailsConfig.DayList? =
+    takeIf { it.size == 2 && it.first() == DAY_PATH }
+        ?.let { runCatching { LocalDate.parse(it.last()) }.getOrNull() }
+        ?.let(DetailsConfig::DayList)

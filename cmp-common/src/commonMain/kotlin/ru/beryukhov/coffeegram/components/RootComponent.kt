@@ -58,6 +58,8 @@ class DefaultRootComponent(
     ) : RootComponent, ComponentContext by context {
     private val navigation = PagesNavigation<Config>()
 
+    private val deepLinkSegments: List<String> = deepLink?.pathSegments().orEmpty()
+
     private val typedPages: Value<ChildPages<Config, RootComponent.Child>> =
         childPages(
             source = navigation,
@@ -69,10 +71,10 @@ class DefaultRootComponent(
                     if (showMap) add(Config.Map)
                     add(Config.Settings)
                 }
-                val deepLinkPath = deepLink?.firstPathSegment()
                 Pages(
                     items = items,
-                    selectedIndex = items.indexOfFirst { it.path == deepLinkPath }.coerceAtLeast(0),
+                    selectedIndex = items.indexOfFirst { it.path == deepLinkSegments.firstOrNull() }
+                        .coerceAtLeast(0),
                 )
             },
             childFactory = ::child,
@@ -100,6 +102,9 @@ class DefaultRootComponent(
         navigation.select(childIndex)
     }
 
+    private fun nestedDeepLinkSegments(config: Config): List<String> =
+        if (deepLinkSegments.firstOrNull() == config.path) deepLinkSegments.drop(1) else emptyList()
+
     private fun child(
         config: Config,
         context: ComponentContext,
@@ -109,6 +114,7 @@ class DefaultRootComponent(
                 DefaultCoffeeEditComponent(
                     context = context,
                     daysCoffeesStore = daysCoffeesStore,
+                    deepLinkSegments = nestedDeepLinkSegments(config),
                 )
             )
 
@@ -161,10 +167,10 @@ class DefaultRootComponent(
     }
 }
 
-internal fun String.firstPathSegment(): String? =
+internal fun String.pathSegments(): List<String> =
     substringAfter("://")
         .substringAfter('/', missingDelimiterValue = "")
         .substringBefore('?')
         .substringBefore('#')
         .split('/')
-        .firstOrNull(String::isNotEmpty)
+        .filter(String::isNotEmpty)

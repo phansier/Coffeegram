@@ -18,10 +18,10 @@ import ru.beryukhov.coffeegram.components.CoffeeEditComponent.DetailsConfig
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
-fun CoffeeEditAppBar(coffeeEditComponent: CoffeeEditComponent) {
+fun CoffeeEditAppBar(coffeeEditComponent: CoffeeEditComponent, isWide: Boolean) {
     val state by coffeeEditComponent.panels.subscribeAsState()
     val details = state.details
-    if (state.mode == ChildPanelsMode.SINGLE && details != null) {
+    if (!isWide && details != null) {
         DayListAppBar(details.instance)
     } else {
         val selectedDay = (details?.configuration as? DetailsConfig.DayList)?.date
