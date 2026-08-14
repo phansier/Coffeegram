@@ -52,6 +52,7 @@ class DefaultRootComponent(
     val themeStore: ThemeStore,
     val daysCoffeesStore: DaysCoffeesStore,
     override val showMap: Boolean = false,
+    deepLink: String? = null,
     private val onAndroidStartWearableActivity: StateFlow<(() -> Unit)?> = MutableStateFlow(null),
     private val onAndroidIconChange: (isSummer: Boolean) -> Unit = {},
     ) : RootComponent, ComponentContext by context {
@@ -68,7 +69,11 @@ class DefaultRootComponent(
                     if (showMap) add(Config.Map)
                     add(Config.Settings)
                 }
-                Pages(items = items, selectedIndex = 0)
+                val deepLinkPath = deepLink?.firstPathSegment()
+                Pages(
+                    items = items,
+                    selectedIndex = items.indexOfFirst { it.path == deepLinkPath }.coerceAtLeast(0),
+                )
             },
             childFactory = ::child,
         )
@@ -80,15 +85,7 @@ class DefaultRootComponent(
             navigator = navigation,
             pages = typedPages,
             serializer = Config.serializer(),
-            pathMapper = { state ->
-                when (state.items.getOrNull(state.selectedIndex)?.configuration) {
-                    Config.CoffeeEdit -> "calendar"
-                    Config.Stats -> "stats"
-                    Config.Map -> "map"
-                    Config.Settings -> "settings"
-                    null -> null
-                }
-            },
+            pathMapper = { state -> state.items.getOrNull(state.selectedIndex)?.configuration?.path },
             childSelector = { child ->
                 when (val instance = child.instance) {
                     is RootComponent.Child.CoffeeEdit -> instance.component
@@ -140,16 +137,34 @@ class DefaultRootComponent(
 
     @Serializable
     private sealed interface Config {
-        @Serializable
-        data object CoffeeEdit : Config
+        val path: String
 
         @Serializable
-        data object Stats : Config
+        data object CoffeeEdit : Config {
+            override val path: String get() = "calendar"
+        }
 
         @Serializable
-        data object Map : Config
+        data object Stats : Config {
+            override val path: String get() = "stats"
+        }
 
         @Serializable
-        data object Settings : Config
+        data object Map : Config {
+            override val path: String get() = "map"
+        }
+
+        @Serializable
+        data object Settings : Config {
+            override val path: String get() = "settings"
+        }
     }
 }
+
+internal fun String.firstPathSegment(): String? =
+    substringAfter("://")
+        .substringAfter('/', missingDelimiterValue = "")
+        .substringBefore('?')
+        .substringBefore('#')
+        .split('/')
+        .firstOrNull(String::isNotEmpty)

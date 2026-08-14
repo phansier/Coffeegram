@@ -46,7 +46,7 @@ private fun CoffeegramApp(lifecycle: LifecycleRegistry) {
             val themeStore = koinInject<ThemeStore>()
             val daysCoffeesStore = koinInject<DaysCoffeesStore>()
             val root = remember {
-                withWebHistory { stateKeeper, _ ->
+                withWebHistory { stateKeeper, deepLink ->
                     DefaultRootComponent(
                         context = DefaultComponentContext(
                             lifecycle = lifecycle,
@@ -55,6 +55,7 @@ private fun CoffeegramApp(lifecycle: LifecycleRegistry) {
                         themeStore = themeStore,
                         daysCoffeesStore = daysCoffeesStore,
                         showMap = true,
+                        deepLink = deepLink,
                     )
                 }
             }
