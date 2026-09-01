@@ -10,7 +10,7 @@ plugins {
     id("com.autonomousapps.dependency-analysis")
     kotlin("plugin.serialization")
     id("org.jetbrains.kotlin.plugin.compose")
-    id("com.github.triplet.play") version "4.0.0"
+    id("com.github.triplet.play") version "4.1.1"
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("com.android.compose.screenshot")
     id("com.google.protobuf")
