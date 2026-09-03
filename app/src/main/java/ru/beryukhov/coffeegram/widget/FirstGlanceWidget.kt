@@ -274,15 +274,15 @@ private fun HorizontalWidget(
         Spacer(GlanceModifier.width(padding))
         Text(
             text = coffee.name,
+            maxLines = 1,
             style = TextStyle(
                 fontSize = 16.sp,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 color = GlanceTheme.colors.primary,
             ),
-            modifier = GlanceModifier
-
+            modifier = GlanceModifier.defaultWeight()
         )
-        Spacer(GlanceModifier.width(padding).defaultWeight())
+        Spacer(GlanceModifier.width(padding))
         val painter = coffee.type.icon.painter()
         val bitmap = remember(painter) {
             painter.toImageBitmap(
