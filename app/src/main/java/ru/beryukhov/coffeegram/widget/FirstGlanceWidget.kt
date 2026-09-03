@@ -64,8 +64,6 @@ import androidx.glance.unit.ColorProvider
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.withTimeoutOrNull
 import org.jetbrains.compose.resources.PreviewContextConfigurationEffect
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -78,7 +76,6 @@ import ru.beryukhov.coffeegram.model.NavigationConstants.TODAYS_COFFEE_LIST
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.BIG_SQUARE
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.HORIZONTAL_RECTANGLE
 import kotlin.math.roundToInt
-import kotlin.time.Duration.Companion.seconds
 import ru.beryukhov.compose_common.R as common_R
 
 class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget_custom_error), KoinComponent {
@@ -103,24 +100,15 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
         }
     }
 
-    /**
-     * The store starts empty and loads from storage asynchronously, so wait a bounded time for
-     * a day with any coffee in it. Falling through covers both "still loading" and "nothing
-     * logged today", and either way a sample reads better in the picker than an empty widget.
-     */
     override suspend fun providePreview(context: Context, widgetCategory: Int) {
         val dataBridge: WidgetDataBridge by inject()
-        val coffees = withTimeoutOrNull(STORED_DATA_TIMEOUT) {
-            dataBridge.getCurrentDayList().first { day -> day.any { it.count > 0 } }
-        } ?: widgetPreviewCounts.toWidgetCoffees()
+        val coffees = dataBridge.previewCoffees()
         provideContent {
             WidgetContent(coffees = coffees, increment = {}, decrement = {})
         }
     }
 
     companion object {
-        private val STORED_DATA_TIMEOUT = 1.seconds
-
         // TODO check this sizes after UI implementation
         // https://developer.android.com/develop/ui/views/appwidgets/layouts#anatomy_determining_size
         internal val SMALL_SQUARE = DpSize(50.dp, 50.dp) // 1x1
