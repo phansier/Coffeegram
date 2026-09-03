@@ -261,7 +261,7 @@ private fun HorizontalWidget(
         )
         Spacer(GlanceModifier.width(padding).defaultWeight())
         val painter = coffeeTypeWithCount.coffee.icon.painter()
-        val bitmap = remember {
+        val bitmap = remember(painter) {
             painter.toImageBitmap(
                 density = Density(density = 1f),
                 layoutDirection = LayoutDirection.Ltr,
