@@ -8,7 +8,7 @@
     android:maxResizeHeight="1000dp"
     android:maxResizeWidth="1000dp"
     android:initialLayout="@layout/widget_loading"
-    android:previewImage="@drawable/logo_splash"
+    android:previewImage="@drawable/widget_preview"
     android:previewLayout="@layout/widget_first_glance_preview"
     android:resizeMode="horizontal|vertical"
     android:targetCellWidth="3"
