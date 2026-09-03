@@ -37,6 +37,7 @@ import androidx.glance.action.actionParametersOf
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.PreviewSizeMode
 import androidx.glance.appwidget.SizeMode
 import androidx.glance.appwidget.components.Scaffold
 import androidx.glance.appwidget.lazy.LazyColumn
@@ -61,6 +62,7 @@ import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import org.jetbrains.compose.resources.PreviewContextConfigurationEffect
 import org.koin.core.component.KoinComponent
@@ -68,12 +70,9 @@ import org.koin.core.component.inject
 import ru.beryukhov.coffeegram.MainActivity
 import ru.beryukhov.coffeegram.R
 import ru.beryukhov.coffeegram.data.CoffeeType
-import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
-import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.model.NavigationConstants.NAVIGATION_STATE_KEY
 import ru.beryukhov.coffeegram.model.NavigationConstants.TODAYS_COFFEE_LIST
-import ru.beryukhov.coffeegram.pages.WidgetDataBridgeStub
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.BIG_SQUARE
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget.Companion.HORIZONTAL_RECTANGLE
 import kotlin.math.roundToInt
@@ -86,11 +85,26 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
     override val sizeMode: SizeMode =
         SizeMode.Responsive(setOf(SMALL_SQUARE, HORIZONTAL_RECTANGLE, BIG_SQUARE))
 
+    override val previewSizeMode: PreviewSizeMode =
+        SizeMode.Responsive(setOf(HORIZONTAL_RECTANGLE, BIG_SQUARE))
+
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val viewModel: WidgetDataBridge by inject()
+        val dataBridge: WidgetDataBridge by inject()
         provideContent {
-            // todo widgets are broken because of compose resources
-            WidgetContent(viewModel)
+            val coffees by dataBridge.getCurrentDayList().collectAsState(persistentListOf())
+            WidgetContent(
+                coffees = coffees,
+                increment = dataBridge::incrementCoffee,
+                decrement = dataBridge::decrementCoffee
+            )
+        }
+    }
+
+    override suspend fun providePreview(context: Context, widgetCategory: Int) {
+        val dataBridge: WidgetDataBridge by inject()
+        val coffees = dataBridge.previewCoffees()
+        provideContent {
+            WidgetContent(coffees = coffees, increment = {}, decrement = {})
         }
     }
 
@@ -110,14 +124,23 @@ class FirstGlanceWidget : GlanceAppWidget(errorUiLayout = R.layout.layout_widget
 @Composable
 private fun WidgetContentPreview() {
     PreviewContextConfigurationEffect()
-    WidgetContent(WidgetDataBridgeStub)
+    WidgetContent(
+        coffees = widgetPreviewCounts.map {
+            WidgetCoffee(it.coffee, printableText(it.coffee.localizedName), it.count)
+        }.toPersistentList(),
+        increment = {},
+        decrement = {}
+    )
 }
 
 @Composable
 internal fun WidgetContent(
-    dataBridge: WidgetDataBridge,
+    coffees: PersistentList<WidgetCoffee>,
+    increment: (CoffeeType) -> Unit,
+    decrement: (CoffeeType) -> Unit,
 ) {
     val size = LocalSize.current
+    val mostPopular = coffees.firstOrNull()
     CompositionLocalProvider(
         LocalConfiguration provides Configuration(),
             LocalDensity provides Density(LocalContext.current)
@@ -128,34 +151,22 @@ internal fun WidgetContent(
                 horizontalPadding = 0.dp,
             ) {
                 when {
-                    size.width < HORIZONTAL_RECTANGLE.width -> {
-                        val count by dataBridge.getCurrentDayCupsCount().collectAsState(0)
-                        SmallWidget(
-                            count = count
-                        )
-                    }
+                    size.width < HORIZONTAL_RECTANGLE.width || mostPopular == null ->
+                        SmallWidget(count = coffees.sumOf { it.count })
 
-                    size.height < BIG_SQUARE.height -> {
-                        val data by dataBridge.getCurrentDayMostPopularWithCount().collectAsState(
-                            CoffeeTypeWithCount(CoffeeTypes.Espresso, 0)
-                        )
+                    size.height < BIG_SQUARE.height ->
                         HorizontalWidget(
-                            coffeeTypeWithCount = data,
-                            increment = dataBridge::incrementCoffee,
-                            decrement = dataBridge::decrementCoffee
+                            coffee = mostPopular,
+                            increment = increment,
+                            decrement = decrement
                         )
-                    }
 
-                    else -> {
-                        val data by dataBridge.getCurrentDayList().collectAsState(
-                            emptyList<CoffeeTypeWithCount>().toPersistentList()
-                        )
+                    else ->
                         BigWidget(
-                            list = data,
-                            increment = dataBridge::incrementCoffee,
-                            decrement = dataBridge::decrementCoffee
+                            coffees = coffees,
+                            increment = increment,
+                            decrement = decrement
                         )
-                    }
                 }
             }
         }
@@ -203,7 +214,7 @@ private val openAppAction = actionStartActivity<MainActivity>(
 
 @Composable
 private fun HorizontalWidget(
-    coffeeTypeWithCount: CoffeeTypeWithCount,
+    coffee: WidgetCoffee,
     modifier: GlanceModifier = GlanceModifier.padding(16.dp).fillMaxSize(),
     increment: (CoffeeType) -> Unit = {},
     decrement: (CoffeeType) -> Unit = {},
@@ -213,7 +224,7 @@ private fun HorizontalWidget(
         modifier = modifier.clickable(openAppAction),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        val isReduceCountAllowed = coffeeTypeWithCount.count > 0
+        val isReduceCountAllowed = coffee.count > 0
         val buttonColors = buttonColors(
             backgroundColor = GlanceTheme.colors.background,
             contentColor = GlanceTheme.colors.primary
@@ -224,13 +235,13 @@ private fun HorizontalWidget(
             modifier = GlanceModifier.size(32.dp).padding(0.dp),
             colors = buttonColors,
             onClick = action {
-                decrement(coffeeTypeWithCount.coffee)
+                decrement(coffee.type)
             }
         )
         Spacer(GlanceModifier.width(padding))
 
         Text(
-            "${coffeeTypeWithCount.count}",
+            "${coffee.count}",
             style = TextStyle(
                 fontSize = 20.sp,
                 color = GlanceTheme.colors.secondary,
@@ -245,23 +256,23 @@ private fun HorizontalWidget(
             modifier = GlanceModifier.size(32.dp).padding(0.dp),
             colors = buttonColors,
             onClick = action {
-                increment(coffeeTypeWithCount.coffee)
+                increment(coffee.type)
             }
         )
         Spacer(GlanceModifier.width(padding))
         Text(
-            text = printableText(coffeeTypeWithCount.coffee.localizedName),
+            text = coffee.name,
+            maxLines = 1,
             style = TextStyle(
                 fontSize = 16.sp,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Start,
                 color = GlanceTheme.colors.primary,
             ),
-            modifier = GlanceModifier
-
+            modifier = GlanceModifier.defaultWeight()
         )
-        Spacer(GlanceModifier.width(padding).defaultWeight())
-        val painter = coffeeTypeWithCount.coffee.icon.painter()
-        val bitmap = remember {
+        Spacer(GlanceModifier.width(padding))
+        val painter = coffee.type.icon.painter()
+        val bitmap = remember(painter) {
             painter.toImageBitmap(
                 density = Density(density = 1f),
                 layoutDirection = LayoutDirection.Ltr,
@@ -281,16 +292,16 @@ private fun HorizontalWidget(
 
 @Composable
 private fun BigWidget(
-    list: PersistentList<CoffeeTypeWithCount>,
+    coffees: PersistentList<WidgetCoffee>,
     modifier: GlanceModifier = GlanceModifier,
     increment: (CoffeeType) -> Unit = {},
     decrement: (CoffeeType) -> Unit = {},
 ) {
     LazyColumn(modifier = modifier.padding(vertical = 16.dp).fillMaxSize()) {
-        items(list) {
+        items(coffees) {
             HorizontalWidget(
                 modifier = GlanceModifier.padding(16.dp).fillMaxWidth().height(72.dp),
-                coffeeTypeWithCount = it,
+                coffee = it,
                 increment = increment,
                 decrement = decrement
             )

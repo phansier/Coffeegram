@@ -32,6 +32,14 @@ import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes.Cappuccino
 import ru.beryukhov.coffeegram.data.printableText
 
+/**
+ * The drink artwork ranges from 107x64 to 69x146, so a square slot would scale the wide ones
+ * down to a third of the height of the tall ones. A slot wider than the widest aspect ratio
+ * makes height the binding constraint, and every drink renders the same height.
+ */
+private val ICON_SLOT_HEIGHT = 48.dp
+private val ICON_SLOT_WIDTH = 80.dp
+
 @Composable
 fun CoffeeTypeItem(
     coffeeType: CoffeeType,
@@ -45,7 +53,7 @@ fun CoffeeTypeItem(
     ) {
         coffeeType.icon(
             modifier = Modifier
-                .size(48.dp)
+                .size(width = ICON_SLOT_WIDTH, height = ICON_SLOT_HEIGHT)
                 .align(Alignment.CenterVertically)
         )
         Spacer(Modifier.width(16.dp))

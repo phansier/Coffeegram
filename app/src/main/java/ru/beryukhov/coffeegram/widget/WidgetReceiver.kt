@@ -1,13 +1,13 @@
 package ru.beryukhov.coffeegram.widget
 
-import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
-import android.content.ComponentName
 import android.content.Context
 import android.os.Build
+import androidx.collection.intSetOf
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import androidx.glance.appwidget.compose
+import androidx.glance.appwidget.setWidgetPreviews
 
 class WidgetReceiver : GlanceAppWidgetReceiver() {
 
@@ -16,15 +16,8 @@ class WidgetReceiver : GlanceAppWidgetReceiver() {
 
 suspend fun setWidgetPreview(appContext: Context) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-        AppWidgetManager.getInstance(appContext).setWidgetPreview(
-            ComponentName(
-                appContext,
-                WidgetReceiver::class.java
-            ),
-            AppWidgetProviderInfo.WIDGET_CATEGORY_HOME_SCREEN,
-            FirstGlanceWidget().compose(
-                context = appContext
-            ),
+        GlanceAppWidgetManager(appContext).setWidgetPreviews<WidgetReceiver>(
+            intSetOf(AppWidgetProviderInfo.WIDGET_CATEGORY_HOME_SCREEN)
         )
     }
 }

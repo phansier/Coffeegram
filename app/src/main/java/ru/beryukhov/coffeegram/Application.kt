@@ -39,12 +39,9 @@ open class Application : Application(), KoinComponent {
             )
         }
         wearableSyncCoordinator.start()
-        // causes java.lang.IllegalStateException: Reading a state that was created after the snapshot was taken
-        // or in a snapshot that has not yet been applied
         MainScope().launch {
             withContext(Dispatchers.Default) {
                 FirstGlanceWidget().updateAll(this@Application)
-                // if (not robolectric test)
                 setWidgetPreview()
             }
         }

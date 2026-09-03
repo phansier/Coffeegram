@@ -46,6 +46,18 @@ data class Image(val iconRes: DrawableResource) : Picture {
     )
 }
 
+data class Vector(val image: ImageVector) : Picture {
+    @Composable
+    override fun painter(): Painter = rememberVectorPainter(image)
+
+    @Composable
+    override fun invoke(modifier: Modifier, contentDescription: String?) = Image(
+        painter = painter(),
+        contentDescription = contentDescription,
+        modifier = modifier
+    )
+}
+
 data class Icon(val image: ImageVector, val tint: Color? = null) : Picture {
     @Composable
     override fun painter(): Painter = rememberVectorPainter(image)

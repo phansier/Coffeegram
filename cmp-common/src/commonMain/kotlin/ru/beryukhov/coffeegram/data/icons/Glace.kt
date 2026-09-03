@@ -1,0 +1,25 @@
+@file:Suppress("MaxLineLength")
+
+package ru.beryukhov.coffeegram.data.icons
+
+import androidx.compose.ui.graphics.vector.ImageVector
+
+val CoffeeIcons.Glace: ImageVector
+    get() = cachedGlace ?: coffeeIcon(
+        name = "Glace",
+        width = 69f,
+        height = 146f,
+    ) {
+        fill(0xFFCCC9C9, "M34.383,35.672H0.297L8.211,145.234H60.559L68.473,35.672")
+        fill(0xFFD3936A, "M34.383,35.672H5.938L13.367,133.973H55.594L62.828,35.672")
+        fill(0xFF6F4121, "M34.383,35.672H5.938L13.367,133.973H55.594L62.828,35.672")
+        fill(0xFFFBFBFB, "M68.469,35.672L60.559,145.234H54.68L62.828,35.672H68.469Z")
+        fill(0xFFEAAB8A, "M62.828,35.672H5.938L8.895,74.777L59.977,74.414L62.828,35.672Z")
+        fill(0xFFF1C2AC, "M62.828,35.672H5.938L6.797,47.016H61.992L62.828,35.672Z")
+        fill(0xFFF1C2AC, "M5.938,35.672C5.938,35.672 16.863,21.746 34.383,21.645C51.906,21.543 62.828,35.672 62.828,35.672")
+        fill(0xFFDB9A7C, "M51.637,27.57C51.637,29.684 49.688,31.395 47.281,31.395C44.879,31.395 42.926,29.684 42.926,27.57C42.926,25.461 44.879,23.75 47.281,23.75C49.688,23.75 51.637,25.461 51.637,27.57Z")
+        fill(0xFF33251C, "M44.824,24.477L57.422,0.355L64.316,2.863L51.637,27.977C50.984,29.266 49.664,30.078 48.219,30.078C45.344,30.078 43.492,27.027 44.824,24.477Z")
+        fill(0xFF5B4638, "M61.953,4.047L48.746,30.039L59.348,4.777L55.789,3.48L56.617,1.895")
+    }.also { cachedGlace = it }
+
+private var cachedGlace: ImageVector? = null
