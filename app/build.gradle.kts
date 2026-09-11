@@ -33,6 +33,13 @@ val resolvedVersionName: String = run {
     }
 }
 
+val resolvedVersionCode: Int = run {
+    val anchorEpochSeconds = 1_789_000_000L
+    val phoneRangeStart = 1_900_000_000L
+    val minutesSinceAnchor = (Instant.now().epochSecond - anchorEpochSeconds) / 60
+    (phoneRangeStart + minutesSinceAnchor).toInt()
+}
+
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -41,7 +48,7 @@ android {
         applicationId = "ru.beryukhov.coffeegram"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = (100000000 + Instant.now().toEpochMilli() / 1000).toInt()
+        versionCode = resolvedVersionCode
         versionName = resolvedVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

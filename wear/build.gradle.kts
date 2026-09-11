@@ -25,6 +25,13 @@ val resolvedVersionName: String = run {
     }
 }
 
+val resolvedVersionCode: Int = run {
+    val anchorEpochSeconds = 1_789_000_000L
+    val wearRangeStart = 2_000_000_000L
+    val minutesSinceAnchor = (Instant.now().epochSecond - anchorEpochSeconds) / 60
+    (wearRangeStart + minutesSinceAnchor).toInt()
+}
+
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -33,10 +40,8 @@ android {
         applicationId = "ru.beryukhov.coffeegram"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        // Wear shares the phone's applicationId, so Google Play requires a versionCode that
-        // does not collide with the phone bundle. Offset into a separate range; the phone uses
-        // a 100000000 base (see app/build.gradle.kts).
-        versionCode = (200000000 + Instant.now().toEpochMilli() / 1000).toInt()
+        // Wear shares the phone's applicationId, so Play requires a non-colliding versionCode range.
+        versionCode = resolvedVersionCode
         versionName = resolvedVersionName
     }
 
