@@ -40,6 +40,8 @@ fun StatsAppBar(modifier: Modifier = Modifier) {
             TopBarTitle(
                 title = stringResource(Res.string.stats_title),
                 eyebrow = stringResource(Res.string.stats_eyebrow),
+                cupertinoTitle = stringResource(Res.string.stats_eyebrow).lowercase()
+                    .replaceFirstChar { it.titlecase() },
             )
         },
         modifier = modifier,

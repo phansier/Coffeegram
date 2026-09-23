@@ -90,12 +90,11 @@ Possible follow-up: `WideNavigationRail` (expanded, labels beside icons) for ≥
 **4. Consider window height (compact-height landscape phones)**
 
 A phone in landscape is ~800×360dp: it gets the rail + dual-pane calendar, but the top app bar (64dp)
-plus the year footer leave ~250dp for a 6-row month grid. Measure height next to width in
+leaves ~280dp for a 6-row month grid. Measure height next to width in
 `WideLayoutProvider` (or use `WindowSizeClass` height breakpoints from `material3-adaptive`) and:
 
 - switch app bars to a small/collapsing variant (see item 8);
-- drop the `Text(year)` footer in `MonthTableScreen` when height is compact (the year is already the
-  app bar eyebrow).
+- ~~drop the `Text(year)` footer in `MonthTableScreen`~~ ✅ removed (the year is the app bar eyebrow).
 
 **5. Calendar list-detail: detail placeholder and proportional panes**
 

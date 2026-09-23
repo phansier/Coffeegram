@@ -1,17 +1,13 @@
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.union
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
@@ -41,19 +37,16 @@ fun MonthTableScreen(
 ) {
     val monthTableScreenState by component.models.collectAsState()
 
-    Column(horizontalAlignment = Alignment.End, modifier = modifier) {
-        MonthTable(
-            yearMonth = monthTableScreenState.yearMonth,
-            today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
-            filledDayItemsMap = monthTableScreenState.filledDayItemsMap,
-            onClick = { dayOfMonth: Int ->
-                component.onDayClick(dayOfMonth)
-            },
-            modifier = Modifier.weight(1f),
-            selectedDay = selectedDay,
-        )
-        Text("${monthTableScreenState.yearMonth.year}", modifier = Modifier.padding(16.dp))
-    }
+    MonthTable(
+        yearMonth = monthTableScreenState.yearMonth,
+        today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
+        filledDayItemsMap = monthTableScreenState.filledDayItemsMap,
+        onClick = { dayOfMonth: Int ->
+            component.onDayClick(dayOfMonth)
+        },
+        modifier = modifier,
+        selectedDay = selectedDay,
+    )
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)
@@ -77,6 +70,7 @@ fun MonthTableAppBar(
             TopBarTitle(
                 title = titleText,
                 eyebrow = "${screenState.yearMonth.year}",
+                cupertinoTitle = "$titleText ${screenState.yearMonth.year}",
                 modifier = Modifier.testTag("Month"),
             )
         },
