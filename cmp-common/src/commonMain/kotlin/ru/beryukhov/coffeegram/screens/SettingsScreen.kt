@@ -2,7 +2,7 @@ package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -91,13 +91,13 @@ fun SettingsScreen(
         if (hasDevice) add(SettingsCategory.DEVICE)
     }
 
-    BoxWithConstraints(
+    Box(
         modifier = modifier
             .fillMaxSize()
             .padding(contentPadding)
             .consumeWindowInsets(contentPadding),
     ) {
-        if (maxWidth >= WIDE_SCREEN_THRESHOLD) {
+        if (LocalIsWideLayout.current) {
             val selectedName by component.selectedCategory.subscribeAsState()
             val selected = categories.firstOrNull { it.name == selectedName } ?: categories.first()
 

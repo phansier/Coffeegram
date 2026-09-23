@@ -1,6 +1,5 @@
 package ru.beryukhov.coffeegram.screens
 
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,10 +17,10 @@ import ru.beryukhov.coffeegram.components.CoffeeEditComponent.DetailsConfig
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
-fun CoffeeEditAppBar(coffeeEditComponent: CoffeeEditComponent, isWide: Boolean) {
+fun CoffeeEditAppBar(coffeeEditComponent: CoffeeEditComponent) {
     val state by coffeeEditComponent.panels.subscribeAsState()
     val details = state.details
-    if (!isWide && details != null) {
+    if (!LocalIsWideLayout.current && details != null) {
         DayListAppBar(details.instance)
     } else {
         val selectedDay = (details?.configuration as? DetailsConfig.DayList)?.date
@@ -35,42 +34,40 @@ fun CoffeeEditScreen(
     coffeeEditComponent: CoffeeEditComponent,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
-    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-        val isWide = maxWidth >= WIDE_SCREEN_THRESHOLD
-        val targetMode = if (isWide) ChildPanelsMode.DUAL else ChildPanelsMode.SINGLE
-        LaunchedEffect(targetMode) { coffeeEditComponent.setMode(targetMode) }
+    val isWide = LocalIsWideLayout.current
+    val targetMode = if (isWide) ChildPanelsMode.DUAL else ChildPanelsMode.SINGLE
+    LaunchedEffect(targetMode) { coffeeEditComponent.setMode(targetMode) }
 
-        val state by coffeeEditComponent.panels.subscribeAsState()
-        val details = state.details
-        val selectedDay = (details?.configuration as? DetailsConfig.DayList)?.date
+    val state by coffeeEditComponent.panels.subscribeAsState()
+    val details = state.details
+    val selectedDay = (details?.configuration as? DetailsConfig.DayList)?.date
 
-        if (isWide) {
-            Row(modifier = Modifier.fillMaxSize()) {
-                MonthTableScreen(
-                    component = state.main.instance,
-                    selectedDay = selectedDay,
-                    modifier = Modifier.weight(1f).padding(contentPadding),
-                )
-                if (details != null) {
-                    DayListScreen(
-                        component = details.instance,
-                        contentPadding = contentPadding,
-                        modifier = Modifier.weight(1f),
-                    )
-                }
-            }
-        } else {
+    if (isWide) {
+        Row(modifier = Modifier.fillMaxSize()) {
+            MonthTableScreen(
+                component = state.main.instance,
+                selectedDay = selectedDay,
+                modifier = Modifier.weight(1f).padding(contentPadding),
+            )
             if (details != null) {
                 DayListScreen(
                     component = details.instance,
                     contentPadding = contentPadding,
-                )
-            } else {
-                MonthTableScreen(
-                    component = state.main.instance,
-                    modifier = Modifier.padding(contentPadding),
+                    modifier = Modifier.weight(1f),
                 )
             }
+        }
+    } else {
+        if (details != null) {
+            DayListScreen(
+                component = details.instance,
+                contentPadding = contentPadding,
+            )
+        } else {
+            MonthTableScreen(
+                component = state.main.instance,
+                modifier = Modifier.padding(contentPadding),
+            )
         }
     }
 }

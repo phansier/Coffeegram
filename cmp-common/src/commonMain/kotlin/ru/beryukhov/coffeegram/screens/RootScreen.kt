@@ -2,7 +2,6 @@
 
 package ru.beryukhov.coffeegram.screens
 
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -55,8 +54,7 @@ fun RootScreen(
     CoffeegramTheme(
         themeState = rootComponent.themeState.collectAsState().value,
     ) {
-        BoxWithConstraints(modifier = modifier) {
-            val isWide = maxWidth >= WIDE_SCREEN_THRESHOLD
+        WideLayoutProvider(modifier = modifier) { isWide ->
             if (isWide) {
                 Row(modifier = Modifier.fillMaxSize()) {
                     NavRail(rootComponent, navBarItems)
@@ -101,7 +99,7 @@ private fun TopBar(rootComponent: RootComponent, isWide: Boolean) {
         },
     ) { _, page ->
         when (val c = page) {
-            is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditAppBar(c.component, isWide)
+            is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditAppBar(c.component)
             is RootComponent.Child.Stats -> StatsAppBar()
             is RootComponent.Child.Map -> MapAppBar(c.component)
             is RootComponent.Child.Settings -> SettingsAppBar(c.component)

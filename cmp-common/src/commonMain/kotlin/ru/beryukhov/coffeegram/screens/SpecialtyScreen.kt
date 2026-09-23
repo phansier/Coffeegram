@@ -1,6 +1,6 @@
 package ru.beryukhov.coffeegram.screens
 
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,8 +21,8 @@ fun SpecialtyScreen(
     component: MapComponent,
     modifier: Modifier = Modifier,
 ) {
-    BoxWithConstraints(modifier = modifier.fillMaxSize()) {
-        if (maxWidth >= WIDE_SCREEN_THRESHOLD) {
+    Box(modifier = modifier.fillMaxSize()) {
+        if (LocalIsWideLayout.current) {
             Row(modifier = Modifier.fillMaxSize()) {
                 MapScreen(
                     component = component,

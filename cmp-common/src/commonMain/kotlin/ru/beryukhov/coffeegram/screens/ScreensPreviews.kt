@@ -49,7 +49,7 @@ private fun MonthTableScreenPreview() = PreviewTheme {
     ) {
         RootScreen(
             pageNum = 0,
-            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component, isWide = false) },
+            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component) },
             CurrentScreen = { padding -> CoffeeEditScreen(component, contentPadding = padding) },
         )
     }
@@ -65,7 +65,7 @@ private fun ListScreenPreview() = PreviewTheme {
     ) {
         RootScreen(
             pageNum = 0,
-            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component, isWide = false) },
+            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component) },
             CurrentScreen = { padding -> CoffeeEditScreen(component, contentPadding = padding) },
         )
     }
@@ -182,12 +182,14 @@ private fun RootScreen(
     CoffeegramTheme(
         themeState = rootComponent.themeState.collectAsState().value,
     ) {
-        AdaptiveScaffold(
-            modifier = Modifier,
-            topBar = { TopBar(modifier) },
-            bottomBar = { BottomBar(rootComponent, navBarItems) }
-        ) { paddingValues ->
-            CurrentScreen(paddingValues)
+        WideLayoutProvider {
+            AdaptiveScaffold(
+                modifier = Modifier,
+                topBar = { TopBar(modifier) },
+                bottomBar = { BottomBar(rootComponent, navBarItems) }
+            ) { paddingValues ->
+                CurrentScreen(paddingValues)
+            }
         }
     }
 }
