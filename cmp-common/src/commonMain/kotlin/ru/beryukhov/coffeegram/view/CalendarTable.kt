@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -43,10 +44,14 @@ private data class DayItem(
     val dayOfMonth: Int? = null
 )
 
+private val DayIconSize = 32.dp
+private val CompactDayIconSize = 20.dp
+
 @Composable
 private fun DayCell(
     dayItem: DayItem,
     modifier: Modifier = Modifier,
+    compact: Boolean = false,
     onClick: (() -> Unit)? = null
 ) {
     val backgroundColor = when {
@@ -54,38 +59,60 @@ private fun DayCell(
         dayItem.isToday -> MaterialTheme.colorScheme.primaryContainer
         else -> Color.Transparent
     }
+    val cellModifier = modifier
+        .padding(vertical = 2.dp)
+        .clickable(
+            enabled = onClick != null,
+            onClick = onClick ?: {}
+        )
+        .background(
+            color = backgroundColor,
+            shape = RoundedCornerShape(8.dp)
+        )
+        .testTag("Day")
+    if (compact) {
+        CompactDayCellContent(dayItem, cellModifier)
+    } else {
+        DayCellContent(dayItem, cellModifier)
+    }
+}
+
+@Composable
+private fun DayCellContent(dayItem: DayItem, modifier: Modifier) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
-            .padding(vertical = 2.dp)
-            .clickable(
-                enabled = onClick != null,
-                onClick = onClick ?: {}
-            )
-            .background(
-                color = backgroundColor,
-                shape = RoundedCornerShape(8.dp)
-            )
-            .testTag("Day")
+        modifier = modifier,
     ) {
-        with(dayItem) {
-            coffeePicture(
-                modifier = Modifier
-                    .padding(top = 4.dp)
-                    .size(32.dp)
-                    .fillMaxWidth()
-                    .align(Alignment.CenterHorizontally)
-            )
+        dayItem.coffeePicture(
+            modifier = Modifier
+                .padding(top = 4.dp)
+                .size(DayIconSize)
+                .fillMaxWidth()
+                .align(Alignment.CenterHorizontally)
+        )
+        Text(
+            text = AnnotatedString(
+                text = dayItem.day,
+                paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
+            ),
+            style = typography.bodyMedium,
+        )
+        HorizontalDivider(modifier = Modifier.padding(horizontal = 4.dp))
+    }
+}
 
-            Text(
-                text = AnnotatedString(
-                    text = day,
-                    paragraphStyle = ParagraphStyle(textAlign = TextAlign.Center)
-                ),
-                style = typography.bodyMedium,
-            )
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 4.dp))
-        }
+@Composable
+private fun CompactDayCellContent(dayItem: DayItem, modifier: Modifier) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(2.dp, Alignment.CenterHorizontally),
+        modifier = modifier.padding(vertical = 4.dp),
+    ) {
+        dayItem.coffeePicture(modifier = Modifier.size(CompactDayIconSize))
+        Text(
+            text = dayItem.day,
+            style = typography.bodySmall,
+        )
     }
 }
 
@@ -97,6 +124,7 @@ fun MonthTable(
     onClick: (dayOfMonth: Int) -> Unit,
     modifier: Modifier = Modifier,
     selectedDay: LocalDate? = null,
+    compact: Boolean = false,
 ) {
     Column(modifier = modifier) {
         LazyVerticalGrid(
@@ -133,7 +161,7 @@ fun MonthTable(
                         coffeePicture = filledDayItemsMap[day + 1] ?: Picture.EMPTY,
                         dayOfMonth = day + 1
                     )
-                    DayCell(dayItem = dayItem, onClick = { onClick(day + 1) })
+                    DayCell(dayItem = dayItem, compact = compact, onClick = { onClick(day + 1) })
                 }
             }
         }

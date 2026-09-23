@@ -13,8 +13,10 @@ import androidx.compose.ui.unit.dp
  * (navigation rail instead of bottom bar, side-by-side / two-pane content).
  */
 internal val WIDE_SCREEN_THRESHOLD = 600.dp
+private val COMPACT_HEIGHT_THRESHOLD = 480.dp
 
 internal val LocalIsWideLayout = compositionLocalOf { false }
+internal val LocalIsCompactHeight = compositionLocalOf { false }
 
 @Composable
 internal fun WideLayoutProvider(
@@ -24,7 +26,10 @@ internal fun WideLayoutProvider(
     val isTabletop = currentWindowAdaptiveInfo().windowPosture.isTabletop
     BoxWithConstraints(modifier = modifier) {
         val isWide = maxWidth >= WIDE_SCREEN_THRESHOLD
-        CompositionLocalProvider(LocalIsWideLayout provides isWide) {
+        CompositionLocalProvider(
+            LocalIsWideLayout provides isWide,
+            LocalIsCompactHeight provides (maxHeight < COMPACT_HEIGHT_THRESHOLD),
+        ) {
             content(isWide && !isTabletop)
         }
     }

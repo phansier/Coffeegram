@@ -24,7 +24,7 @@ Status legend: ✅ done · ⏳ open
 | All screens in Compose | ✅ |
 | Navigation library | ⚠️ Decompose (`ChildPages` + `ChildPanels`), not Navigation 3 |
 | Adaptive navigation area | ✅ `AdaptiveNavigationContainer`: Cupertino bar on compact or tabletop, Material rail otherwise |
-| Breakpoints | ⚠️ One width breakpoint (600dp), now evaluated once at the root; height ignored |
+| Breakpoints | ✅ Width (600dp) and compact height (480dp), evaluated once at the root |
 | List-detail (Calendar → Day) | ⚠️ `ChildPanels` DUAL/SINGLE, but no detail placeholder, fixed 50/50 split |
 | Supporting pane (Map + shop list) | ✅ Side pane on wide, bottom sheet on narrow |
 | Settings list-detail | ✅ Category list + detail on wide |
@@ -87,14 +87,18 @@ Cupertino look, and `NavigationSuiteScaffoldLayout` with a custom suite adds a d
 over the container. Deferred to item 8: a `visible` flag for hiding the navigation on scroll.
 Possible follow-up: `WideNavigationRail` (expanded, labels beside icons) for ≥ 840dp windows.
 
-**4. Consider window height (compact-height landscape phones)**
+**4. ✅ Consider window height (compact-height landscape phones)**
 
-A phone in landscape is ~800×360dp: it gets the rail + dual-pane calendar, but the top app bar (64dp)
-leaves ~280dp for a 6-row month grid. Measure height next to width in
-`WideLayoutProvider` (or use `WindowSizeClass` height breakpoints from `material3-adaptive`) and:
+A phone in landscape is ~800×360dp: it gets the rail + dual-pane calendar, and the top app bar (64dp)
+leaves ~280dp for a 6-row month grid (regular cells need ~400dp). Done:
 
-- switch app bars to a small/collapsing variant (see item 8);
-- ~~drop the `Text(year)` footer in `MonthTableScreen`~~ ✅ removed (the year is the app bar eyebrow).
+- `WideLayoutProvider` also provides `LocalIsCompactHeight` (root height < 480dp);
+- `MonthTable(compact = true)` switches day cells to a single row (20dp icon beside the day number),
+  so a 6-row month fits without scrolling;
+- the `Text(year)` footer in `MonthTableScreen` is removed (the year is in the app bar).
+
+Not possible here: a shorter app bar. `AdaptiveTopAppBar`'s Material adaptation exposes only colors,
+centering and scroll behavior, so reclaiming app-bar height is left to hide-on-scroll (item 8).
 
 **5. Calendar list-detail: detail placeholder and proportional panes**
 
@@ -211,6 +215,6 @@ Those are Material navigation, which is out of scope by constraint. Coffeegram u
 
 1. ~~Item 1 + 2 (bugs, small)~~ ✅
 2. Item 7 (screenshot baseline, or accept manual verification if the blocker isn't solved)
-3. ~~Item 3~~ ✅ → 4 → 5 → 6 (navigation area and panes)
+3. ~~Item 3 → 4~~ ✅ → 5 → 6 (navigation area and panes)
 4. Item 8 → 9 → 10 → 11 (content)
 5. Item 12 → 13 → 14 (input & polish)
