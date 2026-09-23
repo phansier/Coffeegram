@@ -99,6 +99,7 @@ kotlin {
             implementation(libs.cmp.runtime)
             implementation(libs.cmp.foundation)
             implementation(libs.cmp.material3) // for explicit up to date version
+            implementation(libs.cmp.material3.adaptive)
             implementation(libs.material.icons.core)
 
             implementation(libs.coroutines.core)

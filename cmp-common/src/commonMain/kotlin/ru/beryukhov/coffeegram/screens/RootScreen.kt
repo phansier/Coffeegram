@@ -1,9 +1,8 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalAdaptiveApi::class)
+@file:OptIn(ExperimentalMaterial3Api::class)
 
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,14 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme.typography
-import androidx.compose.material3.NavigationRail
-import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,12 +21,8 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.pages.ChildPages
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.router.pages.ChildPages
-import com.slapps.cupertino.adaptive.AdaptiveNavigationBar
-import com.slapps.cupertino.adaptive.AdaptiveNavigationBarItem
-import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
-import org.jetbrains.compose.resources.stringResource
 import ru.beryukhov.coffeegram.app_ui.CoffeegramTheme
 import ru.beryukhov.coffeegram.components.RootComponent
 import ru.beryukhov.coffeegram.model.NavBarItem
@@ -54,26 +44,23 @@ fun RootScreen(
     CoffeegramTheme(
         themeState = rootComponent.themeState.collectAsState().value,
     ) {
-        WideLayoutProvider(modifier = modifier) { isWide ->
-            if (isWide) {
-                Row(modifier = Modifier.fillMaxSize()) {
-                    NavRail(rootComponent, navBarItems)
-                    Scaffold(
-                        contentWindowInsets = WindowInsets.systemBars,
-                        topBar = { TopBar(rootComponent, isWide = true) },
-                        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-                    ) { paddingValues ->
-                        CurrentScreen(rootComponent, paddingValues, snackbarHostState, swipeEnabled = false)
-                    }
-                }
-            } else {
+        val pagesState by rootComponent.pages.subscribeAsState()
+        WideLayoutProvider(modifier = modifier) { showNavigationRail ->
+            val isWide = LocalIsWideLayout.current
+            AdaptiveNavigationContainer(
+                showNavigationRail = showNavigationRail,
+                items = navBarItems,
+                selectedIndex = pagesState.selectedIndex,
+                onSelect = rootComponent::selectPage,
+                modifier = Modifier.fillMaxSize(),
+            ) { bottomBar ->
                 Scaffold(
                     contentWindowInsets = WindowInsets.systemBars,
-                    topBar = { TopBar(rootComponent, isWide = false) },
+                    topBar = { TopBar(rootComponent, isWide = isWide) },
                     snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-                    bottomBar = { BottomBar(rootComponent, navBarItems) }
+                    bottomBar = bottomBar,
                 ) { paddingValues ->
-                    CurrentScreen(rootComponent, paddingValues, snackbarHostState, swipeEnabled = true)
+                    CurrentScreen(rootComponent, paddingValues, snackbarHostState, swipeEnabled = !isWide)
                 }
             }
         }
@@ -151,62 +138,6 @@ private fun CurrentScreen(
 
 private fun ChildPages<*, RootComponent.Child>.isMapSelected(): Boolean =
     items.getOrNull(selectedIndex)?.instance is RootComponent.Child.Map
-
-@Composable
-internal fun BottomBar(
-    rootComponent: RootComponent,
-    navBarItems: PersistentList<NavBarItem>,
-) {
-    AdaptiveNavigationBar {
-        val currentIndex by rootComponent.pages.subscribeAsState()
-        navBarItems.forEachIndexed { index, item ->
-            AdaptiveNavigationBarItem(
-                selected = currentIndex.selectedIndex == index,
-                onClick = { rootComponent.selectPage(index) },
-                label = {
-                    Text(
-                        text = stringResource(item.title),
-                        style = typography.bodySmall
-                    )
-                },
-                icon = {
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = "",
-                    )
-                }
-            )
-        }
-    }
-}
-
-@Composable
-internal fun NavRail(
-    rootComponent: RootComponent,
-    navBarItems: PersistentList<NavBarItem>,
-) {
-    NavigationRail {
-        val currentIndex by rootComponent.pages.subscribeAsState()
-        navBarItems.forEachIndexed { index, item ->
-            NavigationRailItem(
-                selected = currentIndex.selectedIndex == index,
-                onClick = { rootComponent.selectPage(index) },
-                label = {
-                    Text(
-                        text = stringResource(item.title),
-                        style = typography.bodySmall
-                    )
-                },
-                icon = {
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = "",
-                    )
-                }
-            )
-        }
-    }
-}
 
 internal fun getNavBarItems(showMap: Boolean): PersistentList<NavBarItem> =
     if (showMap) {

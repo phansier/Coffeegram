@@ -53,6 +53,7 @@ cmp-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "jetbrainsCompo
 cmp-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "jetbrainsCompose" }
 cmp-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "jetbrainsCompose" }
 cmp-material3 = "org.jetbrains.compose.material3:material3:1.9.0"
+cmp-material3-adaptive = "org.jetbrains.compose.material3.adaptive:adaptive:1.2.0"
 
 kotlinBrowser = { module = "org.jetbrains.kotlin-wrappers:kotlin-browser" }
 kotlinx-browser = { module = "org.jetbrains.kotlinx:kotlinx-browser", version = "0.5.0" }

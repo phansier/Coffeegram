@@ -1,6 +1,7 @@
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
@@ -18,12 +19,13 @@ internal val LocalIsWideLayout = compositionLocalOf { false }
 @Composable
 internal fun WideLayoutProvider(
     modifier: Modifier = Modifier,
-    content: @Composable (isWide: Boolean) -> Unit,
+    content: @Composable (showNavigationRail: Boolean) -> Unit,
 ) {
+    val isTabletop = currentWindowAdaptiveInfo().windowPosture.isTabletop
     BoxWithConstraints(modifier = modifier) {
         val isWide = maxWidth >= WIDE_SCREEN_THRESHOLD
         CompositionLocalProvider(LocalIsWideLayout provides isWide) {
-            content(isWide)
+            content(isWide && !isTabletop)
         }
     }
 }

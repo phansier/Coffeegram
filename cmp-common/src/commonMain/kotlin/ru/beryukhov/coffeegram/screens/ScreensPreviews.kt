@@ -182,11 +182,17 @@ private fun RootScreen(
     CoffeegramTheme(
         themeState = rootComponent.themeState.collectAsState().value,
     ) {
-        WideLayoutProvider {
+        WideLayoutProvider { _ ->
             AdaptiveScaffold(
                 modifier = Modifier,
                 topBar = { TopBar(modifier) },
-                bottomBar = { BottomBar(rootComponent, navBarItems) }
+                bottomBar = {
+                    AppNavigationBar(
+                        items = navBarItems,
+                        selectedIndex = pageNum,
+                        onSelect = rootComponent::selectPage,
+                    )
+                }
             ) { paddingValues ->
                 CurrentScreen(paddingValues)
             }

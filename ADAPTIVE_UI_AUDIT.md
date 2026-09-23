@@ -6,10 +6,16 @@ Android CLI `adaptive` skill (Jetpack Compose adaptive guidance, skill version 2
 Scope: phone, foldable, tablet, desktop/freeform windows, landscape, and pointer/keyboard input.
 Wear OS (`wear`) and Glance widgets are out of scope.
 
-Constraint: no Material 3 libraries (`material3`, `material3-adaptive`,
-`material3-adaptive-navigation-suite`, `adaptive-navigation3`). Recommendations rely only on
-Compose UI / Foundation (`mediaQuery`, `Grid`, `FlexBox`, `nestedScroll`, lazy layouts), Decompose,
-and the Cupertino adaptive components already in use.
+Constraints:
+
+- Material 3 is allowed for UI and layouts (`material3`, `material3-adaptive`, scroll behaviors,
+  window size classes, pane scaffolds driven by our own state).
+- Material 3 is **not** used for navigation: no `adaptive-navigation3`, `ListDetailSceneStrategy`,
+  `ThreePaneScaffoldNavigator`. Decompose (`ChildPages`, `ChildPanels`) owns navigation state.
+- The Cupertino look (`AdaptiveNavigationBar`, `AdaptiveTopAppBar`) must be kept, which rules out
+  Material components that render their own bar (e.g. full `NavigationSuiteScaffold`).
+
+Status legend: ✅ done · ⏳ open
 
 ## Current state (summary)
 
@@ -17,8 +23,8 @@ and the Cupertino adaptive components already in use.
 |---|---|
 | All screens in Compose | ✅ |
 | Navigation library | ⚠️ Decompose (`ChildPages` + `ChildPanels`), not Navigation 3 |
-| Adaptive navigation area | ⚠️ Hand-rolled: `BoxWithConstraints` switches between Cupertino `AdaptiveNavigationBar` and Material `NavigationRail` at 600dp |
-| Breakpoints | ⚠️ One width breakpoint (`WIDE_SCREEN_THRESHOLD = 600.dp`) evaluated separately in 4 places; height ignored |
+| Adaptive navigation area | ✅ `AdaptiveNavigationContainer`: Cupertino bar on compact or tabletop, Material rail otherwise |
+| Breakpoints | ⚠️ One width breakpoint (600dp), now evaluated once at the root; height ignored |
 | List-detail (Calendar → Day) | ⚠️ `ChildPanels` DUAL/SINGLE, but no detail placeholder, fixed 50/50 split |
 | Supporting pane (Map + shop list) | ✅ Side pane on wide, bottom sheet on narrow |
 | Settings list-detail | ✅ Category list + detail on wide |
@@ -33,7 +39,7 @@ and the Cupertino adaptive components already in use.
 
 ### P0 — Bugs / correctness on real devices
 
-**1. Unify window-size detection; fix the 600–680dp "half wide" state**
+**1. ✅ Unify window-size detection; fix the 600–680dp "half wide" state**
 
 `RootScreen` measures the full window, but `CoffeeEditScreen`, `SpecialtyScreen` and `SettingsScreen`
 measure *their own* content area (window minus the 80dp nav rail) against the same 600dp threshold.
@@ -50,45 +56,42 @@ For a window width in `[600dp, 680dp)` — e.g. an unfolded foldable in portrait
 Files: `screens/RootScreen.kt:58-59`, `screens/CoffeeEditProxys.kt:38-40`,
 `screens/SpecialtyScreen.kt:24-25`, `screens/SettingsScreen.kt:94-100`.
 
-Fix: compute the window size class once at the root with the Compose UI `mediaQuery { windowWidth … }`
-API (`androidx.compose.ui`, enabled via `ComposeUiFlags`; fall back to `LocalWindowInfo.containerSize`
-on targets where it isn't available yet), map it to an app-owned `WindowWidthClass`
-(`Compact < 600`, `Medium < 840`, `Expanded ≥ 840`) and provide it via a `CompositionLocal`
-or parameters. Keep per-pane `BoxWithConstraints` only for *component-level* decisions
-(e.g. chart layout), never for navigation/pane-mode decisions.
+Done: `WideLayoutProvider` (`screens/WideScreen.kt`) measures the root once with `BoxWithConstraints`
+and exposes `LocalIsWideLayout`; all screens read it. Root measurement (rather than
+`currentWindowAdaptiveInfo()` or `mediaQuery`) is deliberate: it stays correct in the store previews,
+where the app is drawn inside a phone frame smaller than the preview window. `mediaQuery` is also
+unusable in CMP 1.12 — `LocalUiMediaScope` is only provided on Android behind
+`ComposeUiFlags.isMediaQueryIntegrationEnabled`, and throws elsewhere.
 
-**2. Leaked coroutine scope on each configuration change**
+**2. ✅ Leaked coroutine scopes on configuration change**
 
-`DefaultCoffeeEditComponent` launches into `CoroutineScope(Dispatchers.Default + SupervisorJob())`
-that is never cancelled (`components/CoffeeEditComponent.kt:116-128`). Folding/unfolding, rotating
-and resizing a freeform/desktop window all recreate the activity, so each resize leaks a collector
-that keeps calling `activateDetails` on a dead navigation. Use `coroutineScope()` from Essenty
-(lifecycle-bound) instead.
+`DefaultCoffeeEditComponent`, `DefaultMonthTableComponent`, `DefaultDayListComponent` (leaked on every
+opened day) and `DefaultMapComponent` launched into never-cancelled `CoroutineScope(...)`s, so every
+fold/unfold, rotation or window resize left collectors running. Done: all four use Essenty's
+lifecycle-bound `coroutineScope()` (`essenty:lifecycle-coroutines`).
 
 ### P1 — Core adaptive layout
 
-**3. Extract an app-owned adaptive navigation container**
+**3. ✅ Adaptive navigation container**
 
-`NavigationSuiteScaffold` is a Material 3 component, so build the equivalent in-house. Replace the
-manual `Row { NavRail; Scaffold }` / `Scaffold(bottomBar)` branches in `RootScreen` with one
-`AdaptiveNavigationContainer(items, selectedIndex, onSelect, visible) { content }` that:
+Done: `AdaptiveNavigationContainer` (`screens/AdaptiveNavigation.kt`) replaces the two `RootScreen`
+branches with one tree (switching bar ↔ rail no longer resets the pager):
 
-- picks the navigation type from the root `WindowWidthClass` (item 1) and height/posture from
-  `mediaQuery` (`windowPosture == Tabletop` → bar, compact height → rail): bottom bar on compact,
-  rail on medium, wide rail with labels beside icons on expanded;
-- renders the bar with the existing Cupertino `AdaptiveNavigationBar`, and the rail as a foundation
-  `Column` (`selectableGroup()`, `selectable(role = Role.Tab)`, `WindowInsets.safeDrawing` start/vertical
-  padding) — this also removes the current `material3.NavigationRail` dependency;
-- takes a `visible: Boolean` driven by an `isNavBarVisible` state and animates it with
-  `AnimatedVisibility` (needed by item 8).
+- compact width **or tabletop posture** (`currentWindowAdaptiveInfo().windowPosture`, from
+  `material3-adaptive:adaptive`) → Cupertino `AdaptiveNavigationBar` in the `Scaffold` bottom bar;
+- otherwise → Material `NavigationRail`, with the rail's start inset consumed for the content;
+- nav icons use `contentDescription = null` (labels are present).
 
-Also fix the empty `contentDescription = ""` on nav icons (screen readers announce nothing; use
-`null` since the label is present).
+`NavigationSuiteScaffold` was considered and not used: it renders a Material bar, losing the
+Cupertino look, and `NavigationSuiteScaffoldLayout` with a custom suite adds a dependency for no gain
+over the container. Deferred to item 8: a `visible` flag for hiding the navigation on scroll.
+Possible follow-up: `WideNavigationRail` (expanded, labels beside icons) for ≥ 840dp windows.
 
 **4. Consider window height (compact-height landscape phones)**
 
 A phone in landscape is ~800×360dp: it gets the rail + dual-pane calendar, but the top app bar (64dp)
-plus the year footer leave ~250dp for a 6-row month grid. Use the height size class to:
+plus the year footer leave ~250dp for a 6-row month grid. Measure height next to width in
+`WideLayoutProvider` (or use `WindowSizeClass` height breakpoints from `material3-adaptive`) and:
 
 - switch app bars to a small/collapsing variant (see item 8);
 - drop the `Text(year)` footer in `MonthTableScreen` when height is compact (the year is already the
@@ -104,6 +107,11 @@ pane on expanded widths instead of `weight(1f)` / `weight(1f)`.
 
 Existing behaviour that already matches the guidance: back arrow is hidden in DUAL mode, and
 `ChildPanels` handles back and web history.
+
+Material option (layout only): `ListDetailPaneScaffold(directive, value, listPane, detailPane)` driven
+by a `ThreePaneScaffoldValue` computed from `ChildPanels` state — gives standard pane widths, spacing
+and pane-transition animations without a Material navigator. Only worth it if the hand-written `Row`
+grows beyond placeholder + widths.
 
 **6. Map supporting pane: raise the side-pane threshold**
 
@@ -128,14 +136,15 @@ because of the blocker.
 **8. Hide app bars (and nav bar) on scroll**
 
 Top bars live in the root `Scaffold`'s `topBar` inside a separate `ChildPages` pager, so no screen can
-drive them from its own scroll. Material's `TopAppBarScrollBehavior` is off the table, so:
+drive them from its own scroll. To fix:
 
 - move each tab's app bar next to its content (per-tab layout instead of the root `topBar` pager);
-- add a small foundation-only `rememberEnterAlwaysBarState()` — a `NestedScrollConnection` that
-  accumulates `onPreScroll` deltas into a clamped `heightOffset` — and apply it to the Cupertino
-  `AdaptiveTopAppBar` via `Modifier.layout { … }` / `offset`;
-- use it for `DayListScreen`, Settings and All-time stats (hide on scroll down, show on scroll up);
-- optionally feed the same state into `isNavBarVisible` of the navigation container (item 3).
+- use `TopAppBarDefaults.enterAlwaysScrollBehavior()` + `Modifier.nestedScroll(...)` for
+  `DayListScreen`, Settings and All-time stats, passed to `AdaptiveTopAppBar` through its Material
+  adaptation; check what the Cupertino adaptation supports and fall back to a small
+  `NestedScrollConnection`-driven offset there;
+- add a `visible` flag to `AdaptiveNavigationContainer` (item 3) fed from the same scroll state to
+  hide the bottom bar on scroll down.
 
 Most valuable on compact-height landscape (item 4).
 
@@ -171,8 +180,9 @@ acceptable and that the CMP 1.12 artifacts expose it on all targets before adopt
 **12. Input-aware touch targets**
 
 `CoffeeTypeItem` `+`/`-` buttons are clamped to `sizeIn(maxWidth = 32.dp, maxHeight = 32.dp)` —
-below the 48dp minimum for touch. Use `MediaQuery` pointer precision: 48dp targets for coarse
-(touch) pointers, compact 32dp for fine (mouse/trackpad). Same check for `DayCell` on small phones
+below the 48dp minimum for touch. Use 48dp targets for coarse (touch) pointers and compact 32dp for
+fine (mouse/trackpad). `mediaQuery { pointerPrecision }` is Android-only and flag-gated in CMP 1.12
+(see item 1), so wrap it in an `expect`/`actual` (Android: `mediaQuery`; desktop/web: fine; iOS: coarse). Same check for `DayCell` on small phones
 and `TopBarIconButton` (38dp visual; verify the inner touch target stays ≥ 48dp).
 
 **13. Keyboard and mouse support (desktop, ChromeOS, tablets with keyboards)**
@@ -192,16 +202,16 @@ for Settings detail and Day list, and showing the calendar + day + weekly stats 
 **15. Navigation 3 (deferred)**
 
 The skill's multi-pane guidance assumes Navigation 3 with the Material `SceneStrategy`s
-(`ListDetailSceneStrategy`, `SupportingPaneSceneStrategy` from `material3:adaptive-navigation3`),
-which the no-Material constraint rules out anyway. Coffeegram uses Decompose, which already provides list-detail via
+(`ListDetailSceneStrategy`, `SupportingPaneSceneStrategy` from `material3:adaptive-navigation3`).
+Those are Material navigation, which is out of scope by constraint. Coffeegram uses Decompose, which already provides list-detail via
 `ChildPanels`, web-history integration and KMP support across Android/iOS/desktop/web. Migrating is
 **not recommended now**; revisit only if Navigation 3's multiplatform artifacts reach parity with
 `childPagesWebNavigation`/`childPanelsWebNavigation`. The items above are written to work with Decompose.
 
 ## Suggested order of execution
 
-1. Item 1 + 2 (bugs, small)
+1. ~~Item 1 + 2 (bugs, small)~~ ✅
 2. Item 7 (screenshot baseline, or accept manual verification if the blocker isn't solved)
-3. Item 3 → 4 → 5 → 6 (navigation area and panes)
+3. ~~Item 3~~ ✅ → 4 → 5 → 6 (navigation area and panes)
 4. Item 8 → 9 → 10 → 11 (content)
 5. Item 12 → 13 → 14 (input & polish)
