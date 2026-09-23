@@ -1,6 +1,7 @@
 package ru.beryukhov.coffeegram.components
 
 import com.arkivanov.decompose.ComponentContext
+import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.router.panels.ChildPanels
 import com.arkivanov.decompose.router.panels.ChildPanelsMode
@@ -14,9 +15,7 @@ import com.arkivanov.decompose.router.panels.setMode
 import com.arkivanov.decompose.router.webhistory.WebNavigation
 import com.arkivanov.decompose.router.webhistory.WebNavigationOwner
 import com.arkivanov.decompose.value.Value
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.launchIn
@@ -125,7 +124,7 @@ class DefaultCoffeeEditComponent(
                     DetailsConfig.DayList(yearMonth.clampedDate(currentDate.day))
                 )
             }
-            .launchIn(CoroutineScope(Dispatchers.Default + SupervisorJob()))
+            .launchIn(coroutineScope(Dispatchers.Default))
     }
 
     override fun onBack() {

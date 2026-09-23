@@ -1,9 +1,8 @@
 package ru.beryukhov.coffeegram.components
 
 import com.arkivanov.decompose.ComponentContext
-import kotlinx.coroutines.CoroutineScope
+import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -40,7 +39,7 @@ class DefaultMapComponent(
     context: ComponentContext,
 ) : MapComponent, ComponentContext by context {
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private val scope = coroutineScope(Dispatchers.Main.immediate)
 
     override val coffeeShops: StateFlow<CoffeeShopsState>
         field = MutableStateFlow(CoffeeShopsState())

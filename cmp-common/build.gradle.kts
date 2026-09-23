@@ -115,6 +115,7 @@ kotlin {
 
             api(libs.decompose.core)
             api(libs.essenty)
+            implementation(libs.essenty.coroutines)
             implementation(libs.decompose.compose)
 
             api(libs.koin.core)
