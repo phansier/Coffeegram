@@ -28,7 +28,7 @@ Status legend: ✅ done · ⏳ open
 | List-detail (Calendar → Day) | ✅ `ChildPanels` DUAL/SINGLE with detail placeholder, detail pane ≤ 400dp |
 | Supporting pane (Map + shop list) | ✅ Side pane on expanded or short-wide windows (40%, 280–400dp), bottom sheet otherwise |
 | Settings list-detail | ✅ Category list + detail on wide |
-| Adaptive lists / grids | ❌ All `LazyColumn`s single column; calendar cells don't scale |
+| Adaptive lists / grids | ✅ Calendar fills its pane (`Grid`); lists stay single-column by design |
 | App bars hide on scroll | ✅ Material theme: Day list, Settings, All-time stats, shop list (nav bar stays) |
 | Touch targets vs. pointer | ❌ `+`/`-` buttons are 32dp max, no input-aware sizing |
 | Keyboard / mouse | ❌ No shortcuts, no hover states |
@@ -176,16 +176,20 @@ Resolved by earlier items, no code change:
 - `CoffeeShopList` stays a column in both the bottom sheet and the side pane (≤ 400dp, item 6);
 - Settings detail stays a `Column` — revisit only if the settings list grows.
 
-**10. Scale the month calendar to the available space**
+**10. ✅ Scale the month calendar to the available space**
 
-`MonthTable` uses two `LazyVerticalGrid(GridCells.Fixed(7))` (header and days) with fixed 32dp icons,
-so on tablets/desktop the calendar occupies the top third and cells never grow vertically. The month is
-a fixed 7×(5–6) grid, which is exactly what the experimental Compose `Grid` API is for: size cells from
-`constraints` so the month fills the pane, scale the coffee icon with cell size, and put the weekday
-header in the same grid so columns always align.
+`MonthTable` used two `LazyVerticalGrid(GridCells.Fixed(7))` (header and days) with fixed 32dp icons,
+so on tablets/desktop the calendar occupied the top third. Done with the experimental Compose `Grid`
+(`@OptIn(ExperimentalGridApi::class)`, available in `commonMain` of CMP 1.12 `foundation-layout`):
 
-⚠️ `Grid` is experimental (Compose 1.11+, `@OptIn(ExperimentalGridApi::class)`) — confirm it's
-acceptable and that the CMP 1.12 artifacts expose it on all targets before adopting.
+- one grid: 7 × `1.fr` columns, an `Auto` weekday-header row and 5–6 week rows of
+  `MinMax(56dp | 32dp compact, 1.fr)`, so the month fills the pane and header/day columns always align;
+- days are placed with `gridItem(row, column)` from the first weekday offset;
+- the coffee icon scales with the cell (24–64dp), computed once per grid from its constraints;
+- compact-height cells (item 4) are kept.
+
+The `TablePreview` screenshot reference is outdated by design and needs re-recording
+(`./gradlew :app:updateDebugScreenshotTest`) after review.
 
 **11. Stats: width-based layout and wider charts**
 
@@ -233,5 +237,5 @@ Those are Material navigation, which is out of scope by constraint. Coffeegram u
 1. ~~Item 1 + 2 (bugs, small)~~ ✅
 2. ~~Item 7~~ skipped (manual verification instead)
 3. ~~Item 3 → 4 → 5 → 6~~ ✅ (navigation area and panes)
-4. ~~Item 8 → 9~~ ✅ → 10 → 11 (content)
+4. ~~Item 8 → 9 → 10~~ ✅ → 11 (content)
 5. Item 12 → 13 → 14 (input & polish)
