@@ -46,7 +46,7 @@ fun MonthTableScreen(
         },
         modifier = modifier,
         selectedDay = selectedDay,
-        compact = LocalIsCompactHeight.current,
+        compact = LocalWindowLayout.current.isCompactHeight,
     )
 }
 

@@ -97,7 +97,7 @@ fun SettingsScreen(
             .padding(contentPadding)
             .consumeWindowInsets(contentPadding),
     ) {
-        if (LocalIsWideLayout.current) {
+        if (LocalWindowLayout.current.isWide) {
             val selectedName by component.selectedCategory.subscribeAsState()
             val selected = categories.firstOrNull { it.name == selectedName } ?: categories.first()
 

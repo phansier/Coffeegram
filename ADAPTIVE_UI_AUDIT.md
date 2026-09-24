@@ -26,7 +26,7 @@ Status legend: ✅ done · ⏳ open
 | Adaptive navigation area | ✅ `AdaptiveNavigationContainer`: Cupertino bar on compact or tabletop, Material rail otherwise |
 | Breakpoints | ✅ Width (600dp) and compact height (480dp), evaluated once at the root |
 | List-detail (Calendar → Day) | ✅ `ChildPanels` DUAL/SINGLE with detail placeholder, detail pane ≤ 400dp |
-| Supporting pane (Map + shop list) | ✅ Side pane on wide, bottom sheet on narrow |
+| Supporting pane (Map + shop list) | ✅ Side pane on expanded or short-wide windows (40%, 280–400dp), bottom sheet otherwise |
 | Settings list-detail | ✅ Category list + detail on wide |
 | Adaptive lists / grids | ❌ All `LazyColumn`s single column; calendar cells don't scale |
 | App bars hide on scroll | ❌ None |
@@ -57,7 +57,7 @@ Files: `screens/RootScreen.kt:58-59`, `screens/CoffeeEditProxys.kt:38-40`,
 `screens/SpecialtyScreen.kt:24-25`, `screens/SettingsScreen.kt:94-100`.
 
 Done: `WideLayoutProvider` (`screens/WideScreen.kt`) measures the root once with `BoxWithConstraints`
-and exposes `LocalIsWideLayout`; all screens read it. Root measurement (rather than
+and exposes `LocalWindowLayout` (`isWide`, `isExpandedWidth`, `isCompactHeight`); all screens read it. Root measurement (rather than
 `currentWindowAdaptiveInfo()` or `mediaQuery`) is deliberate: it stays correct in the store previews,
 where the app is drawn inside a phone frame smaller than the preview window. `mediaQuery` is also
 unusable in CMP 1.12 — `LocalUiMediaScope` is only provided on Android behind
@@ -92,7 +92,7 @@ Possible follow-up: `WideNavigationRail` (expanded, labels beside icons) for ≥
 A phone in landscape is ~800×360dp: it gets the rail + dual-pane calendar, and the top app bar (64dp)
 leaves ~280dp for a 6-row month grid (regular cells need ~400dp). Done:
 
-- `WideLayoutProvider` also provides `LocalIsCompactHeight` (root height < 480dp);
+- `LocalWindowLayout.isCompactHeight` (root height < 480dp);
 - `MonthTable(compact = true)` switches day cells to a single row (20dp icon beside the day number),
   so a 6-row month fits without scrolling;
 - the `Text(year)` footer in `MonthTableScreen` is removed (the year is in the app bar).
@@ -121,11 +121,15 @@ by a `ThreePaneScaffoldValue` computed from `ChildPanels` state — gives standa
 and pane-transition animations without a Material navigator. Only worth it if the hand-written `Row`
 grows beyond placeholder + widths.
 
-**6. Map supporting pane: raise the side-pane threshold**
+**6. ✅ Map supporting pane: raise the side-pane threshold**
 
-`SpecialtyScreen` shows a fixed 320dp `SidePane` from 600dp. At 600–840dp with a rail that leaves the
-map ~200–440dp wide. Show the side pane from the *expanded* width class (≥ 840dp) and keep the bottom
-sheet on medium, or make the pane width a fraction (e.g. `0.4f`, clamped 280–400dp).
+`SpecialtyScreen` showed a fixed 320dp `SidePane` from 600dp; at 600–840dp with a rail that left the
+map ~200–440dp wide. Done:
+
+- side pane when the window is expanded (≥ 840dp) **or** wide and short (landscape phones, where a
+  bottom sheet in ~280dp of height would leave almost no map); bottom sheet otherwise, including
+  medium-width portrait (tablet portrait, unfolded foldable);
+- side pane width is 40% of the content, clamped to 280–400dp.
 
 ### P2 — Content adapts to space
 
@@ -220,6 +224,6 @@ Those are Material navigation, which is out of scope by constraint. Coffeegram u
 
 1. ~~Item 1 + 2 (bugs, small)~~ ✅
 2. Item 7 (screenshot baseline, or accept manual verification if the blocker isn't solved)
-3. ~~Item 3 → 4 → 5~~ ✅ → 6 (navigation area and panes)
+3. ~~Item 3 → 4 → 5 → 6~~ ✅ (navigation area and panes)
 4. Item 8 → 9 → 10 → 11 (content)
 5. Item 12 → 13 → 14 (input & polish)

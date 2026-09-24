@@ -25,7 +25,7 @@ import ru.beryukhov.coffeegram.components.MonthTableComponent
 fun CoffeeEditAppBar(coffeeEditComponent: CoffeeEditComponent) {
     val state by coffeeEditComponent.panels.subscribeAsState()
     val details = state.details
-    if (!LocalIsWideLayout.current && details != null) {
+    if (!LocalWindowLayout.current.isWide && details != null) {
         DayListAppBar(details.instance)
     } else {
         val selectedDay = (details?.configuration as? DetailsConfig.DayList)?.date
@@ -39,7 +39,7 @@ fun CoffeeEditScreen(
     coffeeEditComponent: CoffeeEditComponent,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
-    val isWide = LocalIsWideLayout.current
+    val isWide = LocalWindowLayout.current.isWide
     val targetMode = if (isWide) ChildPanelsMode.DUAL else ChildPanelsMode.SINGLE
     LaunchedEffect(targetMode) { coffeeEditComponent.setMode(targetMode) }
 

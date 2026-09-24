@@ -46,7 +46,7 @@ fun RootScreen(
     ) {
         val pagesState by rootComponent.pages.subscribeAsState()
         WideLayoutProvider(modifier = modifier) { showNavigationRail ->
-            val isWide = LocalIsWideLayout.current
+            val isWide = LocalWindowLayout.current.isWide
             AdaptiveNavigationContainer(
                 showNavigationRail = showNavigationRail,
                 items = navBarItems,
