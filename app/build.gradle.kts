@@ -138,6 +138,7 @@ dependencies {
     implementation(libs.glance.appwidget)
     implementation(libs.glance.preview)
     implementation(libs.glance.appwidget.preview)
+    implementation(libs.work.runtime)
 
     implementation(libs.kotlinx.immutableCollections)
 
