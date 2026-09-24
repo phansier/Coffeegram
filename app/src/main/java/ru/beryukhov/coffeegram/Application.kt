@@ -1,6 +1,9 @@
 package ru.beryukhov.coffeegram
 
 import android.app.Application
+import androidx.compose.ui.ComposeUiFlags
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.ExperimentalMediaQueryApi
 import androidx.glance.appwidget.updateAll
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -27,8 +30,10 @@ open class Application : Application(), KoinComponent {
 
     private val wearableSyncCoordinator: WearableSyncCoordinator by inject()
 
+    @OptIn(ExperimentalComposeUiApi::class, ExperimentalMediaQueryApi::class)
     override fun onCreate() {
         super.onCreate()
+        ComposeUiFlags.isMediaQueryIntegrationEnabled = true
         startKoin {
             androidContext(this@Application)
             modules(

@@ -30,7 +30,7 @@ Status legend: ✅ done · ⏳ open
 | Settings list-detail | ✅ Category list + detail on wide |
 | Adaptive lists / grids | ✅ Calendar fills its pane (`Grid`); lists stay single-column by design |
 | App bars hide on scroll | ✅ Material theme: Day list, Settings, All-time stats, shop list (nav bar stays) |
-| Touch targets vs. pointer | ❌ `+`/`-` buttons are 32dp max, no input-aware sizing |
+| Touch targets vs. pointer | ✅ `+`/`-` buttons 48dp on touch, 32dp with a fine pointer |
 | Keyboard / mouse | ❌ No shortcuts, no hover states |
 | Form-factor screenshot tests | ❌ Only 2 component-level previews; screen-level blocked by CMP resources issue |
 | Orientation / resizability | ✅ No orientation lock, resizable by default |
@@ -205,13 +205,22 @@ Done (`screens/CoffeeCharts.kt`):
 
 ### P3 — Input & polish
 
-**12. Input-aware touch targets**
+**12. ✅ Input-aware touch targets**
 
-`CoffeeTypeItem` `+`/`-` buttons are clamped to `sizeIn(maxWidth = 32.dp, maxHeight = 32.dp)` —
-below the 48dp minimum for touch. Use 48dp targets for coarse (touch) pointers and compact 32dp for
-fine (mouse/trackpad). `mediaQuery { pointerPrecision }` is Android-only and flag-gated in CMP 1.12
-(see item 1), so wrap it in an `expect`/`actual` (Android: `mediaQuery`; desktop/web: fine; iOS: coarse). Same check for `DayCell` on small phones
-and `TopBarIconButton` (38dp visual; verify the inner touch target stays ≥ 48dp).
+`CoffeeTypeItem` `+`/`-` buttons were clamped to 32dp — below the 48dp touch minimum, and sitting
+next to the counter so Compose's automatic touch-target expansion can't reliably cover them. Done:
+
+- `hasFinePointer()` (`app_ui/PointerPrecision.kt`, expect/actual): Android → `mediaQuery {
+  pointerPrecision == Fine }`, guarded by `ComposeUiFlags.isMediaQueryIntegrationEnabled` (switched on
+  in `Application.onCreate`; previews and tests fall back to touch); desktop → fine; iOS → touch;
+  web → CSS `(pointer: fine)`;
+- the buttons are 48dp for touch and stay 32dp for mouse/trackpad.
+
+Checked, no change needed: `TopBarIconButton` (38dp visual) and calendar `DayCell`s rely on Compose's
+automatic expansion of pointer targets to 48dp; day cells are ≥ 56dp tall outside compact height.
+
+The `Preview_0` screenshot reference (`CoffeeTypeItem`) shows the old 32dp buttons and needs
+re-recording after review.
 
 **13. Keyboard and mouse support (desktop, ChromeOS, tablets with keyboards)**
 
@@ -242,4 +251,4 @@ Those are Material navigation, which is out of scope by constraint. Coffeegram u
 2. ~~Item 7~~ skipped (manual verification instead)
 3. ~~Item 3 → 4 → 5 → 6~~ ✅ (navigation area and panes)
 4. ~~Item 8 → 9 → 10 → 11~~ ✅ (content)
-5. Item 12 → 13 → 14 (input & polish)
+5. ~~Item 12~~ ✅ → 13 → 14 (input & polish)
