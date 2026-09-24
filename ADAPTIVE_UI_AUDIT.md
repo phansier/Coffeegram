@@ -191,13 +191,17 @@ so on tablets/desktop the calendar occupied the top third. Done with the experim
 The `TablePreview` screenshot reference is outdated by design and needs re-recording
 (`./gradlew :app:updateDebugScreenshotTest`) after review.
 
-**11. Stats: width-based layout and wider charts**
+**11. ✅ Stats: width-based layout and wider charts**
 
-- `AllTimeCoffeeChart` picks side-by-side charts by `maxWidth > maxHeight` (aspect ratio). A tall
-  tablet in portrait gets stacked charts at 800dp+ width; a squat window gets cramped side-by-side
-  ones. Switch on width class instead.
-- On expanded widths, show Weekly and All-time together (two columns / `Grid`) instead of tabs.
-- Cap chart width (`widthIn(max = …)`) so the weekly column chart isn't stretched across 1500dp.
+Done (`screens/CoffeeCharts.kt`):
+
+- expanded width (≥ 840dp): no tabs — one scrolling overview with Weekly and Over-time side by side
+  and Distribution below;
+- otherwise tabs as before; All-time charts sit side by side from the 600dp width breakpoint
+  (`LocalWindowLayout.isWide`) instead of the old `maxWidth > maxHeight` aspect-ratio check;
+- every chart is capped at 720dp and centered;
+- charts are split into `WeeklyChartSection` / `OverTimeChartSection` / `DistributionChartSection`
+  sharing one `ChartSection` title layout.
 
 ### P3 — Input & polish
 
@@ -237,5 +241,5 @@ Those are Material navigation, which is out of scope by constraint. Coffeegram u
 1. ~~Item 1 + 2 (bugs, small)~~ ✅
 2. ~~Item 7~~ skipped (manual verification instead)
 3. ~~Item 3 → 4 → 5 → 6~~ ✅ (navigation area and panes)
-4. ~~Item 8 → 9 → 10~~ ✅ → 11 (content)
+4. ~~Item 8 → 9 → 10 → 11~~ ✅ (content)
 5. Item 12 → 13 → 14 (input & polish)

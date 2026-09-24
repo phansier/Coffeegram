@@ -2,8 +2,8 @@
 
 package ru.beryukhov.coffeegram.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -65,6 +66,22 @@ import kotlin.time.Clock
 
 @Composable
 fun CoffeeCharts(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    val windowLayout = LocalWindowLayout.current
+    ProvideVicoTheme(rememberM3VicoTheme()) {
+        if (windowLayout.isExpandedWidth) {
+            ChartsOverview(coffeeState, modifier)
+        } else {
+            TabbedCharts(coffeeState, allTimeSideBySide = windowLayout.isWide, modifier = modifier)
+        }
+    }
+}
+
+@Composable
+private fun TabbedCharts(
+    coffeeState: DaysCoffeesState,
+    allTimeSideBySide: Boolean,
+    modifier: Modifier = Modifier,
+) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf(stringResource(Res.string.tab_weekly), stringResource(Res.string.tab_all_time))
 
@@ -80,60 +97,180 @@ fun CoffeeCharts(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-        ProvideVicoTheme(rememberM3VicoTheme()) {
-            when (selectedTabIndex) {
-                0 -> WeeklyCoffeeChart(coffeeState)
-                1 -> AllTimeCoffeeChart(coffeeState)
-            }
+        when (selectedTabIndex) {
+            0 -> WeeklyChartSection(
+                coffeeState = coffeeState,
+                modifier = Modifier.padding(16.dp).chartWidth().align(Alignment.CenterHorizontally),
+            )
+            1 -> AllTimeCharts(coffeeState, sideBySide = allTimeSideBySide)
         }
     }
 }
 
 @Composable
-fun WeeklyCoffeeChart(coffeeState: DaysCoffeesState) {
-    // Get dates for the current week (Monday to Sunday)
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-    val startOfWeek = today.minus(DatePeriod(days = today.dayOfWeek.ordinal))
-
-    // Filter data for current week and aggregate by day
-    val weekData = weeklyChartData(startOfWeek, coffeeState)
-    val entries = entries(weekData)
+private fun ChartsOverview(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    val hasData = coffeeState.coffees.isNotEmpty()
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScrollHidingTopBar()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // Create chart entries
-        val modelProducer = remember { CartesianChartModelProducer() }
-        LaunchedEffect(Unit) {
-            modelProducer.runTransaction {
-                columnSeries { series(x = entries.first, y = entries.second) }
+        Column(
+            modifier = Modifier.widthIn(max = MaxChartWidth * 2).fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                ChartTitle(stringResource(Res.string.chart_title_weekly), Modifier.weight(1f))
+                ChartTitle(stringResource(Res.string.chart_title_over_time), Modifier.weight(1f))
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                WeeklyChart(coffeeState, Modifier.weight(1f))
+                if (hasData) {
+                    OverTimeChart(coffeeState, Modifier.weight(1f))
+                } else {
+                    NoChartData(Modifier.weight(1f))
+                }
             }
         }
-        Text(
-            text = stringResource(Res.string.chart_title_weekly),
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
+        if (hasData) {
+            DistributionChartSection(coffeeState, Modifier.chartWidth())
+        }
+    }
+}
 
+@Composable
+private fun AllTimeCharts(coffeeState: DaysCoffeesState, sideBySide: Boolean) {
+    if (coffeeState.coffees.isEmpty()) {
+        NoChartData()
+        return
+    }
+    if (sideBySide) {
+        Row(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            OverTimeChartSection(coffeeState, Modifier.weight(1f).verticalScrollHidingTopBar())
+            DistributionChartSection(coffeeState, Modifier.weight(1f).verticalScrollHidingTopBar())
+        }
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .verticalScrollHidingTopBar(),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            OverTimeChartSection(coffeeState, Modifier.chartWidth())
+            DistributionChartSection(coffeeState, Modifier.chartWidth())
+        }
+    }
+}
+
+private val MaxChartWidth = 720.dp
+
+private fun Modifier.chartWidth(): Modifier = widthIn(max = MaxChartWidth).fillMaxWidth()
+
+@Composable
+private fun NoChartData(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxWidth().padding(16.dp)) {
+        Text(stringResource(Res.string.no_data_available))
+    }
+}
+
+@Composable
+private fun ChartSection(
+    title: String,
+    modifier: Modifier = Modifier,
+    chart: @Composable () -> Unit,
+) {
+    Column(modifier = modifier) {
+        ChartTitle(title)
         Spacer(modifier = Modifier.height(16.dp))
+        chart()
+    }
+}
 
-        val dayNames = dayNames
+@Composable
+private fun ChartTitle(title: String, modifier: Modifier = Modifier) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.headlineSmall,
+        modifier = modifier.fillMaxWidth(),
+        textAlign = TextAlign.Center
+    )
+}
 
-        CartesianChartHost(
-            chart = rememberCartesianChart(
-                rememberColumnCartesianLayer(),
-                startAxis = VerticalAxis.rememberStart(),
-                bottomAxis = HorizontalAxis.rememberBottom(
-                    valueFormatter = { _, value, _ ->
-                        dayNames.getOrNull(weekData.getOrNull(value.toInt())?.dayIndex ?: -1) ?: ""
-                    }
-                ),
+@Composable
+private fun WeeklyChartSection(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    ChartSection(title = stringResource(Res.string.chart_title_weekly), modifier = modifier) {
+        WeeklyChart(coffeeState)
+    }
+}
+
+@Composable
+private fun WeeklyChart(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+    val startOfWeek = today.minus(DatePeriod(days = today.dayOfWeek.ordinal))
+    val weekData = weeklyChartData(startOfWeek, coffeeState)
+    val entries = entries(weekData)
+    val modelProducer = remember { CartesianChartModelProducer() }
+    LaunchedEffect(Unit) {
+        modelProducer.runTransaction {
+            columnSeries { series(x = entries.first, y = entries.second) }
+        }
+    }
+    val dayNames = dayNames
+    CartesianChartHost(
+        chart = rememberCartesianChart(
+            rememberColumnCartesianLayer(),
+            startAxis = VerticalAxis.rememberStart(),
+            bottomAxis = HorizontalAxis.rememberBottom(
+                valueFormatter = { _, value, _ ->
+                    dayNames.getOrNull(weekData.getOrNull(value.toInt())?.dayIndex ?: -1) ?: ""
+                }
             ),
-            modelProducer = modelProducer,
-            modifier = Modifier,
-        )
+        ),
+        modelProducer = modelProducer,
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun OverTimeChartSection(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    ChartSection(title = stringResource(Res.string.chart_title_over_time), modifier = modifier) {
+        OverTimeChart(coffeeState)
+    }
+}
+
+@Composable
+private fun OverTimeChart(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    val aggregatedData = remember(coffeeState) { aggregation(coffeeState) }
+    LineChart(aggregatedData.display(), modifier)
+}
+
+@Composable
+private fun DistributionChartSection(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    ChartSection(title = stringResource(Res.string.chart_title_distribution), modifier = modifier) {
+        ColumnChart(coffeeState)
+    }
+}
+
+private const val MONTHLY_AGGREGATION_THRESHOLD_DAYS = 31
+
+private fun aggregation(coffeeState: DaysCoffeesState): List<AggregatedRawData> {
+    val dates = coffeeState.coffees.keys
+    val daysBetween = (dates.max() - dates.min()).days
+    return if (daysBetween > MONTHLY_AGGREGATION_THRESHOLD_DAYS) {
+        monthlyAggregation(coffeeState)
+    } else {
+        dailyAggregation(coffeeState)
     }
 }
 
@@ -156,123 +293,6 @@ internal fun entries(weekData: List<WeeklyChartData>): Pair<List<Int>, List<Int>
     weekData.mapIndexed { index, data ->
         index to data.totalCoffees
     }.unzip()
-
-@Composable
-fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
-    // Only process if we have data
-    if (coffeeState.coffees.isEmpty()) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(stringResource(Res.string.no_data_available))
-        }
-        return
-    }
-
-    // Get date range for all available data
-    val dates = coffeeState.coffees.keys
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-    val minDate = dates.minOrNull() ?: today
-    val maxDate = dates.maxOrNull() ?: today
-
-    // Calculate day difference
-    val daysBetween = (maxDate - minDate).days
-
-    // Prepare data
-    val useMonthlyAggregation = daysBetween > 31
-
-    // Aggregate data
-    val aggregatedData = remember(coffeeState) {
-        if (useMonthlyAggregation) {
-            monthlyAggregation(coffeeState)
-        } else {
-            dailyAggregation(coffeeState)
-        }
-    }
-
-    BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        val isLandscape = maxWidth > maxHeight
-
-        if (isLandscape) {
-            // Horizontal layout for landscape
-            Row(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                // Left chart - Coffee Consumption Over Time
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .verticalScrollHidingTopBar()
-                ) {
-                    Text(
-                        text = stringResource(Res.string.chart_title_over_time),
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    LineChart(aggregatedData.display())
-                }
-
-                Spacer(modifier = Modifier.width(16.dp))
-
-                // Right chart - Coffee Type Distribution
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .verticalScrollHidingTopBar()
-                ) {
-                    Text(
-                        text = stringResource(Res.string.chart_title_distribution),
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    ColumnChart(coffeeState)
-                }
-            }
-        } else {
-            // Vertical layout for portrait
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScrollHidingTopBar()
-            ) {
-                Text(
-                    text = stringResource(Res.string.chart_title_over_time),
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-                LineChart(aggregatedData.display())
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = stringResource(Res.string.chart_title_distribution),
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                ColumnChart(coffeeState)
-
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-        }
-    }
-}
 
 @Composable
 private fun List<AggregatedRawData>.display(): ImmutableList<AggregatedData> =
@@ -335,7 +355,7 @@ private fun ColumnChart(coffeeState: DaysCoffeesState) {
 }
 
 @Composable
-private fun LineChart(aggregatedData: ImmutableList<AggregatedData>) {
+private fun LineChart(aggregatedData: ImmutableList<AggregatedData>, modifier: Modifier = Modifier) {
     // Create chart entries
     val chartEntries = aggregatedData.mapIndexed { index: Int, data: AggregatedData ->
         index to data.totalCount
@@ -359,7 +379,7 @@ private fun LineChart(aggregatedData: ImmutableList<AggregatedData>) {
                 ),
             ),
         modelProducer = chartEntryModelProducer,
-        modifier = Modifier,
+        modifier = modifier,
     )
 }
 
