@@ -1,18 +1,20 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.union
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -27,6 +29,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import ru.beryukhov.coffeegram.app_ui.LocalPhoneFrameInsets
+import ru.beryukhov.coffeegram.app_ui.handleKeyDown
 import ru.beryukhov.coffeegram.components.MonthTableComponent
 import ru.beryukhov.coffeegram.components.getFullMonthName
 import ru.beryukhov.coffeegram.view.MonthTable
@@ -41,19 +44,20 @@ fun MonthTableScreen(
 ) {
     val monthTableScreenState by component.models.collectAsState()
 
-    Column(horizontalAlignment = Alignment.End, modifier = modifier) {
-        MonthTable(
-            yearMonth = monthTableScreenState.yearMonth,
-            today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
-            filledDayItemsMap = monthTableScreenState.filledDayItemsMap,
-            onClick = { dayOfMonth: Int ->
-                component.onDayClick(dayOfMonth)
-            },
-            modifier = Modifier.weight(1f),
-            selectedDay = selectedDay,
-        )
-        Text("${monthTableScreenState.yearMonth.year}", modifier = Modifier.padding(16.dp))
-    }
+    MonthTable(
+        yearMonth = monthTableScreenState.yearMonth,
+        today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
+        filledDayItemsMap = monthTableScreenState.filledDayItemsMap,
+        onClick = { dayOfMonth: Int ->
+            component.onDayClick(dayOfMonth)
+        },
+        modifier = modifier.onKeyEvent { event ->
+            event.handleKeyDown(Key.PageUp, action = component::onDecrementMonth) ||
+                event.handleKeyDown(Key.PageDown, action = component::onIncrementMonth)
+        },
+        selectedDay = selectedDay,
+        compact = LocalWindowLayout.current.isCompactHeight,
+    )
 }
 
 @OptIn(ExperimentalAdaptiveApi::class)
@@ -62,6 +66,7 @@ fun MonthTableAppBar(
     component: MonthTableComponent,
     modifier: Modifier = Modifier,
     selectedDay: LocalDate? = null,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     val screenState by component.models.collectAsState()
 
@@ -77,6 +82,7 @@ fun MonthTableAppBar(
             TopBarTitle(
                 title = titleText,
                 eyebrow = "${screenState.yearMonth.year}",
+                cupertinoTitle = "$titleText ${screenState.yearMonth.year}",
                 modifier = Modifier.testTag("Month"),
             )
         },
@@ -97,5 +103,6 @@ fun MonthTableAppBar(
             }
         },
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
+        adaptation = { material { applyTopBarScrollBehavior(scrollBehavior) } },
     )
 }

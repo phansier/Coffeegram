@@ -2,8 +2,8 @@
 
 package ru.beryukhov.coffeegram.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Tab
@@ -24,12 +22,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.chart_title_distribution
-import coffeegram.cmp_common.generated.resources.chart_title_over_time
+import coffeegram.cmp_common.generated.resources.chart_title_over_time_daily
+import coffeegram.cmp_common.generated.resources.chart_title_over_time_monthly
+import coffeegram.cmp_common.generated.resources.chart_title_over_time_weekly
 import coffeegram.cmp_common.generated.resources.chart_title_weekly
 import coffeegram.cmp_common.generated.resources.no_data_available
 import coffeegram.cmp_common.generated.resources.tab_all_time
@@ -49,8 +50,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.daysUntil
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
@@ -62,11 +63,26 @@ import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
-import ru.beryukhov.date_time_utils.YearMonth
 import kotlin.time.Clock
 
 @Composable
 fun CoffeeCharts(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    val windowLayout = LocalWindowLayout.current
+    ProvideVicoTheme(rememberM3VicoTheme()) {
+        if (windowLayout.isExpandedWidth) {
+            ChartsOverview(coffeeState, modifier)
+        } else {
+            TabbedCharts(coffeeState, allTimeSideBySide = windowLayout.isWide, modifier = modifier)
+        }
+    }
+}
+
+@Composable
+private fun TabbedCharts(
+    coffeeState: DaysCoffeesState,
+    allTimeSideBySide: Boolean,
+    modifier: Modifier = Modifier,
+) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf(stringResource(Res.string.tab_weekly), stringResource(Res.string.tab_all_time))
 
@@ -82,60 +98,183 @@ fun CoffeeCharts(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-        ProvideVicoTheme(rememberM3VicoTheme()) {
-            when (selectedTabIndex) {
-                0 -> WeeklyCoffeeChart(coffeeState)
-                1 -> AllTimeCoffeeChart(coffeeState)
-            }
+        when (selectedTabIndex) {
+            0 -> WeeklyChartSection(
+                coffeeState = coffeeState,
+                modifier = Modifier.padding(16.dp).chartWidth().align(Alignment.CenterHorizontally),
+            )
+            1 -> AllTimeCharts(coffeeState, sideBySide = allTimeSideBySide)
         }
     }
 }
 
 @Composable
-fun WeeklyCoffeeChart(coffeeState: DaysCoffeesState) {
-    // Get dates for the current week (Monday to Sunday)
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-    val startOfWeek = today.minus(DatePeriod(days = today.dayOfWeek.ordinal))
-
-    // Filter data for current week and aggregate by day
-    val weekData = weeklyChartData(startOfWeek, coffeeState)
-    val entries = entries(weekData)
+private fun ChartsOverview(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    val overTimeSeries = if (coffeeState.coffees.isNotEmpty()) rememberOverTimeSeries(coffeeState) else null
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScrollHidingTopBar()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        // Create chart entries
-        val modelProducer = remember { CartesianChartModelProducer() }
-        LaunchedEffect(Unit) {
-            modelProducer.runTransaction {
-                columnSeries { series(x = entries.first, y = entries.second) }
+        Column(
+            modifier = Modifier.widthIn(max = MaxChartWidth * 2).fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Row(
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                ChartTitle(stringResource(Res.string.chart_title_weekly), Modifier.weight(1f))
+                ChartTitle(overTimeSeries?.title().orEmpty(), Modifier.weight(1f))
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                WeeklyChart(coffeeState, Modifier.weight(1f))
+                if (overTimeSeries != null) {
+                    OverTimeChart(overTimeSeries, Modifier.weight(1f))
+                } else {
+                    NoChartData(Modifier.weight(1f))
+                }
             }
         }
-        Text(
-            text = stringResource(Res.string.chart_title_weekly),
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
+        if (overTimeSeries != null) {
+            DistributionChartSection(coffeeState, Modifier.chartWidth())
+        }
+    }
+}
 
+@Composable
+private fun AllTimeCharts(coffeeState: DaysCoffeesState, sideBySide: Boolean) {
+    if (coffeeState.coffees.isEmpty()) {
+        NoChartData()
+        return
+    }
+    if (sideBySide) {
+        Row(
+            modifier = Modifier.fillMaxSize().padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            OverTimeChartSection(coffeeState, Modifier.weight(1f).verticalScrollHidingTopBar())
+            DistributionChartSection(coffeeState, Modifier.weight(1f).verticalScrollHidingTopBar())
+        }
+    } else {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .verticalScrollHidingTopBar(),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            OverTimeChartSection(coffeeState, Modifier.chartWidth())
+            DistributionChartSection(coffeeState, Modifier.chartWidth())
+        }
+    }
+}
+
+private val MaxChartWidth = 720.dp
+
+private fun Modifier.chartWidth(): Modifier = widthIn(max = MaxChartWidth).fillMaxWidth()
+
+@Composable
+private fun NoChartData(modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxWidth().padding(16.dp)) {
+        Text(stringResource(Res.string.no_data_available))
+    }
+}
+
+@Composable
+private fun ChartSection(
+    title: String,
+    modifier: Modifier = Modifier,
+    chart: @Composable () -> Unit,
+) {
+    Column(modifier = modifier) {
+        ChartTitle(title)
         Spacer(modifier = Modifier.height(16.dp))
+        chart()
+    }
+}
 
-        val dayNames = dayNames
+@Composable
+private fun ChartTitle(title: String, modifier: Modifier = Modifier) {
+    Text(
+        text = title,
+        style = MaterialTheme.typography.headlineSmall,
+        modifier = modifier.fillMaxWidth(),
+        textAlign = TextAlign.Center
+    )
+}
 
-        CartesianChartHost(
-            chart = rememberCartesianChart(
-                rememberColumnCartesianLayer(),
-                startAxis = VerticalAxis.rememberStart(),
-                bottomAxis = HorizontalAxis.rememberBottom(
-                    valueFormatter = { _, value, _ ->
-                        dayNames.getOrNull(weekData.getOrNull(value.toInt())?.dayIndex ?: -1) ?: ""
-                    }
-                ),
+@Composable
+private fun WeeklyChartSection(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    ChartSection(title = stringResource(Res.string.chart_title_weekly), modifier = modifier) {
+        WeeklyChart(coffeeState)
+    }
+}
+
+@Composable
+private fun WeeklyChart(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+    val startOfWeek = today.minus(DatePeriod(days = today.dayOfWeek.ordinal))
+    val weekData = weeklyChartData(startOfWeek, coffeeState)
+    val entries = entries(weekData)
+    val modelProducer = remember { CartesianChartModelProducer() }
+    LaunchedEffect(Unit) {
+        modelProducer.runTransaction {
+            columnSeries { series(x = entries.first, y = entries.second) }
+        }
+    }
+    val dayNames = dayNames
+    CartesianChartHost(
+        chart = rememberCartesianChart(
+            rememberColumnCartesianLayer(),
+            startAxis = VerticalAxis.rememberStart(),
+            bottomAxis = HorizontalAxis.rememberBottom(
+                valueFormatter = { _, value, _ ->
+                    dayNames.getOrNull(weekData.getOrNull(value.toInt())?.dayIndex ?: -1) ?: ""
+                }
             ),
-            modelProducer = modelProducer,
-            modifier = Modifier,
-        )
+        ),
+        modelProducer = modelProducer,
+        modifier = modifier,
+    )
+}
+
+@Composable
+private fun OverTimeChartSection(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    val series = rememberOverTimeSeries(coffeeState)
+    ChartSection(title = series.title(), modifier = modifier) {
+        OverTimeChart(series)
+    }
+}
+
+@Composable
+private fun rememberOverTimeSeries(coffeeState: DaysCoffeesState): OverTimeSeries {
+    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+    return remember(coffeeState, today) { overTimeSeries(coffeeState, today) }
+}
+
+@Composable
+private fun OverTimeSeries.title(): String = stringResource(
+    when (scale) {
+        OverTimeScale.Days -> Res.string.chart_title_over_time_daily
+        OverTimeScale.Weeks -> Res.string.chart_title_over_time_weekly
+        OverTimeScale.Months -> Res.string.chart_title_over_time_monthly
+    }
+)
+
+@Composable
+private fun OverTimeChart(series: OverTimeSeries, modifier: Modifier = Modifier) {
+    LineChart(series.display(), modifier)
+}
+
+@Composable
+private fun DistributionChartSection(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
+    ChartSection(title = stringResource(Res.string.chart_title_distribution), modifier = modifier) {
+        ColumnChart(coffeeState)
     }
 }
 
@@ -160,136 +299,13 @@ internal fun entries(weekData: List<WeeklyChartData>): Pair<List<Int>, List<Int>
     }.unzip()
 
 @Composable
-fun AllTimeCoffeeChart(coffeeState: DaysCoffeesState) {
-    // Only process if we have data
-    if (coffeeState.coffees.isEmpty()) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(stringResource(Res.string.no_data_available))
-        }
-        return
-    }
-
-    // Get date range for all available data
-    val dates = coffeeState.coffees.keys
-    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-    val minDate = dates.minOrNull() ?: today
-    val maxDate = dates.maxOrNull() ?: today
-
-    // Calculate day difference
-    val daysBetween = (maxDate - minDate).days
-
-    // Prepare data
-    val useMonthlyAggregation = daysBetween > 31
-
-    // Aggregate data
-    val aggregatedData = remember(coffeeState) {
-        if (useMonthlyAggregation) {
-            monthlyAggregation(coffeeState)
-        } else {
-            dailyAggregation(coffeeState)
-        }
-    }
-
-    BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        val isLandscape = maxWidth > maxHeight
-
-        if (isLandscape) {
-            // Horizontal layout for landscape
-            Row(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                // Left chart - Coffee Consumption Over Time
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Text(
-                        text = stringResource(Res.string.chart_title_over_time),
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    LineChart(aggregatedData.display())
-                }
-
-                Spacer(modifier = Modifier.width(16.dp))
-
-                // Right chart - Coffee Type Distribution
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Text(
-                        text = stringResource(Res.string.chart_title_distribution),
-                        style = MaterialTheme.typography.headlineSmall,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    ColumnChart(coffeeState)
-                }
-            }
-        } else {
-            // Vertical layout for portrait
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Text(
-                    text = stringResource(Res.string.chart_title_over_time),
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-                LineChart(aggregatedData.display())
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = stringResource(Res.string.chart_title_distribution),
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                ColumnChart(coffeeState)
-
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-        }
-    }
-}
-
-@Composable
-private fun List<AggregatedRawData>.display(): ImmutableList<AggregatedData> =
-    this.map {
-        when (it) {
-            is AggregatedDailyData -> AggregatedData(
-                "${getShortMonthName(it.month)} ${it.day}",
-                totalCount = it.totalCount,
-            )
-
-            is AggregatedMonthlyData -> AggregatedData(
-                label = "${getShortMonthName(it.month)} ${it.year}",
-                totalCount = it.totalCount,
-            )
-        }
+private fun OverTimeSeries.display(): ImmutableList<AggregatedData> =
+    buckets.map { bucket ->
+        val month = getShortMonthName(bucket.start.month)
+        AggregatedData(
+            label = if (scale == OverTimeScale.Months) "$month ${bucket.start.year}" else "$month ${bucket.start.day}",
+            totalCount = bucket.totalCount,
+        )
     }.toImmutableList()
 
 @Composable
@@ -337,13 +353,17 @@ private fun ColumnChart(coffeeState: DaysCoffeesState) {
 }
 
 @Composable
-private fun LineChart(aggregatedData: ImmutableList<AggregatedData>) {
+private fun LineChart(aggregatedData: ImmutableList<AggregatedData>, modifier: Modifier = Modifier) {
     // Create chart entries
     val chartEntries = aggregatedData.mapIndexed { index: Int, data: AggregatedData ->
         index to data.totalCount
     }.unzip()
     val chartEntryModelProducer = remember { CartesianChartModelProducer() }
-    LaunchedEffect(Unit) {
+    val labelSpacing = (aggregatedData.size + MAX_OVER_TIME_LABELS - 1) / MAX_OVER_TIME_LABELS
+    val itemPlacer = remember(labelSpacing) {
+        HorizontalAxis.ItemPlacer.aligned(spacing = { labelSpacing.coerceAtLeast(1) })
+    }
+    LaunchedEffect(aggregatedData) {
         chartEntryModelProducer.runTransaction {
             lineSeries { series(x = chartEntries.first, y = chartEntries.second) }
         }
@@ -357,41 +377,64 @@ private fun LineChart(aggregatedData: ImmutableList<AggregatedData>) {
                 bottomAxis = HorizontalAxis.rememberBottom(
                     valueFormatter = { _, value, _ ->
                         aggregatedData.getOrNull(value.toInt())?.label ?: ""
-                    }
+                    },
+                    itemPlacer = itemPlacer,
                 ),
             ),
         modelProducer = chartEntryModelProducer,
-        modifier = Modifier,
+        modifier = modifier,
     )
 }
 
-internal fun dailyAggregation(coffeeState: DaysCoffeesState): List<AggregatedDailyData> =
-    coffeeState.coffees.map { (date, dayCoffee) ->
-        AggregatedDailyData(
-            month = date.month,
-            day = date.day,
-            totalCount = dayCoffee.coffeeCountMap.values.sum(),
-        ) to date
-    }.sortedBy { it.second }.map { it.first }
+private const val MAX_OVER_TIME_LABELS = 6
+private const val MAX_DAILY_SPAN_DAYS = 31
+private const val MAX_WEEKLY_SPAN_DAYS = 26 * 7
 
-internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedMonthlyData> =
-    coffeeState.coffees.entries.groupBy { entry ->
-        YearMonth(entry.key.year, entry.key.month)
-    }.map { (yearMonth, entries) ->
-        val typeCounts = mutableMapOf<CoffeeType, Int>()
-        entries.forEach { entry ->
-            entry.value.coffeeCountMap.forEach { (type, count) ->
-                typeCounts[type] = (typeCounts[type] ?: 0) + count
-            }
-        }
+enum class OverTimeScale { Days, Weeks, Months }
 
-        AggregatedMonthlyData(
-            year = yearMonth.year,
-            month = yearMonth.month,
-            // label = "${getShortMonthName(yearMonth.month)} ${yearMonth.year}",
-            totalCount = typeCounts.values.sum(),
-        ) to yearMonth
-    }.sortedBy { it.second }.map { it.first }
+data class OverTimeBucket(val start: LocalDate, val totalCount: Int)
+
+data class OverTimeSeries(val scale: OverTimeScale, val buckets: List<OverTimeBucket>)
+
+internal fun overTimeSeries(coffeeState: DaysCoffeesState, today: LocalDate): OverTimeSeries {
+    val dates = coffeeState.coffees.keys
+    val first = dates.min()
+    val last = maxOf(dates.max(), today)
+    val scale = overTimeScale(first, last)
+    val totals = coffeeState.coffees.entries
+        .groupingBy { (date, _) -> bucketStart(date, scale) }
+        .fold(0) { total, (_, dayCoffee) -> total + dayCoffee.coffeeCountMap.values.sum() }
+    val buckets = bucketStarts(first, last, scale).map { start ->
+        OverTimeBucket(start = start, totalCount = totals[start] ?: 0)
+    }
+    return OverTimeSeries(scale, buckets)
+}
+
+internal fun overTimeScale(first: LocalDate, last: LocalDate): OverTimeScale {
+    val spanDays = first.daysUntil(last)
+    return when {
+        spanDays <= MAX_DAILY_SPAN_DAYS -> OverTimeScale.Days
+        spanDays <= MAX_WEEKLY_SPAN_DAYS -> OverTimeScale.Weeks
+        else -> OverTimeScale.Months
+    }
+}
+
+private fun bucketStart(date: LocalDate, scale: OverTimeScale): LocalDate = when (scale) {
+    OverTimeScale.Days -> date
+    OverTimeScale.Weeks -> date.minus(DatePeriod(days = date.dayOfWeek.ordinal))
+    OverTimeScale.Months -> LocalDate(date.year, date.month, 1)
+}
+
+private fun bucketStarts(first: LocalDate, last: LocalDate, scale: OverTimeScale): List<LocalDate> {
+    val step = when (scale) {
+        OverTimeScale.Days -> DatePeriod(days = 1)
+        OverTimeScale.Weeks -> DatePeriod(days = 7)
+        OverTimeScale.Months -> DatePeriod(months = 1)
+    }
+    return generateSequence(bucketStart(first, scale)) { it.plus(step) }
+        .takeWhile { it <= last }
+        .toList()
+}
 
 data class WeeklyChartData(
     val date: LocalDate,
@@ -403,21 +446,5 @@ data class AggregatedData(
     val label: String,
     val totalCount: Int,
 )
-
-sealed interface AggregatedRawData {
-    val totalCount: Int
-}
-
-data class AggregatedDailyData(
-    val month: Month,
-    val day: Int,
-    override val totalCount: Int,
-) : AggregatedRawData
-
-data class AggregatedMonthlyData(
-    val year: Int,
-    val month: Month,
-    override val totalCount: Int,
-) : AggregatedRawData
 
 data class CoffeeTypeCount(val type: CoffeeType, val count: Int)

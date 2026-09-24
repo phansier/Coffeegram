@@ -34,11 +34,14 @@
     <string name="specialty_eyebrow">РЯДОМ С ВАМИ</string>
     <string name="map_short">Спешелти</string>
     <string name="add_drink">Добавить напиток</string>
+    <string name="pick_day_placeholder">Выберите день, чтобы отметить напитки</string>
 
     <string name="tab_weekly">Неделя</string>
     <string name="tab_all_time">Всё время</string>
     <string name="chart_title_weekly">Потребление кофе за неделю</string>
-    <string name="chart_title_over_time">Потребление кофе со временем</string>
+    <string name="chart_title_over_time_daily">Потребление кофе по дням</string>
+    <string name="chart_title_over_time_weekly">Потребление кофе по неделям</string>
+    <string name="chart_title_over_time_monthly">Потребление кофе по месяцам</string>
     <string name="chart_title_distribution">Распределение видов кофе</string>
     <string name="no_data_available">Нет данных</string>
 

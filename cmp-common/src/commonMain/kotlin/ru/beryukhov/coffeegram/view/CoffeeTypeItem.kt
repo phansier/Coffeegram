@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Text
@@ -24,10 +23,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.app_ui.PreviewTheme
+import ru.beryukhov.coffeegram.app_ui.handleKeyDown
+import ru.beryukhov.coffeegram.app_ui.hasFinePointer
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes.Cappuccino
 import ru.beryukhov.coffeegram.data.printableText
@@ -39,6 +42,10 @@ import ru.beryukhov.coffeegram.data.printableText
  */
 private val ICON_SLOT_HEIGHT = 48.dp
 private val ICON_SLOT_WIDTH = 80.dp
+private val FinePointerButtonSize = 32.dp
+private val TouchButtonSize = 48.dp
+private val IncrementKeys = setOf(Key.Plus, Key.Equals, Key.NumPadAdd)
+private val DecrementKeys = setOf(Key.Minus, Key.NumPadSubtract)
 
 @Composable
 fun CoffeeTypeItem(
@@ -49,7 +56,12 @@ fun CoffeeTypeItem(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.padding(16.dp)
+        modifier = modifier
+            .onKeyEvent { event ->
+                event.handleKeyDown(IncrementKeys, action = onIncrement) ||
+                    count > 0 && event.handleKeyDown(DecrementKeys, action = onDecrement)
+            }
+            .padding(16.dp)
     ) {
         coffeeType.icon(
             modifier = Modifier
@@ -67,14 +79,10 @@ fun CoffeeTypeItem(
         )
         Row(modifier = Modifier.align(Alignment.CenterVertically).testTag("CoffeeNam1e")) {
             Spacer(Modifier.width(16.dp))
+            val buttonSize = if (hasFinePointer()) FinePointerButtonSize else TouchButtonSize
             val textButtonModifier = Modifier
                 .align(Alignment.CenterVertically)
-                .sizeIn(
-                    maxWidth = 32.dp,
-                    maxHeight = 32.dp,
-                    minWidth = 0.dp,
-                    minHeight = 0.dp
-                )
+                .size(buttonSize)
             val isReduceCountAllowed = count > 0
             TextButton(
                 enabled = isReduceCountAllowed,

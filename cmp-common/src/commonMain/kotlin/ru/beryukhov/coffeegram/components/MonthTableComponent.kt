@@ -1,9 +1,8 @@
 package ru.beryukhov.coffeegram.components
 
 import com.arkivanov.decompose.ComponentContext
-import kotlinx.coroutines.CoroutineScope
+import com.arkivanov.essenty.lifecycle.coroutines.coroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -35,7 +34,7 @@ class DefaultMonthTableComponent(
     init {
         daysCoffeesStore.state.onEach {
             monthTableScreenStore.newIntent(MonthTableScreenIntent.NewDaysCoffeesState(it))
-        }.launchIn(CoroutineScope(Dispatchers.Default + SupervisorJob()))
+        }.launchIn(coroutineScope(Dispatchers.Default))
     }
 
     override fun onIncrementMonth() {

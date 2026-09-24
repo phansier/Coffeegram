@@ -1,8 +1,9 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,15 +14,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,6 +33,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
@@ -91,13 +97,13 @@ fun SettingsScreen(
         if (hasDevice) add(SettingsCategory.DEVICE)
     }
 
-    BoxWithConstraints(
+    Box(
         modifier = modifier
             .fillMaxSize()
             .padding(contentPadding)
             .consumeWindowInsets(contentPadding),
     ) {
-        if (maxWidth >= WIDE_SCREEN_THRESHOLD) {
+        if (LocalWindowLayout.current.isWide) {
             val selectedName by component.selectedCategory.subscribeAsState()
             val selected = categories.firstOrNull { it.name == selectedName } ?: categories.first()
 
@@ -113,7 +119,7 @@ fun SettingsScreen(
                     modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f)
-                        .verticalScroll(rememberScrollState()),
+                        .verticalScrollHidingTopBar(),
                 ) {
                     SettingsDetail(selected, component, snackbarHostState, themeState, wearableStarter)
                 }
@@ -122,7 +128,7 @@ fun SettingsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
+                    .verticalScrollHidingTopBar(),
             ) {
                 categories.forEachIndexed { index, category ->
                     if (index > 0) HorizontalDivider()
@@ -141,14 +147,13 @@ private fun SettingsCategoryList(
     onSelect: (SettingsCategory) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.selectableGroup()) {
         categories.forEach { category ->
             Text(
                 text = stringResource(category.label),
                 style = typography.bodyLarge,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onSelect(category) }
                     .background(
                         if (category == selected) {
                             MaterialTheme.colorScheme.secondaryContainer
@@ -156,6 +161,12 @@ private fun SettingsCategoryList(
                             Color.Transparent
                         }
                     )
+                    .selectable(
+                        selected = category == selected,
+                        onClick = { onSelect(category) },
+                        role = Role.Tab,
+                    )
+                    .pointerHoverIcon(PointerIcon.Hand)
                     .padding(horizontal = 24.dp, vertical = 16.dp),
             )
         }
@@ -305,10 +316,12 @@ private fun previewComponent() = object : SettingsComponent {
 fun SettingsAppBar(
     component: SettingsComponent,
     modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     AdaptiveTopAppBar(
         title = { TopBarTitle(title = stringResource(Res.string.settings)) },
         modifier = modifier,
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
+        adaptation = { material { applyTopBarScrollBehavior(scrollBehavior) } },
     )
 }

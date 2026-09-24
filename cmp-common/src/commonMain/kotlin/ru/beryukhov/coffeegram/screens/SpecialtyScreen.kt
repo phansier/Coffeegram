@@ -5,16 +5,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.components.MapComponent
 import ru.beryukhov.coffeegram.view.CoffeeShopList
 import ru.beryukhov.coffeegram.view.CoffeeShopListStyle
 
 /**
- * Specialty tab: on wide screens the map and the coffee-shop list sit side by side; on narrow
- * screens the list lives in a draggable bottom sheet over the map instead.
+ * Specialty tab: on expanded or short wide windows the map and the coffee-shop list sit side by
+ * side; otherwise the list lives in a draggable bottom sheet over the map instead.
  */
 @Composable
 fun SpecialtyScreen(
@@ -22,7 +24,8 @@ fun SpecialtyScreen(
     modifier: Modifier = Modifier,
 ) {
     BoxWithConstraints(modifier = modifier.fillMaxSize()) {
-        if (maxWidth >= WIDE_SCREEN_THRESHOLD) {
+        if (LocalWindowLayout.current.showsMapSidePane()) {
+            val sidePaneWidth = (maxWidth * SIDE_PANE_FRACTION).coerceIn(MinSidePaneWidth, MaxSidePaneWidth)
             Row(modifier = Modifier.fillMaxSize()) {
                 MapScreen(
                     component = component,
@@ -30,10 +33,15 @@ fun SpecialtyScreen(
                     showMarkerDescription = false,
                 )
                 VerticalDivider()
-                SidePane(modifier = Modifier.fillMaxHeight()) {
+                SidePane(
+                    modifier = Modifier.fillMaxHeight(),
+                    width = sidePaneWidth,
+                ) {
+                    val listState = rememberLazyListState()
                     CoffeeShopList(
                         component = component,
-                        modifier = Modifier.fillMaxSize(),
+                        listState = listState,
+                        modifier = Modifier.fillMaxSize().hideTopBarOnScroll(listState),
                         style = CoffeeShopListStyle.Card,
                     )
                 }
@@ -42,9 +50,11 @@ fun SpecialtyScreen(
             BottomSheetPane(
                 modifier = Modifier.fillMaxSize(),
                 sheetContent = {
+                    val listState = rememberLazyListState()
                     CoffeeShopList(
                         component = component,
-                        modifier = Modifier.fillMaxWidth(),
+                        listState = listState,
+                        modifier = Modifier.fillMaxWidth().hideTopBarOnScroll(listState),
                         style = CoffeeShopListStyle.Flat,
                     )
                 },
@@ -57,3 +67,10 @@ fun SpecialtyScreen(
         }
     }
 }
+
+private fun WindowLayout.showsMapSidePane(): Boolean =
+    isExpandedWidth || isWide && isCompactHeight
+
+private const val SIDE_PANE_FRACTION = 0.4f
+private val MinSidePaneWidth = 280.dp
+private val MaxSidePaneWidth = 400.dp

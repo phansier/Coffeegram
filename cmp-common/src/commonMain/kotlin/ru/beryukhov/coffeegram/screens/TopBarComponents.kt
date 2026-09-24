@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.slapps.cupertino.adaptive.AdaptiveIconButton
 import com.slapps.cupertino.adaptive.ExperimentalAdaptiveApi
+import com.slapps.cupertino.adaptive.Theme
+import com.slapps.cupertino.adaptive.currentTheme
 
 private val TopBarIconButtonSize = 38.dp
 
@@ -38,24 +40,45 @@ fun TopBarIconButton(
     }
 }
 
+@OptIn(ExperimentalAdaptiveApi::class)
 @Composable
 fun TopBarTitle(
     title: String,
-    eyebrow: String? = null,
     modifier: Modifier = Modifier,
+    eyebrow: String? = null,
+    cupertinoTitle: String = title,
 ) {
-    Column(modifier = modifier) {
-        if (eyebrow != null) {
-            Text(
-                text = eyebrow,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
+    if (currentTheme == Theme.Cupertino) {
         Text(
-            text = title,
-            style = MaterialTheme.typography.titleLarge,
+            text = cupertinoTitle,
+            style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onSurface,
+            modifier = modifier,
         )
+    } else {
+        Column(modifier = modifier) {
+            if (eyebrow != null) {
+                TopBarEyebrowText(eyebrow)
+            }
+            TopBarTitleText(title)
+        }
     }
+}
+
+@Composable
+private fun TopBarEyebrowText(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.labelSmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+}
+
+@Composable
+private fun TopBarTitleText(text: String) {
+    Text(
+        text = text,
+        style = MaterialTheme.typography.titleLarge,
+        color = MaterialTheme.colorScheme.onSurface,
+    )
 }

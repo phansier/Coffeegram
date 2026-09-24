@@ -1,7 +1,10 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
@@ -49,7 +52,7 @@ private fun MonthTableScreenPreview() = PreviewTheme {
     ) {
         RootScreen(
             pageNum = 0,
-            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component, isWide = false) },
+            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component) },
             CurrentScreen = { padding -> CoffeeEditScreen(component, contentPadding = padding) },
         )
     }
@@ -65,7 +68,7 @@ private fun ListScreenPreview() = PreviewTheme {
     ) {
         RootScreen(
             pageNum = 0,
-            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component, isWide = false) },
+            TopBar = { CoffeeEditAppBar(coffeeEditComponent = component) },
             CurrentScreen = { padding -> CoffeeEditScreen(component, contentPadding = padding) },
         )
     }
@@ -182,12 +185,20 @@ private fun RootScreen(
     CoffeegramTheme(
         themeState = rootComponent.themeState.collectAsState().value,
     ) {
-        AdaptiveScaffold(
-            modifier = Modifier,
-            topBar = { TopBar(modifier) },
-            bottomBar = { BottomBar(rootComponent, navBarItems) }
-        ) { paddingValues ->
-            CurrentScreen(paddingValues)
+        WideLayoutProvider { _ ->
+            AdaptiveScaffold(
+                modifier = Modifier,
+                topBar = { TopBar(modifier) },
+                bottomBar = {
+                    AppNavigationBar(
+                        items = navBarItems,
+                        selectedIndex = pageNum,
+                        onSelect = rootComponent::selectPage,
+                    )
+                }
+            ) { paddingValues ->
+                CurrentScreen(paddingValues)
+            }
         }
     }
 }

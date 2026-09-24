@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,6 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -47,9 +50,9 @@ fun CoffeeShopList(
     component: MapComponent,
     modifier: Modifier = Modifier,
     style: CoffeeShopListStyle = CoffeeShopListStyle.Flat,
+    listState: LazyListState = rememberLazyListState(),
 ) {
     val state by component.coffeeShops.collectAsState()
-    val listState = rememberLazyListState()
 
     // When a shop is selected from a map marker, bring it into view. Only scroll when it's
     // off-screen, so selecting an already-visible row (or a list tap) doesn't jump the list.
@@ -91,10 +94,11 @@ private fun CoffeeShopListItem(
     val rowModifier = when (style) {
         CoffeeShopListStyle.Flat -> modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
             .background(
                 if (shop.highlighted) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent
             )
+            .clickable(onClick = onClick)
+            .pointerHoverIcon(PointerIcon.Hand)
             .padding(horizontal = 16.dp, vertical = 10.dp)
 
         CoffeeShopListStyle.Card -> modifier
@@ -109,6 +113,7 @@ private fun CoffeeShopListItem(
             )
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(16.dp))
             .clickable(onClick = onClick)
+            .pointerHoverIcon(PointerIcon.Hand)
             .padding(12.dp)
     }
 

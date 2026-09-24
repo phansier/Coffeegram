@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.union
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -34,15 +35,21 @@ fun StatsScreen(
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
-fun StatsAppBar(modifier: Modifier = Modifier) {
+fun StatsAppBar(
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+) {
     AdaptiveTopAppBar(
         title = {
             TopBarTitle(
                 title = stringResource(Res.string.stats_title),
                 eyebrow = stringResource(Res.string.stats_eyebrow),
+                cupertinoTitle = stringResource(Res.string.stats_eyebrow).lowercase()
+                    .replaceFirstChar { it.titlecase() },
             )
         },
         modifier = modifier,
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
+        adaptation = { material { applyTopBarScrollBehavior(scrollBehavior) } },
     )
 }

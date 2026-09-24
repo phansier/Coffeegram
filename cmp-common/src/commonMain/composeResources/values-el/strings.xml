@@ -34,11 +34,14 @@
     <string name="specialty_eyebrow">ΚΟΝΤΑ ΣΟΥ</string>
     <string name="map_short">Σπέσιαλτι</string>
     <string name="add_drink">Προσθήκη ροφήματος</string>
+    <string name="pick_day_placeholder">Επιλέξτε μια ημέρα για να καταγράψετε τα ροφήματά σας</string>
 
     <string name="tab_weekly">Εβδομαδιαία</string>
     <string name="tab_all_time">Συνολικά</string>
     <string name="chart_title_weekly">Κατανάλωση καφέ αυτή την εβδομάδα</string>
-    <string name="chart_title_over_time">Κατανάλωση καφέ με την πάροδο του χρόνου</string>
+    <string name="chart_title_over_time_daily">Κατανάλωση καφέ ανά ημέρα</string>
+    <string name="chart_title_over_time_weekly">Κατανάλωση καφέ ανά εβδομάδα</string>
+    <string name="chart_title_over_time_monthly">Κατανάλωση καφέ ανά μήνα</string>
     <string name="chart_title_distribution">Κατανομή τύπων καφέ</string>
     <string name="no_data_available">Δεν υπάρχουν διαθέσιμα δεδομένα</string>
 
