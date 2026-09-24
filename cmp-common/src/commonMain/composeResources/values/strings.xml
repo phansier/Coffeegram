@@ -34,6 +34,7 @@
     <string name="specialty_eyebrow">NEAR YOU</string>
     <string name="map_short">Specialty</string>
     <string name="add_drink">Add drink</string>
+    <string name="pick_day_placeholder">Pick a day to log your drinks</string>
 
     <string name="tab_weekly">Weekly</string>
     <string name="tab_all_time">All Time</string>

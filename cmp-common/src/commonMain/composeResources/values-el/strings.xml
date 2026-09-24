@@ -34,6 +34,7 @@
     <string name="specialty_eyebrow">ΚΟΝΤΑ ΣΟΥ</string>
     <string name="map_short">Σπέσιαλτι</string>
     <string name="add_drink">Προσθήκη ροφήματος</string>
+    <string name="pick_day_placeholder">Επιλέξτε μια ημέρα για να καταγράψετε τα ροφήματά σας</string>
 
     <string name="tab_weekly">Εβδομαδιαία</string>
     <string name="tab_all_time">Συνολικά</string>

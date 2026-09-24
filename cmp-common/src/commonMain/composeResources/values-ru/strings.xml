@@ -34,6 +34,7 @@
     <string name="specialty_eyebrow">РЯДОМ С ВАМИ</string>
     <string name="map_short">Спешелти</string>
     <string name="add_drink">Добавить напиток</string>
+    <string name="pick_day_placeholder">Выберите день, чтобы отметить напитки</string>
 
     <string name="tab_weekly">Неделя</string>
     <string name="tab_all_time">Всё время</string>

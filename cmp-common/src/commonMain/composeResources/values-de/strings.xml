@@ -34,6 +34,7 @@
     <string name="specialty_eyebrow">IN DEINER NÄHE</string>
     <string name="map_short">Specialty</string>
     <string name="add_drink">Getränk hinzufügen</string>
+    <string name="pick_day_placeholder">Wähle einen Tag, um deine Getränke einzutragen</string>
 
     <string name="tab_weekly">Wöchentlich</string>
     <string name="tab_all_time">Gesamt</string>

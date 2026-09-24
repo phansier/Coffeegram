@@ -25,7 +25,7 @@ Status legend: ✅ done · ⏳ open
 | Navigation library | ⚠️ Decompose (`ChildPages` + `ChildPanels`), not Navigation 3 |
 | Adaptive navigation area | ✅ `AdaptiveNavigationContainer`: Cupertino bar on compact or tabletop, Material rail otherwise |
 | Breakpoints | ✅ Width (600dp) and compact height (480dp), evaluated once at the root |
-| List-detail (Calendar → Day) | ⚠️ `ChildPanels` DUAL/SINGLE, but no detail placeholder, fixed 50/50 split |
+| List-detail (Calendar → Day) | ✅ `ChildPanels` DUAL/SINGLE with detail placeholder, detail pane ≤ 400dp |
 | Supporting pane (Map + shop list) | ✅ Side pane on wide, bottom sheet on narrow |
 | Settings list-detail | ✅ Category list + detail on wide |
 | Adaptive lists / grids | ❌ All `LazyColumn`s single column; calendar cells don't scale |
@@ -100,13 +100,18 @@ leaves ~280dp for a 6-row month grid (regular cells need ~400dp). Done:
 Not possible here: a shorter app bar. `AdaptiveTopAppBar`'s Material adaptation exposes only colors,
 centering and scroll behavior, so reclaiming app-bar height is left to hide-on-scroll (item 8).
 
-**5. Calendar list-detail: detail placeholder and proportional panes**
+**5. ✅ Calendar list-detail: detail placeholder and proportional panes**
 
-In `CoffeeEditScreen` wide mode, when no day is selected the month table takes 100% width, and
-selecting a day makes it jump to 50%. Always reserve the detail pane and show a placeholder
-("Pick a day to log drinks") in `CoffeeEditScreen` when `state.details == null`.
-Also consider pre-selecting *today* in DUAL mode, and a ~40/60 or fixed-width (≈360–400dp) detail
-pane on expanded widths instead of `weight(1f)` / `weight(1f)`.
+In `CoffeeEditScreen` wide mode, when no day was selected the month table took 100% width, and
+selecting a day made it jump to 50%. Done (`DualPaneCoffeeEdit` in `screens/CoffeeEditProxys.kt`):
+
+- the detail pane is always reserved; with no day selected it shows `DayListPlaceholder`
+  ("Pick a day to log your drinks", all 5 locales);
+- the detail pane is half the content width, capped at 400dp, so on expanded widths the calendar
+  gets the extra space instead of the drink list.
+
+Not done: pre-selecting *today* in DUAL mode — it would change the app bar title and the web URL
+(`/calendar/day/…`) without user action; the placeholder covers the empty state instead.
 
 Existing behaviour that already matches the guidance: back arrow is hidden in DUAL mode, and
 `ChildPanels` handles back and web history.
@@ -215,6 +220,6 @@ Those are Material navigation, which is out of scope by constraint. Coffeegram u
 
 1. ~~Item 1 + 2 (bugs, small)~~ ✅
 2. Item 7 (screenshot baseline, or accept manual verification if the blocker isn't solved)
-3. ~~Item 3 → 4~~ ✅ → 5 → 6 (navigation area and panes)
+3. ~~Item 3 → 4 → 5~~ ✅ → 6 (navigation area and panes)
 4. Item 8 → 9 → 10 → 11 (content)
 5. Item 12 → 13 → 14 (input & polish)
