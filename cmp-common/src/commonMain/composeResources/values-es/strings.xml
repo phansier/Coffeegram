@@ -39,7 +39,9 @@
     <string name="tab_weekly">Semanal</string>
     <string name="tab_all_time">Todo el tiempo</string>
     <string name="chart_title_weekly">Consumo de café esta semana</string>
-    <string name="chart_title_over_time">Consumo de café a lo largo del tiempo</string>
+    <string name="chart_title_over_time_daily">Consumo de café diario</string>
+    <string name="chart_title_over_time_weekly">Consumo de café semanal</string>
+    <string name="chart_title_over_time_monthly">Consumo de café mensual</string>
     <string name="chart_title_distribution">Distribución de tipos de café</string>
     <string name="no_data_available">No hay datos disponibles</string>
 

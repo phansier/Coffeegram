@@ -28,7 +28,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.chart_title_distribution
-import coffeegram.cmp_common.generated.resources.chart_title_over_time
+import coffeegram.cmp_common.generated.resources.chart_title_over_time_daily
+import coffeegram.cmp_common.generated.resources.chart_title_over_time_monthly
+import coffeegram.cmp_common.generated.resources.chart_title_over_time_weekly
 import coffeegram.cmp_common.generated.resources.chart_title_weekly
 import coffeegram.cmp_common.generated.resources.no_data_available
 import coffeegram.cmp_common.generated.resources.tab_all_time
@@ -48,8 +50,8 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.Month
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.daysUntil
 import kotlinx.datetime.minus
 import kotlinx.datetime.plus
 import kotlinx.datetime.toLocalDateTime
@@ -61,7 +63,6 @@ import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.model.DaysCoffeesState
-import ru.beryukhov.date_time_utils.YearMonth
 import kotlin.time.Clock
 
 @Composable
@@ -109,7 +110,7 @@ private fun TabbedCharts(
 
 @Composable
 private fun ChartsOverview(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
-    val hasData = coffeeState.coffees.isNotEmpty()
+    val overTimeSeries = if (coffeeState.coffees.isNotEmpty()) rememberOverTimeSeries(coffeeState) else null
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -127,18 +128,18 @@ private fun ChartsOverview(coffeeState: DaysCoffeesState, modifier: Modifier = M
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
             ) {
                 ChartTitle(stringResource(Res.string.chart_title_weekly), Modifier.weight(1f))
-                ChartTitle(stringResource(Res.string.chart_title_over_time), Modifier.weight(1f))
+                ChartTitle(overTimeSeries?.title().orEmpty(), Modifier.weight(1f))
             }
             Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
                 WeeklyChart(coffeeState, Modifier.weight(1f))
-                if (hasData) {
-                    OverTimeChart(coffeeState, Modifier.weight(1f))
+                if (overTimeSeries != null) {
+                    OverTimeChart(overTimeSeries, Modifier.weight(1f))
                 } else {
                     NoChartData(Modifier.weight(1f))
                 }
             }
         }
-        if (hasData) {
+        if (overTimeSeries != null) {
             DistributionChartSection(coffeeState, Modifier.chartWidth())
         }
     }
@@ -244,33 +245,36 @@ private fun WeeklyChart(coffeeState: DaysCoffeesState, modifier: Modifier = Modi
 
 @Composable
 private fun OverTimeChartSection(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
-    ChartSection(title = stringResource(Res.string.chart_title_over_time), modifier = modifier) {
-        OverTimeChart(coffeeState)
+    val series = rememberOverTimeSeries(coffeeState)
+    ChartSection(title = series.title(), modifier = modifier) {
+        OverTimeChart(series)
     }
 }
 
 @Composable
-private fun OverTimeChart(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
-    val aggregatedData = remember(coffeeState) { aggregation(coffeeState) }
-    LineChart(aggregatedData.display(), modifier)
+private fun rememberOverTimeSeries(coffeeState: DaysCoffeesState): OverTimeSeries {
+    val today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+    return remember(coffeeState, today) { overTimeSeries(coffeeState, today) }
+}
+
+@Composable
+private fun OverTimeSeries.title(): String = stringResource(
+    when (scale) {
+        OverTimeScale.Days -> Res.string.chart_title_over_time_daily
+        OverTimeScale.Weeks -> Res.string.chart_title_over_time_weekly
+        OverTimeScale.Months -> Res.string.chart_title_over_time_monthly
+    }
+)
+
+@Composable
+private fun OverTimeChart(series: OverTimeSeries, modifier: Modifier = Modifier) {
+    LineChart(series.display(), modifier)
 }
 
 @Composable
 private fun DistributionChartSection(coffeeState: DaysCoffeesState, modifier: Modifier = Modifier) {
     ChartSection(title = stringResource(Res.string.chart_title_distribution), modifier = modifier) {
         ColumnChart(coffeeState)
-    }
-}
-
-private const val MONTHLY_AGGREGATION_THRESHOLD_DAYS = 31
-
-private fun aggregation(coffeeState: DaysCoffeesState): List<AggregatedRawData> {
-    val dates = coffeeState.coffees.keys
-    val daysBetween = (dates.max() - dates.min()).days
-    return if (daysBetween > MONTHLY_AGGREGATION_THRESHOLD_DAYS) {
-        monthlyAggregation(coffeeState)
-    } else {
-        dailyAggregation(coffeeState)
     }
 }
 
@@ -295,19 +299,13 @@ internal fun entries(weekData: List<WeeklyChartData>): Pair<List<Int>, List<Int>
     }.unzip()
 
 @Composable
-private fun List<AggregatedRawData>.display(): ImmutableList<AggregatedData> =
-    this.map {
-        when (it) {
-            is AggregatedDailyData -> AggregatedData(
-                "${getShortMonthName(it.month)} ${it.day}",
-                totalCount = it.totalCount,
-            )
-
-            is AggregatedMonthlyData -> AggregatedData(
-                label = "${getShortMonthName(it.month)} ${it.year}",
-                totalCount = it.totalCount,
-            )
-        }
+private fun OverTimeSeries.display(): ImmutableList<AggregatedData> =
+    buckets.map { bucket ->
+        val month = getShortMonthName(bucket.start.month)
+        AggregatedData(
+            label = if (scale == OverTimeScale.Months) "$month ${bucket.start.year}" else "$month ${bucket.start.day}",
+            totalCount = bucket.totalCount,
+        )
     }.toImmutableList()
 
 @Composable
@@ -361,7 +359,11 @@ private fun LineChart(aggregatedData: ImmutableList<AggregatedData>, modifier: M
         index to data.totalCount
     }.unzip()
     val chartEntryModelProducer = remember { CartesianChartModelProducer() }
-    LaunchedEffect(Unit) {
+    val labelSpacing = (aggregatedData.size + MAX_OVER_TIME_LABELS - 1) / MAX_OVER_TIME_LABELS
+    val itemPlacer = remember(labelSpacing) {
+        HorizontalAxis.ItemPlacer.aligned(spacing = { labelSpacing.coerceAtLeast(1) })
+    }
+    LaunchedEffect(aggregatedData) {
         chartEntryModelProducer.runTransaction {
             lineSeries { series(x = chartEntries.first, y = chartEntries.second) }
         }
@@ -375,7 +377,8 @@ private fun LineChart(aggregatedData: ImmutableList<AggregatedData>, modifier: M
                 bottomAxis = HorizontalAxis.rememberBottom(
                     valueFormatter = { _, value, _ ->
                         aggregatedData.getOrNull(value.toInt())?.label ?: ""
-                    }
+                    },
+                    itemPlacer = itemPlacer,
                 ),
             ),
         modelProducer = chartEntryModelProducer,
@@ -383,33 +386,55 @@ private fun LineChart(aggregatedData: ImmutableList<AggregatedData>, modifier: M
     )
 }
 
-internal fun dailyAggregation(coffeeState: DaysCoffeesState): List<AggregatedDailyData> =
-    coffeeState.coffees.map { (date, dayCoffee) ->
-        AggregatedDailyData(
-            month = date.month,
-            day = date.day,
-            totalCount = dayCoffee.coffeeCountMap.values.sum(),
-        ) to date
-    }.sortedBy { it.second }.map { it.first }
+private const val MAX_OVER_TIME_LABELS = 6
+private const val MAX_DAILY_SPAN_DAYS = 31
+private const val MAX_WEEKLY_SPAN_DAYS = 26 * 7
 
-internal fun monthlyAggregation(coffeeState: DaysCoffeesState): List<AggregatedMonthlyData> =
-    coffeeState.coffees.entries.groupBy { entry ->
-        YearMonth(entry.key.year, entry.key.month)
-    }.map { (yearMonth, entries) ->
-        val typeCounts = mutableMapOf<CoffeeType, Int>()
-        entries.forEach { entry ->
-            entry.value.coffeeCountMap.forEach { (type, count) ->
-                typeCounts[type] = (typeCounts[type] ?: 0) + count
-            }
-        }
+enum class OverTimeScale { Days, Weeks, Months }
 
-        AggregatedMonthlyData(
-            year = yearMonth.year,
-            month = yearMonth.month,
-            // label = "${getShortMonthName(yearMonth.month)} ${yearMonth.year}",
-            totalCount = typeCounts.values.sum(),
-        ) to yearMonth
-    }.sortedBy { it.second }.map { it.first }
+data class OverTimeBucket(val start: LocalDate, val totalCount: Int)
+
+data class OverTimeSeries(val scale: OverTimeScale, val buckets: List<OverTimeBucket>)
+
+internal fun overTimeSeries(coffeeState: DaysCoffeesState, today: LocalDate): OverTimeSeries {
+    val dates = coffeeState.coffees.keys
+    val first = dates.min()
+    val last = maxOf(dates.max(), today)
+    val scale = overTimeScale(first, last)
+    val totals = coffeeState.coffees.entries
+        .groupingBy { (date, _) -> bucketStart(date, scale) }
+        .fold(0) { total, (_, dayCoffee) -> total + dayCoffee.coffeeCountMap.values.sum() }
+    val buckets = bucketStarts(first, last, scale).map { start ->
+        OverTimeBucket(start = start, totalCount = totals[start] ?: 0)
+    }
+    return OverTimeSeries(scale, buckets)
+}
+
+internal fun overTimeScale(first: LocalDate, last: LocalDate): OverTimeScale {
+    val spanDays = first.daysUntil(last)
+    return when {
+        spanDays <= MAX_DAILY_SPAN_DAYS -> OverTimeScale.Days
+        spanDays <= MAX_WEEKLY_SPAN_DAYS -> OverTimeScale.Weeks
+        else -> OverTimeScale.Months
+    }
+}
+
+private fun bucketStart(date: LocalDate, scale: OverTimeScale): LocalDate = when (scale) {
+    OverTimeScale.Days -> date
+    OverTimeScale.Weeks -> date.minus(DatePeriod(days = date.dayOfWeek.ordinal))
+    OverTimeScale.Months -> LocalDate(date.year, date.month, 1)
+}
+
+private fun bucketStarts(first: LocalDate, last: LocalDate, scale: OverTimeScale): List<LocalDate> {
+    val step = when (scale) {
+        OverTimeScale.Days -> DatePeriod(days = 1)
+        OverTimeScale.Weeks -> DatePeriod(days = 7)
+        OverTimeScale.Months -> DatePeriod(months = 1)
+    }
+    return generateSequence(bucketStart(first, scale)) { it.plus(step) }
+        .takeWhile { it <= last }
+        .toList()
+}
 
 data class WeeklyChartData(
     val date: LocalDate,
@@ -421,21 +446,5 @@ data class AggregatedData(
     val label: String,
     val totalCount: Int,
 )
-
-sealed interface AggregatedRawData {
-    val totalCount: Int
-}
-
-data class AggregatedDailyData(
-    val month: Month,
-    val day: Int,
-    override val totalCount: Int,
-) : AggregatedRawData
-
-data class AggregatedMonthlyData(
-    val year: Int,
-    val month: Month,
-    override val totalCount: Int,
-) : AggregatedRawData
 
 data class CoffeeTypeCount(val type: CoffeeType, val count: Int)

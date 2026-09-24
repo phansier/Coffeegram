@@ -39,7 +39,9 @@
     <string name="tab_weekly">Wöchentlich</string>
     <string name="tab_all_time">Gesamt</string>
     <string name="chart_title_weekly">Kaffeekonsum diese Woche</string>
-    <string name="chart_title_over_time">Kaffeekonsum im Zeitverlauf</string>
+    <string name="chart_title_over_time_daily">Kaffeekonsum täglich</string>
+    <string name="chart_title_over_time_weekly">Kaffeekonsum wöchentlich</string>
+    <string name="chart_title_over_time_monthly">Kaffeekonsum monatlich</string>
     <string name="chart_title_distribution">Verteilung der Kaffeesorten</string>
     <string name="no_data_available">Keine Daten verfügbar</string>
 
