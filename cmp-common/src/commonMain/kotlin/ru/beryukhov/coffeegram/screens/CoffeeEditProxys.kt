@@ -2,6 +2,7 @@
 
 package ru.beryukhov.coffeegram.screens
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -14,11 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.unit.dp
 import com.arkivanov.decompose.ExperimentalDecomposeApi
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.arkivanov.decompose.router.panels.ChildPanelsMode
 import kotlinx.datetime.LocalDate
+import ru.beryukhov.coffeegram.app_ui.handleKeyDown
 import ru.beryukhov.coffeegram.components.CoffeeEditComponent
 import ru.beryukhov.coffeegram.components.CoffeeEditComponent.DetailsConfig
 import ru.beryukhov.coffeegram.components.DayListComponent
@@ -54,24 +58,32 @@ fun CoffeeEditScreen(
     val details = state.details
     val selectedDay = (details?.configuration as? DetailsConfig.DayList)?.date
 
-    if (isWide) {
-        DualPaneCoffeeEdit(
-            monthTableComponent = state.main.instance,
-            dayListComponent = details?.instance,
-            selectedDay = selectedDay,
-            contentPadding = contentPadding,
-        )
-    } else {
-        if (details != null) {
-            DayListScreen(
-                component = details.instance,
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .onKeyEvent { event ->
+                details != null && event.handleKeyDown(Key.Escape, action = coffeeEditComponent::onBack)
+            },
+    ) {
+        if (isWide) {
+            DualPaneCoffeeEdit(
+                monthTableComponent = state.main.instance,
+                dayListComponent = details?.instance,
+                selectedDay = selectedDay,
                 contentPadding = contentPadding,
             )
         } else {
-            MonthTableScreen(
-                component = state.main.instance,
-                modifier = Modifier.padding(contentPadding),
-            )
+            if (details != null) {
+                DayListScreen(
+                    component = details.instance,
+                    contentPadding = contentPadding,
+                )
+            } else {
+                MonthTableScreen(
+                    component = state.main.instance,
+                    modifier = Modifier.padding(contentPadding),
+                )
+            }
         }
     }
 }

@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -27,6 +29,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import ru.beryukhov.coffeegram.app_ui.LocalPhoneFrameInsets
+import ru.beryukhov.coffeegram.app_ui.handleKeyDown
 import ru.beryukhov.coffeegram.components.MonthTableComponent
 import ru.beryukhov.coffeegram.components.getFullMonthName
 import ru.beryukhov.coffeegram.view.MonthTable
@@ -48,7 +51,10 @@ fun MonthTableScreen(
         onClick = { dayOfMonth: Int ->
             component.onDayClick(dayOfMonth)
         },
-        modifier = modifier,
+        modifier = modifier.onKeyEvent { event ->
+            event.handleKeyDown(Key.PageUp, action = component::onDecrementMonth) ||
+                event.handleKeyDown(Key.PageDown, action = component::onIncrementMonth)
+        },
         selectedDay = selectedDay,
         compact = LocalWindowLayout.current.isCompactHeight,
     )

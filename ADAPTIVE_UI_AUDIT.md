@@ -31,7 +31,7 @@ Status legend: ✅ done · ⏳ open
 | Adaptive lists / grids | ✅ Calendar fills its pane (`Grid`); lists stay single-column by design |
 | App bars hide on scroll | ✅ Material theme: Day list, Settings, All-time stats, shop list (nav bar stays) |
 | Touch targets vs. pointer | ✅ `+`/`-` buttons 48dp on touch, 32dp with a fine pointer |
-| Keyboard / mouse | ❌ No shortcuts, no hover states |
+| Keyboard / mouse | ✅ Month/drink/Esc shortcuts, hover & focus feedback, hand cursor |
 | Form-factor screenshot tests | ❌ Only 2 component-level previews; screen-level blocked by CMP resources issue |
 | Orientation / resizability | ✅ No orientation lock, resizable by default |
 
@@ -222,14 +222,23 @@ automatic expansion of pointer targets to 48dp; day cells are ≥ 56dp tall outs
 The `Preview_0` screenshot reference (`CoffeeTypeItem`) shows the old 32dp buttons and needs
 re-recording after review.
 
-**13. Keyboard and mouse support (desktop, ChromeOS, tablets with keyboards)**
+**13. ✅ Keyboard and mouse support (desktop, ChromeOS, tablets with keyboards)**
 
-None today (no `onKeyEvent`, hover, or pointer icons). Suggested:
+Already provided by Compose and kept: Tab / Shift+Tab move focus, Enter/Space activates the focused
+clickable, and the Material ripple draws hover and focus state layers. Arrow-key 2D focus moves are
+only built in on Android (view system), not in Compose Multiplatform desktop/web. Done on top:
 
-- `←`/`→` (or `PageUp`/`PageDown`) change month; arrow keys move day focus in the calendar;
-  `Enter` opens the day; `+`/`-` adjust the focused drink; `Esc` closes the day pane.
-- Hover highlight on `DayCell`, coffee-shop rows and settings categories; hand pointer icon on clickables.
-- Visible focus indication on custom clickables (`SettingsCategoryList` rows use bare `Text.clickable`).
+- arrow keys move focus between calendar days on every platform (`onPreviewKeyEvent` →
+  `FocusManager.moveFocus`);
+- shortcuts (`app_ui/KeyEvents.kt` helper): PageUp/PageDown change month while focus is in the
+  calendar (arrows stay focus navigation); `+`/`=`/`-` adjust the focused drink row; Esc closes the
+  day pane in both SINGLE and DUAL mode;
+- highlight order fixed in `DayCell` and the flat coffee-shop row: the ripple used to draw *under*
+  the background, so today/selected/highlighted cells hid their hover, focus and press feedback;
+- hand pointer icon on custom clickables (day cells, coffee-shop rows, settings categories);
+- settings categories are `selectable(role = Role.Tab)` in a `selectableGroup` instead of a bare
+  `clickable` Text;
+- tests: `ComposeScreenTest.testPageKeysChangeMonthFromFocusedDay`, `testArrowKeysMoveFocusBetweenDays`.
 
 **14. Larger layout classes (≥ 1200dp)**
 
@@ -251,4 +260,4 @@ Those are Material navigation, which is out of scope by constraint. Coffeegram u
 2. ~~Item 7~~ skipped (manual verification instead)
 3. ~~Item 3 → 4 → 5 → 6~~ ✅ (navigation area and panes)
 4. ~~Item 8 → 9 → 10 → 11~~ ✅ (content)
-5. ~~Item 12~~ ✅ → 13 → 14 (input & polish)
+5. ~~Item 12 → 13~~ ✅ → 14 (input & polish)

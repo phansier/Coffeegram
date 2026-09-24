@@ -21,7 +21,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.ParagraphStyle
@@ -35,6 +40,7 @@ import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
 import ru.beryukhov.coffeegram.app_ui.PreviewTheme
+import ru.beryukhov.coffeegram.app_ui.arrowFocusDirection
 import ru.beryukhov.coffeegram.components.dayNames
 import ru.beryukhov.coffeegram.data.CoffeeTypes
 import ru.beryukhov.coffeegram.data.Picture
@@ -48,6 +54,7 @@ private data class DayItem(
     val dayOfMonth: Int? = null
 )
 
+private val DayCellShape = RoundedCornerShape(8.dp)
 private val CompactDayIconSize = 20.dp
 private val MinDayIconSize = 24.dp
 private val MaxDayIconSize = 64.dp
@@ -74,14 +81,13 @@ private fun DayCell(
     }
     val cellModifier = modifier
         .padding(vertical = 2.dp)
+        .clip(DayCellShape)
+        .background(backgroundColor)
         .clickable(
             enabled = onClick != null,
             onClick = onClick ?: {}
         )
-        .background(
-            color = backgroundColor,
-            shape = RoundedCornerShape(8.dp)
-        )
+        .pointerHoverIcon(PointerIcon.Hand)
         .testTag("Day")
     if (compact) {
         CompactDayCellContent(dayItem, cellModifier)
@@ -159,7 +165,12 @@ fun MonthTable(
     val weeks = (firstDayOffset + daysInMonth + DAYS_IN_WEEK - 1) / DAYS_IN_WEEK
     val minRowHeight = if (compact) MinCompactDayRowHeight else MinDayRowHeight
 
-    BoxWithConstraints(modifier = modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)) {
+    val focusManager = LocalFocusManager.current
+    BoxWithConstraints(
+        modifier = modifier
+            .onPreviewKeyEvent { event -> event.arrowFocusDirection()?.let(focusManager::moveFocus) ?: false }
+            .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+    ) {
         val iconSize = dayIconSize(maxWidth, maxHeight, weeks)
         Grid(
             config = {

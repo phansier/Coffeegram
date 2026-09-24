@@ -3,7 +3,6 @@
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,6 +14,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -32,6 +33,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
@@ -143,14 +147,13 @@ private fun SettingsCategoryList(
     onSelect: (SettingsCategory) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.selectableGroup()) {
         categories.forEach { category ->
             Text(
                 text = stringResource(category.label),
                 style = typography.bodyLarge,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { onSelect(category) }
                     .background(
                         if (category == selected) {
                             MaterialTheme.colorScheme.secondaryContainer
@@ -158,6 +161,12 @@ private fun SettingsCategoryList(
                             Color.Transparent
                         }
                     )
+                    .selectable(
+                        selected = category == selected,
+                        onClick = { onSelect(category) },
+                        role = Role.Tab,
+                    )
+                    .pointerHoverIcon(PointerIcon.Hand)
                     .padding(horizontal = 24.dp, vertical = 16.dp),
             )
         }

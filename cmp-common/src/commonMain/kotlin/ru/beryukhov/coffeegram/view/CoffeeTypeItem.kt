@@ -23,10 +23,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.app_ui.PreviewTheme
+import ru.beryukhov.coffeegram.app_ui.handleKeyDown
 import ru.beryukhov.coffeegram.app_ui.hasFinePointer
 import ru.beryukhov.coffeegram.data.CoffeeType
 import ru.beryukhov.coffeegram.data.CoffeeTypes.Cappuccino
@@ -41,6 +44,8 @@ private val ICON_SLOT_HEIGHT = 48.dp
 private val ICON_SLOT_WIDTH = 80.dp
 private val FinePointerButtonSize = 32.dp
 private val TouchButtonSize = 48.dp
+private val IncrementKeys = setOf(Key.Plus, Key.Equals, Key.NumPadAdd)
+private val DecrementKeys = setOf(Key.Minus, Key.NumPadSubtract)
 
 @Composable
 fun CoffeeTypeItem(
@@ -51,7 +56,12 @@ fun CoffeeTypeItem(
     modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier.padding(16.dp)
+        modifier = modifier
+            .onKeyEvent { event ->
+                event.handleKeyDown(IncrementKeys, action = onIncrement) ||
+                    count > 0 && event.handleKeyDown(DecrementKeys, action = onDecrement)
+            }
+            .padding(16.dp)
     ) {
         coffeeType.icon(
             modifier = Modifier
