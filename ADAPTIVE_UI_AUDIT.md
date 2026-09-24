@@ -29,7 +29,7 @@ Status legend: ✅ done · ⏳ open
 | Supporting pane (Map + shop list) | ✅ Side pane on expanded or short-wide windows (40%, 280–400dp), bottom sheet otherwise |
 | Settings list-detail | ✅ Category list + detail on wide |
 | Adaptive lists / grids | ❌ All `LazyColumn`s single column; calendar cells don't scale |
-| App bars hide on scroll | ✅ Material theme: Day list, Settings, All-time stats, shop list (nav bar ⏳) |
+| App bars hide on scroll | ✅ Material theme: Day list, Settings, All-time stats, shop list (nav bar stays) |
 | Touch targets vs. pointer | ❌ `+`/`-` buttons are 32dp max, no input-aware sizing |
 | Keyboard / mouse | ❌ No shortcuts, no hover states |
 | Form-factor screenshot tests | ❌ Only 2 component-level previews; screen-level blocked by CMP resources issue |
@@ -133,7 +133,7 @@ map ~200–440dp wide. Done:
 
 ### P2 — Content adapts to space
 
-**7. Screenshot tests per form factor (enabler for everything above)**
+**7. Screenshot tests per form factor (enabler for everything above)** — skipped for now
 
 Only `CoffeeTypeItem` and `MonthTable` are screenshot-tested (`app/src/screenshotTest/kotlin/Screenshots.kt`),
 at default phone size. Add a `@FormFactorPreviews` multi-preview (Phone / Foldable / Tablet / Desktop,
@@ -145,7 +145,7 @@ receive already-resolved strings, or a desktop (JVM) screenshot runner (e.g. Rob
 `cmp-common`. Worth doing *before* items 1, 3 and 5 so regressions are visible; ranked here only
 because of the blocker.
 
-**8. Hide app bars (and nav bar) on scroll** — app bars ✅, nav bar ⏳
+**8. ✅ Hide app bars on scroll** (nav bar: skipped)
 
 App bars (done, `screens/TopBarScroll.kt`):
 
@@ -162,18 +162,19 @@ App bars (done, `screens/TopBarScroll.kt`):
   the behavior is not created there — without a Material bar reporting its height the connection
   would swallow scroll deltas.
 
-Open: hide the bottom navigation bar on scroll down via a `visible` flag on
-`AdaptiveNavigationContainer`, driven by the same scroll state.
+Skipped: hiding the bottom navigation bar on scroll. Tried (bar slid out while the selected page's
+top bar was more than half collapsed) and reverted — the bottom bar stays visible.
 
 Most valuable on compact-height landscape (item 4).
 
-**9. Adaptive columns for vertical lists**
+**9. ✅ Adaptive columns for vertical lists** (not needed)
 
-- `DayListScreen` (`LazyColumn` of coffee types): on desktop/large widths the detail pane can be
-  600dp+ wide with a single row per drink. Switch to `LazyVerticalGrid(GridCells.Adaptive(300.dp))`.
-- `CoffeeShopList` in the bottom sheet: keep as a column; in the side pane keep a column (pane is narrow).
-- Settings detail (`Column` of radio/switch rows): candidate for the experimental `Grid`/`FlexBox`
-  on expanded widths, low value — skip unless the settings list grows.
+Resolved by earlier items, no code change:
+
+- `DayListScreen` is at most ~600dp wide in SINGLE mode (compact width) and at most 400dp as the
+  DUAL-mode detail pane (item 5), so `GridCells.Adaptive(300.dp)` would always yield one column;
+- `CoffeeShopList` stays a column in both the bottom sheet and the side pane (≤ 400dp, item 6);
+- Settings detail stays a `Column` — revisit only if the settings list grows.
 
 **10. Scale the month calendar to the available space**
 
@@ -230,7 +231,7 @@ Those are Material navigation, which is out of scope by constraint. Coffeegram u
 ## Suggested order of execution
 
 1. ~~Item 1 + 2 (bugs, small)~~ ✅
-2. Item 7 (screenshot baseline, or accept manual verification if the blocker isn't solved)
+2. ~~Item 7~~ skipped (manual verification instead)
 3. ~~Item 3 → 4 → 5 → 6~~ ✅ (navigation area and panes)
-4. Item 8 → 9 → 10 → 11 (content)
+4. ~~Item 8 → 9~~ ✅ → 10 → 11 (content)
 5. Item 12 → 13 → 14 (input & polish)
