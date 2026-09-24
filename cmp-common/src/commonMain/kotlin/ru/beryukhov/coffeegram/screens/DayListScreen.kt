@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.background
@@ -11,12 +13,15 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -45,11 +50,14 @@ fun DayListScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ) {
     val screenState by component.models.collectAsState()
+    val listState = rememberLazyListState()
     LazyColumn(
+        state = listState,
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .consumeWindowInsets(contentPadding),
+            .consumeWindowInsets(contentPadding)
+            .hideTopBarOnScroll(listState),
         contentPadding = contentPadding,
     ) {
         itemsIndexed(
@@ -94,7 +102,8 @@ fun DayListPlaceholder(
 @Composable
 fun DayListAppBar(
     component: DayListComponent,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     val screenState by component.models.collectAsState()
     val localDate = screenState.date
@@ -113,7 +122,12 @@ fun DayListAppBar(
                 )
             }
         },
-        adaptation = { material { isCenterAligned = true } },
+        adaptation = {
+            material {
+                isCenterAligned = true
+                applyTopBarScrollBehavior(scrollBehavior)
+            }
+        },
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
     )
 }

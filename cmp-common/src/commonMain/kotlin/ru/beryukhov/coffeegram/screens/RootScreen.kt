@@ -13,9 +13,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.pages.ChildPages
@@ -45,6 +48,9 @@ fun RootScreen(
         themeState = rootComponent.themeState.collectAsState().value,
     ) {
         val pagesState by rootComponent.pages.subscribeAsState()
+        val topBarScrollBehaviors = List(pagesState.items.size) { index ->
+            key(index) { rememberTopBarScrollBehavior() }
+        }
         WideLayoutProvider(modifier = modifier) { showNavigationRail ->
             val isWide = LocalWindowLayout.current.isWide
             AdaptiveNavigationContainer(
@@ -56,11 +62,17 @@ fun RootScreen(
             ) { bottomBar ->
                 Scaffold(
                     contentWindowInsets = WindowInsets.systemBars,
-                    topBar = { TopBar(rootComponent, isWide = isWide) },
+                    topBar = { TopBar(rootComponent, topBarScrollBehaviors, isWide = isWide) },
                     snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
                     bottomBar = bottomBar,
                 ) { paddingValues ->
-                    CurrentScreen(rootComponent, paddingValues, snackbarHostState, swipeEnabled = !isWide)
+                    CurrentScreen(
+                        rootComponent = rootComponent,
+                        topBarScrollBehaviors = topBarScrollBehaviors,
+                        paddingValues = paddingValues,
+                        snackbarHostState = snackbarHostState,
+                        swipeEnabled = !isWide,
+                    )
                 }
             }
         }
@@ -68,7 +80,11 @@ fun RootScreen(
 }
 
 @Composable
-private fun TopBar(rootComponent: RootComponent, isWide: Boolean) {
+private fun TopBar(
+    rootComponent: RootComponent,
+    topBarScrollBehaviors: List<TopAppBarScrollBehavior?>,
+    isWide: Boolean,
+) {
     val pagesState by rootComponent.pages.subscribeAsState()
     val pagerSwipeEnabled = !isWide && !pagesState.isMapSelected()
     ChildPages(
@@ -84,12 +100,13 @@ private fun TopBar(rootComponent: RootComponent, isWide: Boolean) {
                 pageContent = pageContent,
             )
         },
-    ) { _, page ->
+    ) { index, page ->
+        val scrollBehavior = topBarScrollBehaviors.getOrNull(index)
         when (val c = page) {
-            is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditAppBar(c.component)
-            is RootComponent.Child.Stats -> StatsAppBar()
-            is RootComponent.Child.Map -> MapAppBar(c.component)
-            is RootComponent.Child.Settings -> SettingsAppBar(c.component)
+            is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditAppBar(c.component, scrollBehavior)
+            is RootComponent.Child.Stats -> StatsAppBar(scrollBehavior = scrollBehavior)
+            is RootComponent.Child.Map -> MapAppBar(c.component, scrollBehavior = scrollBehavior)
+            is RootComponent.Child.Settings -> SettingsAppBar(c.component, scrollBehavior = scrollBehavior)
         }
     }
 }
@@ -97,6 +114,7 @@ private fun TopBar(rootComponent: RootComponent, isWide: Boolean) {
 @Composable
 private fun CurrentScreen(
     rootComponent: RootComponent,
+    topBarScrollBehaviors: List<TopAppBarScrollBehavior?>,
     paddingValues: PaddingValues,
     snackbarHostState: SnackbarHostState,
     swipeEnabled: Boolean,
@@ -116,22 +134,24 @@ private fun CurrentScreen(
                 pageContent = pageContent,
             )
         },
-    ) { _, page ->
-        when (val c = page) {
-            is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditScreen(c.component, paddingValues)
-            is RootComponent.Child.Stats -> StatsScreen(
-                component = c.component,
-                modifier = Modifier.padding(paddingValues),
-            )
-            is RootComponent.Child.Map -> SpecialtyScreen(
-                component = c.component,
-                modifier = Modifier.padding(paddingValues),
-            )
-            is RootComponent.Child.Settings -> SettingsScreen(
-                component = c.component,
-                snackbarHostState = snackbarHostState,
-                contentPadding = paddingValues,
-            )
+    ) { index, page ->
+        CompositionLocalProvider(LocalTopBarScrollBehavior provides topBarScrollBehaviors.getOrNull(index)) {
+            when (val c = page) {
+                is RootComponent.Child.CoffeeEdit -> CmpCoffeeEditScreen(c.component, paddingValues)
+                is RootComponent.Child.Stats -> StatsScreen(
+                    component = c.component,
+                    modifier = Modifier.padding(paddingValues),
+                )
+                is RootComponent.Child.Map -> SpecialtyScreen(
+                    component = c.component,
+                    modifier = Modifier.padding(paddingValues),
+                )
+                is RootComponent.Child.Settings -> SettingsScreen(
+                    component = c.component,
+                    snackbarHostState = snackbarHostState,
+                    contentPadding = paddingValues,
+                )
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -47,9 +48,9 @@ fun CoffeeShopList(
     component: MapComponent,
     modifier: Modifier = Modifier,
     style: CoffeeShopListStyle = CoffeeShopListStyle.Flat,
+    listState: LazyListState = rememberLazyListState(),
 ) {
     val state by component.coffeeShops.collectAsState()
-    val listState = rememberLazyListState()
 
     // When a shop is selected from a map marker, bring it into view. Only scroll when it's
     // off-screen, so selecting an already-visible row (or a list tap) doesn't jump the list.

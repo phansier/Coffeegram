@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -36,9 +37,11 @@ fun SpecialtyScreen(
                     modifier = Modifier.fillMaxHeight(),
                     width = sidePaneWidth,
                 ) {
+                    val listState = rememberLazyListState()
                     CoffeeShopList(
                         component = component,
-                        modifier = Modifier.fillMaxSize(),
+                        listState = listState,
+                        modifier = Modifier.fillMaxSize().hideTopBarOnScroll(listState),
                         style = CoffeeShopListStyle.Card,
                     )
                 }
@@ -47,9 +50,11 @@ fun SpecialtyScreen(
             BottomSheetPane(
                 modifier = Modifier.fillMaxSize(),
                 sheetContent = {
+                    val listState = rememberLazyListState()
                     CoffeeShopList(
                         component = component,
-                        modifier = Modifier.fillMaxWidth(),
+                        listState = listState,
+                        modifier = Modifier.fillMaxWidth().hideTopBarOnScroll(listState),
                         style = CoffeeShopListStyle.Flat,
                     )
                 },

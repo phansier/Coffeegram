@@ -1,7 +1,11 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.union
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -24,7 +28,11 @@ expect fun MapScreen(
 
 @OptIn(ExperimentalAdaptiveApi::class)
 @Composable
-fun MapAppBar(component: MapComponent, modifier: Modifier = Modifier) {
+fun MapAppBar(
+    component: MapComponent,
+    modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+) {
     val hasUserLocation by component.hasUserLocation.collectAsState()
     AdaptiveTopAppBar(
         title = {
@@ -35,5 +43,6 @@ fun MapAppBar(component: MapComponent, modifier: Modifier = Modifier) {
         },
         modifier = modifier,
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
+        adaptation = { material { applyTopBarScrollBehavior(scrollBehavior) } },
     )
 }

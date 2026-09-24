@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.background
@@ -13,15 +15,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -113,7 +115,7 @@ fun SettingsScreen(
                     modifier = Modifier
                         .fillMaxHeight()
                         .weight(1f)
-                        .verticalScroll(rememberScrollState()),
+                        .verticalScrollHidingTopBar(),
                 ) {
                     SettingsDetail(selected, component, snackbarHostState, themeState, wearableStarter)
                 }
@@ -122,7 +124,7 @@ fun SettingsScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
+                    .verticalScrollHidingTopBar(),
             ) {
                 categories.forEachIndexed { index, category ->
                     if (index > 0) HorizontalDivider()
@@ -305,10 +307,12 @@ private fun previewComponent() = object : SettingsComponent {
 fun SettingsAppBar(
     component: SettingsComponent,
     modifier: Modifier = Modifier,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     AdaptiveTopAppBar(
         title = { TopBarTitle(title = stringResource(Res.string.settings)) },
         modifier = modifier,
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
+        adaptation = { material { applyTopBarScrollBehavior(scrollBehavior) } },
     )
 }

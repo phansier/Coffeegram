@@ -29,7 +29,7 @@ Status legend: ✅ done · ⏳ open
 | Supporting pane (Map + shop list) | ✅ Side pane on expanded or short-wide windows (40%, 280–400dp), bottom sheet otherwise |
 | Settings list-detail | ✅ Category list + detail on wide |
 | Adaptive lists / grids | ❌ All `LazyColumn`s single column; calendar cells don't scale |
-| App bars hide on scroll | ❌ None |
+| App bars hide on scroll | ✅ Material theme: Day list, Settings, All-time stats, shop list (nav bar ⏳) |
 | Touch targets vs. pointer | ❌ `+`/`-` buttons are 32dp max, no input-aware sizing |
 | Keyboard / mouse | ❌ No shortcuts, no hover states |
 | Form-factor screenshot tests | ❌ Only 2 component-level previews; screen-level blocked by CMP resources issue |
@@ -145,18 +145,25 @@ receive already-resolved strings, or a desktop (JVM) screenshot runner (e.g. Rob
 `cmp-common`. Worth doing *before* items 1, 3 and 5 so regressions are visible; ranked here only
 because of the blocker.
 
-**8. Hide app bars (and nav bar) on scroll**
+**8. Hide app bars (and nav bar) on scroll** — app bars ✅, nav bar ⏳
 
-Top bars live in the root `Scaffold`'s `topBar` inside a separate `ChildPages` pager, so no screen can
-drive them from its own scroll. To fix:
+App bars (done, `screens/TopBarScroll.kt`):
 
-- move each tab's app bar next to its content (per-tab layout instead of the root `topBar` pager);
-- use `TopAppBarDefaults.enterAlwaysScrollBehavior()` + `Modifier.nestedScroll(...)` for
-  `DayListScreen`, Settings and All-time stats, passed to `AdaptiveTopAppBar` through its Material
-  adaptation; check what the Cupertino adaptation supports and fall back to a small
-  `NestedScrollConnection`-driven offset there;
-- add a `visible` flag to `AdaptiveNavigationContainer` (item 3) fed from the same scroll state to
-  hide the bottom bar on scroll down.
+- `RootScreen` creates one `TopAppBarDefaults.enterAlwaysScrollBehavior()` per page and shares it
+  with both pagers: the app bar pager passes it to `AdaptiveTopAppBar`'s Material adaptation, the
+  content pager provides it via `LocalTopBarScrollBehavior`;
+- only scrolling content opts in with `Modifier.hideTopBarOnScroll()`: `DayListScreen`, Settings,
+  All-time stats and the coffee-shop list (side pane and bottom sheet; map gestures don't dispatch
+  nested scroll). It resets the bar's height and scrolled tint when that content leaves (back to the
+  month, Weekly tab), so the bar can't stay hidden or tinted over non-scrolling content;
+- scroll deltas reach the bar only while the attached content can actually scroll (or the bar is
+  partly hidden), so short content like Settings never hides the bar; the scrolled tint is disabled;
+- Cupertino keeps the bar pinned: its adaptation has no scroll behavior (iOS bars don't hide), and
+  the behavior is not created there — without a Material bar reporting its height the connection
+  would swallow scroll deltas.
+
+Open: hide the bottom navigation bar on scroll down via a `visible` flag on
+`AdaptiveNavigationContainer`, driven by the same scroll state.
 
 Most valuable on compact-height landscape (item 4).
 

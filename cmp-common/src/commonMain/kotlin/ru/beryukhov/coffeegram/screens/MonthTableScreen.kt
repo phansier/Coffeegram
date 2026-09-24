@@ -1,10 +1,14 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.union
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -56,6 +60,7 @@ fun MonthTableAppBar(
     component: MonthTableComponent,
     modifier: Modifier = Modifier,
     selectedDay: LocalDate? = null,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
     val screenState by component.models.collectAsState()
 
@@ -92,5 +97,6 @@ fun MonthTableAppBar(
             }
         },
         windowInsets = TopAppBarDefaults.windowInsets.union(LocalPhoneFrameInsets.current),
+        adaptation = { material { applyTopBarScrollBehavior(scrollBehavior) } },
     )
 }

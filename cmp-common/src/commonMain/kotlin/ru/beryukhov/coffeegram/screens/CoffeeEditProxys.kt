@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package ru.beryukhov.coffeegram.screens
 
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -6,6 +8,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,14 +26,17 @@ import ru.beryukhov.coffeegram.components.MonthTableComponent
 
 @OptIn(ExperimentalDecomposeApi::class)
 @Composable
-fun CoffeeEditAppBar(coffeeEditComponent: CoffeeEditComponent) {
+fun CoffeeEditAppBar(
+    coffeeEditComponent: CoffeeEditComponent,
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+) {
     val state by coffeeEditComponent.panels.subscribeAsState()
     val details = state.details
     if (!LocalWindowLayout.current.isWide && details != null) {
-        DayListAppBar(details.instance)
+        DayListAppBar(details.instance, scrollBehavior = scrollBehavior)
     } else {
         val selectedDay = (details?.configuration as? DetailsConfig.DayList)?.date
-        MonthTableAppBar(state.main.instance, selectedDay = selectedDay)
+        MonthTableAppBar(state.main.instance, selectedDay = selectedDay, scrollBehavior = scrollBehavior)
     }
 }
 
