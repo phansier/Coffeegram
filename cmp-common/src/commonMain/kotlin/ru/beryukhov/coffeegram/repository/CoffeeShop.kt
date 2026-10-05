@@ -1,5 +1,6 @@
 package ru.beryukhov.coffeegram.repository
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -37,6 +38,7 @@ data class CoffeeShop(
 /**
  * Parses a Postgres `timestamptz` into an [Instant], degrading a malformed/unexpected value to null
  */
+@OptIn(ExperimentalSerializationApi::class)
 internal object TolerantInstantSerializer : KSerializer<Instant?> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("UpdatedAt", PrimitiveKind.STRING).nullable

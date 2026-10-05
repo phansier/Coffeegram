@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.nativePaint
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
@@ -84,7 +85,7 @@ actual fun Modifier.boxShadow(
                 val hasBlurRadius = blurRadius.value.let { it.isFinite() && it != 0f }
                 val paint = Paint()
 
-                paint.asFrameworkPaint().let { frameworkPaint ->
+                paint.nativePaint.let { frameworkPaint ->
 
                     if (hasBlurRadius) {
                         frameworkPaint.maskFilter = BlurMaskFilter(
