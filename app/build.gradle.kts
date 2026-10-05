@@ -101,6 +101,9 @@ android {
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
+            all {
+                it.jvmArgs("--add-exports=java.base/jdk.internal.access=ALL-UNNAMED")
+            }
         }
     }
 }
@@ -108,9 +111,7 @@ android {
 kotlin {
     compilerOptions {
         optIn.add("kotlin.RequiresOptIn")
-        freeCompilerArgs.addAll(
-            "-Xexplicit-backing-fields",
-        )
+        freeCompilerArgs.addAll()
     }
     jvmToolchain(21)
 }
