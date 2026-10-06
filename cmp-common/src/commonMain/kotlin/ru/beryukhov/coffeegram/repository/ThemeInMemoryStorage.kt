@@ -1,9 +1,9 @@
 package ru.beryukhov.coffeegram.repository
 
 import ru.beryukhov.coffeegram.model.ThemeState
-import ru.beryukhov.coffeegram.store_lib.Storage
+import ru.beryukhov.coffeegram.model.ThemeStorage
 
-class ThemeInMemoryStorage : Storage<ThemeState> {
+class ThemeInMemoryStorage : ThemeStorage {
     private var themeState: ThemeState? = null
 
     override suspend fun getState(): ThemeState? = themeState
