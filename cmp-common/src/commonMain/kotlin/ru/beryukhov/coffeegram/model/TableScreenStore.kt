@@ -72,4 +72,5 @@ data class MonthTableScreenState(
     val filledDayItems: FilledDayItems,
 )
 
+@ConsistentCopyVisibility
 data class FilledDayItems internal constructor(val byDayOfMonth: PersistentMap<Int, Picture>)
