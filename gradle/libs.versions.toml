@@ -3,11 +3,11 @@ targetSdk = "36"
 compileSdk = "37"
 minSdk = "26"
 
-kotlin = "2.4.20" # https://github.com/JetBrains/kotlin/releases
+kotlin = "2.5.0-Beta1" # https://github.com/JetBrains/kotlin/releases
 ksp = "2.3.12" # https://github.com/google/ksp/releases
 
-compose = "1.11.3" # https://developer.android.com/jetpack/androidx/releases/compose-ui
-jetbrainsCompose = "1.12.0" # https://github.com/JetBrains/compose-multiplatform/releases
+compose = "1.12.1" # https://developer.android.com/jetpack/androidx/releases/compose-ui
+jetbrainsCompose = "1.12.1" # https://github.com/JetBrains/compose-multiplatform/releases
 hotReload = "1.2.0" # https://github.com/JetBrains/compose-hot-reload/releases
 
 agp = "9.2.1" # https://developer.android.com/studio/releases/gradle-plugin
@@ -32,7 +32,7 @@ composablesBottomSheet = "2.10.0" # https://composables.com/compose-unstyled/doc
 
 coil = "3.6.3" # https://github.com/coil-kt/coil/releases
 coroutines = "1.11.0" # https://github.com/Kotlin/kotlinx.coroutines
-serialization = "1.11.0" # https://github.com/Kotlin/kotlinx.serialization/releases
+serialization = "1.12.0-RC" # https://github.com/Kotlin/kotlinx.serialization/releases
 datastore = "1.3.0-alpha11" # https://developer.android.com/jetpack/androidx/releases/datastore
 koin = "4.2.2" # https://github.com/InsertKoinIO/koin#setup--current-version
 core = "1.19.1" # https://developer.android.com/jetpack/androidx/releases/core
