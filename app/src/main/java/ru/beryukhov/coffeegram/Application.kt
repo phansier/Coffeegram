@@ -15,9 +15,9 @@ import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 import ru.beryukhov.coffeegram.model.ThemeStorage
-import ru.beryukhov.coffeegram.repository.ThemeDataStorePrefStorage
 import ru.beryukhov.coffeegram.repository.ThemeDataStoreProtoStorage
 import ru.beryukhov.coffeegram.repository.ThemeSharedPrefStorage
+import ru.beryukhov.coffeegram.repository.themeDataStorePrefStorage
 import ru.beryukhov.coffeegram.wearable.WearableSyncCoordinator
 import ru.beryukhov.coffeegram.widget.DefaultWidgetDataBridge
 import ru.beryukhov.coffeegram.widget.FirstGlanceWidget
@@ -65,6 +65,6 @@ internal val androidAppModule = module {
         ThemeDataStoreProtoStorage(context = get())
         ThemeSharedPrefStorage(context = get())
         // the last used, other to demo their existence
-        ThemeDataStorePrefStorage(dataStore = get())
+        themeDataStorePrefStorage()
     }
 }
