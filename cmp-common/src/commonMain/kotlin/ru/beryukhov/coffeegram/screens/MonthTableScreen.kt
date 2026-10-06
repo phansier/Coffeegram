@@ -47,7 +47,7 @@ fun MonthTableScreen(
     MonthTable(
         yearMonth = monthTableScreenState.yearMonth,
         today = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
-        filledDayItemsMap = monthTableScreenState.filledDayItemsMap,
+        filledDayItemsMap = monthTableScreenState.filledDayItems.byDayOfMonth,
         onClick = { dayOfMonth: Int ->
             component.onDayClick(dayOfMonth)
         },
