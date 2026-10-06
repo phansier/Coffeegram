@@ -1,5 +1,11 @@
 # Swift Export status
 
+## 06.10.2026
+kotlin = "2.4.20"
+
+Blocker below still reproduces (`compileSwiftExportMainKotlinIosSimulatorArm64`): the three
+first-party mismatches remain. The Skiko `Array<FontFeature>` error no longer appears.
+
 ## 24.07.2026
 kotlin = "2.4.20-Beta2"
 jetbrainsCompose = "1.11.1"
