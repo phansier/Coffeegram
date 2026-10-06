@@ -15,7 +15,7 @@ class MonthTableScreenStore(yearMonth: YearMonth = nowYM(), initialStoreState: D
         initialState = MonthTableScreenState(
             yearMonth = yearMonth,
             daysCoffeesState = initialStoreState,
-            filledDayItemsMap = initialStoreState.calculate(yearMonth)
+            filledDayItems = initialStoreState.calculate(yearMonth)
         )
     ) {
 
@@ -24,19 +24,19 @@ class MonthTableScreenStore(yearMonth: YearMonth = nowYM(), initialStoreState: D
             MonthTableScreenIntent.NextMonth ->
                 copy(
                     yearMonth = increaseMonth(),
-                    filledDayItemsMap = daysCoffeesState.calculate(increaseMonth())
+                    filledDayItems = daysCoffeesState.calculate(increaseMonth())
                 )
 
             MonthTableScreenIntent.PreviousMonth ->
                 copy(
                     yearMonth = decreaseMonth(),
-                    filledDayItemsMap = daysCoffeesState.calculate(decreaseMonth())
+                    filledDayItems = daysCoffeesState.calculate(decreaseMonth())
                 )
 
             is MonthTableScreenIntent.NewDaysCoffeesState ->
                 copy(
                     daysCoffeesState = intent.state,
-                    filledDayItemsMap = intent.state.calculate(yearMonth)
+                    filledDayItems = intent.state.calculate(yearMonth)
                 )
         }
 
@@ -49,7 +49,10 @@ class MonthTableScreenStore(yearMonth: YearMonth = nowYM(), initialStoreState: D
     }
 }
 
-internal fun DaysCoffeesState.calculate(yearMonth: YearMonth): PersistentMap<Int, Picture> =
+internal fun DaysCoffeesState.calculate(yearMonth: YearMonth): FilledDayItems =
+    FilledDayItems(filledDayItemsMap(yearMonth))
+
+private fun DaysCoffeesState.filledDayItemsMap(yearMonth: YearMonth): PersistentMap<Int, Picture> =
     this.coffees.filter { entry: Map.Entry<LocalDate, DayCoffee> ->
         entry.key.year == yearMonth.year && entry.key.month == yearMonth.month
     }
@@ -66,5 +69,7 @@ sealed interface MonthTableScreenIntent {
 data class MonthTableScreenState(
     val yearMonth: YearMonth,
     val daysCoffeesState: DaysCoffeesState,
-    val filledDayItemsMap: PersistentMap<Int, Picture>,
+    val filledDayItems: FilledDayItems,
 )
+
+data class FilledDayItems internal constructor(val byDayOfMonth: PersistentMap<Int, Picture>)
