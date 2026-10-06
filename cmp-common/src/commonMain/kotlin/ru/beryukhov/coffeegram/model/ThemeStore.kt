@@ -1,9 +1,8 @@
 package ru.beryukhov.coffeegram.model
 
-import ru.beryukhov.coffeegram.store_lib.Storage
 import ru.beryukhov.coffeegram.store_lib.StoreImpl
 
-class ThemeStore(storage: Storage<ThemeState>) : StoreImpl<ThemeIntent, ThemeState>(
+class ThemeStore(storage: ThemeStorage) : StoreImpl<ThemeIntent, ThemeState>(
     initialState = ThemeStateDefault,
     storage = storage
 ) {

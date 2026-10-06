@@ -9,12 +9,12 @@ import androidx.datastore.migrations.SharedPreferencesView
 import kotlinx.coroutines.flow.firstOrNull
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
+import ru.beryukhov.coffeegram.model.ThemeStorage
 import ru.beryukhov.coffeegram.repository.ThemePreferences.ProtoThemeState
-import ru.beryukhov.coffeegram.store_lib.Storage
 
 private const val DATA_STORE_FILE_NAME = "user_prefs.pb"
 
-class ThemeDataStoreProtoStorage(private val context: Context) : Storage<ThemeState> {
+class ThemeDataStoreProtoStorage(private val context: Context) : ThemeStorage {
 
     private val Context.dataStore: DataStore<ThemePreferences> by dataStore(
         fileName = DATA_STORE_FILE_NAME,
