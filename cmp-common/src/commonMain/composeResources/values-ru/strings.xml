@@ -69,4 +69,8 @@
     <string name="map_long">Карта спешелти кофе</string>
 
     <string name="open_on_watch">Открыть на часах</string>
+
+    <string name="copy_link">Скопировать ссылку</string>
+    <string name="share">Поделиться…</string>
+    <string name="link_copied">Ссылка скопирована</string>
 </resources>

@@ -3,7 +3,7 @@ package ru.beryukhov.coffeegram.view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +24,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,6 +54,7 @@ fun CoffeeShopList(
     modifier: Modifier = Modifier,
     style: CoffeeShopListStyle = CoffeeShopListStyle.Flat,
     listState: LazyListState = rememberLazyListState(),
+    onLinkCopied: () -> Unit = {},
 ) {
     val state by component.coffeeShops.collectAsState()
 
@@ -78,6 +82,7 @@ fun CoffeeShopList(
                 shop = shop,
                 style = style,
                 onClick = { component.onMarkerClicked(shop.coffeeShop) },
+                onLinkCopied = onLinkCopied,
             )
             if (style == CoffeeShopListStyle.Flat) HorizontalDivider()
         }
@@ -89,6 +94,33 @@ private fun CoffeeShopListItem(
     shop: ExtendedCoffeeShop,
     style: CoffeeShopListStyle,
     onClick: () -> Unit,
+    onLinkCopied: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var menuExpanded by remember { mutableStateOf(false) }
+    Box {
+        CoffeeShopRow(
+            shop = shop,
+            style = style,
+            onClick = onClick,
+            onMenuRequest = { menuExpanded = true },
+            modifier = modifier,
+        )
+        CoffeeShopShareMenu(
+            shop = shop.coffeeShop,
+            expanded = menuExpanded,
+            onDismiss = { menuExpanded = false },
+            onLinkCopied = onLinkCopied,
+        )
+    }
+}
+
+@Composable
+private fun CoffeeShopRow(
+    shop: ExtendedCoffeeShop,
+    style: CoffeeShopListStyle,
+    onClick: () -> Unit,
+    onMenuRequest: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val rowModifier = when (style) {
@@ -97,7 +129,7 @@ private fun CoffeeShopListItem(
             .background(
                 if (shop.highlighted) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent
             )
-            .clickable(onClick = onClick)
+            .selectableWithMenu(onClick = onClick, onMenuRequest = onMenuRequest)
             .pointerHoverIcon(PointerIcon.Hand)
             .padding(horizontal = 16.dp, vertical = 10.dp)
 
@@ -112,7 +144,7 @@ private fun CoffeeShopListItem(
                 }
             )
             .border(1.dp, MaterialTheme.colorScheme.outlineVariant, RoundedCornerShape(16.dp))
-            .clickable(onClick = onClick)
+            .selectableWithMenu(onClick = onClick, onMenuRequest = onMenuRequest)
             .pointerHoverIcon(PointerIcon.Hand)
             .padding(12.dp)
     }
@@ -146,6 +178,10 @@ private fun CoffeeShopListItem(
         }
     }
 }
+
+private fun Modifier.selectableWithMenu(onClick: () -> Unit, onMenuRequest: () -> Unit): Modifier =
+    onSecondaryClick(onMenuRequest)
+        .combinedClickable(onClick = onClick, onLongClick = onMenuRequest)
 
 /**
  * `Flat` matches the compact, divider-separated rows used in the narrow-screen bottom sheet.

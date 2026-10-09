@@ -69,4 +69,8 @@
     <string name="map_long">Χάρτης Καφέ Σπέσιαλτι</string>
 
     <string name="open_on_watch">Άνοιγμα στο ρολόι</string>
+
+    <string name="copy_link">Αντιγραφή συνδέσμου</string>
+    <string name="share">Κοινοποίηση…</string>
+    <string name="link_copied">Ο σύνδεσμος αντιγράφηκε</string>
 </resources>
