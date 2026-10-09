@@ -22,6 +22,14 @@ class DeepLinkTest {
     }
 
     @Test
+    fun testMapShopPath() {
+        assertEquals(
+            listOf("map", "6f1c2a9e-0b7d-4c1e-9a3f-2d8e5b4c7a10"),
+            "https://coffeegram.pages.dev/map/6f1c2a9e-0b7d-4c1e-9a3f-2d8e5b4c7a10".pathSegments(),
+        )
+    }
+
+    @Test
     fun testQueryAndFragmentAreStripped() {
         assertEquals(listOf("stats"), "https://coffeegram.pages.dev/stats?admin=1".pathSegments())
         assertEquals(listOf("settings"), "https://coffeegram.pages.dev/settings#theme".pathSegments())

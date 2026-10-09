@@ -69,4 +69,8 @@
     <string name="map_long">Specialty Coffee Map</string>
 
     <string name="open_on_watch">Open on watch</string>
+
+    <string name="copy_link">Copy link</string>
+    <string name="share">Share…</string>
+    <string name="link_copied">Link copied</string>
 </resources>

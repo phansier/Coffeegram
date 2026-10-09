@@ -237,11 +237,24 @@ private class WebMapState(
         // Only fit-to-bounds once, on the first non-empty load. Subsequent marker rebuilds
         // (from expand/highlight state changes) must not stomp on the user's pan/zoom, and a
         // resolved user location takes priority over fitting to all markers.
-        if (!didInitialFit && !didFocusUserLocation && pendingShops.isNotEmpty()) {
-            val b = paddedBounds(pendingShops.map { it.coffeeShop })
-            jsFitBounds(m, b.west, b.south, b.east, b.north)
-            didInitialFit = true
+        if (didInitialFit || pendingShops.isEmpty()) return
+        val initiallyHighlighted = pendingShops.firstOrNull { it.highlighted }?.coffeeShop
+        when {
+            initiallyHighlighted != null -> focusInitiallyHighlighted(m, initiallyHighlighted)
+            !didFocusUserLocation -> fitAllShops(m)
         }
+        didInitialFit = true
+    }
+
+    private fun focusInitiallyHighlighted(m: MapHandle, shop: CoffeeShop) {
+        currentZoom = maxOf(currentZoom, MapDefaults.ZOOM_WITH_LOCATION.toDouble())
+        jsSetCenter(m, shop.longitude, shop.latitude, currentZoom)
+        didFocusUserLocation = true
+    }
+
+    private fun fitAllShops(m: MapHandle) {
+        val b = paddedBounds(pendingShops.map { it.coffeeShop })
+        jsFitBounds(m, b.west, b.south, b.east, b.north)
     }
 }
 
