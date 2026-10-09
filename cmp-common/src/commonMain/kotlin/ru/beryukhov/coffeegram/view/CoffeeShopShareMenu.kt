@@ -16,6 +16,7 @@ import ru.beryukhov.coffeegram.app_ui.PreviewTheme
 import ru.beryukhov.coffeegram.repository.CoffeeShop
 import ru.beryukhov.coffeegram.share.plainTextClipEntry
 import ru.beryukhov.coffeegram.share.rememberNativeShare
+import ru.beryukhov.coffeegram.share.shareLink
 import ru.beryukhov.coffeegram.share.shareText
 
 @Composable
@@ -35,7 +36,7 @@ internal fun CoffeeShopShareMenu(
             onClick = {
                 onDismiss()
                 scope.launch {
-                    clipboard.setClipEntry(plainTextClipEntry(shop.shareText()))
+                    clipboard.setClipEntry(plainTextClipEntry(shop.shareLink()))
                     onLinkCopied()
                 }
             },
