@@ -128,6 +128,7 @@ class DefaultRootComponent(
             Config.Map -> RootComponent.Child.Map(
                 DefaultMapComponent(
                     context = context,
+                    deepLinkShopId = nestedDeepLinkSegments(config).firstOrNull(),
                 )
             )
 

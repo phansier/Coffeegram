@@ -37,6 +37,7 @@ interface MapComponent {
 
 class DefaultMapComponent(
     context: ComponentContext,
+    private val deepLinkShopId: String? = null,
 ) : MapComponent, ComponentContext by context {
 
     private val scope = coroutineScope(Dispatchers.Main.immediate)
@@ -56,7 +57,7 @@ class DefaultMapComponent(
             try {
                 val shops = coffeeShops()
                 coffeeShops.value = CoffeeShopsState(
-                    list = shops.map { ExtendedCoffeeShop(it, false) },
+                    list = shops.highlightedBy { it.id == deepLinkShopId },
                     expanded = false,
                     isLoading = false,
                 )
@@ -81,17 +82,16 @@ class DefaultMapComponent(
     override fun onMarkerClicked(coffeeShop: CoffeeShop) {
         val current = coffeeShops.value
         coffeeShops.value = current.copy(
-            list = current.list.map {
-                if (it.coffeeShop == coffeeShop) {
-                    it.copy(highlighted = true)
-                } else {
-                    it.copy(highlighted = false)
-                }
-            }
+            list = current.list.map { it.coffeeShop }.highlightedBy { it == coffeeShop }
         )
     }
 
     override fun onUserLocationObtained() {
         hasUserLocation.value = true
     }
+}
+
+internal fun List<CoffeeShop>.highlightedBy(predicate: (CoffeeShop) -> Boolean): List<ExtendedCoffeeShop> {
+    val highlightedIndex = indexOfFirst(predicate)
+    return mapIndexed { index, shop -> ExtendedCoffeeShop(shop, highlighted = index == highlightedIndex) }
 }
