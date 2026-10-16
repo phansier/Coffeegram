@@ -1,6 +1,8 @@
 package ru.beryukhov.coffeegram.map
 
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material3.Button
@@ -16,7 +18,9 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FitAllMarkersButton(
     onClick: () -> Unit,
-    modifier: Modifier = Modifier.padding(16.dp),
+    modifier: Modifier = Modifier
+        .windowInsetsPadding(mapOverlayInsets(WindowInsetsSides.Start))
+        .padding(16.dp),
 ) {
     Button(
         onClick = onClick,
