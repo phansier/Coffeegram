@@ -4,9 +4,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -22,6 +24,7 @@ import coffeegram.cmp_common.generated.resources.link_copied
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.getString
 import ru.beryukhov.coffeegram.components.MapComponent
+import ru.beryukhov.coffeegram.map.mapOverlayInsets
 import ru.beryukhov.coffeegram.view.CoffeeShopList
 import ru.beryukhov.coffeegram.view.CoffeeShopListStyle
 
@@ -59,7 +62,10 @@ fun SpecialtyScreen(
                         CoffeeShopList(
                             component = component,
                             listState = listState,
-                            modifier = Modifier.fillMaxSize().hideTopBarOnScroll(listState),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .windowInsetsPadding(mapOverlayInsets(WindowInsetsSides.End))
+                                .hideTopBarOnScroll(listState),
                             style = CoffeeShopListStyle.Card,
                             onLinkCopied = onLinkCopied,
                         )
@@ -75,7 +81,10 @@ fun SpecialtyScreen(
                     CoffeeShopList(
                         component = component,
                         listState = listState,
-                        modifier = Modifier.fillMaxWidth().hideTopBarOnScroll(listState),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .windowInsetsPadding(mapOverlayInsets(WindowInsetsSides.Horizontal))
+                            .hideTopBarOnScroll(listState),
                         style = CoffeeShopListStyle.Flat,
                         onLinkCopied = onLinkCopied,
                     )

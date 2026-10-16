@@ -144,7 +144,7 @@ private fun CurrentScreen(
                 )
                 is RootComponent.Child.Map -> SpecialtyScreen(
                     component = c.component,
-                    modifier = Modifier.padding(paddingValues),
+                    modifier = Modifier.padding(paddingValues.verticalOnly()),
                 )
                 is RootComponent.Child.Settings -> SettingsScreen(
                     component = c.component,
@@ -155,6 +155,9 @@ private fun CurrentScreen(
         }
     }
 }
+
+private fun PaddingValues.verticalOnly(): PaddingValues =
+    PaddingValues(top = calculateTopPadding(), bottom = calculateBottomPadding())
 
 private fun ChildPages<*, RootComponent.Child>.isMapSelected(): Boolean =
     items.getOrNull(selectedIndex)?.instance is RootComponent.Child.Map
