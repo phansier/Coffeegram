@@ -1,5 +1,35 @@
 # Swift Export status
 
+## 22.10.2026 (Kotlin 2.5.0-Beta2)
+kotlin = "2.5.0-Beta2"
+jetbrainsCompose = "1.12.2"
+serialization = "1.12.0-RC"
+
+`make compileSwiftExport` passes, but it only covers the Kotlin bridge compilation — the real check
+is `make buildIos` (`embedSwiftExportForXcode`), which still ends with `** BUILD FAILED **`.
+
+| Task | Beta1 | Beta2 |
+|---|---|---|
+| `compileSwiftExportMainKotlinIosSimulatorArm64` | ✅ | ✅ |
+| `iosSimulatorArm64DebugBuildSPMPackage` | ❌ KT-85660 | ❌ KT-85660 |
+| `linkSwiftExportBinaryDebugStaticIosSimulatorArm64` | ❌ KT-89699 | ✅ |
+
+### Fixed upstream
+- [KT-89699](https://youtrack.jetbrains.com/issue/KT-89699) — the `Density.roundToPx` reverse-bridge
+  crash is gone; `linkSwiftExportBinaryDebugStaticIosSimulatorArm64` produces
+  `libSwiftExportBinary.a`.
+
+### Current blocker (unresolved, upstream)
+1. `iosSimulatorArm64DebugBuildSPMPackage` — unchanged from Beta1:
+   ```
+   OrgJetbrainsComposeUiUiGraphics.swift:4467:21: error: type member must not be named 'Type',
+   since it would conflict with the 'foo.Type' expression
+   ```
+   [KT-85660](https://youtrack.jetbrains.com/issue/KT-85660) (`PathSegment.Type`).
+
+`make buildIos` still exhausts the default Gradle daemon heap (2.6 GiB reported) during the link
+step; the build continues, but the daemon is stopped afterwards.
+
 ## 06.10.2026 (Kotlin 2.5.0-Beta1)
 kotlin = "2.5.0-Beta1"
 jetbrainsCompose = "1.12.1"
