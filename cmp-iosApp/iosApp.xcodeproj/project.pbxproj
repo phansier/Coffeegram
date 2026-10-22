@@ -163,7 +163,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n  ./gradlew :cmp-common:embedSwiftExportForXcode";
+			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :cmp-common:embedSwiftExportForXcode";
 		};
 		30DD22152F7D6D640099116B /* Sync Compose Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -337,8 +337,6 @@
 					"-ObjC",
 					"-l\"c++\"",
 					"-framework",
-					"\"cmp_common\"",
-					"-framework",
 					"\"MapKit\"",
 					"-framework",
 					"\"CoreLocation\"",
@@ -372,8 +370,6 @@
 					"$(inherited)",
 					"-ObjC",
 					"-l\"c++\"",
-					"-framework",
-					"\"cmp_common\"",
 					"-framework",
 					"\"MapKit\"",
 					"-framework",

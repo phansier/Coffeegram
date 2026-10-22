@@ -216,3 +216,22 @@ compose.desktop {
         }
     }
 }
+
+val swiftExportPackageDir = layout.buildDirectory.dir("SPMPackage")
+
+tasks.matching { it.name.endsWith("GenerateSPMPackage") }.configureEach {
+    val packageDir = swiftExportPackageDir
+    doLast {
+        val renamePathSegmentTypeEnumKT85660: (File) -> Unit = { swiftFile ->
+            val patched = swiftFile.readText()
+                .replace("public enum Type:", "public enum Type_:")
+                .replace("PathSegment.Type\\b".toRegex(), "PathSegment.Type_")
+                .replace("Type.allCases", "Type_.allCases")
+            swiftFile.writeText(patched)
+        }
+        packageDir.get().asFile
+            .walk()
+            .filter { it.name == "OrgJetbrainsComposeUiUiGraphics.swift" }
+            .forEach(renamePathSegmentTypeEnumKT85660)
+    }
+}

@@ -5,30 +5,51 @@ kotlin = "2.5.0-Beta2"
 jetbrainsCompose = "1.12.2"
 serialization = "1.12.0-RC"
 
-`make compileSwiftExport` passes, but it only covers the Kotlin bridge compilation — the real check
-is `make buildIos` (`embedSwiftExportForXcode`), which still ends with `** BUILD FAILED **`.
+✅ **Swift Export works end to end** (with one local workaround): `make buildIos` ends with
+`** BUILD SUCCEEDED **`, and the app launches on the iOS simulator showing the Compose UI via
+`import CmpCommon` → `MainViewController()`.
+
+Note: `make compileSwiftExport` only covers the Kotlin bridge compilation — the real check is
+`make buildIos` (`embedSwiftExportForXcode`).
 
 | Task | Beta1 | Beta2 |
 |---|---|---|
 | `compileSwiftExportMainKotlinIosSimulatorArm64` | ✅ | ✅ |
-| `iosSimulatorArm64DebugBuildSPMPackage` | ❌ KT-85660 | ❌ KT-85660 |
+| `iosSimulatorArm64DebugBuildSPMPackage` | ❌ KT-85660 | ✅ with workaround |
 | `linkSwiftExportBinaryDebugStaticIosSimulatorArm64` | ❌ KT-89699 | ✅ |
+| `embedSwiftExportForXcode` + Xcode app link | — | ✅ |
 
 ### Fixed upstream
 - [KT-89699](https://youtrack.jetbrains.com/issue/KT-89699) — the `Density.roundToPx` reverse-bridge
   crash is gone; `linkSwiftExportBinaryDebugStaticIosSimulatorArm64` produces
   `libSwiftExportBinary.a`.
 
-### Current blocker (unresolved, upstream)
-1. `iosSimulatorArm64DebugBuildSPMPackage` — unchanged from Beta1:
-   ```
-   OrgJetbrainsComposeUiUiGraphics.swift:4467:21: error: type member must not be named 'Type',
-   since it would conflict with the 'foo.Type' expression
-   ```
-   [KT-85660](https://youtrack.jetbrains.com/issue/KT-85660) (`PathSegment.Type`).
+### Worked around locally: KT-85660 (unresolved upstream)
+`iosSimulatorArm64DebugBuildSPMPackage` fails on the generated Swift for Compose UI graphics:
+```
+OrgJetbrainsComposeUiUiGraphics.swift:4467:21: error: type member must not be named 'Type',
+since it would conflict with the 'foo.Type' expression
+```
+[KT-85660](https://youtrack.jetbrains.com/issue/KT-85660) (`PathSegment.Type`).
 
-`make buildIos` still exhausts the default Gradle daemon heap (2.6 GiB reported) during the link
-step; the build continues, but the daemon is stopped afterwards.
+Workaround in `cmp-common/build.gradle.kts`: a `doLast` on every `*GenerateSPMPackage` task renames
+the enum to `Type_` in the generated `OrgJetbrainsComposeUiUiGraphics.swift` (`enum Type:`,
+`PathSegment.Type`, `Type.allCases`). Swift-only rename is safe because the bridges are C functions.
+The rename logic must live inside `doLast` — calling a script-level function breaks the
+configuration cache ("cannot serialize Gradle script object references").
+It is text-based, so it may silently stop matching on a future Kotlin version; remove it once
+KT-85660 is fixed.
+
+### Xcode project change
+After the SPM package built, the app link failed with `ld: framework 'cmp_common' not found`.
+Removed `-framework cmp_common` from `OTHER_LDFLAGS` (Debug and Release) in
+`cmp-iosApp/iosApp.xcodeproj` — Swift Export links `libCmpCommon.a` itself via autolink.
+
+### Remaining notes
+- `make buildIos` exhausts the default Gradle daemon heap (2.6 GiB reported) during the link step;
+  the build continues, but the daemon is stopped afterwards.
+- Harmless linker warning: `libicu` object built for iOS-simulator 18.5, app targets 18.0.
+- Only the first screen was checked at runtime; other tabs not exercised yet.
 
 ## 06.10.2026 (Kotlin 2.5.0-Beta1)
 kotlin = "2.5.0-Beta1"
