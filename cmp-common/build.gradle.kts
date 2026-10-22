@@ -76,6 +76,20 @@ kotlin {
                 configure(libs.essenty, SwiftExportVisibility.HIDDEN)
                 configure(libs.koin.core, SwiftExportVisibility.HIDDEN)
                 configure("org.jetbrains.compose.ui:ui-graphics", SwiftExportVisibility.HIDDEN)
+                configure(libs.cmp.ui, SwiftExportVisibility.HIDDEN)
+                configure("org.jetbrains.compose.ui:ui-unit", SwiftExportVisibility.HIDDEN)
+                configure("androidx.compose.runtime:runtime", SwiftExportVisibility.HIDDEN)
+                configure(libs.cmp.components.resources, SwiftExportVisibility.HIDDEN)
+                configure(libs.coroutines.core, SwiftExportVisibility.HIDDEN)
+                configure(libs.kotlinx.immutableCollections, SwiftExportVisibility.HIDDEN)
+                configure(libs.kotlinx.datetime, SwiftExportVisibility.HIDDEN)
+                configure("org.jetbrains.kotlinx:kotlinx-serialization-core", SwiftExportVisibility.HIDDEN)
+                configure("androidx.datastore:datastore-core", SwiftExportVisibility.HIDDEN)
+                configure("com.arkivanov.essenty:back-handler", SwiftExportVisibility.HIDDEN)
+                configure("com.arkivanov.essenty:instance-keeper", SwiftExportVisibility.HIDDEN)
+                configure("com.arkivanov.essenty:state-keeper", SwiftExportVisibility.HIDDEN)
+                configure(projects.repository, SwiftExportVisibility.HIDDEN)
+                configure(projects.dateTimeUtils, SwiftExportVisibility.HIDDEN)
             }
         }
     }
