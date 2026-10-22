@@ -80,7 +80,6 @@ kotlin {
                 configure("org.jetbrains.compose.ui:ui-unit", SwiftExportVisibility.HIDDEN)
                 configure("androidx.compose.runtime:runtime", SwiftExportVisibility.HIDDEN)
                 configure(libs.cmp.components.resources, SwiftExportVisibility.HIDDEN)
-                configure(libs.coroutines.core, SwiftExportVisibility.HIDDEN)
                 configure(libs.kotlinx.immutableCollections, SwiftExportVisibility.HIDDEN)
                 configure(libs.kotlinx.datetime, SwiftExportVisibility.HIDDEN)
                 configure("org.jetbrains.kotlinx:kotlinx-serialization-core", SwiftExportVisibility.HIDDEN)
