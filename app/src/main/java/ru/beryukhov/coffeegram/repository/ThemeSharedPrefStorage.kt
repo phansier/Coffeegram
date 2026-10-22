@@ -7,7 +7,7 @@ import androidx.core.content.edit
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStateDefault
-import ru.beryukhov.coffeegram.store_lib.Storage
+import ru.beryukhov.coffeegram.model.ThemeStorage
 
 internal const val FILENAME = "theme_shared_pref"
 internal const val THEME_STATE = "theme_state"
@@ -15,7 +15,7 @@ internal const val THEME_CUPERTINO = "theme_dynamic"
 internal const val THEME_DYNAMIC = "theme_dynamic"
 internal const val THEME_SUMMER = "theme_summer"
 
-class ThemeSharedPrefStorage(private val context: Context) : Storage<ThemeState> {
+class ThemeSharedPrefStorage(private val context: Context) : ThemeStorage {
 
     private val sharedPrefs: SharedPreferences by lazy {
         context.getSharedPreferences(FILENAME, Context.MODE_PRIVATE)

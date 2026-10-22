@@ -73,9 +73,23 @@ updateScreenshots:
 screenshotTest:
 	./gradlew :app:validateDebugScreenshotTest --no-configuration-cache $(params)
 
-# ARCHS=arm64 is required for Compose Multiplatform's syncComposeResourcesForIos task
+# ARCHS=arm64 is required because there is no iosX64 target: a generic simulator build also requests x86_64, which fails Swift Export's architecture validation and the Compose resources sync
 buildIos:
 	xcodebuild build -project cmp-iosApp/iosApp.xcodeproj -scheme iosApp -destination 'generic/platform=iOS Simulator' ARCHS=arm64
+
+# Swift Export tasks are registered only when Xcode build env vars are present, so they are emulated here
+swiftExportDir := $(CURDIR)/build/swift-export-xcode
+xcodeEnv := CONFIGURATION=Debug SDK_NAME=iphonesimulator PLATFORM_NAME=iphonesimulator ARCHS=arm64 \
+	TARGET_BUILD_DIR=$(swiftExportDir) BUILT_PRODUCTS_DIR=$(swiftExportDir) CONFIGURATION_BUILD_DIR=$(swiftExportDir) \
+	FRAMEWORKS_FOLDER_PATH=Frameworks ENABLE_USER_SCRIPT_SANDBOXING=NO IPHONEOS_DEPLOYMENT_TARGET=16.0
+
+compileSwiftExport:
+	mkdir -p $(swiftExportDir) && \
+	$(xcodeEnv) ./gradlew :cmp-common:compileSwiftExportMainKotlinIosSimulatorArm64 --no-configuration-cache $(params)
+
+linkSwiftExport:
+	mkdir -p $(swiftExportDir) && \
+	$(xcodeEnv) ./gradlew :cmp-common:linkSwiftExportBinaryDebugStaticIosSimulatorArm64 --no-configuration-cache $(params)
 
 updateWebDepsLocks:
 	./gradlew :kotlinUpgradeYarnLock :kotlinWasmUpgradeYarnLock $(params)

@@ -14,10 +14,11 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.firstOrNull
 import okio.Path.Companion.toPath
 import org.koin.core.module.Module
+import org.koin.core.scope.Scope
 import ru.beryukhov.coffeegram.model.DarkThemeState
 import ru.beryukhov.coffeegram.model.ThemeState
 import ru.beryukhov.coffeegram.model.ThemeStateDefault
-import ru.beryukhov.coffeegram.store_lib.Storage
+import ru.beryukhov.coffeegram.model.ThemeStorage
 
 internal const val DATA_STORE_FILE_NAME = "theme.preferences_pb"
 
@@ -33,7 +34,7 @@ private object PreferencesKeys {
     val THEME_CUPERTINO_KEY = booleanPreferencesKey(THEME_CUPERTINO)
 }
 
-class ThemeDataStorePrefStorage(private val dataStore: DataStore<Preferences>) : Storage<ThemeState> {
+class ThemeDataStorePrefStorage internal constructor(private val dataStore: DataStore<Preferences>) : ThemeStorage {
 
     override suspend fun getState(): ThemeState? {
         DebugLogger().log(
@@ -84,6 +85,8 @@ class ThemeDataStorePrefStorage(private val dataStore: DataStore<Preferences>) :
         }
     }
 }
+
+fun Scope.themeDataStorePrefStorage(): ThemeStorage = ThemeDataStorePrefStorage(dataStore = get())
 
 fun createDataStore(producePath: () -> String): DataStore<Preferences> {
     return PreferenceDataStoreFactory.createWithPath(

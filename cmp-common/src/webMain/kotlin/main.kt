@@ -18,7 +18,7 @@ import ru.beryukhov.coffeegram.model.DaysCoffeesStore
 import ru.beryukhov.coffeegram.model.ThemeStore
 import ru.beryukhov.coffeegram.screens.RootScreen
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalDecomposeApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 fun main() {
     val lifecycle = LifecycleRegistry()
 
@@ -33,6 +33,7 @@ fun main() {
     }
 }
 
+@OptIn(ExperimentalDecomposeApi::class)
 @Composable
 private fun CoffeegramApp(lifecycle: LifecycleRegistry) {
     KoinApplication(

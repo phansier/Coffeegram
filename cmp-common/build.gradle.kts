@@ -1,5 +1,10 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.plugin.mpp.DisableCacheInKotlinVersion
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCacheApi
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.export.SwiftExportVisibility
+import org.jetbrains.kotlin.gradle.swiftexport.ExperimentalSwiftExportDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.util.Properties
 
@@ -61,6 +66,46 @@ kotlin {
         it.binaries.framework {
             baseName = "cmp_common"
             isStatic = true
+        }
+    }
+
+    @OptIn(ExperimentalSwiftExportDsl::class)
+    export {
+        swift {
+            moduleName = "CmpCommon"
+            rootPackage = "ru.beryukhov.coffeegram"
+            xcodeIntegration {
+                configure(libs.decompose.core, SwiftExportVisibility.HIDDEN)
+                configure(libs.essenty, SwiftExportVisibility.HIDDEN)
+                configure(libs.koin.core, SwiftExportVisibility.HIDDEN)
+                configure("org.jetbrains.compose.ui:ui-graphics", SwiftExportVisibility.HIDDEN)
+                configure(libs.cmp.ui, SwiftExportVisibility.HIDDEN)
+                configure("org.jetbrains.compose.ui:ui-unit", SwiftExportVisibility.HIDDEN)
+                configure("androidx.compose.runtime:runtime", SwiftExportVisibility.HIDDEN)
+                configure(libs.cmp.components.resources, SwiftExportVisibility.HIDDEN)
+                configure(libs.kotlinx.immutableCollections, SwiftExportVisibility.HIDDEN)
+                configure(libs.kotlinx.datetime, SwiftExportVisibility.HIDDEN)
+                configure("org.jetbrains.kotlinx:kotlinx-serialization-core", SwiftExportVisibility.HIDDEN)
+                configure("androidx.datastore:datastore-core", SwiftExportVisibility.HIDDEN)
+                configure("com.arkivanov.essenty:back-handler", SwiftExportVisibility.HIDDEN)
+                configure("com.arkivanov.essenty:instance-keeper", SwiftExportVisibility.HIDDEN)
+                configure("com.arkivanov.essenty:state-keeper", SwiftExportVisibility.HIDDEN)
+                configure(projects.repository, SwiftExportVisibility.HIDDEN)
+                configure(projects.dateTimeUtils, SwiftExportVisibility.HIDDEN)
+            }
+        }
+    }
+
+    val isCi = providers.environmentVariable("CI").isPresent
+    if (isCi) {
+        targets.withType<KotlinNativeTarget>().configureEach {
+            binaries.configureEach {
+                @OptIn(KotlinNativeCacheApi::class)
+                disableNativeCache(
+                    DisableCacheInKotlinVersion.`2_5_0`,
+                    "Cold CI runners spend most of the iOS build compiling per-library native caches",
+                )
+            }
         }
     }
 

@@ -59,15 +59,11 @@ kotlin {
         }
         webMain.dependencies {
             implementation(libs.sqlite.web)
+            npm("sqlite-wasm-worker", layout.projectDirectory.dir("worker").asFile)
         }
 
         wasmJsMain.dependencies {
             implementation(libs.kotlinx.browser)
-        }
-        webMain.dependencies {
-            implementation(
-                npm("sqlite-wasm-worker", layout.projectDirectory.dir("worker").asFile)
-            )
         }
     }
 
