@@ -73,7 +73,7 @@ updateScreenshots:
 screenshotTest:
 	./gradlew :app:validateDebugScreenshotTest --no-configuration-cache $(params)
 
-# ARCHS=arm64 is required for Compose Multiplatform's syncComposeResourcesForIos task
+# ARCHS=arm64 is required because there is no iosX64 target: a generic simulator build also requests x86_64, which fails Swift Export's architecture validation and the Compose resources sync
 buildIos:
 	xcodebuild build -project cmp-iosApp/iosApp.xcodeproj -scheme iosApp -destination 'generic/platform=iOS Simulator' ARCHS=arm64
 

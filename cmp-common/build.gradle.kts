@@ -1,5 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.plugin.mpp.export.SwiftExportVisibility
 import org.jetbrains.kotlin.gradle.swiftexport.ExperimentalSwiftExportDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import java.util.Properties
@@ -66,9 +67,16 @@ kotlin {
     }
 
     @OptIn(ExperimentalSwiftExportDsl::class)
-    swiftExport {
-        moduleName = "CmpCommon"
-        flattenPackage = "ru.beryukhov.coffeegram"
+    export {
+        swift {
+            moduleName = "CmpCommon"
+            rootPackage = "ru.beryukhov.coffeegram"
+            xcodeIntegration {
+                configure(libs.decompose.core, SwiftExportVisibility.HIDDEN)
+                configure(libs.essenty, SwiftExportVisibility.HIDDEN)
+                configure(libs.koin.core, SwiftExportVisibility.HIDDEN)
+            }
+        }
     }
 
     js {
