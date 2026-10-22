@@ -5,8 +5,8 @@ kotlin = "2.5.0-Beta2"
 jetbrainsCompose = "1.12.2"
 serialization = "1.12.0-RC"
 
-✅ **Swift Export works end to end** (with one local workaround): `make buildIos` ends with
-`** BUILD SUCCEEDED **`, and the app launches on the iOS simulator showing the Compose UI via
+✅ **Swift Export works end to end**: `make buildIos` ends with `** BUILD SUCCEEDED **`, and the app
+launches on the iOS simulator (also from the Android Studio KMP plugin) showing the Compose UI via
 `import CmpCommon` → `MainViewController()`.
 
 Note: `make compileSwiftExport` only covers the Kotlin bridge compilation — the real check is
@@ -15,7 +15,7 @@ Note: `make compileSwiftExport` only covers the Kotlin bridge compilation — th
 | Task | Beta1 | Beta2 |
 |---|---|---|
 | `compileSwiftExportMainKotlinIosSimulatorArm64` | ✅ | ✅ |
-| `iosSimulatorArm64DebugBuildSPMPackage` | ❌ KT-85660 | ✅ with workaround |
+| `iosSimulatorArm64DebugBuildSPMPackage` | ❌ KT-85660 | ✅ (ui-graphics `HIDDEN`) |
 | `linkSwiftExportBinaryDebugStaticIosSimulatorArm64` | ❌ KT-89699 | ✅ |
 | `embedSwiftExportForXcode` + Xcode app link | — | ✅ |
 
@@ -24,31 +24,63 @@ Note: `make compileSwiftExport` only covers the Kotlin bridge compilation — th
   crash is gone; `linkSwiftExportBinaryDebugStaticIosSimulatorArm64` produces
   `libSwiftExportBinary.a`.
 
-### Worked around locally: KT-85660 (unresolved upstream)
-`iosSimulatorArm64DebugBuildSPMPackage` fails on the generated Swift for Compose UI graphics:
+### Migrated to `export { swift { } }`
+`swiftExport { }` is deprecated (error in Kotlin 2.5.20, removed in 2.6.0,
+https://kotl.in/swift-export-dsl-migration). Current config in `cmp-common/build.gradle.kts`:
+```kotlin
+export {
+    swift {
+        moduleName = "CmpCommon"
+        rootPackage = "ru.beryukhov.coffeegram"
+        xcodeIntegration {
+            configure(libs.decompose.core, SwiftExportVisibility.HIDDEN)
+            configure(libs.essenty, SwiftExportVisibility.HIDDEN)
+            configure(libs.koin.core, SwiftExportVisibility.HIDDEN)
+            configure("org.jetbrains.compose.ui:ui-graphics", SwiftExportVisibility.HIDDEN)
+        }
+    }
+}
+```
+- `flattenPackage` → `rootPackage`.
+- `xcodeIntegration()` registers `embedSwiftExportForXcode` and its pipeline; the legacy DSL activated
+  it implicitly.
+- The new DSL fully exports (`EXPOSED`) every direct `api` dependency by default. Decompose's
+  generated bridges then fail to compile (`Argument type mismatch`, `Overload resolution ambiguity`
+  on `PanelsNavigator.navigate`), so the `api` dependencies are `HIDDEN`: only empty stubs for the
+  types `CmpCommon` refers to. Swift only needs `MainViewController()`.
+
+### KT-85660 avoided via `HIDDEN` (unresolved upstream)
+`iosSimulatorArm64DebugBuildSPMPackage` failed on the generated Swift for Compose UI graphics:
 ```
 OrgJetbrainsComposeUiUiGraphics.swift:4467:21: error: type member must not be named 'Type',
 since it would conflict with the 'foo.Type' expression
 ```
 [KT-85660](https://youtrack.jetbrains.com/issue/KT-85660) (`PathSegment.Type`).
 
-Workaround in `cmp-common/build.gradle.kts`: a `doLast` on every `*GenerateSPMPackage` task renames
-the enum to `Type_` in the generated `OrgJetbrainsComposeUiUiGraphics.swift` (`enum Type:`,
-`PathSegment.Type`, `Type.allCases`). Swift-only rename is safe because the bridges are C functions.
-The rename logic must live inside `doLast` — calling a script-level function breaks the
-configuration cache ("cannot serialize Gradle script object references").
-It is text-based, so it may silently stop matching on a future Kotlin version; remove it once
-KT-85660 is fixed.
+Marking the transitive `org.jetbrains.compose.ui:ui-graphics` as `HIDDEN` drops `PathSegment`
+entirely (generated `OrgJetbrainsComposeUiUiGraphics.swift`: 6677 → 136 lines). This replaced an
+earlier text-patch workaround (a `doLast` on `*GenerateSPMPackage` renaming the enum to `Type_`).
 
-### Xcode project change
-After the SPM package built, the app link failed with `ld: framework 'cmp_common' not found`.
-Removed `-framework cmp_common` from `OTHER_LDFLAGS` (Debug and Release) in
-`cmp-iosApp/iosApp.xcodeproj` — Swift Export links `libCmpCommon.a` itself via autolink.
+### Xcode project changes (`cmp-iosApp/iosApp.xcodeproj`)
+- Removed `-framework cmp_common` from `OTHER_LDFLAGS` (Debug and Release) — it failed with
+  `ld: framework 'cmp_common' not found`; Swift Export links `libCmpCommon.a` itself via autolink.
+- "Build cmp_common KMP Framework" phase no longer skips Gradle when
+  `OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED=YES`. The Android Studio KMP plugin sets it and pre-builds the
+  old `cmp_common.framework` instead, so its builds failed with
+  `Unable to resolve module dependency: 'CmpCommon'`.
+- Removed the "Sync Compose Resources" phase: `embedSwiftExportForXcode` already runs
+  `syncSwiftExportBinaryComposeResourcesForIos`, which copies `compose-resources` into the app.
+- The remaining script phase has "Based on dependency analysis" unchecked (`alwaysOutOfDate = 1`);
+  Gradle handles up-to-date checks.
 
 ### Remaining notes
+- `ARCHS=arm64` is required (no `iosX64` target): a generic simulator build also requests x86_64,
+  which fails `validateArchitecturesForEmbedSwiftExportForXcode` (`ios_x64` not configured) and
+  `syncSwiftExportBinaryComposeResourcesForIos` (`Unknown iOS simulator arch: 'x86_64'`).
 - `make buildIos` exhausts the default Gradle daemon heap (2.6 GiB reported) during the link step;
   the build continues, but the daemon is stopped afterwards.
-- Harmless linker warning: `libicu` object built for iOS-simulator 18.5, app targets 18.0.
+- Harmless warnings: `libicu` object built for iOS-simulator 18.5 while the app targets 18.0;
+  `-[UIApplication statusBarStyle]` deprecation assert at runtime on iOS 27 (not from our code).
 - Only the first screen was checked at runtime; other tabs not exercised yet.
 
 ## 06.10.2026 (Kotlin 2.5.0-Beta1)
