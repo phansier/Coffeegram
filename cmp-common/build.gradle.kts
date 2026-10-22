@@ -1,5 +1,8 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.plugin.mpp.DisableCacheInKotlinVersion
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeCacheApi
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.plugin.mpp.export.SwiftExportVisibility
 import org.jetbrains.kotlin.gradle.swiftexport.ExperimentalSwiftExportDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -89,6 +92,19 @@ kotlin {
                 configure("com.arkivanov.essenty:state-keeper", SwiftExportVisibility.HIDDEN)
                 configure(projects.repository, SwiftExportVisibility.HIDDEN)
                 configure(projects.dateTimeUtils, SwiftExportVisibility.HIDDEN)
+            }
+        }
+    }
+
+    val isCi = providers.environmentVariable("CI").isPresent
+    if (isCi) {
+        targets.withType<KotlinNativeTarget>().configureEach {
+            binaries.configureEach {
+                @OptIn(KotlinNativeCacheApi::class)
+                disableNativeCache(
+                    DisableCacheInKotlinVersion.`2_5_0`,
+                    "Cold CI runners spend most of the iOS build compiling per-library native caches",
+                )
             }
         }
     }
