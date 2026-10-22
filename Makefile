@@ -79,12 +79,17 @@ buildIos:
 
 # Swift Export tasks are registered only when Xcode build env vars are present, so they are emulated here
 swiftExportDir := $(CURDIR)/build/swift-export-xcode
+xcodeEnv := CONFIGURATION=Debug SDK_NAME=iphonesimulator PLATFORM_NAME=iphonesimulator ARCHS=arm64 \
+	TARGET_BUILD_DIR=$(swiftExportDir) BUILT_PRODUCTS_DIR=$(swiftExportDir) CONFIGURATION_BUILD_DIR=$(swiftExportDir) \
+	FRAMEWORKS_FOLDER_PATH=Frameworks ENABLE_USER_SCRIPT_SANDBOXING=NO IPHONEOS_DEPLOYMENT_TARGET=16.0
+
 compileSwiftExport:
 	mkdir -p $(swiftExportDir) && \
-	CONFIGURATION=Debug SDK_NAME=iphonesimulator PLATFORM_NAME=iphonesimulator ARCHS=arm64 \
-	TARGET_BUILD_DIR=$(swiftExportDir) BUILT_PRODUCTS_DIR=$(swiftExportDir) CONFIGURATION_BUILD_DIR=$(swiftExportDir) \
-	FRAMEWORKS_FOLDER_PATH=Frameworks ENABLE_USER_SCRIPT_SANDBOXING=NO IPHONEOS_DEPLOYMENT_TARGET=16.0 \
-	./gradlew :cmp-common:compileSwiftExportMainKotlinIosSimulatorArm64 --no-configuration-cache $(params)
+	$(xcodeEnv) ./gradlew :cmp-common:compileSwiftExportMainKotlinIosSimulatorArm64 --no-configuration-cache $(params)
+
+linkSwiftExport:
+	mkdir -p $(swiftExportDir) && \
+	$(xcodeEnv) ./gradlew :cmp-common:linkSwiftExportBinaryDebugStaticIosSimulatorArm64 --no-configuration-cache $(params)
 
 updateWebDepsLocks:
 	./gradlew :kotlinUpgradeYarnLock :kotlinWasmUpgradeYarnLock $(params)
