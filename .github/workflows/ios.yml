@@ -22,7 +22,7 @@ jobs:
           cache: 'gradle'
 
     - name: Cache Kotlin/Native toolchain
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: ~/.konan
         key: konan-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('gradle/libs.versions.toml') }}
