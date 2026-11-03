@@ -130,7 +130,6 @@ glance-appwidget-preview = { module = "androidx.glance:glance-appwidget-preview"
 glance-appwidget-testing = { module = "androidx.glance:glance-appwidget-testing", version.ref = "glance" }
 work-runtime = { module = "androidx.work:work-runtime", version.ref = "work" }
 
-google-maps-utils = "com.google.maps.android:maps-ktx:6.4.1"
 google-maps-compose = "com.google.maps.android:maps-compose:9.0.1"
 
 
