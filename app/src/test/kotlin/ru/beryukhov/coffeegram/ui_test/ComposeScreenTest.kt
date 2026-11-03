@@ -93,13 +93,13 @@ class ComposeScreenTest {
     fun testArrowKeysMoveFocusBetweenDays() {
         withRule {
             val days = onAllNodesWithTag("Day")
-            days[0].requestFocus()
+            days[1].requestFocus()
 
-            days[0].performKeyInput { pressKey(Key.DirectionRight) }
+            days[1].performKeyInput { pressKey(Key.DirectionRight) }
+            days[2].assertIsFocused()
+
+            days[2].performKeyInput { pressKey(Key.DirectionLeft) }
             days[1].assertIsFocused()
-
-            days[1].performKeyInput { pressKey(Key.DirectionLeft) }
-            days[0].assertIsFocused()
         }
     }
 
