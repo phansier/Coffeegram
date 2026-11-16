@@ -10,7 +10,7 @@ compose = "1.12.1" # https://developer.android.com/jetpack/androidx/releases/com
 jetbrainsCompose = "1.12.2" # https://github.com/JetBrains/compose-multiplatform/releases
 hotReload = "1.2.0" # https://github.com/JetBrains/compose-hot-reload/releases
 
-agp = "9.2.1" # https://developer.android.com/studio/releases/gradle-plugin
+agp = "9.5.1" # https://developer.android.com/studio/releases/gradle-plugin
 ktor = "3.6.0" # https://github.com/ktorio/ktor
 androidxRoom3 = "3.0.2" # https://developer.android.com/jetpack/androidx/releases/room3
 sqlite = "2.7.0" # https://developer.android.com/jetpack/androidx/releases/sqlite
