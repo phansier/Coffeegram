@@ -28,6 +28,9 @@ buildDesktop:
 testCommon:
 	./gradlew :cmp-common:testAndroidHostTest $(params)
 
+testIos:
+	./gradlew :cmp-common:iosSimulatorArm64Test $(params)
+
 localCheck: detekt testApp buildApp buildWear buildDesktop testCommon
 
 # https://github.com/PatilShreyas/compose-report-to-html
