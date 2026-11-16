@@ -42,12 +42,7 @@ class PhoneDataLayerListenerService : WearableListenerService(), KoinComponent {
         if (change == null) {
             Log.d(TAG, "Discarding event ${event.dataItem.uri}")
         } else {
-            val intent = if (change.delta > 0) {
-                DaysCoffeesIntent.PlusCoffee(today, change.type)
-            } else {
-                DaysCoffeesIntent.MinusCoffee(today, change.type)
-            }
-            applyAndPublishBeforeConfirming(intent, today)
+            applyAndPublishBeforeConfirming(change.toDaysCoffeesIntent(), today)
         }
         try {
             // Block the binder thread until deletion completes so the service
