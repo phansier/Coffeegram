@@ -19,6 +19,23 @@ plugins {
     `maven-publish`
 }
 
+listOf("android", "iosarm64", "iossimulatorarm64").forEach { platform ->
+    dependencies.components.withModule("io.github.kakaocup:compose-multiplatform-$platform") {
+        val module = id
+        allVariants {
+            withCapabilities {
+                removeCapability(module.group, "compose")
+                removeCapability(module.group, "compose-multiplatform")
+                addCapability(module.group, module.name, module.version)
+            }
+        }
+    }
+}
+
+tasks.withType<Test>().matching { it.name.contains("AndroidHostTest") }.configureEach {
+    jvmArgs("--add-exports=java.base/jdk.internal.access=ALL-UNNAMED")
+}
+
 val supabaseProps = Properties().apply {
     rootProject.file("local.defaults.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
     rootProject.file("secrets.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
@@ -49,12 +66,16 @@ val generateSupabaseConfig = tasks.register("generateSupabaseConfig") {
 }
 
 kotlin {
+    applyDefaultHierarchyTemplate()
+
     android {
         namespace = "ru.beryukhov.compose_common"
         compileSdk = libs.versions.compileSdk.get().toInt()
         minSdk = libs.versions.minSdk.get().toInt()
         androidResources.enable = true
-        withHostTestBuilder {}
+        withHostTestBuilder {}.configure {
+            isIncludeAndroidResources = true
+        }
     }
 
     jvm()
@@ -198,8 +219,24 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.ktor.logging)
         }
-        getByName("androidHostTest").dependencies {
-            implementation(libs.kotlin.test.junit)
+        val mobileTest = create("mobileTest") {
+            dependsOn(commonTest.get())
+            dependencies {
+                implementation(libs.cmp.uiTest)
+                implementation(libs.kakao.composeMultiplatform)
+            }
+        }
+        getByName("androidHostTest") {
+            dependsOn(mobileTest)
+            dependencies {
+                implementation(libs.kotlin.test.junit)
+                implementation(libs.robolectric)
+                implementation(libs.compose.uiTestManifest)
+                implementation(libs.espresso.core)
+            }
+        }
+        iosTest {
+            dependsOn(mobileTest)
         }
         jvmMain.dependencies {
             implementation(compose.desktop.currentOs)
