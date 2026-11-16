@@ -84,6 +84,7 @@ kotlin {
 
 dependencies {
     implementation(projects.cmpCommon)
+    implementation(projects.dateTimeUtils)
     implementation(libs.composeWear.material)
     implementation(libs.composeWear.foundation)
 

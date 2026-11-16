@@ -8,16 +8,15 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.todayIn
+import ru.beryukhov.coffeegram.data.DatedDayCoffee
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.WEAR_CAPABILITY
+import ru.beryukhov.coffeegram.data.currentDateFlow
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
-import kotlin.time.Clock
 
 private const val TAG = "WearSyncCoordinator"
 
@@ -38,11 +37,9 @@ class WearableSyncCoordinator(
             if (!hasPairedWearable()) return@launch
             wearableActivityStarter.value = ::triggerWearableActivity
 
-            daysCoffeesStore.state
-                .map { state ->
-                    val today = Clock.System.todayIn(TimeZone.currentSystemDefault())
-                    state.coffees[today] ?: DayCoffee()
-                }
+            combine(daysCoffeesStore.state, currentDateFlow()) { state, today ->
+                DatedDayCoffee(date = today, dayCoffee = state.coffees[today] ?: DayCoffee())
+            }
                 .distinctUntilChanged()
                 .collect { dayCoffee ->
                     wearableSyncService.sendDayCoffee(scope, dayCoffee)

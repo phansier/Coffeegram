@@ -8,9 +8,7 @@ import com.google.android.gms.wearable.DataMapItem
 import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.WearableListenerService
 import ru.beryukhov.coffeegram.data.DAY_COFFEE_PATH
-import ru.beryukhov.coffeegram.data.KEY
 import ru.beryukhov.coffeegram.data.START_ACTIVITY_PATH
-import ru.beryukhov.coffeegram.data.toDayCoffee
 
 interface MessageHandler {
     fun onMessageReceived(messageEvent: MessageEvent)
@@ -36,10 +34,7 @@ class DataHandlerImpl : DataHandler {
     override fun onDataReceived(dataEvent: DataEvent) {
         val uri = dataEvent.dataItem.uri
         when (uri.path) {
-            DAY_COFFEE_PATH ->
-                DataMapItem.fromDataItem(dataEvent.dataItem).dataMap.getIntegerArrayList(KEY)?.toDayCoffee()?.let {
-                    coffeeState.value = it
-                }
+            DAY_COFFEE_PATH -> acceptPhoneSnapshot(DataMapItem.fromDataItem(dataEvent.dataItem).dataMap)
         }
     }
 }

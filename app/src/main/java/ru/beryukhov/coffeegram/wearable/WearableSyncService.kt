@@ -11,7 +11,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import ru.beryukhov.coffeegram.data.DAY_COFFEE_PATH
-import ru.beryukhov.coffeegram.data.DayCoffee
+import ru.beryukhov.coffeegram.data.DatedDayCoffee
 import ru.beryukhov.coffeegram.data.START_ACTIVITY_PATH
 import ru.beryukhov.coffeegram.data.toDataMap
 
@@ -54,7 +54,7 @@ class WearableSyncService(
     /**
      * Send the current day coffee data to wearable devices.
      */
-    fun sendDayCoffee(scope: CoroutineScope, dayCoffee: DayCoffee) {
+    fun sendDayCoffee(scope: CoroutineScope, dayCoffee: DatedDayCoffee) {
         scope.launch {
             try {
                 val request = PutDataMapRequest.create(DAY_COFFEE_PATH).apply {
