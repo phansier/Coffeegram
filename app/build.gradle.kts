@@ -12,7 +12,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.github.triplet.play") version "4.1.1"
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-    id("com.android.compose.screenshot")
     id("com.google.protobuf")
 }
 
@@ -96,13 +95,19 @@ android {
         exclude(group = "androidx.appcompat", module = "appcompat-resources")
     }
 
-    experimentalProperties["android.experimental.enableScreenshotTest"] = true
-
     testOptions {
         unitTests {
             isIncludeAndroidResources = true
             all {
                 it.jvmArgs("--add-exports=java.base/jdk.internal.access=ALL-UNNAMED")
+            }
+        }
+        screenshotTests.create("screenshotTest") {
+            engineVersion = libs.versions.screenshot.get()
+            targetVariants.add("debug")
+            dependencies {
+                implementation(libs.compose.uiTooling)
+                implementation(libs.screenshot.validation.api)
             }
         }
     }
@@ -131,8 +136,6 @@ dependencies {
     implementation(libs.compose.icons.core)
 
     debugImplementation(libs.compose.uiTooling)
-    screenshotTestImplementation(libs.compose.uiTooling)
-    screenshotTestImplementation(libs.screenshot.validation.api)
 
     implementation(libs.compose.preview)
     implementation(libs.compose.activity)
@@ -166,8 +169,6 @@ dependencies {
     implementation(libs.lottie.compose)
 
     testImplementation(libs.robolectric)
-    testImplementation(libs.compose.uiTestJunit4)
-    testImplementation(libs.kakao.compose)
     testImplementation(libs.glance.appwidget.testing)
 
     testImplementation(libs.kotlin.test.junit)

@@ -28,6 +28,9 @@ buildDesktop:
 testCommon:
 	./gradlew :cmp-common:testAndroidHostTest $(params)
 
+testIos:
+	./gradlew :cmp-common:iosSimulatorArm64Test $(params)
+
 localCheck: detekt testApp buildApp buildWear buildDesktop testCommon
 
 # https://github.com/PatilShreyas/compose-report-to-html
@@ -68,10 +71,10 @@ buildHealth:
 	./gradlew buildHealth $(params)
 
 updateScreenshots:
-	./gradlew :app:updateDebugScreenshotTest --no-configuration-cache $(params)
+	./gradlew :app:updateDebugScreenshotTestDefaultTestSuite $(params)
 
 screenshotTest:
-	./gradlew :app:validateDebugScreenshotTest --no-configuration-cache $(params)
+	./gradlew :app:testDebugScreenshotTestDefaultTestSuite $(params)
 
 # ARCHS=arm64 is required because there is no iosX64 target: a generic simulator build also requests x86_64, which fails Swift Export's architecture validation and the Compose resources sync
 buildIos:

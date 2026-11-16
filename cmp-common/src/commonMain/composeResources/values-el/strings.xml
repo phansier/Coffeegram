@@ -28,6 +28,7 @@
     <string name="settings_style">Στυλ</string>
     <string name="settings_device">Συσκευή</string>
     <string name="calendar">Ημερολόγιο</string>
+    <string name="back">Πίσω</string>
     <string name="stats">Στατιστικά</string>
     <string name="stats_title">Οι συνήθειές σου</string>
     <string name="stats_eyebrow">ΣΤΑΤΙΣΤΙΚΑ</string>

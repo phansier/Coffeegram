@@ -27,10 +27,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.add_drink
+import coffeegram.cmp_common.generated.resources.back
 import coffeegram.cmp_common.generated.resources.pick_day_placeholder
 import com.slapps.cupertino.adaptive.AdaptiveIconButton
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
@@ -57,7 +59,8 @@ fun DayListScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .consumeWindowInsets(contentPadding)
-            .hideTopBarOnScroll(listState),
+            .hideTopBarOnScroll(listState)
+            .testTag("DayList"),
         contentPadding = contentPadding,
     ) {
         itemsIndexed(
@@ -118,7 +121,7 @@ fun DayListAppBar(
             AdaptiveIconButton(onClick = component::onBackClicked) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = ""
+                    contentDescription = stringResource(Res.string.back)
                 )
             }
         },

@@ -28,6 +28,9 @@ jobs:
         key: konan-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('gradle/libs.versions.toml') }}
         restore-keys: konan-${{ runner.os }}-${{ runner.arch }}-
 
+    - name: Test iOS
+      run: make testIos
+
     - name: Link Swift Export
       run: make linkSwiftExport
 
