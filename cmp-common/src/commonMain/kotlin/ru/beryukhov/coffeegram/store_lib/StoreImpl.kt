@@ -1,11 +1,14 @@
 package ru.beryukhov.coffeegram.store_lib
 
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 /**
@@ -16,37 +19,39 @@ abstract class StoreImpl<Intent : Any, State : Any>(
     initialState: State,
     private val storage: Storage<State>? = null
 ) : Store<Intent, State> {
-    private val intentFlow = MutableSharedFlow<Intent>()
+    private val scope = MainScope()
     private val stateFlow = MutableStateFlow(initialState)
+    private val storedStateLoaded = CompletableDeferred<Unit>()
+    private val intentLock = Mutex()
 
     override val state: StateFlow<State>
         get() = stateFlow
 
     init {
-        MainScope().launch {
+        scope.launch {
             withContext(Dispatchers.Default) {
                 getStoredState()?.let {
                     stateFlow.value = it
                 }
             }
-            handleIntents()
+            storedStateLoaded.complete(Unit)
         }
     }
 
     override fun newIntent(intent: Intent) {
-        MainScope().launch {
-            intentFlow.emit(intent)
-        }
+        scope.launch(start = CoroutineStart.UNDISPATCHED) { applyIntent(intent) }
     }
 
-    private suspend fun handleIntents() {
-        intentFlow.collect {
-            stateFlow.value = stateFlow.value.handleIntent(intent = it)
+    override suspend fun applyIntent(intent: Intent): State =
+        intentLock.withLock {
+            storedStateLoaded.await()
+            val newState = stateFlow.value.handleIntent(intent = intent)
+            stateFlow.value = newState
             withContext(Dispatchers.Default) {
-                storage?.saveState(stateFlow.value)
+                storage?.saveState(newState)
             }
+            newState
         }
-    }
 
     private suspend fun getStoredState(): State? {
         return storage?.getState()

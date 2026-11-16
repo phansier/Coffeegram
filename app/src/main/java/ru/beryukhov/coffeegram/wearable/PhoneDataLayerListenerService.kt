@@ -7,9 +7,7 @@ import com.google.android.gms.wearable.DataEventBuffer
 import com.google.android.gms.wearable.DataMapItem
 import com.google.android.gms.wearable.Wearable
 import com.google.android.gms.wearable.WearableListenerService
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.datetime.LocalDate
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -20,10 +18,8 @@ import ru.beryukhov.coffeegram.data.currentDate
 import ru.beryukhov.coffeegram.data.toCoffeeChangeEvent
 import ru.beryukhov.coffeegram.model.DaysCoffeesIntent
 import ru.beryukhov.coffeegram.model.DaysCoffeesStore
-import kotlin.time.Duration.Companion.seconds
 
 private const val TAG = "PhoneDataLayerSvc"
-private val STATE_UPDATE_TIMEOUT = 2.seconds
 
 class PhoneDataLayerListenerService : WearableListenerService(), KoinComponent {
     private val daysCoffeesStore: DaysCoffeesStore by inject()
@@ -63,11 +59,7 @@ class PhoneDataLayerListenerService : WearableListenerService(), KoinComponent {
     }
 
     private fun applyAndPublishBeforeConfirming(intent: DaysCoffeesIntent, today: LocalDate) = runBlocking {
-        val before = daysCoffeesStore.state.value
-        daysCoffeesStore.newIntent(intent)
-        val applied = withTimeoutOrNull(STATE_UPDATE_TIMEOUT) {
-            daysCoffeesStore.state.first { it != before }
-        } ?: return@runBlocking
+        val applied = daysCoffeesStore.applyIntent(intent)
         wearableSyncService.putDayCoffee(DatedDayCoffee(date = today, dayCoffee = applied.coffees[today] ?: DayCoffee()))
     }
 }
