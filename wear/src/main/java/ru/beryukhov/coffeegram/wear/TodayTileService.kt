@@ -110,9 +110,6 @@ class TodayTileService : Material3TileService(allowDynamicTheme = false, default
         )
 }
 
-private val DayCoffee.total: Int
-    get() = coffeeCountMap.values.sum()
-
 private fun DayCoffee.mostDrunk(): List<Pair<CoffeeType, Int>> =
     CoffeeTypes.entries
         .map { type -> type to (coffeeCountMap[type] ?: 0) }

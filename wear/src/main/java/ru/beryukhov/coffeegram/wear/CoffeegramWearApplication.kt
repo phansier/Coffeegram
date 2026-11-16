@@ -1,7 +1,9 @@
 package ru.beryukhov.coffeegram.wear
 
 import android.app.Application
+import android.content.ComponentName
 import android.content.Context
+import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import androidx.wear.tiles.TileService
 import com.google.android.gms.wearable.Wearable
 import kotlinx.coroutines.MainScope
@@ -13,13 +15,18 @@ class CoffeegramWearApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        refreshTileWhenCountsChange()
+        refreshSurfacesWhenCountsChange()
     }
 
-    private fun refreshTileWhenCountsChange() {
+    private fun refreshSurfacesWhenCountsChange() {
+        val complicationUpdater = ComplicationDataSourceUpdateRequester.create(
+            this,
+            ComponentName(this, TodayComplicationService::class.java),
+        )
         MainScope().launch {
             coffeeRepository.todayCoffee.drop(1).collect {
                 TileService.getUpdater(this@CoffeegramWearApplication).requestUpdate(TodayTileService::class.java)
+                complicationUpdater.requestUpdateAll()
             }
         }
     }
