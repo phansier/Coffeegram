@@ -5,7 +5,6 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import kotlinx.coroutines.runBlocking
 import repository.model.DbDayCoffee
 import repository.room.AppDatabase
-import repository.room.DayCoffee
 import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -36,18 +35,5 @@ class RoomCoffeeRepositoryTest {
         repository.createOrUpdate(listOf(latte(1), cappuccino(3)))
         repository.createOrUpdate(listOf(latte(2), cappuccino(3)))
         assertEquals(listOf(latte(2), cappuccino(3)), repository.getAll().sortedBy { it.coffeeName }.reversed())
-    }
-
-    @Test
-    fun duplicatesLeftByOldVersionLoadLatestCountAndAreRemovedOnNextSave() = runBlocking {
-        dao.insertAll(
-            listOf(11, 2, 8).map { count -> DayCoffee(date = "2026-11-16", coffeeName = "Latte", count = count) }
-        )
-
-        assertEquals(listOf(latte(11)), repository.getAll())
-
-        repository.createOrUpdate(listOf(latte(12)))
-        assertEquals(listOf(latte(12)), repository.getAll())
-        assertEquals(1, dao.getAll().size)
     }
 }

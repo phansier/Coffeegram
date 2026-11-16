@@ -1,14 +1,14 @@
 package repository.room
 
 import androidx.room3.Dao
-import androidx.room3.Delete
 import androidx.room3.Entity
+import androidx.room3.Index
 import androidx.room3.Insert
+import androidx.room3.OnConflictStrategy
 import androidx.room3.PrimaryKey
 import androidx.room3.Query
-import androidx.room3.Update
 
-@Entity
+@Entity(indices = [Index(value = ["date", "coffeeName"], unique = true)])
 data class DayCoffee(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val date: String,
@@ -18,15 +18,9 @@ data class DayCoffee(
 
 @Dao
 interface DayCoffeeDao {
-    @Insert
-    suspend fun insertAll(items: List<DayCoffee>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertOrReplace(items: List<DayCoffee>)
 
-    @Update
-    suspend fun updateAll(items: List<DayCoffee>)
-
-    @Delete
-    suspend fun deleteAll(items: List<DayCoffee>)
-
-    @Query("SELECT * FROM DayCoffee ORDER BY id")
+    @Query("SELECT * FROM DayCoffee")
     suspend fun getAll(): List<DayCoffee>
 }
