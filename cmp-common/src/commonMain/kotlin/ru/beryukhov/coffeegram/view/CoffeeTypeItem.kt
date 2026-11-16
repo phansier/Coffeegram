@@ -26,6 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import ru.beryukhov.coffeegram.app_ui.PreviewTheme
@@ -57,6 +59,8 @@ fun CoffeeTypeItem(
 ) {
     Row(
         modifier = modifier
+            .testTag("CoffeeItem")
+            .semantics { stateDescription = count.toString() }
             .onKeyEvent { event ->
                 event.handleKeyDown(IncrementKeys, action = onIncrement) ||
                     count > 0 && event.handleKeyDown(DecrementKeys, action = onDecrement)

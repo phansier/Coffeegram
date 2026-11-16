@@ -12,4 +12,6 @@ class DayListScreen(private val provider: SemanticsNodeInteractionsProvider) :
         hasTestTag("CoffeeName")
         hasText(name)
     }
+
+    fun coffeeItem(name: String) = CoffeeItem(provider, name)
 }
