@@ -6,23 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
-import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
-import androidx.wear.compose.foundation.lazy.itemsIndexed
-import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
-import androidx.wear.compose.material.PositionIndicator
-import androidx.wear.compose.material.Scaffold
+import androidx.wear.compose.material3.AppScaffold
 import com.google.android.gms.wearable.DataMapItem
 import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.PutDataRequest
@@ -34,12 +25,10 @@ import ru.beryukhov.coffeegram.data.COFFEE_EVENT_KEY_DB_KEY
 import ru.beryukhov.coffeegram.data.COFFEE_EVENT_KEY_DELTA
 import ru.beryukhov.coffeegram.data.COFFEE_EVENT_PATH_PREFIX
 import ru.beryukhov.coffeegram.data.CoffeeType
-import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.data.DAY_COFFEE_PATH
 import ru.beryukhov.coffeegram.data.currentDate
 import ru.beryukhov.coffeegram.data.currentDateFlow
 import ru.beryukhov.coffeegram.data.dayCoffeeOn
-import ru.beryukhov.coffeegram.data.withEmpty
 
 private const val TAG = "WearActivity"
 
@@ -49,7 +38,9 @@ class WearActivity : ComponentActivity() {
         primeCoffeeStateFromDataLayer()
         setContent {
             CoffeegramTheme {
-                PagesContent()
+                AppScaffold {
+                    TodayRoute()
+                }
             }
         }
     }
@@ -76,49 +67,21 @@ class WearActivity : ComponentActivity() {
     }
 }
 
-@Preview
 @Composable
-internal fun PagesContent() {
+private fun TodayRoute() {
     val datedDayCoffee by coffeeState.collectAsState()
     val today by remember { currentDateFlow() }.collectAsState(initial = currentDate())
-    val dayCoffee = datedDayCoffee.dayCoffeeOn(today)
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val listState = rememberScalingLazyListState()
-    Scaffold(
-        positionIndicator = { PositionIndicator(scalingLazyListState = listState) }
-    ) {
-        ScalingLazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            state = listState,
-            contentPadding = PaddingValues(
-                top = 28.dp,
-                start = 10.dp,
-                end = 10.dp,
-                bottom = 40.dp
-            ),
-        ) {
-            itemsIndexed(
-                items = dayCoffee.coffeeCountMap.withEmpty(),
-                itemContent = { _, pair: CoffeeTypeWithCount ->
-                    CoffeeItem(
-                        c = pair.coffee,
-                        count = pair.count,
-                        onIncrement = {
-                            if (applyDelta(pair.coffee, +1)) {
-                                scope.launch { sendCoffeeChange(context, pair.coffee, +1) }
-                            }
-                        },
-                        onDecrement = {
-                            if (applyDelta(pair.coffee, -1)) {
-                                scope.launch { sendCoffeeChange(context, pair.coffee, -1) }
-                            }
-                        },
-                    )
-                }
-            )
-        }
-    }
+    TodayScreen(
+        dayCoffee = datedDayCoffee.dayCoffeeOn(today),
+        onIncrement = { type -> changeCoffeeCount(type, +1) { scope.launch { sendCoffeeChange(context, type, +1) } } },
+        onDecrement = { type -> changeCoffeeCount(type, -1) { scope.launch { sendCoffeeChange(context, type, -1) } } },
+    )
+}
+
+private fun changeCoffeeCount(type: CoffeeType, delta: Int, onChanged: () -> Unit) {
+    if (applyDelta(type, delta)) onChanged()
 }
 
 private suspend fun sendCoffeeChange(context: Context, type: CoffeeType, delta: Int) {

@@ -85,11 +85,12 @@ kotlin {
 dependencies {
     implementation(projects.cmpCommon)
     implementation(projects.dateTimeUtils)
-    implementation(libs.composeWear.material)
+    implementation(libs.composeWear.material3)
     implementation(libs.composeWear.foundation)
 
     implementation(libs.compose.activity)
-    implementation(libs.compose.uiTooling)
+    debugImplementation(libs.compose.uiTooling)
+    implementation(libs.composeWear.uiTooling)
     implementation(libs.playServices.wearable)
     implementation(libs.coroutines.play)
 }

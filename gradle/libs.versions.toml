@@ -24,7 +24,7 @@ jetbrainsKotlinWrappers = "2026.10.5"
 detekt = "1.23.8" # https://github.com/detekt/detekt
 detektCompose = "0.6.8" # https://github.com/mrmans0n/compose-rules
 detektDecompose = "0.2.0" # https://github.com/AJIEKCX/decompose-detekt-rules
-wearCompose = "1.7.0" # https://developer.android.com/jetpack/androidx/releases/wear-compose
+wearCompose = "1.7.1" # https://developer.android.com/jetpack/androidx/releases/wear-compose
 
 cupertino = "2.3.1" # https://github.com/schott12521/compose-cupertino
 
@@ -92,7 +92,8 @@ espresso-core = "androidx.test.espresso:espresso-core:3.7.0" # https://developer
 kakao-composeMultiplatform = { module = "io.github.kakaocup:compose-multiplatform", version = "2.0.0" } # https://github.com/KakaoCup/Multiplatform/releases
 robolectric = { module = "org.robolectric:robolectric", version = "4.17" }
 
-composeWear-material = { module = "androidx.wear.compose:compose-material", version.ref = "wearCompose" }
+composeWear-material3 = { module = "androidx.wear.compose:compose-material3", version.ref = "wearCompose" }
+composeWear-uiTooling = { module = "androidx.wear.compose:compose-ui-tooling", version.ref = "wearCompose" }
 composeWear-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "wearCompose" }
 
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
