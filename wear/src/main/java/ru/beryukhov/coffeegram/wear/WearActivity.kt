@@ -6,13 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.lifecycleScope
 import androidx.wear.compose.material3.AppScaffold
+import kotlinx.coroutines.launch
 import ru.beryukhov.coffeegram.data.DayCoffee
 
 class WearActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        coffeeRepository.loadFromDataLayer()
+        lifecycleScope.launch { coffeeRepository.refreshFromDataLayer() }
         setContent {
             CoffeegramTheme {
                 AppScaffold {

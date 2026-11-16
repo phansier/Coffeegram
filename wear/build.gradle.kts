@@ -91,6 +91,8 @@ dependencies {
     implementation(libs.compose.activity)
     debugImplementation(libs.compose.uiTooling)
     implementation(libs.composeWear.uiTooling)
+    implementation(libs.wear.tiles)
+    implementation(libs.wear.protolayout.material3)
     implementation(libs.playServices.wearable)
     implementation(libs.coroutines.play)
 

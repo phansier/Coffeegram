@@ -136,6 +136,8 @@ google-maps-compose = "com.google.maps.android:maps-compose:9.0.1"
 
 
 protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }  # https://mvnrepository.com/artifact/com.google.protobuf/protobuf-javalite
+wear-tiles = "androidx.wear.tiles:tiles:1.6.2" # https://developer.android.com/jetpack/androidx/releases/wear-tiles
+wear-protolayout-material3 = "androidx.wear.protolayout:protolayout-material3:1.4.2" # https://developer.android.com/jetpack/androidx/releases/wear-protolayout
 playServices-wearable = "com.google.android.gms:play-services-wearable:20.0.1" # https://mvnrepository.com/artifact/com.google.android.gms/play-services-wearable
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.5.2" # https://github.com/Kotlin/kotlinx.collections.immutable
 vico-multiplatform = { module = "com.patrykandpatrick.vico:multiplatform", version.ref = "vico" }

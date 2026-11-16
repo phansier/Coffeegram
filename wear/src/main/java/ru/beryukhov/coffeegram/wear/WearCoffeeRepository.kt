@@ -11,9 +11,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -37,26 +39,24 @@ class WearCoffeeRepository(private val dataClient: DataClient) {
     private val state = MutableStateFlow(WearCoffeeState(DatedDayCoffee(date = currentDate())))
 
     val todayCoffee: Flow<DayCoffee> =
-        combine(state, currentDateFlow()) { current, today -> current.dayCoffeeOn(today) }
+        combine(state, currentDateFlow()) { current, today -> current.dayCoffeeOn(today) }.distinctUntilChanged()
 
-    fun loadFromDataLayer() {
-        scope.launch {
-            try {
-                val today = currentDate()
-                val phoneSnapshots = async { dataClient.readDataMaps(DAY_COFFEE_PATH, DataClient.FILTER_LITERAL) }
-                val outbox = async { dataClient.readDataMaps(COFFEE_EVENT_PATH_PREFIX, DataClient.FILTER_PREFIX) }
-                phoneSnapshots.await().values.firstOrNull()
-                    ?.toDatedDayCoffee(dateWhenMissing = today)
-                    ?.let { snapshot -> state.update { it.withPhoneSnapshot(snapshot) } }
-                val unconfirmed = outbox.await()
-                    .mapNotNull { (path, map) -> map.toCoffeeChangeEvent(dateWhenMissing = today)?.let { path to it } }
-                    .toMap()
-                state.update { it.withUnconfirmedChanges(unconfirmed) }
-            } catch (cancellation: CancellationException) {
-                throw cancellation
-            } catch (exception: Exception) {
-                Log.d(TAG, "Loading from data layer failed: $exception")
-            }
+    suspend fun refreshFromDataLayer() = coroutineScope {
+        try {
+            val today = currentDate()
+            val phoneSnapshots = async { dataClient.readDataMaps(DAY_COFFEE_PATH, DataClient.FILTER_LITERAL) }
+            val outbox = async { dataClient.readDataMaps(COFFEE_EVENT_PATH_PREFIX, DataClient.FILTER_PREFIX) }
+            phoneSnapshots.await().values.firstOrNull()
+                ?.toDatedDayCoffee(dateWhenMissing = today)
+                ?.let { snapshot -> state.update { it.withPhoneSnapshot(snapshot) } }
+            val unconfirmed = outbox.await()
+                .mapNotNull { (path, map) -> map.toCoffeeChangeEvent(dateWhenMissing = today)?.let { path to it } }
+                .toMap()
+            state.update { it.withUnconfirmedChanges(unconfirmed) }
+        } catch (cancellation: CancellationException) {
+            throw cancellation
+        } catch (exception: Exception) {
+            Log.d(TAG, "Loading from data layer failed: $exception")
         }
     }
 

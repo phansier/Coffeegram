@@ -32,5 +32,10 @@ fun currentDateFlow(
     }
 }.distinctUntilChanged()
 
+fun durationUntilTomorrow(
+    clock: Clock = Clock.System,
+    timeZone: TimeZone = TimeZone.currentSystemDefault(),
+): Duration = clock.untilDayAfter(currentDate(clock, timeZone), timeZone)
+
 private fun Clock.untilDayAfter(day: LocalDate, timeZone: TimeZone): Duration =
     day.plus(1, DateTimeUnit.DAY).atStartOfDayIn(timeZone) - now()
