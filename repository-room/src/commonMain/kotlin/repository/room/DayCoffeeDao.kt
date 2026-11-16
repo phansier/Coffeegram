@@ -1,6 +1,7 @@
 package repository.room
 
 import androidx.room3.Dao
+import androidx.room3.Delete
 import androidx.room3.Entity
 import androidx.room3.Insert
 import androidx.room3.PrimaryKey
@@ -18,11 +19,14 @@ data class DayCoffee(
 @Dao
 interface DayCoffeeDao {
     @Insert
-    suspend fun insert(item: DayCoffee)
+    suspend fun insertAll(items: List<DayCoffee>)
 
     @Update
-    suspend fun update(item: DayCoffee)
+    suspend fun updateAll(items: List<DayCoffee>)
 
-    @Query("SELECT * FROM DayCoffee")
+    @Delete
+    suspend fun deleteAll(items: List<DayCoffee>)
+
+    @Query("SELECT * FROM DayCoffee ORDER BY id")
     suspend fun getAll(): List<DayCoffee>
 }

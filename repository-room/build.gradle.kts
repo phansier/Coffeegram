@@ -57,6 +57,9 @@ kotlin {
         jvmMain.dependencies {
             implementation(libs.sqlite.bundled)
         }
+        jvmTest.dependencies {
+            implementation(libs.kotlin.test.junit)
+        }
         webMain.dependencies {
             implementation(libs.sqlite.web)
             npm("sqlite-wasm-worker", layout.projectDirectory.dir("worker").asFile)
