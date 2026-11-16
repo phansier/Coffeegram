@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.ui_test
+package ru.beryukhov.coffeegram.ui_test.tests
 
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.test.ExperimentalTestApi
@@ -7,6 +7,10 @@ import androidx.compose.ui.test.performKeyInput
 import androidx.compose.ui.test.pressKey
 import androidx.compose.ui.test.requestFocus
 import androidx.compose.ui.test.v2.runComposeUiTest
+import ru.beryukhov.coffeegram.ui_test.UiTest
+import ru.beryukhov.coffeegram.ui_test.screens.DayListScreen
+import ru.beryukhov.coffeegram.ui_test.screens.TableScreen
+import ru.beryukhov.coffeegram.ui_test.setRootScreenContent
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals

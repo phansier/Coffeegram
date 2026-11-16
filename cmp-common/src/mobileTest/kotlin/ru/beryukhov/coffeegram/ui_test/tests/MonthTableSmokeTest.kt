@@ -1,12 +1,13 @@
-package ru.beryukhov.coffeegram.ui_test
+package ru.beryukhov.coffeegram.ui_test.tests
 
 import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.SemanticsNodeInteractionsProvider
 import androidx.compose.ui.test.v2.runComposeUiTest
-import io.github.kakaocup.compose.node.element.KNode
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.Month
+import ru.beryukhov.coffeegram.ui_test.TestEnvironment
+import ru.beryukhov.coffeegram.ui_test.UiTest
+import ru.beryukhov.coffeegram.ui_test.screens.TableScreen
 import ru.beryukhov.coffeegram.view.MonthTable
 import ru.beryukhov.date_time_utils.YearMonth
 import kotlin.test.Test
@@ -27,12 +28,6 @@ class MonthTableSmokeTest : UiTest() {
             }
         }
 
-        day(this, "14").assertIsDisplayed()
+        TableScreen(this).day("14").assertIsDisplayed()
     }
-
-    private fun day(semanticsProvider: SemanticsNodeInteractionsProvider, number: String) =
-        KNode(semanticsProvider) {
-            hasTestTag("Day")
-            hasText(number)
-        }
 }

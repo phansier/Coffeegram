@@ -1,4 +1,4 @@
-package ru.beryukhov.coffeegram.ui_test
+package ru.beryukhov.coffeegram.ui_test.screens
 
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.getOrNull
