@@ -169,6 +169,7 @@ dependencies {
     implementation(libs.lottie.compose)
 
     testImplementation(libs.robolectric)
+    testImplementation(libs.coroutines.test)
     testImplementation(libs.glance.appwidget.testing)
 
     testImplementation(libs.kotlin.test.junit)

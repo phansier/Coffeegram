@@ -84,6 +84,7 @@ private val previewDaysCoffeesStore: DaysCoffeesStore
     get() = object : DaysCoffeesStore {
         override val state: StateFlow<DaysCoffeesState> = MutableStateFlow(sampleDaysCoffeesState())
         override fun newIntent(intent: DaysCoffeesIntent) = Unit
+        override suspend fun applyIntent(intent: DaysCoffeesIntent): DaysCoffeesState = state.value
     }
 
 private fun sampleDaysCoffeesState(): DaysCoffeesState {

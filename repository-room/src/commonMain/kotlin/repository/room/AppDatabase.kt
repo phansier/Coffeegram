@@ -6,7 +6,7 @@ import androidx.room3.RoomDatabase
 import androidx.room3.RoomDatabaseConstructor
 import org.koin.core.module.Module
 
-@Database(entities = [DayCoffee::class], version = 1)
+@Database(entities = [DayCoffee::class], version = 2)
 @ConstructedBy(AppDatabaseConstructor::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getDao(): DayCoffeeDao

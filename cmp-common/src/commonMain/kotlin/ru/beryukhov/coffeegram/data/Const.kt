@@ -9,6 +9,7 @@ const val DAY_COFFEE_PATH = "/coffee"
 const val COFFEE_EVENT_PATH_PREFIX = "/coffee-event/"
 const val COFFEE_EVENT_KEY_DB_KEY = "dbKey"
 const val COFFEE_EVENT_KEY_DELTA = "delta"
+const val COFFEE_EVENT_KEY_DATE = "date"
 
 // Capability advertised by the wear app; the phone uses this to detect paired
 // watches via CapabilityClient. Must match wear/src/main/res/values/wear.xml.

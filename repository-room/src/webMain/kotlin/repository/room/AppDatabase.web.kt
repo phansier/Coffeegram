@@ -15,7 +15,8 @@ fun getDatabase(): AppDatabase {
 fun getDatabaseBuilder(): RoomDatabase.Builder<AppDatabase> {
     return Room.databaseBuilder<AppDatabase>(
         name = "my_room.db",
-    ).setDriver(createSQLiteWasmWorker())
+    ).addMigrations(MIGRATION_1_2)
+        .setDriver(createSQLiteWasmWorker())
 }
 
 expect fun createSQLiteWasmWorker(): WebWorkerSQLiteDriver

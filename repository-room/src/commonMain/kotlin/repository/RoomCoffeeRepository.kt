@@ -12,41 +12,17 @@ class RoomCoffeeRepository(private val database: AppDatabase) : CoffeeRepository
     }
 
     override suspend fun createOrUpdate(dbDateCoffees: List<DbDayCoffee>) {
-        val all = dao.getAll()
-        if (all.isEmpty()) {
-            create(dbDateCoffees)
-        } else {
-            update(dbDateCoffees, all)
-        }
-    }
-
-    private suspend fun create(dateCoffees: List<DbDayCoffee>) {
-        dateCoffees.forEach {
-            dao.insert(DayCoffee(date = it.date, coffeeName = it.coffeeName, count = it.count))
-        }
-    }
-
-    private suspend fun update(
-        newCoffees: List<DbDayCoffee>,
-        oldCoffees: List<DayCoffee>
-    ) {
-        newCoffees.forEach { new ->
-            oldCoffees.firstOrNull { old ->
-                old.date == new.date &&
-                    old.coffeeName == new.coffeeName &&
-                    old.count != new.count
-            }
-                ?.also { old ->
-                    // found DC to update count
-                    dao.update(old.copy(count = new.count))
-                } ?: run {
-                // coffee with this date and name was not found -> needs to be written
-                dao.insert(DayCoffee(date = new.date, coffeeName = new.coffeeName, count = new.count))
-            }
-        }
+        val savedCounts = dao.getAll().associate { coffeeDay(it.date, it.coffeeName) to it.count }
+        dao.insertOrReplace(
+            dbDateCoffees
+                .filter { savedCounts[coffeeDay(it.date, it.coffeeName)] != it.count }
+                .map { DayCoffee(date = it.date, coffeeName = it.coffeeName, count = it.count) }
+        )
     }
 
     override suspend fun getAll(): List<DbDayCoffee> {
         return dao.getAll().map { DbDayCoffee(date = it.date, coffeeName = it.coffeeName, count = it.count) }
     }
 }
+
+private fun coffeeDay(date: String, coffeeName: String): Pair<String, String> = date to coffeeName

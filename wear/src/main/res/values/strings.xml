@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Coffeegram</string>
+    <string name="remove_one">Remove</string>
+    <string name="add_one">Add</string>
+    <string name="plus_one" translatable="false">+1</string>
+    <string name="minus_one" translatable="false">−1</string>
+    <string name="tile_label">Coffee today</string>
+    <string name="tile_today_total">Today: %1$d</string>
+    <string name="open_app">Open</string>
+    <string name="tile_coffee_count">%1$s · %2$d</string>
+    <string name="complication_label">Coffee today</string>
+    <string name="complication_title">Coffee</string>
+    <string name="complication_description">%1$d coffees today</string>
 </resources>

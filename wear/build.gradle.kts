@@ -84,13 +84,20 @@ kotlin {
 
 dependencies {
     implementation(projects.cmpCommon)
-    implementation(libs.composeWear.material)
+    implementation(projects.dateTimeUtils)
+    implementation(libs.composeWear.material3)
     implementation(libs.composeWear.foundation)
 
     implementation(libs.compose.activity)
-    implementation(libs.compose.uiTooling)
+    debugImplementation(libs.compose.uiTooling)
+    implementation(libs.composeWear.uiTooling)
+    implementation(libs.wear.tiles)
+    implementation(libs.wear.complications.dataSource)
+    implementation(libs.wear.protolayout.material3)
     implementation(libs.playServices.wearable)
     implementation(libs.coroutines.play)
+
+    testImplementation(libs.kotlin.test.junit)
 }
 
 object KeyHelper {
