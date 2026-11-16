@@ -93,6 +93,8 @@ dependencies {
     implementation(libs.composeWear.uiTooling)
     implementation(libs.playServices.wearable)
     implementation(libs.coroutines.play)
+
+    testImplementation(libs.kotlin.test.junit)
 }
 
 object KeyHelper {

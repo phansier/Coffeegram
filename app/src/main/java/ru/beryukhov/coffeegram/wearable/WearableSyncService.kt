@@ -51,24 +51,19 @@ class WearableSyncService(
         }
     }
 
-    /**
-     * Send the current day coffee data to wearable devices.
-     */
-    fun sendDayCoffee(scope: CoroutineScope, dayCoffee: DatedDayCoffee) {
-        scope.launch {
-            try {
-                val request = PutDataMapRequest.create(DAY_COFFEE_PATH).apply {
-                    dayCoffee.toDataMap(dataMap)
-                }.asPutDataRequest().setUrgent()
+    suspend fun putDayCoffee(dayCoffee: DatedDayCoffee) {
+        try {
+            val request = PutDataMapRequest.create(DAY_COFFEE_PATH).apply {
+                dayCoffee.toDataMap(dataMap)
+            }.asPutDataRequest().setUrgent()
 
-                val result = dataClient.putDataItem(request).await()
+            val result = dataClient.putDataItem(request).await()
 
-                Log.d(TAG, "DataItem saved: $result")
-            } catch (cancellationException: CancellationException) {
-                throw cancellationException
-            } catch (exception: Exception) {
-                Log.d(TAG, "Saving DataItem failed: $exception")
-            }
+            Log.d(TAG, "DataItem saved: $result")
+        } catch (cancellationException: CancellationException) {
+            throw cancellationException
+        } catch (exception: Exception) {
+            Log.d(TAG, "Saving DataItem failed: $exception")
         }
     }
 }

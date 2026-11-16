@@ -42,7 +42,7 @@ class WearableSyncCoordinator(
         }
             .distinctUntilChanged()
             .collect { dayCoffee ->
-                wearableSyncService.sendDayCoffee(scope, dayCoffee)
+                wearableSyncService.putDayCoffee(dayCoffee)
             }
     }
 
