@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Coffeegram</string>
+    <string name="remove_one">Remove</string>
+    <string name="add_one">Add</string>
+    <string name="plus_one" translatable="false">+1</string>
+    <string name="minus_one" translatable="false">−1</string>
 </resources>

@@ -6,32 +6,22 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
 import androidx.wear.compose.foundation.lazy.itemsIndexed
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
-import androidx.wear.compose.material.Chip
-import androidx.wear.compose.material.ChipDefaults
-import androidx.wear.compose.material.LocalContentAlpha
 import androidx.wear.compose.material.PositionIndicator
 import androidx.wear.compose.material.Scaffold
-import androidx.wear.compose.material.Text
 import com.google.android.gms.wearable.DataMapItem
 import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.PutDataRequest
@@ -49,7 +39,6 @@ import ru.beryukhov.coffeegram.data.CoffeeTypeWithCount
 import ru.beryukhov.coffeegram.data.DAY_COFFEE_PATH
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.KEY
-import ru.beryukhov.coffeegram.data.printableText
 import ru.beryukhov.coffeegram.data.toDayCoffee
 import ru.beryukhov.coffeegram.data.withEmpty
 
@@ -91,8 +80,6 @@ class WearActivity : ComponentActivity() {
         }
     }
 }
-
-private const val SWIPE_STEP_DP = 56
 
 @Preview
 @Composable
@@ -165,49 +152,4 @@ private suspend fun sendCoffeeChange(context: Context, type: CoffeeType, delta: 
     } catch (exception: Exception) {
         Log.d(TAG, "putDataItem event failed: $exception")
     }
-}
-
-@Composable
-fun CoffeeItem(
-    c: CoffeeType,
-    count: Int,
-    onIncrement: () -> Unit,
-    onDecrement: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Chip(
-        modifier = modifier.pointerInput(c) {
-            val threshold = SWIPE_STEP_DP.dp.toPx()
-            var dragAccum = 0f
-            detectHorizontalDragGestures(
-                onDragEnd = { dragAccum = 0f },
-                onDragCancel = { dragAccum = 0f },
-            ) { _, dx ->
-                dragAccum += dx
-                while (dragAccum >= threshold) {
-                    onIncrement()
-                    dragAccum -= threshold
-                }
-                while (dragAccum <= -threshold) {
-                    onDecrement()
-                    dragAccum += threshold
-                }
-            }
-        },
-        icon = {
-            c.icon(
-                modifier = Modifier
-                    .size(ChipDefaults.IconSize)
-                    .alpha(LocalContentAlpha.current)
-            )
-        },
-        label = {
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                textAlign = TextAlign.Center,
-                text = printableText(c.localizedName) + " - " + count
-            )
-        },
-        onClick = {},
-    )
 }
