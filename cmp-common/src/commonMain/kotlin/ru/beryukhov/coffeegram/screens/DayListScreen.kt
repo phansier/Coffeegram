@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coffeegram.cmp_common.generated.resources.Res
 import coffeegram.cmp_common.generated.resources.add_drink
+import coffeegram.cmp_common.generated.resources.back
 import coffeegram.cmp_common.generated.resources.pick_day_placeholder
 import com.slapps.cupertino.adaptive.AdaptiveIconButton
 import com.slapps.cupertino.adaptive.AdaptiveTopAppBar
@@ -120,7 +121,7 @@ fun DayListAppBar(
             AdaptiveIconButton(onClick = component::onBackClicked) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = ""
+                    contentDescription = stringResource(Res.string.back)
                 )
             }
         },

@@ -7,6 +7,8 @@ import io.github.kakaocup.compose.node.element.KNode
 class DayListScreen(private val provider: SemanticsNodeInteractionsProvider) :
     ComposeScreen<DayListScreen>(provider, { hasTestTag("DayList") }) {
 
+    val backButton = KNode(provider) { hasContentDescription("Back") }
+
     fun coffee(name: String) = KNode(provider) {
         useUnmergedTree = true
         hasTestTag("CoffeeName")

@@ -28,6 +28,7 @@
     <string name="settings_style">Stil</string>
     <string name="settings_device">Gerät</string>
     <string name="calendar">Kalender</string>
+    <string name="back">Zurück</string>
     <string name="stats">Statistiken</string>
     <string name="stats_title">Deine Gewohnheiten</string>
     <string name="stats_eyebrow">STATISTIK</string>

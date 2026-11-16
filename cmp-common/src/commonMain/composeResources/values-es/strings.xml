@@ -28,6 +28,7 @@
     <string name="settings_style">Estilo</string>
     <string name="settings_device">Dispositivo</string>
     <string name="calendar">Calendario</string>
+    <string name="back">Atrás</string>
     <string name="stats">Estadísticas</string>
     <string name="stats_title">Tus hábitos</string>
     <string name="stats_eyebrow">ESTADÍSTICAS</string>

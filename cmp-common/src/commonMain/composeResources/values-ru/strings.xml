@@ -28,6 +28,7 @@
     <string name="settings_style">Стиль</string>
     <string name="settings_device">Устройство</string>
     <string name="calendar">Календарь</string>
+    <string name="back">Назад</string>
     <string name="stats">Статистика</string>
     <string name="stats_title">Ваши привычки</string>
     <string name="stats_eyebrow">СТАТИСТИКА</string>
