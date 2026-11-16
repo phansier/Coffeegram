@@ -5,4 +5,4 @@ import androidx.compose.runtime.Composable
 expect abstract class UiTest()
 
 @Composable
-expect fun ProvideTestResources()
+expect fun TestEnvironment(content: @Composable () -> Unit)

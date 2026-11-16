@@ -17,13 +17,14 @@ class MonthTableSmokeTest : UiTest() {
     @Test
     fun dayOfMonthIsDisplayed() = runComposeUiTest {
         setContent {
-            ProvideTestResources()
-            MonthTable(
-                yearMonth = YearMonth(2020, Month.JULY),
-                today = LocalDate(2020, 7, 14),
-                filledDayItemsMap = persistentMapOf(),
-                onClick = {},
-            )
+            TestEnvironment {
+                MonthTable(
+                    yearMonth = YearMonth(2020, Month.JULY),
+                    today = LocalDate(2020, 7, 14),
+                    filledDayItemsMap = persistentMapOf(),
+                    onClick = {},
+                )
+            }
         }
 
         day(this, "14").assertIsDisplayed()

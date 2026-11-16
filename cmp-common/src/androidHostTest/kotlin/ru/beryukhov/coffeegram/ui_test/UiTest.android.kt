@@ -9,6 +9,7 @@ import ru.beryukhov.coffeegram.PreviewContextConfigurationEffectProvider
 actual abstract class UiTest actual constructor()
 
 @Composable
-actual fun ProvideTestResources() {
+actual fun TestEnvironment(content: @Composable () -> Unit) {
     PreviewContextConfigurationEffectProvider()
+    content()
 }
