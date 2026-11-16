@@ -15,8 +15,8 @@ import ru.beryukhov.coffeegram.data.DatedDayCoffee
 import ru.beryukhov.coffeegram.data.DayCoffee
 import ru.beryukhov.coffeegram.data.currentDateFlow
 import ru.beryukhov.coffeegram.data.dayCoffeeOn
-import ru.beryukhov.coffeegram.data.updatedBy
 import ru.beryukhov.coffeegram.data.parseDate
+import ru.beryukhov.coffeegram.data.updatedBy
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull

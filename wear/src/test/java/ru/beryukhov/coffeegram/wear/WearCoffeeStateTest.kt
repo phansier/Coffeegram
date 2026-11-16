@@ -14,12 +14,12 @@ class WearCoffeeStateTest {
     private val yesterday = LocalDate(2026, 11, 15)
     private val today = LocalDate(2026, 11, 16)
 
+    private val addLatte = CoffeeChangeEvent(today, Latte, +1)
+
     private fun phone(latte: Int, cappuccino: Int = 0) =
         DatedDayCoffee(today, DayCoffee(mapOf(Latte to latte, Cappuccino to cappuccino)))
 
     private fun latteOn(state: WearCoffeeState) = state.dayCoffeeOn(today).coffeeCountMap[Latte]
-
-    private val addLatte = CoffeeChangeEvent(today, Latte, +1)
 
     @Test
     fun unconfirmedChangesFromOutboxAreShownOnTopOfPhoneCounts() {

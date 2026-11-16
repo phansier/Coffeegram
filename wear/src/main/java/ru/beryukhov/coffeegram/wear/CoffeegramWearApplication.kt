@@ -3,8 +3,8 @@ package ru.beryukhov.coffeegram.wear
 import android.app.Application
 import android.content.ComponentName
 import android.content.Context
-import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import androidx.wear.tiles.TileService
+import androidx.wear.watchface.complications.datasource.ComplicationDataSourceUpdateRequester
 import com.google.android.gms.wearable.Wearable
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.drop

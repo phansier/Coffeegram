@@ -15,11 +15,15 @@ fun CoffeeChangeEvent.toPutDataRequest(eventPath: String): PutDataRequest =
     }.asPutDataRequest().setUrgent()
 
 fun DataMap.toCoffeeChangeEvent(dateWhenMissing: LocalDate): CoffeeChangeEvent? {
-    val type = CoffeeTypes.entries.find { it.dbKey == getString(COFFEE_EVENT_KEY_DB_KEY) } ?: return null
-    val delta = getInt(COFFEE_EVENT_KEY_DELTA, 0).takeIf { it != 0 } ?: return null
-    return CoffeeChangeEvent(
-        date = parseDate(getString(COFFEE_EVENT_KEY_DATE)) ?: dateWhenMissing,
-        type = type,
-        delta = delta,
-    )
+    val type = CoffeeTypes.entries.find { it.dbKey == getString(COFFEE_EVENT_KEY_DB_KEY) }
+    val delta = getInt(COFFEE_EVENT_KEY_DELTA, 0).takeIf { it != 0 }
+    return if (type == null || delta == null) {
+        null
+    } else {
+        CoffeeChangeEvent(
+            date = parseDate(getString(COFFEE_EVENT_KEY_DATE)) ?: dateWhenMissing,
+            type = type,
+            delta = delta,
+        )
+    }
 }

@@ -36,20 +36,16 @@ class TodayComplicationService : SuspendingTimelineComplicationDataSourceService
     override fun getPreviewData(type: ComplicationType): ComplicationData? =
         if (type == ComplicationType.SHORT_TEXT) totalData(PREVIEW_TOTAL) else null
 
-    private fun totalData(total: Int): ComplicationData =
-        ShortTextComplicationData.Builder(
-            text = PlainComplicationText.Builder(total.toString()).build(),
-            contentDescription = PlainComplicationText.Builder(getString(R.string.complication_description, total)).build(),
-        )
-            .setTitle(PlainComplicationText.Builder(getString(R.string.complication_title)).build())
-            .setTapAction(openAppIntent())
-            .build()
+    private fun totalData(total: Int): ComplicationData = ShortTextComplicationData.Builder(
+        text = PlainComplicationText.Builder(total.toString()).build(),
+        contentDescription = PlainComplicationText.Builder(getString(R.string.complication_description, total)).build(),
+    ).setTitle(PlainComplicationText.Builder(getString(R.string.complication_title)).build())
+        .setTapAction(openAppIntent()).build()
 
-    private fun openAppIntent(): PendingIntent =
-        PendingIntent.getActivity(
-            this,
-            0,
-            Intent(this, WearActivity::class.java),
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-        )
+    private fun openAppIntent(): PendingIntent = PendingIntent.getActivity(
+        this,
+        0,
+        Intent(this, WearActivity::class.java),
+        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+    )
 }

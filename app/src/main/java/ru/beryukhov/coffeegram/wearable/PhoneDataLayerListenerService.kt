@@ -55,6 +55,11 @@ class PhoneDataLayerListenerService : WearableListenerService(), KoinComponent {
 
     private fun applyAndPublishBeforeConfirming(intent: DaysCoffeesIntent, today: LocalDate) = runBlocking {
         val applied = daysCoffeesStore.applyIntent(intent)
-        wearableSyncService.putDayCoffee(DatedDayCoffee(date = today, dayCoffee = applied.coffees[today] ?: DayCoffee()))
+        wearableSyncService.putDayCoffee(
+            DatedDayCoffee(
+                date = today,
+                dayCoffee = applied.coffees[today] ?: DayCoffee()
+            )
+        )
     }
 }

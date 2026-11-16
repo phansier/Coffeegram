@@ -70,7 +70,11 @@ class TodayTileService : Material3TileService(allowDynamicTheme = false, default
         clickId.toClickedCoffee()?.let { repository.change(it, +1) }
     }
 
-    private fun MaterialScope.todayLayout(title: String, coffees: List<TileCoffee>, openAppLabel: String): LayoutElement {
+    private fun MaterialScope.todayLayout(
+        title: String,
+        coffees: List<TileCoffee>,
+        openAppLabel: String
+    ): LayoutElement {
         val renderId = System.currentTimeMillis().toString()
         return primaryLayout(
             titleSlot = { text(title.layoutString) },
@@ -80,40 +84,33 @@ class TodayTileService : Material3TileService(allowDynamicTheme = false, default
     }
 
     private fun MaterialScope.coffeeButtons(coffees: List<TileCoffee>, renderId: String): LayoutElement =
-        LayoutElementBuilders.Column.Builder()
-            .setWidth(expand())
-            .apply {
-                coffees.forEachIndexed { index, coffee ->
-                    if (index > 0) addContent(LayoutElementBuilders.Spacer.Builder().setHeight(dp(BUTTON_SPACING_DP)).build())
-                    addContent(coffeeButton(coffee, renderId))
+        LayoutElementBuilders.Column.Builder().setWidth(expand()).apply {
+            coffees.forEachIndexed { index, coffee ->
+                if (index > 0) {
+                    addContent(
+                        LayoutElementBuilders.Spacer.Builder().setHeight(dp(BUTTON_SPACING_DP)).build()
+                    )
                 }
+                addContent(coffeeButton(coffee, renderId))
             }
-            .build()
+        }.build()
 
-    private fun MaterialScope.coffeeButton(coffee: TileCoffee, renderId: String): LayoutElement =
-        button(
-            onClick = clickable(id = ADD_COFFEE_CLICK_PREFIX + coffee.type.dbKey + CLICK_ID_SEPARATOR + renderId),
-            width = expand(),
-            labelContent = { text(coffee.label.layoutString) },
-        )
+    private fun MaterialScope.coffeeButton(coffee: TileCoffee, renderId: String): LayoutElement = button(
+        onClick = clickable(id = ADD_COFFEE_CLICK_PREFIX + coffee.type.dbKey + CLICK_ID_SEPARATOR + renderId),
+        width = expand(),
+        labelContent = { text(coffee.label.layoutString) },
+    )
 
-    private fun openApp(): Clickable =
-        clickable(
-            action = ActionBuilders.LaunchAction.Builder()
-                .setAndroidActivity(
-                    ActionBuilders.AndroidActivity.Builder()
-                        .setPackageName(packageName)
-                        .setClassName(WearActivity::class.java.name)
-                        .build()
-                )
-                .build()
-        )
+    private fun openApp(): Clickable = clickable(
+        action = ActionBuilders.LaunchAction.Builder().setAndroidActivity(
+            ActionBuilders.AndroidActivity.Builder().setPackageName(packageName)
+                .setClassName(WearActivity::class.java.name).build()
+        ).build()
+    )
 }
 
 private fun DayCoffee.mostDrunk(): List<Pair<CoffeeType, Int>> =
-    CoffeeTypes.entries
-        .map { type -> type to (coffeeCountMap[type] ?: 0) }
-        .sortedByDescending { (_, count) -> count }
+    CoffeeTypes.entries.map { type -> type to (coffeeCountMap[type] ?: 0) }.sortedByDescending { (_, count) -> count }
         .take(TILE_COFFEE_COUNT)
 
 private fun String.toClickedCoffee(): CoffeeType? {

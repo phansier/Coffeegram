@@ -26,20 +26,21 @@ class AppDatabaseMigrationTest {
     private fun createVersion1Database(vararg rows: Triple<String, String, Int>) {
         driver.open(databaseFile.path).use { connection ->
             connection.execSQL(
-                "CREATE TABLE IF NOT EXISTS `DayCoffee` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "CREATE TABLE IF NOT EXISTS `DayCoffee` " +
+                    "(`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     "`date` TEXT NOT NULL, `coffeeName` TEXT NOT NULL, `count` INTEGER NOT NULL)"
             )
             rows.forEach { (date, coffeeName, count) ->
-                connection.execSQL("INSERT INTO DayCoffee(date, coffeeName, count) VALUES ('$date', '$coffeeName', $count)")
+                connection.execSQL(
+                    "INSERT INTO DayCoffee(date, coffeeName, count) VALUES ('$date', '$coffeeName', $count)"
+                )
             }
             connection.execSQL("PRAGMA user_version = 1")
         }
     }
 
     private fun openMigratedDatabase(): AppDatabase =
-        Room.databaseBuilder<AppDatabase>(name = databaseFile.path)
-            .addMigrations(MIGRATION_1_2)
-            .setDriver(driver)
+        Room.databaseBuilder<AppDatabase>(name = databaseFile.path).addMigrations(MIGRATION_1_2).setDriver(driver)
             .build()
 
     @Test

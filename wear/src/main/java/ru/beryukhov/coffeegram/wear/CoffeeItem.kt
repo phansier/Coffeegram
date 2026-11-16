@@ -19,6 +19,8 @@ import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.RevealDirection
 import androidx.wear.compose.material3.RevealState
 import androidx.wear.compose.material3.RevealValue
+import androidx.wear.compose.material3.RevealValue.Companion.LeftRevealed
+import androidx.wear.compose.material3.RevealValue.Companion.RightRevealed
 import androidx.wear.compose.material3.SurfaceTransformation
 import androidx.wear.compose.material3.SwipeToReveal
 import androidx.wear.compose.material3.SwipeToRevealScope
@@ -91,12 +93,12 @@ private fun SwipeToRevealScope.DecrementAction(onClick: () -> Unit) {
 
 private fun RevealState.isIncrementSide(): Boolean =
     currentValue == RevealValue.LeftRevealing ||
-        currentValue == RevealValue.LeftRevealed ||
+        currentValue == LeftRevealed ||
         targetValue == RevealValue.LeftRevealing ||
-        targetValue == RevealValue.LeftRevealed
+        targetValue == LeftRevealed
 
 private fun RevealValue.isDecrementSide(): Boolean =
-    this == RevealValue.RightRevealing || this == RevealValue.RightRevealed
+    this == RevealValue.RightRevealing || this == RightRevealed
 
 @Composable
 private fun CoverWhenListScrolls(revealState: RevealState, isListScrolling: Boolean) {
@@ -110,7 +112,7 @@ private fun CoverWhenListScrolls(revealState: RevealState, isListScrolling: Bool
 @Composable
 private fun CoverAfterAction(revealState: RevealState) {
     LaunchedEffect(revealState.currentValue) {
-        if (revealState.currentValue == RevealValue.LeftRevealed || revealState.currentValue == RevealValue.RightRevealed) {
+        if (revealState.currentValue == LeftRevealed || revealState.currentValue == RightRevealed) {
             revealState.animateTo(RevealValue.Covered)
         }
     }
