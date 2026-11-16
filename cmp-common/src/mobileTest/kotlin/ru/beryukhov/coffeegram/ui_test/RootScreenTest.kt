@@ -67,4 +67,17 @@ class RootScreenTest : UiTest() {
             dayAt(1).assertIsFocused()
         }
     }
+
+    @Test
+    fun openingDayShowsCoffeeList() = runComposeUiTest {
+        setRootScreenContent()
+
+        TableScreen(this).day("1").performClick()
+
+        DayListScreen(this).apply {
+            assertIsDisplayed()
+            coffee("Cappuccino").assertIsDisplayed()
+            coffee("Latte").assertIsDisplayed()
+        }
+    }
 }

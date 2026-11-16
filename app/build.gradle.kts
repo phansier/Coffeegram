@@ -166,8 +166,6 @@ dependencies {
     implementation(libs.lottie.compose)
 
     testImplementation(libs.robolectric)
-    testImplementation(libs.compose.uiTestJunit4)
-    testImplementation(libs.kakao.compose)
     testImplementation(libs.glance.appwidget.testing)
 
     testImplementation(libs.kotlin.test.junit)

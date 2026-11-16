@@ -88,10 +88,8 @@ material-icons-core = "org.jetbrains.compose.material:material-icons-core:1.7.3"
 
 compose-activity = "androidx.activity:activity-compose:1.13.0" # https://developer.android.com/jetpack/androidx/releases/activity # androidx-activity-compose
 
-compose-uiTestJunit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 compose-uiTestManifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
 espresso-core = "androidx.test.espresso:espresso-core:3.7.0" # https://developer.android.com/jetpack/androidx/releases/test
-kakao-compose = { module = "io.github.kakaocup:compose", version = "1.1.1" }
 kakao-composeMultiplatform = { module = "io.github.kakaocup:compose-multiplatform", version = "2.0.0" } # https://github.com/KakaoCup/Multiplatform/releases
 robolectric = { module = "org.robolectric:robolectric", version = "4.17" }
 

@@ -77,7 +77,7 @@ fun CoffeeTypeItem(
                 .weight(1f)
                 .testTag("CoffeeName")
         )
-        Row(modifier = Modifier.align(Alignment.CenterVertically).testTag("CoffeeNam1e")) {
+        Row(modifier = Modifier.align(Alignment.CenterVertically)) {
             Spacer(Modifier.width(16.dp))
             val buttonSize = if (hasFinePointer()) FinePointerButtonSize else TouchButtonSize
             val textButtonModifier = Modifier
