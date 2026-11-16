@@ -67,7 +67,6 @@ composeKotlinGradle = { module = "org.jetbrains.kotlin:compose-compiler-gradle-p
 protobufGradle = { module = "com.google.protobuf:protobuf-gradle-plugin", version = "0.10.0" }
 secretsGradle = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
 kspGradle = { module = "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
-screenshotGradle = { module = "com.android.compose.screenshot:screenshot-test-gradle-plugin", version.ref = "screenshot"}
 
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detektCompose = { module = "io.nlopez.compose.rules:detekt", version.ref = "detektCompose" }
